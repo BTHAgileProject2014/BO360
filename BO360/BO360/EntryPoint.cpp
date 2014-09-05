@@ -39,7 +39,7 @@ bool init()
 }
 bool loadMedia()
 {
-	m_HelloWorld = SDL_LoadBMP("test.bmp");
+	m_HelloWorld = SDL_LoadBMP("../BO360/Bilder/test.bmp");
 	if (m_HelloWorld == NULL)
 	{
 		printf("Pic can't be lodaedededed SDL_Error: %s\n", SDL_GetError());
