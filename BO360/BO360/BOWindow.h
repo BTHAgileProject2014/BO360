@@ -14,6 +14,7 @@ public:
 
 	bool Initialize();
 	bool Initialize(std::string p_windowText, int p_windowWidth, int p_windowHeight);
+	void SetWindowText(std::string p_windowText);
 
 	void Shutdown();
 
