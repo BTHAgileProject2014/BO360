@@ -10,7 +10,17 @@ BOSystem::~BOSystem()
 
 }
 
-void BOSystem::Run()
+bool BOSystem::Initialize()
+{
+	return m_window.Initialize();
+}
+
+bool BOSystem::Run()
+{
+	return true;
+}
+
+void BOSystem::Shutdown()
 {
 
 }

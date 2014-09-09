@@ -1,10 +1,19 @@
-class BOSystem
+#ifndef BOSYSTEM_H_
+#define BOSYSTEM_H_
+
+#include "BOComponent.h"
+#include "BOWindow.h"
+
+class BOSystem : BOComponent
 {
 public:
 	BOSystem();
 	~BOSystem();
 
+	bool Initialize();
+	void Shutdown();
+	bool Run();
 private:
-	void Run();
-
+	BOWindow m_window;
 };
+#endif

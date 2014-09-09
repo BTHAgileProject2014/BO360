@@ -21,9 +21,21 @@
     <ClCompile Include="BOMain.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="BOWindow.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="BOComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BOSystem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BOWindow.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BOComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
