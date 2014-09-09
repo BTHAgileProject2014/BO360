@@ -1,4 +1,5 @@
 #include "BOSystem.h"
+#define DEBUG
 
 int main(int argc, char* args[])
 {

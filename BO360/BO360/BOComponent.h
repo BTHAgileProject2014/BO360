@@ -1,4 +1,6 @@
-#pragma once
+#ifndef BOCOMPONENT_H_
+#define BOCOMPONENT_H_
+
 class BOComponent
 {
 public:
@@ -10,3 +12,4 @@ public:
 	virtual void Shutdown();
 };
 
+#endif

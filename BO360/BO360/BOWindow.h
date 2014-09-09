@@ -3,6 +3,8 @@
 
 #include "BOComponent.h"
 #include <SDL.h>
+#include <string>
+#include <stdio.h>
 
 class BOWindow : BOComponent
 {
@@ -11,6 +13,8 @@ public:
 	~BOWindow();
 
 	bool Initialize();
+	bool Initialize(std::string p_windowText, int p_windowWidth, int p_windowHeight);
+
 	void Shutdown();
 
 private:
