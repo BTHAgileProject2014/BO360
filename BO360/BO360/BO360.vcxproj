@@ -71,13 +71,16 @@
   <ItemGroup>
     <ClInclude Include="BOComponent.h" />
     <ClInclude Include="BOGraphicInterface.h" />
+    <ClInclude Include="BOObject.h" />
     <ClInclude Include="BOSystem.h" />
+    <ClInclude Include="BOUtility.h" />
     <ClInclude Include="BOWindow.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BOComponent.cpp" />
     <ClCompile Include="BOGraphicInterface.cpp" />
     <ClCompile Include="BOMain.cpp" />
+    <ClCompile Include="BOObject.cpp" />
     <ClCompile Include="BOSystem.cpp" />
     <ClCompile Include="BOWindow.cpp" />
   </ItemGroup>
