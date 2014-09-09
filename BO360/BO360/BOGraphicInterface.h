@@ -18,9 +18,9 @@ public:
 
 private:
 	BOWindow* m_window;
-	int m_screenWidth;
-	int m_screenHeight;
-	bool m_fullscreen;
+	int m_windowWidth;
+	int m_windowHeight;
+	//bool m_fullscreen;	// Use only when fullscreen and resolutions is supported
 };
 #endif
 
