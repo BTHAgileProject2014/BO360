@@ -12,12 +12,13 @@ BOInput::~BOInput()
 
 bool BOInput::Initialize()
 {
+	m_publisher.Initialize();
 	return true;
 }
 
 void BOInput::Shutdown()
 {
-
+	m_publisher.Shutdown();
 }
 
 bool BOInput::Update()
@@ -39,12 +40,14 @@ bool BOInput::Update()
 				{
 					case SDLK_LEFT:
 					{
+						m_publisher.Notify(leftArrow, true);
 						std::cout << "LEFT is pressed\n";
 						break;
 					}
 
 					case SDLK_RIGHT:
 					{
+						m_publisher.Notify(rightArrow, true);
 						std::cout << "RIGHT is pressed\n";
 						break;
 					}
@@ -71,12 +74,14 @@ bool BOInput::Update()
 				{
 					case SDLK_LEFT:
 					{
+						m_publisher.Notify(leftArrow, false);
 						std::cout << "LEFT is released\n";
 						break;
 					}
 
 					case SDLK_RIGHT:
 					{
+						m_publisher.Notify(rightArrow, false);
 						std::cout << "RIGHT is released\n";
 						break;
 					}
@@ -92,18 +97,23 @@ bool BOInput::Update()
 
 			case SDL_MOUSEMOTION:
 			{
-				std::cout << "Mouse position: " << event.motion.x << ", " << event.motion.y;
+				m_publisher.Notify(event.motion.x, event.motion.y);
+				std::cout << "Mouse position: " << event.motion.x << ", " << event.motion.y << "\n";
 				break;
 			}
 
 			case SDL_MOUSEBUTTONDOWN:
 			{
+				m_publisher.Notify(leftMouseKey, true);
+				std::cout << "LEFT mousebutton pressed\n";
 				break;
 				
 			}
 
 			case SDL_MOUSEBUTTONUP:
 			{
+				m_publisher.Notify(leftMouseKey, false);
+				std::cout << "LEFT mousebutton released\n";
 				break;
 			}
 		}

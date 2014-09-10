@@ -3,6 +3,8 @@
 
 #include "BOComponent.h"
 #include "SDL.h"
+#include "BOPublisher.h"
+#include "BOUtility.h"
 
 class BOInput : BOComponent
 {
@@ -17,7 +19,7 @@ public:
 	bool Update();
 
 private:
-
+	BOPublisher m_publisher;
 };
 
 #endif

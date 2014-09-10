@@ -39,21 +39,10 @@ bool BOSystem::Initialize()
 
 bool BOSystem::Run()
 {
-	return m_input.Update();
-
-	SDL_Event event;
-	while (SDL_PollEvent(&event))
-	{
-		if (event.type == SDL_QUIT)
-		{
-			return false;
-		}
-	}
-
 	m_objectManager.Update();
 	m_objectManager.Draw();
 
-	return true;
+	return m_input.Update();
 }
 
 void BOSystem::Shutdown()
