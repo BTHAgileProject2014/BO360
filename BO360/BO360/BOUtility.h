@@ -127,6 +127,9 @@ struct InputMessages
 	int mouseX;
 	int mouseY;
 	bool leftMouseKey;
+	bool rightMouseKey;
+	bool middleMouseKey;
+	bool spacebarKey;
 	bool rightArrow;
 	bool leftArrow;
 	bool upArrow;
@@ -139,7 +142,10 @@ enum KeyMessages
 	downArrow,
 	rightArrow,
 	leftArrow,
-	leftMouseKey
+	leftMouseKey,
+	rightMouseKey,
+	middleMouseKey,
+	spacebarKey
 };
 
 // Sphere for collision check

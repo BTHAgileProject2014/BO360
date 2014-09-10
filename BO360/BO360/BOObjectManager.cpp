@@ -17,7 +17,7 @@ bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight)
 	int2 blackHoleSize = int2(220, 220);
 	float2 blackHolePosition = float2((p_windowWidth / 2.0f) - (blackHoleSize.x / 2), (p_windowHeight / 2.0f) - (blackHoleSize.y / 2));
 
-	result = m_blackHole.Initialize(blackHolePosition, blackHoleSize, "Bilder/placeholderBlackhole.bmp");
+	result = m_blackHole.Initialize(blackHolePosition, blackHoleSize, "Bilder/placeholderBlackhole.png");
 
 	if (!result)
 	{
@@ -29,7 +29,7 @@ bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight)
 	float2 ballPosition = float2(10, 10);
 
 	BOBall ball;
-	result = ball.Initialize(ballPosition, ballSize, "Bilder/placeholderBoll.bmp");
+	result = ball.Initialize(ballPosition, ballSize, "Bilder/placeholderBoll.png");
 	m_ballList.push_back(ball);
 
 	if (!result)

@@ -1,5 +1,6 @@
 #include "BOSystem.h"
 
+
 BOSystem::BOSystem()
 {
 
@@ -13,7 +14,8 @@ BOSystem::~BOSystem()
 bool BOSystem::Initialize()
 {
 	bool result;
-
+	m_input.Initialize();
+	
 	windowWidth = 800;
 	windowHeight = 600;
 
@@ -29,19 +31,13 @@ bool BOSystem::Initialize()
 	}
 
 	return true;
+
 }
 
 bool BOSystem::Run()
 {
-	SDL_Event event;
-	while (SDL_PollEvent(&event))
-	{
-		if (event.type == SDL_QUIT)
-		{
-			return false;
-		}
-	}
-
+	bool result = true;
+	result = m_input.Update();
 	m_objectManager.Update();
 
 	BOGraphicInterface::Clear();
@@ -50,10 +46,10 @@ bool BOSystem::Run()
 
 	BOGraphicInterface::Present();
 
-	return true;
+	return result;
 }
 
 void BOSystem::Shutdown()
 {
-
+	m_input.Shutdown();
 }
