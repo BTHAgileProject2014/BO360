@@ -49,12 +49,19 @@ void BOObjectManager::Shutdown()
 
 void BOObjectManager::Update()
 {
+	bool result;
 	m_blackHole.Update();
 
 	for (int i = 0; i < m_ballList.size(); i++)
 	{
 		m_ballList[i].Update();
 	}
+	
+	if (BOPhysics::CheckCollisionSpheres(m_ballList[0].GetBoundingSphere(), m_blackHole.GetBoundingSphere()))
+	{
+		std::cout << "KROCK" << std::endl;
+	}
+
 }
 
 void BOObjectManager::Draw()

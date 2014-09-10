@@ -5,6 +5,7 @@
 #include "BOObject.h"
 #include "BOBlackHole.h"
 #include "BOBall.h"
+#include "BOPhysics.h"
 #include <vector>
 
 class BOObjectManager :
