@@ -14,11 +14,10 @@ bool BOSystem::Initialize()
 {
 	bool result;
 
-	windowWidth = 1024;
-	windowHeight = 720;
+	windowWidth = 800;
+	windowHeight = 600;
 
-	result = m_window.Initialize("Are we going to support multiple resolutions?", windowWidth, windowHeight);
-	if (!result)
+	if (!BOGraphicInterface::Initialize())
 	{
 		return false;
 	}
@@ -44,7 +43,12 @@ bool BOSystem::Run()
 	}
 
 	m_objectManager.Update();
+
+	BOGraphicInterface::Clear();
+
 	m_objectManager.Draw();
+
+	BOGraphicInterface::Present();
 
 	return true;
 }

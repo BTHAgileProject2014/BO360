@@ -4,6 +4,7 @@
 #include "BOComponent.h"
 #include "BOObject.h"
 #include "BOBlackHole.h"
+#include "BOBall.h"
 #include <vector>
 
 class BOObjectManager :
@@ -18,10 +19,13 @@ public:
 	void Update();
 	void Draw();
 
-	//std::vector<BOObject> ObjectList;
-
 private:
+	// BOBackground;
+	// BOPad m_pad;
 	BOBlackHole m_blackHole;
+	std::vector<BOBall> m_ballList;
+	//std::vector<BOBlock> m_blockList;
+	//std::vector<BOParticle> m_particleList;
+	//std::vector<BOPowerUp> m_powerUPlist;
 };
-
 #endif

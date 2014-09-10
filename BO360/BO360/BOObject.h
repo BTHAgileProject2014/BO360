@@ -2,6 +2,7 @@
 #define BOOBJECT_H_
 
 #include "BOUtility.h"
+#include "BOGraphicInterface.h"
 #include <SDL.h>
 #include <string>
 
@@ -20,7 +21,7 @@ public:
 	int2 GetSize();
 	void SetSize(int2 p_size);
 
-	SDL_Surface* GetSprite();
+	SDL_Texture* GetSprite();
 	void SetSprite(std::string p_fileName);
 
 	void Draw();
@@ -28,6 +29,6 @@ public:
 protected:
 	float2 m_position;
 	int2 m_size;
-	SDL_Surface* m_sprite;
+	SDL_Texture* m_sprite;
 };
 #endif

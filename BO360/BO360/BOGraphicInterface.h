@@ -5,7 +5,7 @@
 #include "BOWindow.h"
 #include "BOComponent.h"
 #include <iostream>
-#include "BOBlackHole.h"
+#include <SDL_image.h>
 
 class BOGraphicInterface
 {

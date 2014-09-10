@@ -1,10 +1,8 @@
 #include "BOBlackHole.h"
 
-
 BOBlackHole::BOBlackHole()
 {
 }
-
 
 BOBlackHole::~BOBlackHole()
 {
@@ -12,6 +10,7 @@ BOBlackHole::~BOBlackHole()
 
 void BOBlackHole::Update()
 {
+
 	// Fix spinning hole and so on if wanted.
 }
 
@@ -21,4 +20,5 @@ sphere BOBlackHole::GetBoundingSphere()
 	
 	return boundingSphere;
 
+	// TODO: Add black hole mechanics.
 }

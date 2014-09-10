@@ -3,8 +3,7 @@
 
 #include "BOObject.h"
 
-class BOBlackHole :
-	public BOObject
+class BOBlackHole : public BOObject
 {
 public:
 	BOBlackHole();
@@ -14,5 +13,4 @@ public:
 
 	sphere GetBoundingSphere();
 };
-
 #endif

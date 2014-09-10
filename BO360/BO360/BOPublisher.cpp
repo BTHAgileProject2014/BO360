@@ -37,11 +37,12 @@ void BOPublisher::Shutdown()
 	
 }
 
+// Call the subscribers
 void BOPublisher::Notify()
 {
 	for (unsigned int i = 0; i < m_subscribers.size(); i++)
 	{
-		// m_subscribers->Notify(m_inputMessage);
+		m_subscribers[i]->Handle(m_inputMessage);
 	}
 }
 

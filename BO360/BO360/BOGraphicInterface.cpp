@@ -27,6 +27,14 @@ bool BOGraphicInterface::Initialize()
 	}
 	SDL_SetRenderDrawColor(GetInstance().m_renderer, 0, 0, 0, SDL_ALPHA_OPAQUE);
 
+
+	int imgFlags = IMG_INIT_PNG;
+	if (!(IMG_Init(imgFlags) & imgFlags))
+	{
+		std::cout << "Failed to init SDL_Image:" << IMG_GetError() << std::endl;
+		return false;
+	}
+
 	return true;
 }
 
@@ -36,13 +44,17 @@ void BOGraphicInterface::Shutdown()
 }
 void BOGraphicInterface::Draw(SDL_Texture* p_texture, float2 p_position, int2 p_size)
 {
-	SDL_Rect rect;
-	rect.x = (int)p_position.x;
-	rect.y = (int)p_position.y;
-	rect.w = p_size.x;
-	rect.h = p_size.y;
+	SDL_Rect source, target;
+	target.x = (int)p_position.x;
+	target.y = (int)p_position.y;
+	target.w = p_size.x;
+	target.h = p_size.y;
+	source.x = 0;
+	source.y = 0;
+	source.w = p_size.x;
+	source.h = p_size.y;
 
-	SDL_RenderCopy(GetInstance().m_renderer, p_texture, &rect, &rect);
+	SDL_RenderCopy(GetInstance().m_renderer, p_texture, &source, &target);
 }
 
 void BOGraphicInterface::Clear()
@@ -60,10 +72,10 @@ SDL_Texture* BOGraphicInterface::LoadTexture(std::string p_path)
 	SDL_Texture* newTexture = 0;
 
 	// Apparently, we need to load to a surface first
-	SDL_Surface* surface = SDL_LoadBMP(p_path.c_str());
+	SDL_Surface* surface = IMG_Load(p_path.c_str());
 	if (surface == NULL)
 	{
-		std::cout << "Failed to load image: " + p_path;
+		std::cout << "Failed to load image: " + p_path << std::endl;
 		// Failed to load! 
 		// This should be handled
 	}

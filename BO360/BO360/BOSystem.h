@@ -2,8 +2,8 @@
 #define BOSYSTEM_H_
 
 #include "BOComponent.h"
-#include "BOWindow.h"
 #include "BOObjectManager.h"
+#include "BOGraphicInterface.h"
 
 class BOSystem : BOComponent
 {
@@ -15,7 +15,6 @@ public:
 	void Shutdown();
 	bool Run();
 private:
-	BOWindow m_window;
 	BOObjectManager m_objectManager;
 	int windowWidth, windowHeight;
 };
