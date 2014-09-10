@@ -34,7 +34,7 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="BOInput.cpp">
-	<Filter>Source Files</Filter>
+      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="BOBlackHole.cpp">
       <Filter>Source Files</Filter>
@@ -52,6 +52,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="BOPhysics.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="BOPaddle.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -72,7 +75,7 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="BOInput.h">
-	<Filter>Header Files</Filter>
+      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="BOBlackHole.h">
       <Filter>Header Files</Filter>
@@ -93,6 +96,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="BOPhysics.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BOPaddle.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

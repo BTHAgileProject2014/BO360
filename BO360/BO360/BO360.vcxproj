@@ -76,6 +76,7 @@
     <ClInclude Include="BOInput.h" />
     <ClInclude Include="BOObject.h" />
     <ClInclude Include="BOObjectManager.h" />
+    <ClInclude Include="BOPaddle.h" />
     <ClInclude Include="BOPhysics.h" />
     <ClInclude Include="BOPublisher.h" />
     <ClInclude Include="BOSubscriber.h" />
@@ -92,6 +93,7 @@
     <ClCompile Include="BOMain.cpp" />
     <ClCompile Include="BOObject.cpp" />
     <ClCompile Include="BOObjectManager.cpp" />
+    <ClCompile Include="BOPaddle.cpp" />
     <ClCompile Include="BOPhysics.cpp" />
     <ClCompile Include="BOPublisher.cpp" />
     <ClCompile Include="BOSubscriber.cpp" />
