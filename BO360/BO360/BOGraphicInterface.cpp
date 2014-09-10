@@ -6,10 +6,15 @@ BOGraphicInterface::~BOGraphicInterface()
 
 bool BOGraphicInterface::Initialize()
 {
+	return Initialize(800, 600);
+}
+
+bool BOGraphicInterface::Initialize(int p_windowWidth, int p_windowHeight)
+{
 	BOGraphicInterface* selfPtr = &GetInstance();
 	bool result;
-	GetInstance().m_windowWidth = 800;
-	GetInstance().m_windowHeight = 600;
+	GetInstance().m_windowWidth = p_windowWidth;
+	GetInstance().m_windowHeight = p_windowHeight;
 
 	result = GetInstance().m_window.Initialize("ScreenName", GetInstance().m_windowWidth, GetInstance().m_windowHeight);
 	if (!result)
