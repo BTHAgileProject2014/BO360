@@ -3,6 +3,7 @@
 
 #include "BOWindow.h"
 #include "BOComponent.h"
+#include "BOBlackHole.h"
 
 class BOGraphicInterface : public BOComponent
 {
@@ -21,6 +22,8 @@ private:
 	int m_windowWidth;
 	int m_windowHeight;
 	//bool m_fullscreen;	// Use only when fullscreen and resolutions is supported
+
+	BOBlackHole* m_blackHole;
 };
 #endif
 
