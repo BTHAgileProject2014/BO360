@@ -14,11 +14,14 @@ bool BOPublisher::Initialize()
 {
 	m_subscribers = std::vector<BOSubscriber*>();
 
-	// All key messages is set to false
+	// All key messages is set to false(not pressed)
 	m_inputMessage = InputMessages();
 	m_inputMessage.mouseX = 0;
 	m_inputMessage.mouseY = 0;
 	m_inputMessage.leftMouseKey = false;
+	m_inputMessage.rightMouseKey = false;
+	m_inputMessage.middleMouseKey = false;
+	m_inputMessage.spacebarKey = false;
 	m_inputMessage.upArrow = false;;
 	m_inputMessage.downArrow = false;
 	m_inputMessage.leftArrow = false;
@@ -46,13 +49,19 @@ void BOPublisher::Notify()
 	}
 }
 
-// Change value for specified key (true = down, false = up)
+// Change value for specified key (true = pressed, false = not pressed)
 void BOPublisher::Notify(KeyMessages p_keyMessage, bool p_value)
 {
 	switch (p_keyMessage)
 	{
 	case leftMouseKey:
 		m_inputMessage.leftMouseKey = p_value;
+		break;
+	case rightMouseKey:
+		m_inputMessage.rightMouseKey = p_value;
+		break;
+	case middleMouseKey:
+		m_inputMessage.middleMouseKey = p_value;
 		break;
 	case upArrow:
 		m_inputMessage.upArrow = p_value;
@@ -65,6 +74,9 @@ void BOPublisher::Notify(KeyMessages p_keyMessage, bool p_value)
 		break;
 	case rightArrow:
 		m_inputMessage.rightArrow = p_value;
+		break;
+	case spacebarKey:
+		m_inputMessage.spacebarKey = p_value;
 		break;
 	}
 
