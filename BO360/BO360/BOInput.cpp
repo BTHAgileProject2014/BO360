@@ -104,16 +104,29 @@ bool BOInput::Update()
 
 			case SDL_MOUSEBUTTONDOWN:
 			{
-				m_publisher.Notify(leftMouseKey, true);
-				std::cout << "LEFT mousebutton pressed\n";
+				switch (event.button.button)
+				{
+					case SDL_BUTTON_LEFT:
+					{
+						m_publisher.Notify(leftMouseKey, true);
+						std::cout << "LEFT mousebutton pressed\n";
+						break;
+					}
+				}
 				break;
-				
 			}
 
 			case SDL_MOUSEBUTTONUP:
 			{
-				m_publisher.Notify(leftMouseKey, false);
-				std::cout << "LEFT mousebutton released\n";
+				switch (event.button.button)
+				{
+					case SDL_BUTTON_LEFT:
+					{
+						m_publisher.Notify(leftMouseKey, false);
+						std::cout << "LEFT mousebutton released\n";
+						break;
+					}
+				}
 				break;
 			}
 		}
