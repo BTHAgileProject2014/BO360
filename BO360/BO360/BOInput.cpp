@@ -89,6 +89,23 @@ bool BOInput::Update()
 				}
 				break;
 			}
+
+			case SDL_MOUSEMOTION:
+			{
+				std::cout << "Mouse position: " << event.motion.x << ", " << event.motion.y;
+				break;
+			}
+
+			case SDL_MOUSEBUTTONDOWN:
+			{
+				break;
+				
+			}
+
+			case SDL_MOUSEBUTTONUP:
+			{
+				break;
+			}
 		}
 	}
 	// Keep the program running

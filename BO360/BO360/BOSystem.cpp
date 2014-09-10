@@ -19,8 +19,6 @@ bool BOSystem::Initialize()
 
 bool BOSystem::Run()
 {
-	
-	
 	return m_input.Update();
 }
 
