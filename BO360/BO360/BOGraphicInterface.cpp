@@ -50,17 +50,27 @@ void BOGraphicInterface::Shutdown()
 void BOGraphicInterface::Draw(SDL_Texture* p_texture, float2 p_position, int2 p_size)
 {
 	SDL_Rect source, target;
-	target.x = (int)p_position.x;
-	target.y = (int)p_position.y;
+	target.x = (int)p_position.x - (p_size.x / 2);
+	target.y = (int)p_position.y - (p_size.y / 2);
 	target.w = p_size.x;
 	target.h = p_size.y;
 	source.x = 0;
 	source.y = 0;
 	source.w = p_size.x;
 	source.h = p_size.y;
+	/*
+	static double angle = 0.0f;
+	angle += 0.0001f;
+	SDL_Point p;
 
+	p.x = p_size.x / 2;
+	p.y = p_size.y / 2;
+
+	SDL_RenderCopyEx(GetInstance().m_renderer, p_texture, &source, &target, angle, &p, SDL_FLIP_NONE);
+	*/
 	SDL_RenderCopy(GetInstance().m_renderer, p_texture, &source, &target);
 }
+
 
 void BOGraphicInterface::Clear()
 {
