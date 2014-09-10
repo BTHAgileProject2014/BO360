@@ -32,11 +32,22 @@ bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight)
 
 	BOBall ball;
 	result = ball.Initialize(ballPosition, ballSize, "Bilder/placeholderBoll.png", ballSpeed, ballDirection);
-	m_ballList.push_back(ball);
-
 	if (!result)
 	{
 		return false;
+	}
+
+	m_ballList.push_back(ball);
+
+	for (int i = 0; i < 9; i++)
+	{
+		BOBlock block;
+		result = block.Initialize(float2(((85*i) + 20), 5), int2(80,80), "Bilder/placeholderHexagon.png");
+		if (!result)
+		{
+			return false;
+		}
+		m_blockList.push_back(block);
 	}
 
 	return true;
@@ -56,6 +67,10 @@ void BOObjectManager::Update()
 	{
 		m_ballList[i].Update();
 	}
+	for (int i = 0; i < m_blockList.size(); i++)
+	{
+		m_blockList[i].Update();
+	}
 	
 	if (BOPhysics::CheckCollisionSpheres(m_ballList[0].GetBoundingSphere(), m_blackHole.GetBoundingSphere()))
 	{
@@ -71,6 +86,10 @@ void BOObjectManager::Draw()
 	for (int i = 0; i < m_ballList.size(); i++)
 	{
 		m_ballList[i].Draw();
+	}
+	for (int i = 0; i < m_blockList.size(); i++)
+	{
+		m_blockList[i].Draw();
 	}
 
 }
