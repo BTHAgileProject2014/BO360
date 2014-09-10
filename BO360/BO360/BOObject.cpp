@@ -40,7 +40,6 @@ void BOObject::Shutdown()
 void BOObject::Draw()
 {
 	// TODO: add Draw call here.
-	//sdl.draw(adadsam);
 }
 
 // Position Get / Set functions.

@@ -11,6 +11,8 @@ public:
 	~BOBlackHole();
 
 	void Update();
+
+	sphere GetBoundingSphere();
 };
 
 #endif
