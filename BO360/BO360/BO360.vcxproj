@@ -74,6 +74,8 @@
     <ClInclude Include="BOGraphicInterface.h" />
     <ClInclude Include="BOObject.h" />
     <ClInclude Include="BOObjectManager.h" />
+    <ClInclude Include="BOPublisher.h" />
+    <ClInclude Include="BOSubscriber.h" />
     <ClInclude Include="BOSystem.h" />
     <ClInclude Include="BOUtility.h" />
     <ClInclude Include="BOWindow.h" />
@@ -85,6 +87,8 @@
     <ClCompile Include="BOMain.cpp" />
     <ClCompile Include="BOObject.cpp" />
     <ClCompile Include="BOObjectManager.cpp" />
+    <ClCompile Include="BOPublisher.cpp" />
+    <ClCompile Include="BOSubscriber.cpp" />
     <ClCompile Include="BOSystem.cpp" />
     <ClCompile Include="BOWindow.cpp" />
   </ItemGroup>

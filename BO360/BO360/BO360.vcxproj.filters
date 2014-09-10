@@ -37,6 +37,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="BOObjectManager.cpp">
+		<Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="BOPublisher.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="BOSubscriber.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -63,6 +69,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="BOObjectManager.h">
+		<Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BOPublisher.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BOSubscriber.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
