@@ -8,7 +8,7 @@ class BOBall: public BOObject
 public:
 	BOBall();
 	~BOBall();
-
+	bool Initialize(float2 p_position, int2 p_size, std::string p_fileName, float p_speed, float2 p_direction);
 	void Update();
 	void SetSpeed(float p_speed);
 	float GetSpeed();

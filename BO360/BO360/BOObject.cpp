@@ -27,12 +27,7 @@ bool BOObject::Initialize(float2 p_position, int2 p_size, std::string p_fileName
 // Shutdown and memory release.
 void BOObject::Shutdown()
 {
-	// Delete the sprite.
-	if (m_sprite)
-	{
-		delete m_sprite;
-		m_sprite = NULL;
-	}
+
 }
 
 // Sprite Draw call.
@@ -71,13 +66,6 @@ SDL_Texture* BOObject::GetSprite()
 
 void BOObject::SetSprite(std::string p_fileName)
 {
-	// Delete the old sprite.
-	if (m_sprite)
-	{
-		delete m_sprite;
-		m_sprite = NULL;
-	}
-
 	// Load new texture.
 	m_sprite = BOGraphicInterface::LoadTexture(p_fileName);
 }
