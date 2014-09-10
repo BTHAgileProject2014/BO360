@@ -5,6 +5,7 @@
 #include "BOWindow.h"
 #include "BOInput.h"
 #include "BOObjectManager.h"
+#include "BOGraphicInterface.h"
 
 
 class BOSystem : BOComponent
@@ -17,10 +18,8 @@ public:
 	void Shutdown();
 	bool Run();
 private:
-	BOWindow m_window;
 
 	BOInput m_input;
-
 	BOObjectManager m_objectManager;
 	int windowWidth, windowHeight;
 

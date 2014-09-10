@@ -1,6 +1,5 @@
 #include "BOBlackHole.h"
 
-
 BOBlackHole::BOBlackHole()
 {
 }

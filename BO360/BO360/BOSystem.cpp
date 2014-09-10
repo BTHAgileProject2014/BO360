@@ -13,19 +13,13 @@ BOSystem::~BOSystem()
 
 bool BOSystem::Initialize()
 {
-	m_input.Initialize();
-	return m_window.Initialize("Are we going to support multiple resolutions?", 1024, 720);
-
 	bool result;
+	m_input.Initialize();
+	
+	windowWidth = 800;
+	windowHeight = 600;
 
-	windowWidth = 1024;
-	windowHeight = 720;
-
-	result = m_window.Initialize("Are we going to support multiple resolutions?", windowWidth, windowHeight);
-	if (!result)
-	{
-		return false;
-	}
+	BOGraphicInterface::Initialize();
 
 	result = m_objectManager.Initialize(windowWidth, windowHeight);
 	if (!result)
@@ -40,9 +34,15 @@ bool BOSystem::Initialize()
 bool BOSystem::Run()
 {
 	m_objectManager.Update();
+
+	BOGraphicInterface::Clear();
+
 	m_objectManager.Draw();
 
 	return m_input.Update();
+	BOGraphicInterface::Present();
+
+	return true;
 }
 
 void BOSystem::Shutdown()
