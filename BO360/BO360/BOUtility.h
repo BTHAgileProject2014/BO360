@@ -1,5 +1,6 @@
 #ifndef BOUTILITY_H_
 #define BOUTILITY_H_
+#include <math.h>
 
 // Floating point value structs.
 struct float2
@@ -15,6 +16,21 @@ struct float2
 	{
 		x = p_x;
 		y = p_y;
+	}
+
+	float length()
+	{
+		return (float)sqrt(x*x + y*y);
+	}
+
+	float2 normalized()
+	{
+		float2 normalizedFloat;
+		float lengthFloat;
+		lengthFloat = length();
+		normalizedFloat.x = x / lengthFloat;
+		normalizedFloat.y = y / lengthFloat;
+		return normalizedFloat;
 	}
 };
 
