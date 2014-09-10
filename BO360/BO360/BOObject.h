@@ -26,7 +26,7 @@ public:
 
 	void Draw();
 
-private:
+protected:
 	float2 m_position;
 	int2 m_size;
 	SDL_Texture* m_sprite;

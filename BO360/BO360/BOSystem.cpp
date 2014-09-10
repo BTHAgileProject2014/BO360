@@ -19,7 +19,10 @@ bool BOSystem::Initialize()
 	windowWidth = 800;
 	windowHeight = 600;
 
-	BOGraphicInterface::Initialize();
+	if (!BOGraphicInterface::Initialize())
+	{
+		return false;
+	}
 
 	result = m_objectManager.Initialize(windowWidth, windowHeight);
 	if (!result)
@@ -33,16 +36,17 @@ bool BOSystem::Initialize()
 
 bool BOSystem::Run()
 {
+	bool result = true;
+	result = m_input.Update();
 	m_objectManager.Update();
 
 	BOGraphicInterface::Clear();
 
 	m_objectManager.Draw();
 
-	return m_input.Update();
 	BOGraphicInterface::Present();
 
-	return true;
+	return result;
 }
 
 void BOSystem::Shutdown()

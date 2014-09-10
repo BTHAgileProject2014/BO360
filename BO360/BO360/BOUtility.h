@@ -111,6 +111,9 @@ struct InputMessages
 	int mouseX;
 	int mouseY;
 	bool leftMouseKey;
+	bool rightMouseKey;
+	bool middleMouseKey;
+	bool spacebarKey;
 	bool rightArrow;
 	bool leftArrow;
 	bool upArrow;
@@ -123,6 +126,27 @@ enum KeyMessages
 	downArrow,
 	rightArrow,
 	leftArrow,
-	leftMouseKey
+	leftMouseKey,
+	rightMouseKey,
+	middleMouseKey,
+	spacebarKey
+};
+
+// Sphere for collision check
+struct sphere
+{
+	float2 pos;
+	int radius;
+
+	sphere()
+	{
+
+	}
+
+	sphere(float2 p_pos, int p_radius)
+	{
+		pos = p_pos;
+		radius = p_radius;
+	}
 };
 #endif

@@ -48,8 +48,9 @@
     <ClCompile Include="BOSubscriber.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-
-      
+    <ClCompile Include="BOBall.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BOSystem.h">
@@ -85,6 +86,8 @@
     <ClInclude Include="BOWindow.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-      
+    <ClInclude Include="BOBall.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -5,6 +5,7 @@
 #include "BOWindow.h"
 #include "BOComponent.h"
 #include <iostream>
+#include <SDL_image.h>
 
 class BOGraphicInterface
 {
@@ -12,6 +13,8 @@ public:
 	~BOGraphicInterface();
 
 	static bool Initialize();
+	static bool Initialize(int p_windowWidth, int p_windowHeight);
+
 	static void Shutdown();
 	static void Draw(SDL_Texture* p_texture, struct float2 p_position, struct int2 p_size);
 	static void Clear();
