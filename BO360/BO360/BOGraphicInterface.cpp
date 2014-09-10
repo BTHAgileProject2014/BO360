@@ -47,19 +47,25 @@ void BOGraphicInterface::Shutdown()
 {
 	GetInstance().m_window.Shutdown();
 }
-void BOGraphicInterface::Draw(SDL_Texture* p_texture, float2 p_position, int2 p_size)
+
+void BOGraphicInterface::Draw(SDL_Texture* p_texture, float2 p_position, int2 p_size, int4 p_source)
 {
 	SDL_Rect source, target;
+	source.x = p_source.x;
+	source.y = p_source.y;
+	source.w = p_source.z;
+	source.h = p_source.w;
+
 	target.x = (int)p_position.x;
 	target.y = (int)p_position.y;
 	target.w = p_size.x;
 	target.h = p_size.y;
-	source.x = 0;
-	source.y = 0;
-	source.w = p_size.x;
-	source.h = p_size.y;
 
 	SDL_RenderCopy(GetInstance().m_renderer, p_texture, &source, &target);
+}
+void BOGraphicInterface::Draw(SDL_Texture* p_texture, float2 p_position, int2 p_size)
+{
+	Draw(p_texture, p_position, p_size, int4(0, 0, p_size.x, p_size.y));
 }
 
 void BOGraphicInterface::Clear()
