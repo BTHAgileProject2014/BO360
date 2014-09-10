@@ -1,5 +1,6 @@
 #include "BOSystem.h"
 
+
 BOSystem::BOSystem()
 {
 
@@ -17,16 +18,9 @@ bool BOSystem::Initialize()
 
 bool BOSystem::Run()
 {
-	SDL_Event event;
-	while (SDL_PollEvent(&event))
-	{
-		if (event.type == SDL_QUIT)
-		{
-			return false;
-		}
-	}
-
-	return true;
+	
+	
+	return m_input.Update();
 }
 
 void BOSystem::Shutdown()
