@@ -50,19 +50,19 @@ void BOPublisher::Notify(KeyMessages p_keyMessage, bool p_value)
 {
 	switch (p_keyMessage)
 	{
-	case KeyMessages::leftMouseKey:
+	case leftMouseKey:
 		m_inputMessage.leftMouseKey = p_value;
 		break;
-	case KeyMessages::upArrow:
+	case upArrow:
 		m_inputMessage.upArrow = p_value;
 		break;
-	case KeyMessages::downArrow:
+	case downArrow:
 		m_inputMessage.downArrow = p_value;
 		break;
-	case KeyMessages::leftArrow:
+	case leftArrow:
 		m_inputMessage.leftArrow = p_value;
 		break;
-	case KeyMessages::rightArrow:
+	case rightArrow:
 		m_inputMessage.rightArrow = p_value;
 		break;
 	}
