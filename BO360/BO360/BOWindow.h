@@ -18,6 +18,7 @@ public:
 
 	void Shutdown();
 
+	SDL_Window* GetUnderlyingSDLWindow();
 private:
 	SDL_Window* m_sdlWindow;
 };

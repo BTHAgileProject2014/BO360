@@ -1,6 +1,8 @@
 #ifndef BOUTILITY_H_
 #define BOUTILITY_H_
 
+#include "BOGraphicInterface.h"
+
 // Floating point value structs.
 struct float2
 {
