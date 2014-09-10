@@ -1,5 +1,5 @@
 #include "BOObject.h"
-using namespace std;
+
 
 // Constructor / Destructor.
 BOObject::BOObject()
@@ -13,7 +13,7 @@ BOObject::~BOObject()
 }
 
 // Variable initilaize.
-bool BOObject::Initialize(float2 p_position, int2 p_size, string p_fileName)
+bool BOObject::Initialize(float2 p_position, int2 p_size, std::string p_fileName)
 {
 	// Set variables.
 	m_position = p_position;
@@ -36,10 +36,11 @@ void BOObject::Shutdown()
 	}
 }
 
-// Sprite render call.
-void BOObject::Render(float2 p_position, int2 p_size, SDL_Surface p_sprite)
+// Sprite Draw call.
+void BOObject::Draw()
 {
-	// TODO: add render call here.
+	// TODO: add Draw call here.
+	//sdl.draw(adadsam);
 }
 
 // Position Get / Set functions.
@@ -70,7 +71,7 @@ SDL_Surface* BOObject::GetSprite()
 	return m_sprite;
 }
 
-void BOObject::SetSprite(string p_fileName)
+void BOObject::SetSprite(std::string p_fileName)
 {
 	// Delete the old sprite.
 	if (m_sprite)
