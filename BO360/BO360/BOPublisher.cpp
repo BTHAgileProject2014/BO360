@@ -10,7 +10,7 @@ BOPublisher::~BOPublisher()
 {
 }
 
-void BOPublisher::Initialize()
+bool BOPublisher::Initialize()
 {
 	m_subscribers = std::vector<BOSubscriber*>();
 
@@ -23,13 +23,15 @@ void BOPublisher::Initialize()
 	m_inputMessage.downArrow = false;
 	m_inputMessage.leftArrow = false;
 	m_inputMessage.rightArrow = false;
+
+	return true;
 }
 
 void BOPublisher::Shutdown()
 {
-	for (auto element = m_subscribers.begin(); element != m_subscribers.end(); element++)
+	for (unsigned int i = 0; i < m_subscribers.size(); i++)
 	{
-		delete *element;
+		delete m_subscribers[i];
 	}
 	m_subscribers.clear();
 	

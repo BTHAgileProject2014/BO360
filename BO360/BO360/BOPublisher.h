@@ -1,9 +1,10 @@
 #ifndef BOPUBLISHER_H_
 #define BOPUBLISHER_H_
 #include "BOSubscriber.h"
+#include "BOComponent.h"
 #include "BOUtility.h"
 #include <vector>
-class BOPublisher
+class BOPublisher : public BOComponent
 {
 private:
 	std::vector<BOSubscriber*> m_subscribers;
@@ -13,7 +14,7 @@ public:
 	BOPublisher();
 	~BOPublisher();
 
-	void Initialize();
+	bool Initialize();
 	void Shutdown();
 
 	void Notify(KeyMessages p_keyMessage, bool p_value);
