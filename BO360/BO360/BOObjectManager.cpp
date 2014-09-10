@@ -19,7 +19,7 @@ bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight)
 	// Set middle off screen as position
 	float2 tempBlackHolePos = float2((p_windowWidth / 2.0f) - (tempBlackHoleSize.x / 2), (p_windowHeight / 2.0f)-(tempBlackHoleSize.y / 2));
 	
-	result = m_blackHole.Initialize(tempBlackHolePos, tempBlackHoleSize, "Bilder/placeholderBlackhole.bmp");
+	result = m_blackHole.Initialize(tempBlackHolePos, tempBlackHoleSize, "Bilder/placeholderBlackhole.png");
 	if (!result)
 	{
 		return false;
