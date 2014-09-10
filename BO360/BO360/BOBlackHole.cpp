@@ -4,12 +4,11 @@ BOBlackHole::BOBlackHole()
 {
 }
 
-
 BOBlackHole::~BOBlackHole()
 {
 }
 
 void BOBlackHole::Update()
 {
-	// Fix spinning hole and so on if wanted.
+	// TODO: Add black hole mechanics.
 }

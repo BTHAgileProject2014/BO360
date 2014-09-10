@@ -69,6 +69,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="BOBall.h" />
     <ClInclude Include="BOBlackHole.h" />
     <ClInclude Include="BOComponent.h" />
     <ClInclude Include="BOGraphicInterface.h" />
@@ -81,6 +82,7 @@
     <ClInclude Include="BOWindow.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="BOBall.cpp" />
     <ClCompile Include="BOBlackHole.cpp" />
     <ClCompile Include="BOComponent.cpp" />
     <ClCompile Include="BOGraphicInterface.cpp" />
