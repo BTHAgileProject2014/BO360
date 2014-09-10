@@ -5,7 +5,6 @@
 #include "BOWindow.h"
 #include "BOComponent.h"
 #include <iostream>
-#include "BOBlackHole.h"
 
 class BOGraphicInterface
 {

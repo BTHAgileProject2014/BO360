@@ -1,6 +1,5 @@
 #include "BOObject.h"
 
-
 // Constructor / Destructor.
 BOObject::BOObject()
 {
@@ -20,7 +19,7 @@ bool BOObject::Initialize(float2 p_position, int2 p_size, std::string p_fileName
 	m_size = p_size;
 
 	// Load texture.
-	m_sprite = SDL_LoadBMP(p_fileName.c_str());
+	m_sprite = BOGraphicInterface::LoadTexture(p_fileName);
 
 	return true;
 }
@@ -39,8 +38,7 @@ void BOObject::Shutdown()
 // Sprite Draw call.
 void BOObject::Draw()
 {
-	// TODO: add Draw call here.
-	//sdl.draw(adadsam);
+	BOGraphicInterface::Draw(m_sprite, m_position, m_size);
 }
 
 // Position Get / Set functions.
@@ -66,7 +64,7 @@ void BOObject::SetSize(int2 p_size)
 }
 
 // Sprite Get / Set functions.
-SDL_Surface* BOObject::GetSprite()
+SDL_Texture* BOObject::GetSprite()
 {
 	return m_sprite;
 }
@@ -81,5 +79,5 @@ void BOObject::SetSprite(std::string p_fileName)
 	}
 
 	// Load new texture.
-	m_sprite = SDL_LoadBMP(p_fileName.c_str());
+	m_sprite = BOGraphicInterface::LoadTexture(p_fileName);
 }
