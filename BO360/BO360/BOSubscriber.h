@@ -11,6 +11,6 @@ public:
 	virtual bool Initialize();
 	virtual void Shutdown();
 
-	virtual void Handle(InputMessages p_inputMessages);
+	virtual void Handle(InputMessages p_inputMessages) = 0;
 };
 #endif
