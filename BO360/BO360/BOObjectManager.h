@@ -18,7 +18,7 @@ public:
 	void Update();
 	void Draw();
 
-	std::vector<BOObject> ObjectList;
+	//std::vector<BOObject> ObjectList;
 
 private:
 	BOBlackHole m_blackHole;

@@ -32,16 +32,6 @@ bool BOGraphicInterface::Initialize()
 		// Initialize failed
 		return false;
 	}
-
-	m_blackHole = new BOBlackHole;
-	if (!m_blackHole)
-	{
-		return false;
-	}
-
-	float2 tempBlackHolePos = float2(m_windowWidth/2.0f, m_windowHeight/2.0f);
-	int2 tempBlackHoleSize = int2(100, 100);
-	result = m_blackHole->Initialize(tempBlackHolePos, tempBlackHoleSize, "..\BO360\Bilder\placeholderBlackhole.png");
 	
 	return true;
 }
