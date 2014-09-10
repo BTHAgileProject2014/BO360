@@ -13,6 +13,7 @@ BOSystem::~BOSystem()
 
 bool BOSystem::Initialize()
 {
+	m_input.Initialize();
 	return m_window.Initialize("Are we going to support multiple resolutions?", 1024, 720);
 }
 
@@ -25,5 +26,5 @@ bool BOSystem::Run()
 
 void BOSystem::Shutdown()
 {
-
+	m_input.Shutdown();
 }
