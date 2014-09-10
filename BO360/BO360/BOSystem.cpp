@@ -17,7 +17,10 @@ bool BOSystem::Initialize()
 	windowWidth = 800;
 	windowHeight = 600;
 
-	BOGraphicInterface::Initialize();
+	if (!BOGraphicInterface::Initialize())
+	{
+		return false;
+	}
 
 	result = m_objectManager.Initialize(windowWidth, windowHeight);
 	if (!result)

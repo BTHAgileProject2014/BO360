@@ -5,6 +5,7 @@
 #include "BOWindow.h"
 #include "BOComponent.h"
 #include <iostream>
+#include <SDL_image.h>
 
 class BOGraphicInterface
 {
