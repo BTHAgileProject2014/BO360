@@ -38,6 +38,20 @@ bool BOInput::Update()
 			{
 				switch (event.key.keysym.sym)
 				{
+					case SDLK_UP:
+					{
+						m_publisher.Notify(upArrow, true);
+						std::cout << "UP is pressed\n";
+						break;
+					}
+
+					case SDLK_DOWN:
+					{
+						m_publisher.Notify(downArrow, true);
+						std::cout << "DOWN is pressed\n";
+						break;
+					}
+
 					case SDLK_LEFT:
 					{
 						m_publisher.Notify(leftArrow, true);
@@ -54,6 +68,7 @@ bool BOInput::Update()
 
 					case SDLK_SPACE:
 					{
+						m_publisher.Notify(spacebarKey, true);
 						std::cout << "SPACE is pressed\n";
 						break;
 					}
@@ -72,6 +87,20 @@ bool BOInput::Update()
 			{
 				switch (event.key.keysym.sym)
 				{
+					case SDLK_UP:
+					{
+						m_publisher.Notify(upArrow, false);
+						std::cout << "UP is released\n";
+						break;
+					}
+
+					case SDLK_DOWN:
+					{
+						m_publisher.Notify(downArrow, false);
+						std::cout << "DOWN is released\n";
+						break;
+					}
+
 					case SDLK_LEFT:
 					{
 						m_publisher.Notify(leftArrow, false);
@@ -88,6 +117,7 @@ bool BOInput::Update()
 
 					case SDLK_SPACE:
 					{
+						m_publisher.Notify(spacebarKey, false);
 						std::cout << "SPACE is released\n";
 						break;
 					}
@@ -112,6 +142,13 @@ bool BOInput::Update()
 						std::cout << "LEFT mousebutton pressed\n";
 						break;
 					}
+
+					case SDL_BUTTON_RIGHT:
+					{
+						m_publisher.Notify(rightMouseKey, false);
+						std::cout << "RIGHT mousebutton pressed\n";
+						break;
+					}
 				}
 				break;
 			}
@@ -124,6 +161,13 @@ bool BOInput::Update()
 					{
 						m_publisher.Notify(leftMouseKey, false);
 						std::cout << "LEFT mousebutton released\n";
+						break;
+					}
+
+					case SDL_BUTTON_RIGHT:
+					{
+						m_publisher.Notify(rightMouseKey, false);
+						std::cout << "RIGHT mousebutton released\n";
 						break;
 					}
 				}
