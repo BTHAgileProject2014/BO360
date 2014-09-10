@@ -4,6 +4,8 @@
 #include "BOComponent.h"
 #include "BOWindow.h"
 #include "BOInput.h"
+#include "BOObjectManager.h"
+
 
 class BOSystem : BOComponent
 {
@@ -16,6 +18,11 @@ public:
 	bool Run();
 private:
 	BOWindow m_window;
+
 	BOInput m_input;
+
+	BOObjectManager m_objectManager;
+	int windowWidth, windowHeight;
+
 };
 #endif

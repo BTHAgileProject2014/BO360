@@ -23,7 +23,7 @@ public:
 	SDL_Surface* GetSprite();
 	void SetSprite(std::string p_fileName);
 
-	void Render(float2 p_position, int2 p_size, SDL_Surface p_sprite);
+	void Draw();
 
 private:
 	float2 m_position;

@@ -69,20 +69,28 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="BOBlackHole.h" />
     <ClInclude Include="BOComponent.h" />
     <ClInclude Include="BOGraphicInterface.h" />
     <ClInclude Include="BOInput.h" />
     <ClInclude Include="BOObject.h" />
+    <ClInclude Include="BOObjectManager.h" />
+    <ClInclude Include="BOPublisher.h" />
+    <ClInclude Include="BOSubscriber.h" />
     <ClInclude Include="BOSystem.h" />
     <ClInclude Include="BOUtility.h" />
     <ClInclude Include="BOWindow.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="BOBlackHole.cpp" />
     <ClCompile Include="BOComponent.cpp" />
     <ClCompile Include="BOGraphicInterface.cpp" />
     <ClCompile Include="BOInput.cpp" />
     <ClCompile Include="BOMain.cpp" />
     <ClCompile Include="BOObject.cpp" />
+    <ClCompile Include="BOObjectManager.cpp" />
+    <ClCompile Include="BOPublisher.cpp" />
+    <ClCompile Include="BOSubscriber.cpp" />
     <ClCompile Include="BOSystem.cpp" />
     <ClCompile Include="BOWindow.cpp" />
   </ItemGroup>

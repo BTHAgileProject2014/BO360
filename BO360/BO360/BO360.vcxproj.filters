@@ -34,14 +34,23 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="BOInput.cpp">
+	<Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="BOBlackHole.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="BOObjectManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="BOPublisher.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="BOSubscriber.cpp">
+
+      
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BOSystem.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="BOWindow.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="BOComponent.h">
@@ -57,7 +66,22 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="BOInput.h">
+	<Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BOBlackHole.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="BOObjectManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BOPublisher.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BOSubscriber.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BOWindow.h">
+
+      
   </ItemGroup>
 </Project>
