@@ -106,4 +106,25 @@ struct int4
 		w = p_w;
 	}
 };
+
+// Key messages for input
+struct InputMessages
+{
+	int mouseX;
+	int mouseY;
+	bool leftMouseKey;
+	bool rightArrow;
+	bool leftArrow;
+	bool upArrow;
+	bool downArrow;
+};
+
+enum KeyMessages
+{
+	upArrow,
+	downArrow,
+	rightArrow,
+	leftArrow,
+	leftMouseKey
+};
 #endif
