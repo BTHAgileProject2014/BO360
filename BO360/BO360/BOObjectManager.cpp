@@ -27,9 +27,11 @@ bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight)
 	// Initialize primary ball.
 	int2 ballSize = int2(40, 40);
 	float2 ballPosition = float2(10, 10);
+	float ballSpeed = 0.01f;
+	float2 ballDirection = float2(10, 5);
 
 	BOBall ball;
-	result = ball.Initialize(ballPosition, ballSize, "Bilder/placeholderBoll.png");
+	result = ball.Initialize(ballPosition, ballSize, "Bilder/placeholderBoll.png", ballSpeed, ballDirection);
 	m_ballList.push_back(ball);
 
 	if (!result)
