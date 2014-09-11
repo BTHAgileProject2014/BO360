@@ -13,16 +13,43 @@ BOPaddle::~BOPaddle()
 bool BOPaddle::Initialize(float2 p_position, int2 p_size, std::string p_fileName)
 {
 	m_rotation = 0.0f;
+	m_deltaRotation = 0.01f;
+	BOPublisher::AddSubscriber(this);
 	return BOObject::Initialize(p_position, p_size, p_fileName);
+	
 }
 
 void BOPaddle::Handle(InputMessages p_inputMessages)
 {
+	if (p_inputMessages.leftArrow)
+	{
+		m_movingLeft = true;
+	}
+	else
+	{
+		m_movingLeft = false;
+	}
 
+	if (p_inputMessages.rightArrow)
+	{
+		m_movingRight = true;
+	}
+	else
+	{
+		m_movingRight = false;
+	}
 }
 
 void BOPaddle::Update()
 {
+	if (m_movingLeft)
+	{
+		m_rotation -= m_deltaRotation;
+	}
+	else if (m_movingRight)
+	{
+		m_rotation += m_deltaRotation;
+	}
 }
 
 void BOPaddle::Draw()

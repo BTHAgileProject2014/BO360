@@ -2,6 +2,8 @@
 #define BOPADDLE_H_
 #include "BOObject.h"
 #include "BOSubscriber.h"
+#include "BOPublisher.h"
+
 class BOPaddle : public BOObject, public BOSubscriber
 {
 public:
@@ -17,5 +19,8 @@ public:
 
 private:
 	double m_rotation;
+	double m_deltaRotation;
+	bool m_movingLeft;
+	bool m_movingRight;
 };
 #endif

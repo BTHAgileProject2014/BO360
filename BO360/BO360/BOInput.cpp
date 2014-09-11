@@ -12,6 +12,7 @@ BOInput::~BOInput()
 
 bool BOInput::Initialize()
 {
+	m_leftArrowPressed = false;
 	m_publisher.Initialize();
 	return true;
 }
@@ -54,8 +55,12 @@ bool BOInput::Update()
 
 					case SDLK_LEFT:
 					{
-						m_publisher.Notify(leftArrow, true);
-						std::cout << "LEFT is pressed\n";
+						if (!m_leftArrowPressed)
+						{
+							m_leftArrowPressed = true;
+							m_publisher.Notify(leftArrow, true);
+							std::cout << "LEFT is pressed\n";
+						}
 						break;
 					}
 
@@ -103,6 +108,7 @@ bool BOInput::Update()
 
 					case SDLK_LEFT:
 					{
+						m_leftArrowPressed = false;
 						m_publisher.Notify(leftArrow, false);
 						std::cout << "LEFT is released\n";
 						break;

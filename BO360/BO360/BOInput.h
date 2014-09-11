@@ -20,6 +20,7 @@ public:
 
 private:
 	BOPublisher m_publisher;
+	bool m_leftArrowPressed;
 };
 
 #endif
