@@ -41,13 +41,16 @@ bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight)
 
 	for (int i = 0; i < 9; i++)
 	{
-		BOBlock block;
-		result = block.Initialize(float2(((85*i) + 20), 5), int2(80,80), "Bilder/placeholderHexagon.png");
-		if (!result)
+		for (int j = 0; j < 2; j++)
 		{
-			return false;
+			BOBlock block;
+			result = block.Initialize(float2(((85*i) + 20), (5+(510*j))), int2(80,80), "Bilder/placeholderHexagon.png");
+			if (!result)
+			{
+				return false;
+			}
+			m_blockList.push_back(block);
 		}
-		m_blockList.push_back(block);
 	}
 
 	return true;
