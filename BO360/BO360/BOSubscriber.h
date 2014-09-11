@@ -2,15 +2,11 @@
 #define BOSUBSCRIBER_H_
 #include "BOComponent.h"
 #include "BOUtility.h"
-class BOSubscriber : public BOComponent
+class BOSubscriber
 {
 public:
 	BOSubscriber();
 	~BOSubscriber();
-
-	virtual bool Initialize();
-	virtual void Shutdown();
-
 	virtual void Handle(InputMessages p_inputMessages) = 0;
 };
 #endif

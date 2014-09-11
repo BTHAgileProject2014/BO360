@@ -1,5 +1,5 @@
 #include "BOPublisher.h"
-
+std::vector<BOSubscriber*> BOPublisher::m_subscribers;
 
 BOPublisher::BOPublisher()
 {
@@ -95,4 +95,16 @@ void BOPublisher::Notify(int p_x, int p_y)
 void BOPublisher::AddSubscriber(BOSubscriber* p_subscriber)
 {
 	m_subscribers.push_back(p_subscriber);
+}
+
+void BOPublisher::Unsubscribe(BOSubscriber* p_subscriber)
+{
+	for (unsigned int i = 0; i < m_subscribers.size(); i++)
+	{
+		if (m_subscribers[i] == p_subscriber)
+		{
+			m_subscribers.erase(m_subscribers.begin() + i);
+			break;
+		}
+	}
 }

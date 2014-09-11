@@ -32,6 +32,24 @@ struct float2
 		normalizedFloat.y = y / lengthFloat;
 		return normalizedFloat;
 	}
+
+	float2 operator+(const float2 p_input)
+	{
+		float2 temp;
+		temp.x = (x + p_input.x);
+		temp.y = (y + p_input.y);
+
+		return temp;
+	}
+
+	float2 operator-(const float2 p_input)
+	{
+		float2 temp;
+		temp.x = (x - p_input.x);
+		temp.y = (y - p_input.y);
+
+		return temp;
+	}
 };
 
 struct float3
@@ -48,6 +66,42 @@ struct float3
 		x = p_x;
 		y = p_y;
 		z = p_z;
+	}
+
+	float length()
+	{
+		return (float)sqrt(x*x + y*y + z*z);
+	}
+
+	float3 normalized()
+	{
+		float3 normalizedFloat;
+		float lengthFloat;
+		lengthFloat = length();
+		normalizedFloat.x = x / lengthFloat;
+		normalizedFloat.y = y / lengthFloat;
+		normalizedFloat.z = z / lengthFloat;
+		return normalizedFloat;
+	}
+
+	float3 operator+(const float3 p_input)
+	{
+		float3 temp;
+		temp.x = (x + p_input.x);
+		temp.y = (y + p_input.y);
+		temp.z = (z + p_input.z);
+
+		return temp;
+	}
+
+	float3 operator-(const float3 p_input)
+	{
+		float3 temp;
+		temp.x = (x - p_input.x);
+		temp.y = (y - p_input.y);
+		temp.z = (z - p_input.z);
+
+		return temp;
 	}
 };
 
@@ -67,6 +121,45 @@ struct float4
 		z = p_z;
 		w = p_w;
 	}
+
+	float length()
+	{
+		return (float)sqrt(x*x + y*y + z*z + w*w);
+	}
+
+	float4 normalized()
+	{
+		float4 normalizedFloat;
+		float lengthFloat;
+		lengthFloat = length();
+		normalizedFloat.x = x / lengthFloat;
+		normalizedFloat.y = y / lengthFloat;
+		normalizedFloat.z = z / lengthFloat;
+		normalizedFloat.w = w / lengthFloat;
+		return normalizedFloat;
+	}
+
+	float4 operator+(const float4 p_input)
+	{
+		float4 temp;
+		temp.x = (x + p_input.x);
+		temp.y = (y + p_input.y);
+		temp.z = (z + p_input.z);
+		temp.w = (w + p_input.w);
+
+		return temp;
+	}
+
+	float4 operator-(const float4 p_input)
+	{
+		float4 temp;
+		temp.x = (x - p_input.x);
+		temp.y = (y - p_input.y);
+		temp.z = (z - p_input.z);
+		temp.w = (w - p_input.w);
+
+		return temp;
+	}
 };
 
 // Integer value structs.
@@ -83,6 +176,29 @@ struct int2
 	{
 		x = p_x;
 		y = p_y;
+	}
+
+	float length()
+	{
+		return (float)sqrt((float)(x*x) + (float)(y*y));
+	}
+
+	int2 operator+(const int2 p_input)
+	{
+		int2 temp;
+		temp.x = (x + p_input.x);
+		temp.y = (y + p_input.y);
+
+		return temp;
+	}
+
+	int2 operator-(const int2 p_input)
+	{
+		int2 temp;
+		temp.x = (x - p_input.x);
+		temp.y = (y - p_input.y);
+
+		return temp;
 	}
 };
 
@@ -101,6 +217,31 @@ struct int3
 		y = p_y;
 		z = p_z;
 	}
+
+	float length()
+	{
+		return (float)sqrt((float)(x*x) + (float)(y*y) + (float)(z*z));
+	}
+
+	int3 operator+(const int3 p_input)
+	{
+		int3 temp;
+		temp.x = (x + p_input.x);
+		temp.y = (y + p_input.y);
+		temp.z = (z + p_input.z);
+
+		return temp;
+	}
+
+	int3 operator-(const int3 p_input)
+	{
+		int3 temp;
+		temp.x = (x - p_input.x);
+		temp.y = (y - p_input.y);
+		temp.z = (z - p_input.z);
+
+		return temp;
+	}
 };
 
 struct int4
@@ -118,6 +259,33 @@ struct int4
 		y = p_y;
 		z = p_z;
 		w = p_w;
+	}
+
+	float length()
+	{
+		return (float)sqrt((float)(x*x) + (float)(y*y) + (float)(z*z) + (float)(w*w));
+	}
+
+	int4 operator+(const int4 p_input)
+	{
+		int4 temp;
+		temp.x = (x + p_input.x);
+		temp.y = (y + p_input.y);
+		temp.z = (z + p_input.z);
+		temp.w = (w + p_input.w);
+
+		return temp;
+	}
+
+	int4 operator-(const int4 p_input)
+	{
+		int4 temp;
+		temp.x = (x - p_input.x);
+		temp.y = (y - p_input.y);
+		temp.z = (z - p_input.z);
+		temp.w = (w - p_input.w);
+
+		return temp;
 	}
 };
 
