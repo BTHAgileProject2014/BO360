@@ -246,7 +246,7 @@ bool BOPhysics::MattiasBallPadCollision(sphere p_sphere, float2 p_sphereDir, sph
 
 		if ((ctpAngle < startAngleMA) && (ctpAngle > (startAngleMA - padSpread)))
 		{
-			std::cout << "Hit!";
+			//std::cout << "Hit!";
 			return true;
 		}
 
@@ -255,7 +255,7 @@ bool BOPhysics::MattiasBallPadCollision(sphere p_sphere, float2 p_sphereDir, sph
 			double padAngle = startAngleMA - padSpread + (2 * PI);
 			if (((ctpAngle > 0) && (ctpAngle < startAngleMA)) || ((ctpAngle > padAngle < (2 * PI))))
 			{
-				std::cout << "Hit!";
+				//std::cout << "Hit!";
 				return true;
 			}
 		}
