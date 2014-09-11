@@ -20,5 +20,6 @@ public:
 	void Notify(KeyMessages p_keyMessage, bool p_value);
 	void Notify(int p_x, int p_y);
 	static void AddSubscriber(BOSubscriber* p_subscriber);
+	static void Unsubscribe(BOSubscriber* p_subscriber);
 };
 #endif
