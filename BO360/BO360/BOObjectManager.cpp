@@ -76,11 +76,14 @@ void BOObjectManager::Update()
 	{
 		m_blockList[i].Update();
 	}
+
 	
-	if (BOPhysics::CheckCollisionSpheres(m_ballList[0].GetBoundingSphere(), m_blackHole.GetBoundingSphere()))
-	{
-		std::cout << "KROCK" << std::endl;
-	}
+	int bounceCorner = BOPhysics::CheckCollisioPadSphere(m_blackHole.GetBoundingSphere().pos, m_blackHole.GetBoundingSphere().radius, 0.0f, m_ballList[0].GetBoundingSphere().pos, m_ballList[0].GetBoundingSphere().radius);
+	BallDirectionChange(bounceCorner);
+	//if (BOPhysics::CheckCollisionSpheres(m_ballList[0].GetBoundingSphere(), m_blackHole.GetBoundingSphere()))
+	//{
+	//	std::cout << "KROCK" << std::endl;
+	//}
 
 }
 
@@ -99,4 +102,19 @@ void BOObjectManager::Draw()
 
 	m_paddle.Draw();
 
+}
+void BOObjectManager::BallDirectionChange(int p_bounceCorner)
+{
+	if (p_bounceCorner == 1)
+	{
+
+	}
+	else if (p_bounceCorner == 1)
+	{
+
+	}
+	else if (p_bounceCorner == 1)
+	{
+
+	}
 }
