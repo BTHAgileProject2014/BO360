@@ -122,7 +122,7 @@ void BOGraphicInterface::Present()
 	SDL_RenderPresent(GetInstance().m_renderer);
 }
 
-void BOGraphicInterface::SetWindowText(std::string p_windowText)
+void BOGraphicInterface::SetWindowTitle(std::string p_windowText)
 {
 	GetInstance().m_window.SetWindowText(p_windowText);
 }

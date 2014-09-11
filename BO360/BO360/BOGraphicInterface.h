@@ -21,7 +21,7 @@ public:
 	static void DrawEx(SDL_Texture* p_texture, int4 p_source, int4 p_destination, double p_rotation, int2 p_rotationSource);
 	static void Clear();
 	static void Present();
-	static void SetWindowText(std::string p_windowText);
+	static void SetWindowTitle(std::string p_windowText);
 	static SDL_Texture* LoadTexture(std::string p_path);
 
 private:

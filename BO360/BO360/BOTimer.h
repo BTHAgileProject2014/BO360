@@ -18,11 +18,18 @@ public:
 
 	Uint32 GetDeltaTime();
 
+	int FPS();
+
 private:
 	Uint32 m_totalTimeMS;
 
 	Uint32 m_deltaTimeMS;
 	Uint32 m_currentTimeStampMS;
 	Uint32 m_previousTimeStampMS;
+
+	int m_frames;
+	int m_FPS;
+	Uint32 m_milliSecondsPassed;
+	Uint32 m_offset;
 };
 #endif
