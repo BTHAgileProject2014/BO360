@@ -39,35 +39,82 @@ bool BOPhysics::CheckCollisionBoxToBox(box p_box1, box p_box2)
 
 bool BOPhysics::CheckCollisionSphereToHexagon(sphere p_sphere, hexagon p_hexagon)
 {
-	if (CheckCollisionSphereToLine(p_sphere, p_hexagon.pointUpLeft, p_hexagon.pointUpRight))
+	float2 point1, point2;
+	CheckCollisionSphereToLine(p_sphere, p_hexagon.pointUpLeft, p_hexagon.pointUpRight, point1, point2);
+	if (point1.x >= p_hexagon.pointUpLeft.x && point1.x <= p_hexagon.pointUpRight.x && point1.y == p_hexagon.pointUpLeft.y && point1.y == p_hexagon.pointUpRight.y && point2.x == -1000)
 	{
 		return true;
 	}
-	else if (CheckCollisionSphereToLine(p_sphere, p_hexagon.pointUpRight, p_hexagon.pointRight))
+	else if ((point1.x >= p_hexagon.pointUpLeft.x && point1.x <= p_hexagon.pointUpRight.x && point1.y == p_hexagon.pointUpLeft.y && point1.y == p_hexagon.pointUpRight.y) 
+		|| (point2.x >= p_hexagon.pointUpLeft.x && point2.x <= p_hexagon.pointUpRight.x && point2.y == p_hexagon.pointUpLeft.y && point2.y == p_hexagon.pointUpRight.y))
 	{
 		return true;
 	}
-	else if(CheckCollisionSphereToLine(p_sphere, p_hexagon.pointRight, p_hexagon.pointDownRight))
+	
+	CheckCollisionSphereToLine(p_sphere, p_hexagon.pointUpRight, p_hexagon.pointRight, point1, point2);
+	if (point1.x >= p_hexagon.pointUpRight.x && point1.x <= p_hexagon.pointRight.x && point1.y >= p_hexagon.pointUpRight.y && point1.y <= p_hexagon.pointRight.y && point2.x == -1000)
 	{
 		return true;
 	}
-	else if (CheckCollisionSphereToLine(p_sphere, p_hexagon.pointDownRight, p_hexagon.pointDownLeft))
+	else if ((point1.x >= p_hexagon.pointUpRight.x && point1.x <= p_hexagon.pointRight.x && point1.y >= p_hexagon.pointUpRight.y && point1.y <= p_hexagon.pointRight.y)
+		|| (point2.x >= p_hexagon.pointUpRight.x && point2.x <= p_hexagon.pointRight.x && point2.y >= p_hexagon.pointUpRight.y && point2.y <= p_hexagon.pointRight.y))
 	{
 		return true;
 	}
-	else if (CheckCollisionSphereToLine(p_sphere, p_hexagon.pointDownLeft, p_hexagon.pointLeft))
+	
+	CheckCollisionSphereToLine(p_sphere, p_hexagon.pointRight, p_hexagon.pointDownRight, point1, point2);
+	if (point1.x <= p_hexagon.pointRight.x && point1.x >= p_hexagon.pointDownRight.x && point1.y >= p_hexagon.pointRight.y && point1.y <= p_hexagon.pointDownRight.y && point2.x == -1000)
 	{
 		return true;
 	}
-	else if (CheckCollisionSphereToLine(p_sphere, p_hexagon.pointLeft, p_hexagon.pointUpLeft))
+	else if ((point1.x <= p_hexagon.pointRight.x && point1.x >= p_hexagon.pointDownRight.x && point1.y >= p_hexagon.pointRight.y && point1.y <= p_hexagon.pointDownRight.y)
+		|| (point2.x <= p_hexagon.pointRight.x && point2.x >= p_hexagon.pointDownRight.x && point2.y >= p_hexagon.pointRight.y && point2.y <= p_hexagon.pointDownRight.y))
+	{
+		return true;
+	}
+	
+	CheckCollisionSphereToLine(p_sphere, p_hexagon.pointDownRight, p_hexagon.pointDownLeft, point1, point2);
+	if (point1.x <= p_hexagon.pointDownRight.x && point1.x >= p_hexagon.pointDownLeft.x && point1.y >= p_hexagon.pointDownRight.y && point1.y <= p_hexagon.pointDownLeft.y && point2.x == -1000)
+	{
+		return true;
+	}
+	else if ((point1.x <= p_hexagon.pointDownRight.x && point1.x >= p_hexagon.pointDownLeft.x && point1.y >= p_hexagon.pointDownRight.y && point1.y <= p_hexagon.pointDownLeft.y)
+		|| (point2.x <= p_hexagon.pointDownRight.x && point2.x >= p_hexagon.pointDownLeft.x && point2.y >= p_hexagon.pointDownRight.y && point2.y <= p_hexagon.pointDownLeft.y))
+	{
+		return true;
+	}
+	
+	CheckCollisionSphereToLine(p_sphere, p_hexagon.pointDownLeft, p_hexagon.pointLeft, point1, point2);
+	if (point1.x <= p_hexagon.pointDownLeft.x && point1.x >= p_hexagon.pointLeft.x && point1.y <= p_hexagon.pointDownLeft.y && point1.y >= p_hexagon.pointLeft.y && point2.x == -1000)
+	{
+		return true;
+	}
+	else if ((point1.x <= p_hexagon.pointDownLeft.x && point1.x >= p_hexagon.pointLeft.x && point1.y <= p_hexagon.pointDownLeft.y && point1.y >= p_hexagon.pointLeft.y)
+		|| (point2.x <= p_hexagon.pointDownLeft.x && point2.x >= p_hexagon.pointLeft.x && point2.y <= p_hexagon.pointDownLeft.y && point2.y >= p_hexagon.pointLeft.y))
 	{
 		return true;
 	}
 
+	CheckCollisionSphereToLine(p_sphere, p_hexagon.pointLeft, p_hexagon.pointUpLeft, point1, point2);
+	if (point1.x >= p_hexagon.pointLeft.x && point1.x <= p_hexagon.pointUpLeft.x && point1.y <= p_hexagon.pointLeft.y && point1.y >= p_hexagon.pointUpLeft.y && point2.x == -1000)
+	{
+		return true;
+	}
+	else if ((point1.x >= p_hexagon.pointLeft.x && point1.x <= p_hexagon.pointUpLeft.x && point1.y <= p_hexagon.pointLeft.y && point1.y >= p_hexagon.pointUpLeft.y)
+		|| (point2.x >= p_hexagon.pointLeft.x && point2.x <= p_hexagon.pointUpLeft.x && point2.y <= p_hexagon.pointLeft.y && point2.y >= p_hexagon.pointUpLeft.y))
+	{
+		return true;
+	}
+
+	if (point1.x = -1000)
+	{
+		return false;
+	}
+	
 	return false;
 }
 
-bool BOPhysics::CheckCollisionSphereToLine(sphere p_sphere, float2 p_point1, float2 p_point2)
+void BOPhysics::CheckCollisionSphereToLine(sphere p_sphere, float2 p_point1, float2 p_point2, float2& p_returnValue1, float2& p_returnValue2)
 {
 	float2 localPoint1, localPoint2, point2MinusPoint1;
 	localPoint1 = p_point1 - p_sphere.pos;
@@ -76,38 +123,33 @@ bool BOPhysics::CheckCollisionSphereToLine(sphere p_sphere, float2 p_point1, flo
 
 	point2MinusPoint1 = localPoint2 - localPoint1;
 
-	a = (point2MinusPoint1.x) * (point2MinusPoint1.x) + (point2MinusPoint1.y)* (point2MinusPoint1.y);
+	a = (point2MinusPoint1.x) * (point2MinusPoint1.x) + (point2MinusPoint1.y) * (point2MinusPoint1.y);
 	b = 2 * ((point2MinusPoint1.x * localPoint1.x) + (point2MinusPoint1.y * localPoint1.y));
 	c = (localPoint1.x * localPoint1.x) + (localPoint1.y * localPoint1.y) - (p_sphere.radius * p_sphere.radius);
 	delta = b * b - (4 * a * c);
 	if (delta < 0)	// No intersection
 	{
-		return false;
+		p_returnValue1 = float2(-1000, -1000);
+		p_returnValue2 = float2(-1000, -1000);
 	}
 	else if (delta == 0) // One intersection
 	{
-		return true;
 		// Code for returning intersecting point
-		/*
 		u1 = -b / (2 * a);
-		return p_point1 + (u1 * point2MinusPoint1);
-		*/
+		p_returnValue1 = p_point1 + (point2MinusPoint1 * u1);
+		p_returnValue2 = float2(-1000, -1000);
 	}
 	else if (delta > 0) // Two intersections
 	{
-		return true;
 		// Code for returning the two points intersecting
-		/*
 		squareRootDelta = sqrt(delta);
 
 		u1 = (-b + squareRootDelta) / (2 * a);
 		u2 = (-b - squareRootDelta) / (2 * a);
 
-		return{ p_point1 + (u1 * point2MinusPoint1); p_point1 + (u2 * point2MinusPoint1) }
-		*/
+		p_returnValue1 = p_point1 + (point2MinusPoint1 * u1);
+		p_returnValue2 = p_point1 + (point2MinusPoint1 * u2);
 	}
-
-	return false;
 }
 
 int BOPhysics::CheckCollisioPadSphere(float2 p_centerPad, float p_radiusPad, double p_padRotation, float2 p_centerBall, float p_radiusBall)

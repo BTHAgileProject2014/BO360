@@ -33,7 +33,7 @@ bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight)
 	int2 ballSize = int2(40, 40);
 	float2 ballPosition = float2(30, 30);
 	float ballSpeed = 0.1f;
-	float2 ballDirection = float2(10, 5);
+	float2 ballDirection = float2(10, 15);
 	BOBall ball;
 	result = ball.Initialize(ballPosition, ballSize, "Bilder/placeholderBoll.png", ballSpeed, ballDirection);
 	if (!result)
@@ -81,22 +81,19 @@ void BOObjectManager::Update()
 		m_blockList[i].Update();
 	}
 
-for (int i = 0; i < m_blockList.size(); i++)
+	for (int i = 0; i < m_blockList.size(); i++)
 	{
-		/*if (BOPhysics::CheckCollisionBoxToBox(m_ballList[0].GetBoundingBox(), m_blockList[i].GetBoundingBox()))
+		if (BOPhysics::CheckCollisionBoxToBox(m_ballList[0].GetBoundingBox(), m_blockList[i].GetBoundingBox()))
 		{
-			std::cout << "BOOOM KRASH" << std::endl;
-		}*/
-		if (BOPhysics::CheckCollisionSphereToHexagon(m_ballList[0].GetBoundingSphere(), m_blockList[i].GetBoundingHexagon()))
-		{
-			std::cout << "HEXAGON SMALL" << std::endl;
-		}
-		
+			if (BOPhysics::CheckCollisionSphereToHexagon(m_ballList[0].GetBoundingSphere(), m_blockList[i].GetBoundingHexagon()))
+			{
+				m_blockList[i].SetDead();
+			}
+		}		
 	}
+
 	if (!BOPhysics::CheckCollisionSpheres(m_ballList[0].GetBoundingSphere(), m_blackHole.GetBoundingSphere()))
 	{
-		std::cout << "KROCK" << std::endl;
-		//m_ballList[0].SetDirection(float2(rand(), rand()));
 		m_hasColided = false;
 	}
 	
@@ -117,7 +114,11 @@ void BOObjectManager::Draw()
 	}
 	for (int i = 0; i < m_blockList.size(); i++)
 	{
-		m_blockList[i].Draw();
+		if (!m_blockList[i].GetDead())
+		{
+			m_blockList[i].Draw();
+		}
+		
 	}
 
 	m_paddle.Draw();

@@ -3,6 +3,7 @@
 
 BOBlock::BOBlock()
 {
+	dead = false;
 }
 
 
@@ -23,4 +24,14 @@ box BOBlock::GetBoundingBox()
 hexagon BOBlock::GetBoundingHexagon()
 {
 	return hexagon(m_position, m_size);
+}
+
+void BOBlock::SetDead()
+{
+	dead = true;
+}
+
+bool BOBlock::GetDead()
+{
+	return dead;
 }

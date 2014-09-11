@@ -52,6 +52,15 @@ struct float2
 
 		return temp;
 	}
+
+	float2 operator*(const float p_input)
+	{
+		float2 temp;
+		temp.x = x * p_input;
+		temp.y = y * p_input;
+
+		return temp;
+	}
 };
 
 struct float3
@@ -382,10 +391,10 @@ struct hexagon
 		pointRight.y = p_pos.y;
 
 		pointDownRight.x = p_pos.x + 20;
-		pointDownRight.y = p_pos.y - 35;
+		pointDownRight.y = p_pos.y + 35;
 
 		pointDownLeft.x = p_pos.x - 19;
-		pointDownLeft.y = p_pos.y - 35;
+		pointDownLeft.y = p_pos.y + 35;
 
 		pointLeft.x = p_pos.x - 39;
 		pointLeft.y = p_pos.y;

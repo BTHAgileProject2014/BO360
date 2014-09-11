@@ -12,6 +12,10 @@ public:
 	void Update();
 	box GetBoundingBox();
 	hexagon GetBoundingHexagon();
+	void SetDead();
+	bool GetDead();
+private:
+	bool dead;
 };
 
 #endif
