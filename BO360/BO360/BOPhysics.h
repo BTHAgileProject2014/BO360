@@ -11,5 +11,6 @@ public:
 	static bool CheckCollisionSpheres(sphere p_sphere1, sphere p_sphere2);
 	static bool CheckCollisionBoxToBox(box p_box1, box p_box2);
 	static bool CheckCollisionSphereToHexagon(sphere p_sphere, hexagon p_hexagon);
+	static bool CheckCollisionSphereToLine(sphere p_sphere, float2 point1, float2 point2);
 };
 #endif

@@ -91,9 +91,13 @@ void BOObjectManager::Update()
 	}
 	for (int i = 0; i < m_blockList.size(); i++)
 	{
-		if (BOPhysics::CheckCollisionBoxToBox(m_ballList[0].GetBoundingBox(), m_blockList[i].GetBoundingBox()))
+		/*if (BOPhysics::CheckCollisionBoxToBox(m_ballList[0].GetBoundingBox(), m_blockList[i].GetBoundingBox()))
 		{
 			std::cout << "BOOOM KRASH" << std::endl;
+		}*/
+		if (BOPhysics::CheckCollisionSphereToHexagon(m_ballList[0].GetBoundingSphere(), m_blockList[i].GetBoundingHexagon()))
+		{
+			std::cout << "HEXAGON SMALL" << std::endl;
 		}
 	}
 

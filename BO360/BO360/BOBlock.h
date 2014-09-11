@@ -11,7 +11,7 @@ public:
 	~BOBlock();
 	void Update();
 	box GetBoundingBox();
-	hexagon GetBoundHexagon();
+	hexagon GetBoundingHexagon();
 };
 
 #endif
