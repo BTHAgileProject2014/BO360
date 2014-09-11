@@ -1,5 +1,5 @@
 #include "BOPublisher.h"
-
+std::vector<BOSubscriber*> BOPublisher::m_subscribers;
 
 BOPublisher::BOPublisher()
 {
