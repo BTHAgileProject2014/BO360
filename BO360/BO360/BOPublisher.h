@@ -18,7 +18,7 @@ public:
 	void Shutdown();
 
 	void Notify(KeyMessages p_keyMessage, bool p_value);
-	void Notify(int p_x, int p_y);
+	void Notify(int2 p_mousePosition);
 	static void AddSubscriber(BOSubscriber* p_subscriber);
 	static void Unsubscribe(BOSubscriber* p_subscriber);
 };

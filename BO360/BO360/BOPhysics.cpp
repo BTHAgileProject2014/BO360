@@ -26,3 +26,34 @@ bool BOPhysics::CheckCollisionSpheres(sphere p_sphere1, sphere p_sphere2)
 	
 	return false;
 }
+int BOPhysics::CheckCollisioPadSphere(float2 p_centerPad, float p_radiusPad, double p_padRotation, float2 p_centerBall, float p_radiusBall)
+{
+	if (CollisionRadiusRadius(p_centerPad, p_radiusPad, p_centerBall, p_radiusBall))
+	{
+		//if (CheckBallInPadAngle(p_centerPad, p_radiusPad, p_PadRotation, p_centerBall, p_radiusBall))
+		//{
+			if		((p_centerBall.x <= (p_centerPad.x + 80.0f)) && (p_centerBall.x >= (p_centerPad.x - 80.0f)) && (p_centerBall.y <= p_centerPad.y))
+			{
+				return 1;
+			}
+			else if ((p_centerBall.x <= (p_centerPad.x + 80.0f)) && (p_centerBall.x >= (p_centerPad.x - 80.0f)) && (p_centerBall.y >= p_centerPad.y))
+			{
+				return 2;
+			}
+			else if ((p_centerBall.y <= (p_centerPad.y + 80.0f)) && (p_centerBall.y >= (p_centerPad.y - 80.0f)) && (p_centerBall.x <= p_centerPad.x))
+			{
+				return 3;
+			}
+			else
+			{
+				return 4;
+			}
+		//}
+	}
+	return 0;
+}
+bool BOPhysics::CheckBallInPadAngle(float2 p_centerPad, float p_radiusPad, double p_padRotation, float2 p_centerBall, float p_radiusBall)
+{
+
+	return true;
+}

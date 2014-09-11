@@ -23,6 +23,10 @@ public:
 	void Draw();
 
 private:
+	void BallDirectionChange(int p_bounceCorner);
+	bool m_hasColided;
+
+
 	// BOBackground;
 	// BOPad m_pad;
 	BOBlackHole m_blackHole;
