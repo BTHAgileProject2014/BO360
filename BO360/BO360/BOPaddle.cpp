@@ -14,3 +14,8 @@ void BOPaddle::Handle(InputMessages p_inputMessages)
 {
 
 }
+
+void BOPaddle::Update()
+{
+
+}

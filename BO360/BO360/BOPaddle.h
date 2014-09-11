@@ -8,5 +8,9 @@ public:
 	BOPaddle();
 	~BOPaddle();
 	void Handle(InputMessages p_inputMessages);
+	void Update();
+
+private:
+	double m_rotation;
 };
 #endif

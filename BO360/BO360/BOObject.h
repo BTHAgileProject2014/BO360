@@ -6,7 +6,7 @@
 #include <SDL.h>
 #include <string>
 
-class BOObject
+class BOObject : BOComponent
 {
 public:
 	BOObject();

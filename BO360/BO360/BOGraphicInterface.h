@@ -18,6 +18,7 @@ public:
 	static void Shutdown();
 	static void Draw(SDL_Texture* p_texture, float2 p_position, int2 p_size, int4 p_target);
 	static void Draw(SDL_Texture* p_texture, struct float2 p_position, struct int2 p_size);
+	static void DrawEx(SDL_Texture* p_texture, int4 p_source, int4 p_destination, double p_rotation, int2 p_rotationSource);
 	static void Clear();
 	static void Present();
 	static SDL_Texture* LoadTexture(std::string p_path);
