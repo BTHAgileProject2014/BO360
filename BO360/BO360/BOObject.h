@@ -25,6 +25,7 @@ public:
 	SDL_Texture* GetSprite();
 	void SetSprite(std::string p_fileName);
 
+	sphere GetBoundingSphere();
 
 protected:
 	float2 m_position;

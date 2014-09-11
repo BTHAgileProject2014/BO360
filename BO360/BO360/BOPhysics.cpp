@@ -1,5 +1,8 @@
 #include "BOPhysics.h"
 
+const double BOPhysics::PI = 3.14159265359;
+const double BOPhysics::HALF_PI = PI / 2;
+
 bool BOPhysics::CollisionRadiusRadius(float2 p_centerA, float p_radiusA, float2 p_centerB, float p_radiusB)
 {
 	// Calculate x and y distance.
@@ -56,4 +59,52 @@ bool BOPhysics::CheckBallInPadAngle(float2 p_centerPad, float p_radiusPad, doubl
 {
 
 	return true;
+}
+
+bool BOPhysics::MattiasBallPadCollision(sphere p_sphere, float2 p_sphereDir, sphere p_padSphere, double p_startAngle, double p_endAngle)
+{
+	float sphereDir = cos(p_sphereDir.x);
+	if (p_sphereDir.y < 0)
+	{
+		sphereDir += HALF_PI;
+	}
+
+
+	//if (CheckCollisionSpheres(p_sphere, p_padSphere))
+	//{
+	float2 big, small;
+	big = float2(0.0f, 0.0f);
+
+	small = float2(1.0f, 1.0f);
+	float2 smallDir = float2(-0.5f, -0.5f);
+
+	float2 smallToBig = big - small; // should be -1, -1
+
+	float x = 1.0f;
+	float y = 0.001f;
+
+
+	// ??????????
+	double test = cos(1.58);
+	double test2 = acos(test); // <-- Should be 1.9
+	// ?????????????????
+
+
+
+	float2 exampleVector = float2(-1, -1);
+	float2 normalizedExampleVector = exampleVector.normalized();
+	float angle = acos(normalizedExampleVector.x);
+	if (exampleVector.y < 0)
+	{
+		angle += HALF_PI;
+	}
+	float anglePlusHalf = angle + 1.57;
+
+	float normalizedAngleA = acos(normalizedExampleVector.x);
+	float normalizedAngleB = asin(test);
+
+	return true;
+	//}
+
+	return 0;
 }

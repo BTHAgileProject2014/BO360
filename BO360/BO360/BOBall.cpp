@@ -57,7 +57,9 @@ float2 BOBall::GetDirection()
 	return m_direction;
 }
 
+/*
 sphere BOBall::GetBoundingSphere()
 {
 	return sphere(m_position, (m_size.x / 2));
 }
+*/

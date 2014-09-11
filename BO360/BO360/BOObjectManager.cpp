@@ -78,6 +78,7 @@ void BOObjectManager::Update()
 		m_blockList[i].Update();
 	}
 
+	//BOPhysics::MattiasBallPadCollision(m_ballList[0].GetBoundingSphere(), m_ballList[0].GetDirection(), m_paddle.
 
 	if (!BOPhysics::CheckCollisionSpheres(m_ballList[0].GetBoundingSphere(), m_blackHole.GetBoundingSphere()))
 	{
