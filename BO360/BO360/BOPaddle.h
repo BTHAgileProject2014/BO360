@@ -7,8 +7,13 @@ class BOPaddle : public BOObject, public BOSubscriber
 public:
 	BOPaddle();
 	~BOPaddle();
-	void Handle(InputMessages p_inputMessages);
+
 	void Update();
+
+	// Overloaded functions
+	bool Initialize(float2 p_position, int2 p_size, std::string p_fileName);
+	void Handle(InputMessages p_inputMessages);
+	void Draw();
 
 private:
 	double m_rotation;
