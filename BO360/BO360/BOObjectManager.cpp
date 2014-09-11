@@ -22,7 +22,6 @@ bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight)
 	{
 		return false;
 	}
-
 	result = m_paddle.Initialize(float2((p_windowWidth / 2.0f), (p_windowHeight / 2.0f)), int2(220, 220), "Bilder/placeholderPad.png");
 	if (!result)
 	{
@@ -66,6 +65,8 @@ void BOObjectManager::Update()
 {
 	bool result;
 	m_blackHole.Update();
+
+	m_paddle.Update();
 
 	for (int i = 0; i < m_ballList.size(); i++)
 	{

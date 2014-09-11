@@ -48,6 +48,29 @@ void BOGraphicInterface::Shutdown()
 	GetInstance().m_window.Shutdown();
 }
 
+
+
+void BOGraphicInterface::DrawEx(SDL_Texture* p_texture, int4 p_source, int4 p_destination, double p_rotation, int2 p_rotationSource)
+{
+	SDL_Rect source;
+	source.x = p_source.x;
+	source.y = p_source.y;
+	source.w = p_source.z;
+	source.h = p_source.w;
+
+	SDL_Rect destionation;
+	destionation.x = p_destination.x;
+	destionation.y = p_destination.y;
+	destionation.w = p_destination.z;
+	destionation.h = p_destination.w;
+
+	SDL_Point rotationSource;
+	rotationSource.x = p_rotationSource.x;
+	rotationSource.y = p_rotationSource.y;
+
+	SDL_RenderCopyEx(GetInstance().m_renderer, p_texture, &source, &destionation, p_rotation, &rotationSource, SDL_FLIP_NONE);
+}
+
 void BOGraphicInterface::Draw(SDL_Texture* p_texture, float2 p_position, int2 p_size, int4 p_source)
 {
 	SDL_Rect source, target;
