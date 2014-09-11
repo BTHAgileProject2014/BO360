@@ -11,6 +11,7 @@ public:
 	~BOPaddle();
 
 	void Update();
+	double GetRotation();
 
 	// Overloaded functions
 	bool Initialize(float2 p_position, int2 p_size, std::string p_fileName);

@@ -14,9 +14,12 @@ public:
 	float GetSpeed();
 	void SetDirection(float2 p_direction);
 	float2 GetDirection();
+	bool CanColide();
+	void BouncedOnPad();
 	//sphere GetBoundingSphere();
 
 private:
+	bool m_canColide;
 	float m_speed;
 	float2 m_direction;
 

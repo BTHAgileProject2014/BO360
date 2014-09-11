@@ -61,15 +61,113 @@ bool BOPhysics::CheckBallInPadAngle(float2 p_centerPad, float p_radiusPad, doubl
 	return true;
 }
 
-bool BOPhysics::MattiasBallPadCollision(sphere p_sphere, float2 p_sphereDir, sphere p_padSphere, double p_startAngle, double p_endAngle)
+bool BOPhysics::MattiasBallPadCollision(sphere p_sphere, float2 p_sphereDir, sphere p_padSphere, double p_startAngle, double p_padSpread)
 {
-	float sphereDir = cos(p_sphereDir.x);
-	if (p_sphereDir.y < 0)
+	if (CheckCollisionSpheres(p_sphere, p_padSphere))
 	{
-		sphereDir += HALF_PI;
+		float2 up = float2(0, 1);
+		double alpha = acos(up.x);
+
+
+		double degreesToRadians = (2 * PI) / 360;
+		double rToDegrees = 360 / (2 * PI);
+		double startAngle = p_startAngle;
+		double padSpread = p_padSpread;
+		startAngle *= degreesToRadians;
+		padSpread *= degreesToRadians;
+
+
+		double startAngleMA = HALF_PI - startAngle;
+
+
+		float2 centerToSphere = (p_sphere.pos - p_padSphere.pos).normalized();
+		centerToSphere.y *= -1;
+
+		double arccos = acos(centerToSphere.x);
+		double arcsin = asin(centerToSphere.y);
+
+		float ctpAngle = acos(centerToSphere.x);
+		//ctpAngle -= HALF_PI;
+		if (centerToSphere.x < 0 && centerToSphere.y < 0)
+		{
+			ctpAngle *= -1;
+		}
+
+		if (centerToSphere.x < 0 && centerToSphere.y > 0)
+		{
+			// Rätt?
+		}
+
+		if (centerToSphere.x > 0 && centerToSphere.y < 0)
+		{
+			ctpAngle *= -1;
+		}
+
+		if (centerToSphere.x > 0 && centerToSphere.y > 0)
+		{
+			// Rätt?
+		}
+	
+		if (ctpAngle < 0.0f)
+		{
+			ctpAngle += 2 * PI;
+		}
+
+		if (startAngleMA < 0.0f)
+		{
+			startAngleMA += 2 * PI;
+		}
+
+		if ((ctpAngle < startAngleMA) && (ctpAngle > (startAngleMA - padSpread)))
+		{
+			std::cout << "Hit!";
+			return true;
+		}
+
+		if ((startAngleMA - padSpread) < 0)
+		{
+			double padAngle = startAngleMA - padSpread + (2 * PI);
+			if (((ctpAngle > 0) && (ctpAngle < startAngleMA)) || ((ctpAngle > padAngle < (2 * PI))))
+			{
+				std::cout << "Hit!";
+				return true;
+			}
+		}
+
+		return false;
+	
+		/*
+		if (ctpAngle < 0)
+		{
+			ctpAngle += 2 * PI;
+		}
+		*/
+
+		if (ctpAngle < 0.0f)
+		{
+			ctpAngle += 2 * PI;
+		}
+
+		if (startAngle < 0.0f)
+		{
+			startAngle += PI * 2;
+		}
+
+		//std::cout << "Start Angle: " << startAngle * rToDegrees << "End Angle: " << rToDegrees * (startAngle + padSpread) << "CTP Angle: " << rToDegrees * ctpAngle << std::endl;
+
+		if (ctpAngle > startAngle && ctpAngle < startAngle + padSpread)
+		{
+			return true;
+		}
+		float overlap = -((2 * PI) - (startAngle + padSpread));
+		if ((overlap > 0) && (ctpAngle < overlap))
+		{
+			return true;
+		}
+
+		
 	}
-
-
+	return false;
 	//if (CheckCollisionSpheres(p_sphere, p_padSphere))
 	//{
 	float2 big, small;

@@ -23,7 +23,7 @@ bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight)
 	{
 		return false;
 	}
-	result = m_paddle.Initialize(float2((p_windowWidth / 2.0f), (p_windowHeight / 2.0f)), int2(220, 220), "Bilder/placeholderPad.png");
+	result = m_paddle.Initialize(float2((p_windowWidth / 2.0f), (p_windowHeight / 2.0f)), int2(180, 180), "Bilder/placeholderPad2.png");
 	if (!result)
 	{
 		return false;
@@ -31,9 +31,9 @@ bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight)
 
 	// Initialize primary ball.
 	int2 ballSize = int2(40, 40);
-	float2 ballPosition = float2(10, 10);
+	float2 ballPosition = float2(400, 300);
 	float ballSpeed = 0.1f;
-	float2 ballDirection = float2(10, 5);
+	float2 ballDirection = float2(-0.7, 0.5);
 	BOBall ball;
 	result = ball.Initialize(ballPosition, ballSize, "Bilder/placeholderBoll.png", ballSpeed, ballDirection);
 	if (!result)
@@ -80,14 +80,24 @@ void BOObjectManager::Update()
 
 	//BOPhysics::MattiasBallPadCollision(m_ballList[0].GetBoundingSphere(), m_ballList[0].GetDirection(), m_paddle.
 
-	if (!BOPhysics::CheckCollisionSpheres(m_ballList[0].GetBoundingSphere(), m_blackHole.GetBoundingSphere()))
+	if (m_ballList[0].CanColide())
 	{
-		m_hasColided = false;
-	}
-	if (!m_hasColided)
-	{
-		int bounceCorner = BOPhysics::CheckCollisioPadSphere(m_blackHole.GetBoundingSphere().pos, m_blackHole.GetBoundingSphere().radius, 0.0f, m_ballList[0].GetBoundingSphere().pos, m_ballList[0].GetBoundingSphere().radius);
-		BallDirectionChange(bounceCorner);
+		if (BOPhysics::MattiasBallPadCollision(m_ballList[0].GetBoundingSphere(), m_ballList[0].GetDirection(), m_paddle.GetBoundingSphere(), m_paddle.GetRotation() - 20, 40))
+		{
+			sphere changedSphere = m_paddle.GetBoundingSphere();
+			changedSphere.radius -= 1;
+			if (!BOPhysics::CheckCollisionSpheres(m_ballList[0].GetBoundingSphere(), changedSphere))
+			{
+				std::cout << "Colided!";
+				float2 newDir = m_ballList[0].GetDirection();
+				newDir.x *= -1.0f;
+				newDir.y *= -1.0f;
+				newDir = newDir.normalized();
+				m_ballList[0].SetDirection(newDir);
+				m_ballList[0].BouncedOnPad();
+			}
+
+		}
 	}
 }
 

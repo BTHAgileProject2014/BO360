@@ -11,6 +11,7 @@ BOBall::~BOBall()
 
 bool BOBall::Initialize(float2 p_position, int2 p_size, std::string p_fileName, float p_speed, float2 p_direction)
 {
+	m_canColide = false;
 	m_position = p_position;
 	m_size = p_size;
 	m_speed = p_speed;
@@ -29,10 +30,12 @@ void BOBall::Update()
 
 	if (m_position.x < 0 || m_position.x > 800)
 	{
+		m_canColide = true;
 		m_direction.x *= -1;
 	}
 	if (m_position.y < 0 || m_position.y > 600)
 	{
+		m_canColide = true;
 		m_direction.y *= -1;
 	}
 }
@@ -57,6 +60,15 @@ float2 BOBall::GetDirection()
 	return m_direction;
 }
 
+bool BOBall::CanColide()
+{
+	return m_canColide;
+}
+
+void BOBall::BouncedOnPad()
+{
+	m_canColide = false;
+}
 /*
 sphere BOBall::GetBoundingSphere()
 {
