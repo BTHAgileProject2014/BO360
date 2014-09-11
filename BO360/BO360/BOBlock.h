@@ -10,7 +10,8 @@ public:
 	BOBlock();
 	~BOBlock();
 	void Update();
-	box GetBoundingBox;
+	box GetBoundingBox();
+	hexagon GetBoundHexagon();
 };
 
 #endif

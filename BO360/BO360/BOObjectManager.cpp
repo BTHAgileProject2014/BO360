@@ -77,12 +77,23 @@ void BOObjectManager::Update()
 	for (int i = 0; i < m_blockList.size(); i++)
 	{
 		m_blockList[i].Update();
+		if (BOPhysics::CheckCollisionBoxToBox(m_ballList[0].GetBoundingBox(), m_blockList[i].GetBoundingBox()))
+		{
+			std::cout << "BOOOM KRASH" << std::endl;
+		}
 	}
 	
 	if (BOPhysics::CheckCollisionSpheres(m_ballList[0].GetBoundingSphere(), m_blackHole.GetBoundingSphere()))
 	{
 		std::cout << "KROCK" << std::endl;
 		//m_ballList[0].SetDirection(float2(rand(), rand()));
+	}
+	for (int i = 0; i < m_blockList.size(); i++)
+	{
+		if (BOPhysics::CheckCollisionBoxToBox(m_ballList[0].GetBoundingBox(), m_blockList[i].GetBoundingBox()))
+		{
+			std::cout << "BOOOM KRASH" << std::endl;
+		}
 	}
 
 }

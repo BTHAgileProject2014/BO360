@@ -61,3 +61,8 @@ sphere BOBall::GetBoundingSphere()
 {
 	return sphere(m_position, (m_size.x / 2));
 }
+
+box BOBall::GetBoundingBox()
+{
+	return box(m_position, m_size);
+}

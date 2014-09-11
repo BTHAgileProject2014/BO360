@@ -26,3 +26,21 @@ bool BOPhysics::CheckCollisionSpheres(sphere p_sphere1, sphere p_sphere2)
 	
 	return false;
 }
+
+bool BOPhysics::CheckCollisionBoxToBox(box p_box1, box p_box2)
+{
+	if (p_box1.bottom < p_box2.top || p_box1.top > p_box2.bottom || p_box1.left > p_box2.right || p_box1.right < p_box2.left)
+	{
+		return false;
+	}
+
+	return true;
+}
+
+bool BOPhysics::CheckCollisionSphereToHexagon(sphere p_sphere, hexagon p_hexagon)
+{
+	float2 localPointUpLeft, localPointUpRight, localPointRight, localPointDownRight, localPointDownLeft, localPointLeft;
+	//localPointUpLeft = p_hexagon.pointUpLeft - p_sphere.pos;
+
+	return false;
+}

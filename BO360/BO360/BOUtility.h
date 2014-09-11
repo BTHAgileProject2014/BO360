@@ -170,6 +170,7 @@ struct box
 {
 	float2 pos;
 	int2 size;
+	int top, bottom, left, right;
 
 	box()
 	{
@@ -180,6 +181,44 @@ struct box
 	{
 		pos = p_pos;
 		size = p_size;
+
+		top = (int)p_pos.y;
+		bottom = (int)p_pos.y + size.y;
+		left = (int)p_pos.x;
+		right = (int)p_pos.x + size.x;
+	}
+};
+
+struct hexagon
+{
+	float2 pos;
+	int2 size;
+	float2 pointUpLeft, pointUpRight, pointRight, pointDownRight, pointDownLeft, pointLeft;
+	float2 offset;
+
+	hexagon(){}
+
+	hexagon(float2 p_pos, int2 p_size)
+	{
+		offset = float2(40, 40);
+		
+		pointUpLeft.x = p_pos.x - 19;
+		pointUpLeft.y = p_pos.y - 34;
+
+		pointUpRight.x = p_pos.x + 20;
+		pointUpRight.y = p_pos.y - 34;
+
+		pointRight.x = p_pos.x + 40;
+		pointRight.y = p_pos.y;
+
+		pointDownRight.x = p_pos.x + 20;
+		pointDownRight.y = p_pos.y - 35;
+
+		pointDownLeft.x = p_pos.x - 19;
+		pointDownLeft.y = p_pos.y - 35;
+
+		pointLeft.x = p_pos.x - 39;
+		pointLeft.y = p_pos.y;
 	}
 };
 #endif

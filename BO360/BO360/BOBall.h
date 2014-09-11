@@ -15,6 +15,7 @@ public:
 	void SetDirection(float2 p_direction);
 	float2 GetDirection();
 	sphere GetBoundingSphere();
+	box GetBoundingBox();
 
 private:
 	float m_speed;
