@@ -1,6 +1,18 @@
 #include "BOInput.h"
 #include <iostream>
 
+// To keep track of key indexes in a reasonable way
+enum BOInputKey
+{
+	BOInput_Up,
+	BOInput_Down,
+	BOInput_Left,
+	BOInput_Right,
+	BOInput_Space,
+	BOInput_M1,
+	BOInput_M2
+};
+
 BOInput::BOInput()
 {
 }
@@ -12,7 +24,10 @@ BOInput::~BOInput()
 
 bool BOInput::Initialize()
 {
-	m_leftArrowPressed = false;
+	for (int i = 0; i < 7; i++)
+	{
+		m_buttonsPressed[i] = false;
+	}
 	m_publisher.Initialize();
 	return true;
 }
@@ -41,23 +56,31 @@ bool BOInput::Update()
 				{
 					case SDLK_UP:
 					{
-						m_publisher.Notify(upArrow, true);
-						std::cout << "UP is pressed\n";
+						if (!m_buttonsPressed[BOInput_Up])
+						{
+							m_buttonsPressed[BOInput_Up] = true;
+							m_publisher.Notify(upArrow, true);
+							std::cout << "UP is pressed\n";
+						}
 						break;
 					}
 
 					case SDLK_DOWN:
 					{
-						m_publisher.Notify(downArrow, true);
-						std::cout << "DOWN is pressed\n";
+						if (!m_buttonsPressed[BOInput_Down])
+						{
+							m_buttonsPressed[BOInput_Down] = true;
+							m_publisher.Notify(downArrow, true);
+							std::cout << "DOWN is pressed\n";
+						}
 						break;
 					}
 
 					case SDLK_LEFT:
 					{
-						if (!m_leftArrowPressed)
+						if (!m_buttonsPressed[BOInput_Left])
 						{
-							m_leftArrowPressed = true;
+							m_buttonsPressed[BOInput_Left] = true;
 							m_publisher.Notify(leftArrow, true);
 							std::cout << "LEFT is pressed\n";
 						}
@@ -66,15 +89,23 @@ bool BOInput::Update()
 
 					case SDLK_RIGHT:
 					{
-						m_publisher.Notify(rightArrow, true);
-						std::cout << "RIGHT is pressed\n";
+						if (!m_buttonsPressed[BOInput_Right])
+						{
+							m_buttonsPressed[BOInput_Right] = true;
+							m_publisher.Notify(rightArrow, true);
+							std::cout << "RIGHT is pressed\n";
+						}
 						break;
 					}
 
 					case SDLK_SPACE:
 					{
-						m_publisher.Notify(spacebarKey, true);
-						std::cout << "SPACE is pressed\n";
+						if (!m_buttonsPressed[BOInput_Space])
+						{
+							m_buttonsPressed[BOInput_Space] = true;
+							m_publisher.Notify(spacebarKey, true);
+							std::cout << "SPACE is pressed\n";
+						}
 						break;
 					}
 
@@ -94,6 +125,7 @@ bool BOInput::Update()
 				{
 					case SDLK_UP:
 					{
+						m_buttonsPressed[BOInput_Up] = false;
 						m_publisher.Notify(upArrow, false);
 						std::cout << "UP is released\n";
 						break;
@@ -101,6 +133,7 @@ bool BOInput::Update()
 
 					case SDLK_DOWN:
 					{
+						m_buttonsPressed[BOInput_Down] = false;
 						m_publisher.Notify(downArrow, false);
 						std::cout << "DOWN is released\n";
 						break;
@@ -108,7 +141,7 @@ bool BOInput::Update()
 
 					case SDLK_LEFT:
 					{
-						m_leftArrowPressed = false;
+						m_buttonsPressed[BOInput_Left] = false;
 						m_publisher.Notify(leftArrow, false);
 						std::cout << "LEFT is released\n";
 						break;
@@ -116,6 +149,7 @@ bool BOInput::Update()
 
 					case SDLK_RIGHT:
 					{
+						m_buttonsPressed[BOInput_Right] = false;
 						m_publisher.Notify(rightArrow, false);
 						std::cout << "RIGHT is released\n";
 						break;
@@ -123,6 +157,7 @@ bool BOInput::Update()
 
 					case SDLK_SPACE:
 					{
+						m_buttonsPressed[BOInput_Space] = false;
 						m_publisher.Notify(spacebarKey, false);
 						std::cout << "SPACE is released\n";
 						break;
@@ -144,15 +179,23 @@ bool BOInput::Update()
 				{
 					case SDL_BUTTON_LEFT:
 					{
-						m_publisher.Notify(leftMouseKey, true);
-						std::cout << "LEFT mousebutton pressed\n";
+						if (!m_buttonsPressed[BOInput_M1])
+						{
+							m_buttonsPressed[BOInput_M1] = true;
+							m_publisher.Notify(leftMouseKey, true);
+							std::cout << "LEFT mousebutton pressed\n";
+						}
 						break;
 					}
 
 					case SDL_BUTTON_RIGHT:
 					{
-						m_publisher.Notify(rightMouseKey, false);
-						std::cout << "RIGHT mousebutton pressed\n";
+						if (!m_buttonsPressed[BOInput_M2])
+						{
+							m_buttonsPressed[BOInput_M2] = true;
+							m_publisher.Notify(rightMouseKey, false);
+							std::cout << "RIGHT mousebutton pressed\n";
+						}
 						break;
 					}
 				}
@@ -165,6 +208,7 @@ bool BOInput::Update()
 				{
 					case SDL_BUTTON_LEFT:
 					{
+						m_buttonsPressed[BOInput_M1] = false;
 						m_publisher.Notify(leftMouseKey, false);
 						std::cout << "LEFT mousebutton released\n";
 						break;
@@ -172,6 +216,7 @@ bool BOInput::Update()
 
 					case SDL_BUTTON_RIGHT:
 					{
+						m_buttonsPressed[BOInput_M2] = false;
 						m_publisher.Notify(rightMouseKey, false);
 						std::cout << "RIGHT mousebutton released\n";
 						break;
