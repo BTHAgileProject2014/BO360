@@ -23,6 +23,9 @@ public:
 	void Draw();
 
 private:
+	void BallDirectionChange(int p_bounceCorner);
+
+
 	// BOBackground;
 	// BOPad m_pad;
 	BOBlackHole m_blackHole;
