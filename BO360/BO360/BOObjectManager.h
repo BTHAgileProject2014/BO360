@@ -24,6 +24,7 @@ public:
 
 private:
 	void BallDirectionChange(int p_bounceCorner);
+	bool m_hasColided;
 
 
 	// BOBackground;
