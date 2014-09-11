@@ -79,28 +79,15 @@ void BOObjectManager::Update()
 	}
 
 
-	//float2 SpherePos = m_ballList[0].GetBoundingSphere().pos;
-	//float2 SphereSpeedDir;
-	//SphereSpeedDir.x = m_ballList[0].GetSpeed() * m_ballList[0].GetDirection().x;
-	//SphereSpeedDir.y = m_ballList[0].GetSpeed() * m_ballList[0].GetDirection().y;
-	//SpherePos.x += SphereSpeedDir.x;
-	//SpherePos.y += SphereSpeedDir.y;
-
 	if (!BOPhysics::CheckCollisionSpheres(m_ballList[0].GetBoundingSphere(), m_blackHole.GetBoundingSphere()))
 	{
 		m_hasColided = false;
-		//std::cout << "FALSE" << std::endl;
 	}
 	if (!m_hasColided)
 	{
 		int bounceCorner = BOPhysics::CheckCollisioPadSphere(m_blackHole.GetBoundingSphere().pos, m_blackHole.GetBoundingSphere().radius, 0.0f, m_ballList[0].GetBoundingSphere().pos, m_ballList[0].GetBoundingSphere().radius);
 		BallDirectionChange(bounceCorner);
 	}
-	//if (BOPhysics::CheckCollisionSpheres(m_ballList[0].GetBoundingSphere(), m_blackHole.GetBoundingSphere()))
-	//{
-	//	std::cout << "KROCK" << std::endl;
-	//}
-
 }
 
 void BOObjectManager::Draw()
@@ -125,7 +112,6 @@ void BOObjectManager::BallDirectionChange(int p_bounceCorner)
 		return;
 	m_hasColided = true;
 
-	//std::cout << "TRUE" << std::endl;
 	float2 ballDir = m_ballList[0].GetDirection();
 	if (p_bounceCorner == 1 || p_bounceCorner == 2)//Straight up and down corner
 	{
