@@ -28,10 +28,6 @@ private:
 	std::string m_string;
 	Uint32 m_deltaTime;
 	float m_totalTime;
-
-	float FPScounter(Uint32 p_deltaTime);
-	float m_currentFPS;
-	float m_averageFPS;
 	int m_FPS;
 };
 #endif

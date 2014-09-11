@@ -42,10 +42,7 @@ bool BOSystem::Initialize()
 
 	m_deltaTime = 0;
 	m_totalTime = 0;
-
-	m_currentFPS = 0;
-	m_averageFPS = 60;
-	m_FPS = 60;
+	m_FPS = 0;
 
 	return true;
 }
@@ -64,13 +61,10 @@ bool BOSystem::Run()
 	{
 		m_totalTime = m_timer.GetTotalTimeS();
 		m_deltaTime = m_timer.GetDeltaTime();
-		if (m_deltaTime > 0)
-		{
-			m_FPS = (int)FPScounter(m_deltaTime);
-		}
+		m_FPS = m_timer.FPS();
 		
 		m_string = "Total time: " + std::to_string(m_totalTime) + " seconds. Delta time: " + std::to_string(m_deltaTime) + " milliseconds. FPS: " + std::to_string(m_FPS);
-		BOGraphicInterface::SetWindowText(m_string);
+		BOGraphicInterface::SetWindowTitle(m_string);
 	}
 
 	// Update the input manager.
@@ -92,15 +86,6 @@ bool BOSystem::Run()
 	// ============================
 
 	return result;
-}
-
-float BOSystem::FPScounter(Uint32 p_deltaTime)
-{
-	m_currentFPS = (1.0f / p_deltaTime) * 1000.0F;
-
-	m_averageFPS = (m_currentFPS * 0.1f) + (m_averageFPS * 0.9f);
-
-	return m_averageFPS;
 }
 
 void BOSystem::Shutdown()
