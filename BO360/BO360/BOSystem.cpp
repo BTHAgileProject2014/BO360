@@ -14,7 +14,11 @@ BOSystem::~BOSystem()
 bool BOSystem::Initialize()
 {
 	bool result;
-	m_input.Initialize();
+	result = m_input.Initialize();
+	if (!result)
+	{
+		return false;
+	}
 	
 	windowWidth = 800;
 	windowHeight = 600;
