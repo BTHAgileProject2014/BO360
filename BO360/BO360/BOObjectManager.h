@@ -2,6 +2,7 @@
 #define BOOBJECTMANGAGER_H_
 
 #include "BOComponent.h"
+#include "BOBackground.h"
 #include "BOObject.h"
 #include "BOBlackHole.h"
 #include "BOBall.h"
@@ -10,8 +11,7 @@
 #include "BOPhysics.h"
 #include <vector>
 
-class BOObjectManager :
-	public BOComponent
+class BOObjectManager : public BOComponent
 {
 public:
 	BOObjectManager();
@@ -26,13 +26,10 @@ private:
 	void BallDirectionChange(int p_bounceCorner);
 	bool m_hasColided;
 
-
-	// BOBackground;
-	// BOPad m_pad;
+	BOBackground m_background;
 	BOBlackHole m_blackHole;
 	std::vector<BOBall> m_ballList;
 	BOPaddle m_paddle;
-	//std::vector<BOBlock> m_blockList;
 	std::vector<BOBlock> m_blockList;
 	//std::vector<BOParticle> m_particleList;
 	//std::vector<BOPowerUp> m_powerUPlist;
