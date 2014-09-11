@@ -54,6 +54,9 @@
     <ClCompile Include="BOPhysics.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="BOPaddle.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="BOBlock.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -96,6 +99,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="BOPhysics.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BOPaddle.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="BOBlock.h">

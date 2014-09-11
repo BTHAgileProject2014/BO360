@@ -47,20 +47,47 @@ void BOGraphicInterface::Shutdown()
 {
 	GetInstance().m_window.Shutdown();
 }
-void BOGraphicInterface::Draw(SDL_Texture* p_texture, float2 p_position, int2 p_size)
+
+void BOGraphicInterface::Draw(SDL_Texture* p_texture, float2 p_position, int2 p_size, int4 p_source)
 {
 	SDL_Rect source, target;
-	target.x = (int)p_position.x;
-	target.y = (int)p_position.y;
+	target.x = (int)p_position.x - (p_size.x / 2);
+	target.y = (int)p_position.y - (p_size.y / 2);
 	target.w = p_size.x;
 	target.h = p_size.y;
-	source.x = 0;
-	source.y = 0;
-	source.w = p_size.x;
-	source.h = p_size.y;
+	source.x = p_source.x;
+	source.y = p_source.y;
+	source.w = p_source.z;
+	source.h = p_source.w;
+	
+	 
+	// Prototype rotation
+	//SDL_Point p;
+	//p.x = p_size.x / 2;
+	//p.y = p_size.y / 2;
+	//double angle = 0;
+	//if (p_size.y == 80)
+	//{
+	//	static double specialAngle = 0.0f;
+	//	specialAngle += 0.05f;
+	//	angle = specialAngle;
+	//}
+	//SDL_RenderCopyEx(GetInstance().m_renderer, p_texture, &source, &target, angle, &p, SDL_FLIP_NONE);
+	//
 
 	SDL_RenderCopy(GetInstance().m_renderer, p_texture, &source, &target);
 }
+void BOGraphicInterface::Draw(SDL_Texture* p_texture, float2 p_position, int2 p_size)
+{
+	int4 source;
+	source.x = 0;
+	source.y = 0;
+	source.z = p_size.x;
+	source.w = p_size.y;
+
+	Draw(p_texture, p_position, p_size, source);
+}
+
 
 void BOGraphicInterface::Clear()
 {

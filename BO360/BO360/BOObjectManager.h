@@ -5,6 +5,7 @@
 #include "BOObject.h"
 #include "BOBlackHole.h"
 #include "BOBall.h"
+#include "BOPaddle.h"
 #include "BOBlock.h"
 #include "BOPhysics.h"
 #include <vector>
@@ -26,6 +27,8 @@ private:
 	// BOPad m_pad;
 	BOBlackHole m_blackHole;
 	std::vector<BOBall> m_ballList;
+	BOPaddle m_paddle;
+	//std::vector<BOBlock> m_blockList;
 	std::vector<BOBlock> m_blockList;
 	//std::vector<BOParticle> m_particleList;
 	//std::vector<BOPowerUp> m_powerUPlist;
