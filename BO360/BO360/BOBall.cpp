@@ -9,7 +9,55 @@ BOBall::~BOBall()
 {
 }
 
+bool BOBall::Initialize(float2 p_position, int2 p_size, std::string p_fileName, float p_speed, float2 p_direction)
+{
+	m_position = p_position;
+	m_size = p_size;
+	m_speed = p_speed;
+	m_direction = p_direction;
+
+	// Load texture.
+	m_sprite = BOGraphicInterface::LoadTexture(p_fileName);
+
+	return true;
+}
+
 void BOBall::Update()
 {
-	// TODO: Add ball mechanics.
+	m_position.x = m_speed * m_direction.x + m_position.x;
+	m_position.y = m_speed * m_direction.y + m_position.y;
+
+	if (m_position.x < 0 || m_position.x > 800)
+	{
+		m_direction.x *= -1;
+	}
+	if (m_position.y < 0 || m_position.y > 600)
+	{
+		m_direction.y *= -1;
+	}
+}
+
+void BOBall::SetSpeed(float p_speed)
+{
+	m_speed = p_speed;
+}
+
+float BOBall::GetSpeed()
+{
+	return m_speed;
+}
+
+void BOBall::SetDirection(float2 p_direction)
+{
+	m_direction = p_direction.normalized();
+}
+
+float2 BOBall::GetDirection()
+{
+	return m_direction;
+}
+
+sphere BOBall::GetBoundingSphere()
+{
+	return sphere(m_position, (m_size.x / 2));
 }

@@ -16,9 +16,5 @@ void BOBlackHole::Update()
 
 sphere BOBlackHole::GetBoundingSphere()
 {
-	sphere boundingSphere = sphere(m_position, (m_size.x / 2));
-	
-	return boundingSphere;
-
-	// TODO: Add black hole mechanics.
+	return sphere(m_position, (m_size.x / 2));
 }
