@@ -15,7 +15,7 @@ bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight)
 	
 	// Initialize black hole.
 	int2 blackHoleSize = int2(220, 220);
-	float2 blackHolePosition = float2((p_windowWidth / 2.0f) - (blackHoleSize.x / 2), (p_windowHeight / 2.0f) - (blackHoleSize.y / 2));
+	float2 blackHolePosition = float2((p_windowWidth / 2.0f), (p_windowHeight / 2.0f));
 
 	result = m_blackHole.Initialize(blackHolePosition, blackHoleSize, "Bilder/placeholderBlackhole.png");
 	if (!result)
@@ -35,7 +35,7 @@ bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight)
 		return false;
 	}
 
-	result = m_paddle.Initialize(float2(420.0f, 180.f), int2(80, 80), "Bilder/placeholderPad.png");
+	result = m_paddle.Initialize(float2((p_windowWidth / 2.0f), (p_windowHeight / 2.0f)), int2(80, 80), "Bilder/placeholderPad.png");
 	if (!result)
 	{
 		return false;
