@@ -10,6 +10,7 @@ public:
 	BOBlock();
 	~BOBlock();
 	void Update();
+	box GetBoundingBox;
 };
 
 #endif

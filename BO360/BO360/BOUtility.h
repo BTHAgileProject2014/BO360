@@ -165,4 +165,21 @@ struct sphere
 		radius = p_radius;
 	}
 };
+
+struct box
+{
+	float2 pos;
+	int2 size;
+
+	box()
+	{
+
+	}
+
+	box(float2 p_pos, int2 p_size)
+	{
+		pos = p_pos;
+		size = p_size;
+	}
+};
 #endif

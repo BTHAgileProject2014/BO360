@@ -31,7 +31,7 @@ bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight)
 
 	// Initialize primary ball.
 	int2 ballSize = int2(40, 40);
-	float2 ballPosition = float2(10, 10);
+	float2 ballPosition = float2(30, 30);
 	float ballSpeed = 0.01f;
 	float2 ballDirection = float2(10, 5);
 	BOBall ball;
@@ -48,7 +48,7 @@ bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight)
 		for (int j = 0; j < 2; j++)
 		{
 			BOBlock block;
-			result = block.Initialize(float2(((85*i) + 20), (5+(510*j))), int2(80,80), "Bilder/placeholderHexagon.png");
+			result = block.Initialize(float2(((85*i) + 60), (45+(510*j))), int2(80,80), "Bilder/placeholderHexagon.png");
 			if (!result)
 			{
 				return false;
@@ -82,6 +82,7 @@ void BOObjectManager::Update()
 	if (BOPhysics::CheckCollisionSpheres(m_ballList[0].GetBoundingSphere(), m_blackHole.GetBoundingSphere()))
 	{
 		std::cout << "KROCK" << std::endl;
+		//m_ballList[0].SetDirection(float2(rand(), rand()));
 	}
 
 }

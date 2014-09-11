@@ -27,11 +27,11 @@ void BOBall::Update()
 	m_position.x = m_speed * m_direction.x + m_position.x;
 	m_position.y = m_speed * m_direction.y + m_position.y;
 
-	if (m_position.x < 0 || m_position.x > 800)
+	if (m_position.x < 20 || m_position.x > 780)
 	{
 		m_direction.x *= -1;
 	}
-	if (m_position.y < 0 || m_position.y > 600)
+	if (m_position.y < 20 || m_position.y > 580)
 	{
 		m_direction.y *= -1;
 	}
