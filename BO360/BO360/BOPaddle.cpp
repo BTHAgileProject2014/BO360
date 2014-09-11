@@ -23,10 +23,11 @@ void BOPaddle::Handle(InputMessages p_inputMessages)
 
 void BOPaddle::Update()
 {
-
 }
 
 void BOPaddle::Draw()
 {
-
+	int4 mySource = int4(0, 0, m_size.x, m_size.y);
+	int4 myDest = int4((int)m_position.x - (m_size.x / 2), (int)m_position.y - (m_size.y / 2), m_size.x, m_size.y);
+	BOGraphicInterface::DrawEx(m_sprite, mySource, myDest, m_rotation, int2(m_size.x / 2, m_size.y / 2));
 }
