@@ -14,7 +14,7 @@ bool BOBall::Initialize(float2 p_position, int2 p_size, std::string p_fileName, 
 	m_position = p_position;
 	m_size = p_size;
 	m_speed = p_speed;
-	m_direction = p_direction;
+	m_direction = p_direction.normalized();
 
 	// Load texture.
 	m_sprite = BOGraphicInterface::LoadTexture(p_fileName);

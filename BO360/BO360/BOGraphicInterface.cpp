@@ -122,6 +122,11 @@ void BOGraphicInterface::Present()
 	SDL_RenderPresent(GetInstance().m_renderer);
 }
 
+void BOGraphicInterface::SetWindowText(std::string p_windowText)
+{
+	GetInstance().m_window.SetWindowText(p_windowText);
+}
+
 SDL_Texture* BOGraphicInterface::LoadTexture(std::string p_path)
 {
 	SDL_Texture* newTexture = 0;

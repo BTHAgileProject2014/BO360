@@ -168,7 +168,10 @@ bool BOInput::Update()
 
 			case SDL_MOUSEMOTION:
 			{
-				m_publisher.Notify(event.motion.x, event.motion.y);
+				int2 position;
+				position.x = event.motion.x;
+				position.y = event.motion.y;
+				m_publisher.Notify(position);
 				std::cout << "Mouse position: " << event.motion.x << ", " << event.motion.y << "\n";
 				break;
 			}

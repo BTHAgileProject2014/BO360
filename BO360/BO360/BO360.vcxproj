@@ -82,6 +82,7 @@
     <ClInclude Include="BOPublisher.h" />
     <ClInclude Include="BOSubscriber.h" />
     <ClInclude Include="BOSystem.h" />
+    <ClInclude Include="BOTimer.h" />
     <ClInclude Include="BOUtility.h" />
     <ClInclude Include="BOWindow.h" />
   </ItemGroup>
@@ -100,6 +101,7 @@
     <ClCompile Include="BOPublisher.cpp" />
     <ClCompile Include="BOSubscriber.cpp" />
     <ClCompile Include="BOSystem.cpp" />
+    <ClCompile Include="BOTimer.cpp" />
     <ClCompile Include="BOWindow.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
