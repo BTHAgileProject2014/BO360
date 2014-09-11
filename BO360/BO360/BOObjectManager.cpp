@@ -34,7 +34,7 @@ bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight)
 
 	float2 ballPosition = float2(30, 30);
 	float ballSpeed = 0.1f;
-	float2 ballDirection = float2(10, 15);
+	float2 ballDirection = float2(10, 10);
 
 	BOBall ball;
 	result = ball.Initialize(ballPosition, ballSize, "Bilder/placeholderBoll.png", ballSpeed, ballDirection);
