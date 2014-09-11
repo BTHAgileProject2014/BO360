@@ -84,10 +84,10 @@ void BOPublisher::Notify(KeyMessages p_keyMessage, bool p_value)
 }
 
 // Change position of the mouse pointer
-void BOPublisher::Notify(int p_x, int p_y)
+void BOPublisher::Notify(int2 p_mousePosition)
 {
-	m_inputMessage.mouseX = p_x;
-	m_inputMessage.mouseY = p_y;
+	m_inputMessage.mouseX = p_mousePosition.x;
+	m_inputMessage.mouseY = p_mousePosition.y;
 
 	Notify();
 }
