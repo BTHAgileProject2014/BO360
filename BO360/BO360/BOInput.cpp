@@ -60,7 +60,9 @@ bool BOInput::Update()
 						{
 							m_buttonsPressed[BOInput_Up] = true;
 							m_publisher.Notify(upArrow, true);
+#ifdef DEBUG
 							std::cout << "UP is pressed\n";
+#endif
 						}
 						break;
 					}
@@ -71,7 +73,9 @@ bool BOInput::Update()
 						{
 							m_buttonsPressed[BOInput_Down] = true;
 							m_publisher.Notify(downArrow, true);
+#ifdef DEBUG
 							std::cout << "DOWN is pressed\n";
+#endif
 						}
 						break;
 					}
@@ -82,7 +86,9 @@ bool BOInput::Update()
 						{
 							m_buttonsPressed[BOInput_Left] = true;
 							m_publisher.Notify(leftArrow, true);
+#ifdef DEBUG
 							std::cout << "LEFT is pressed\n";
+#endif	
 						}
 						break;
 					}
@@ -93,7 +99,9 @@ bool BOInput::Update()
 						{
 							m_buttonsPressed[BOInput_Right] = true;
 							m_publisher.Notify(rightArrow, true);
+#ifdef DEBUG
 							std::cout << "RIGHT is pressed\n";
+#endif
 						}
 						break;
 					}
@@ -104,7 +112,9 @@ bool BOInput::Update()
 						{
 							m_buttonsPressed[BOInput_Space] = true;
 							m_publisher.Notify(spacebarKey, true);
+#ifdef DEBUG
 							std::cout << "SPACE is pressed\n";
+#endif
 						}
 						break;
 					}
@@ -127,7 +137,9 @@ bool BOInput::Update()
 					{
 						m_buttonsPressed[BOInput_Up] = false;
 						m_publisher.Notify(upArrow, false);
+#ifdef DEBUG
 						std::cout << "UP is released\n";
+#endif
 						break;
 					}
 
@@ -135,7 +147,9 @@ bool BOInput::Update()
 					{
 						m_buttonsPressed[BOInput_Down] = false;
 						m_publisher.Notify(downArrow, false);
+#ifdef DEBUG
 						std::cout << "DOWN is released\n";
+#endif
 						break;
 					}
 
@@ -143,7 +157,9 @@ bool BOInput::Update()
 					{
 						m_buttonsPressed[BOInput_Left] = false;
 						m_publisher.Notify(leftArrow, false);
+#ifdef DEBUG
 						std::cout << "LEFT is released\n";
+#endif
 						break;
 					}
 
@@ -151,7 +167,9 @@ bool BOInput::Update()
 					{
 						m_buttonsPressed[BOInput_Right] = false;
 						m_publisher.Notify(rightArrow, false);
+#ifdef DEBUG
 						std::cout << "RIGHT is released\n";
+#endif
 						break;
 					}
 
@@ -159,7 +177,9 @@ bool BOInput::Update()
 					{
 						m_buttonsPressed[BOInput_Space] = false;
 						m_publisher.Notify(spacebarKey, false);
+#ifdef DEBUG
 						std::cout << "SPACE is released\n";
+#endif
 						break;
 					}
 				}
@@ -172,7 +192,9 @@ bool BOInput::Update()
 				position.x = event.motion.x;
 				position.y = event.motion.y;
 				m_publisher.Notify(position);
+#ifdef DEBUG
 				std::cout << "Mouse position: " << event.motion.x << ", " << event.motion.y << "\n";
+#endif				
 				break;
 			}
 
@@ -186,7 +208,9 @@ bool BOInput::Update()
 						{
 							m_buttonsPressed[BOInput_M1] = true;
 							m_publisher.Notify(leftMouseKey, true);
+#ifdef DEBUG
 							std::cout << "LEFT mousebutton pressed\n";
+#endif
 						}
 						break;
 					}
@@ -197,7 +221,9 @@ bool BOInput::Update()
 						{
 							m_buttonsPressed[BOInput_M2] = true;
 							m_publisher.Notify(rightMouseKey, false);
+#ifdef DEBUG
 							std::cout << "RIGHT mousebutton pressed\n";
+#endif
 						}
 						break;
 					}
@@ -213,7 +239,9 @@ bool BOInput::Update()
 					{
 						m_buttonsPressed[BOInput_M1] = false;
 						m_publisher.Notify(leftMouseKey, false);
+#ifdef DEBUG
 						std::cout << "LEFT mousebutton released\n";
+#endif
 						break;
 					}
 
@@ -221,7 +249,9 @@ bool BOInput::Update()
 					{
 						m_buttonsPressed[BOInput_M2] = false;
 						m_publisher.Notify(rightMouseKey, false);
+#ifdef DEBUG
 						std::cout << "RIGHT mousebutton released\n";
+#endif
 						break;
 					}
 				}

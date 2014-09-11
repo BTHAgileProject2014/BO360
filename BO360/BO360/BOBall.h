@@ -16,7 +16,7 @@ public:
 	float2 GetDirection();
 	bool CanColide();
 	void BouncedOnPad();
-	//sphere GetBoundingSphere();
+	box GetBoundingBox();
 
 private:
 	bool m_canColide;

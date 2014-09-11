@@ -31,9 +31,11 @@ bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight)
 
 	// Initialize primary ball.
 	int2 ballSize = int2(40, 40);
-	float2 ballPosition = float2(400, 300);
+
+	float2 ballPosition = float2(30, 30);
 	float ballSpeed = 0.1f;
-	float2 ballDirection = float2(-0.7, 0.5);
+	float2 ballDirection = float2(10, 15);
+
 	BOBall ball;
 	result = ball.Initialize(ballPosition, ballSize, "Bilder/placeholderBoll.png", ballSpeed, ballDirection);
 	if (!result)
@@ -45,13 +47,16 @@ bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight)
 
 	for (int i = 0; i < 9; i++)
 	{
-		BOBlock block;
-		result = block.Initialize(float2(((85*i) + 20), 5), int2(80,80), "Bilder/placeholderHexagon.png");
-		if (!result)
+		for (int j = 0; j < 2; j++)
 		{
-			return false;
+			BOBlock block;
+			result = block.Initialize(float2(((85*i) + 60), (45+(510*j))), int2(80,80), "Bilder/placeholderHexagon.png");
+			if (!result)
+			{
+				return false;
+			}
+			m_blockList.push_back(block);
 		}
-		m_blockList.push_back(block);
 	}
 
 	return true;
@@ -78,7 +83,17 @@ void BOObjectManager::Update()
 		m_blockList[i].Update();
 	}
 
-	//BOPhysics::MattiasBallPadCollision(m_ballList[0].GetBoundingSphere(), m_ballList[0].GetDirection(), m_paddle.
+	for (int i = 0; i < m_blockList.size(); i++)
+	{
+		if (BOPhysics::CheckCollisionBoxToBox(m_ballList[0].GetBoundingBox(), m_blockList[i].GetBoundingBox()))
+		{
+			if (BOPhysics::CheckCollisionSphereToHexagon(m_ballList[0].GetBoundingSphere(), m_blockList[i].GetBoundingHexagon()))
+			{
+				m_blockList[i].SetDead();
+			}
+		}		
+	}
+
 
 	if (m_ballList[0].CanColide())
 	{
@@ -111,7 +126,11 @@ void BOObjectManager::Draw()
 	}
 	for (int i = 0; i < m_blockList.size(); i++)
 	{
-		m_blockList[i].Draw();
+		if (!m_blockList[i].GetDead())
+		{
+			m_blockList[i].Draw();
+		}
+		
 	}
 
 	m_paddle.Draw();

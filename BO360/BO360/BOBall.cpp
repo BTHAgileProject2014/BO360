@@ -28,12 +28,12 @@ void BOBall::Update()
 	m_position.x = m_speed * m_direction.x + m_position.x;
 	m_position.y = m_speed * m_direction.y + m_position.y;
 
-	if (m_position.x < 0 || m_position.x > 800)
+	if (m_position.x < 20 || m_position.x > 780)
 	{
 		m_canColide = true;
 		m_direction.x *= -1;
 	}
-	if (m_position.y < 0 || m_position.y > 600)
+	if (m_position.y < 20 || m_position.y > 580)
 	{
 		m_canColide = true;
 		m_direction.y *= -1;
@@ -69,9 +69,8 @@ void BOBall::BouncedOnPad()
 {
 	m_canColide = false;
 }
-/*
-sphere BOBall::GetBoundingSphere()
+
+box BOBall::GetBoundingBox()
 {
-	return sphere(m_position, (m_size.x / 2));
+	return box(m_position, m_size);
 }
-*/
