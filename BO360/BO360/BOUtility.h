@@ -361,10 +361,10 @@ struct box
 		pos = p_pos;
 		size = p_size;
 
-		top = (int)p_pos.y;
-		bottom = (int)p_pos.y + size.y;
-		left = (int)p_pos.x;
-		right = (int)p_pos.x + size.x;
+		top = (int)p_pos.y - (size.y / 2);
+		bottom = (int)p_pos.y + (size.y/2);
+		left = (int)p_pos.x - (size.x / 2);
+		right = (int)p_pos.x + (size.x/2);
 	}
 };
 
