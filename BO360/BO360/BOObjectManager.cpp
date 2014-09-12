@@ -103,22 +103,26 @@ void BOObjectManager::Update()
 
 	if (m_ballList[0].CanColide())
 	{
-		if (BOPhysics::MattiasBallPadCollision(m_ballList[0].GetBoundingSphere(), m_ballList[0].GetDirection(), m_paddle.GetBoundingSphere(), m_paddle.GetRotation() - 20, 40))
-		{
-			sphere changedSphere = m_paddle.GetBoundingSphere();
-			changedSphere.radius -= 1;
-			if (!BOPhysics::CheckCollisionSpheres(m_ballList[0].GetBoundingSphere(), changedSphere))
-			{
-				std::cout << "Colided!";
-				float2 newDir = m_ballList[0].GetDirection();
-				newDir.x *= -1.0f;
-				newDir.y *= -1.0f;
-				newDir = newDir.normalized();
-				m_ballList[0].SetDirection(newDir);
-				m_ballList[0].BouncedOnPad();
-			}
+		
+		int bounceTest = BOPhysics::CheckCollisioPadSphere(m_ballList[0].GetBoundingSphere(), m_ballList[0].GetDirection(), m_paddle.GetBoundingSphere(), m_paddle.GetRotation() - 20, 40);
 
-		}
+		BallDirectionChange(bounceTest);
+	/*	if (BOPhysics::MattiasBallPadCollision(m_ballList[0].GetBoundingSphere(), m_ballList[0].GetDirection(), m_paddle.GetBoundingSphere(), m_paddle.GetRotation() - 20, 40))
+		{*/
+			//sphere changedSphere = m_paddle.GetBoundingSphere();
+			//changedSphere.radius -= 1;
+			//if (!BOPhysics::CheckCollisionSpheres(m_ballList[0].GetBoundingSphere(), changedSphere))
+			//{
+			//	std::cout << "Colided!";
+			//	float2 newDir = m_ballList[0].GetDirection();
+			//	newDir.x *= -1.0f;
+			//	newDir.y *= -1.0f;
+			//	newDir = newDir.normalized();
+			//	m_ballList[0].SetDirection(newDir);
+			//	m_ballList[0].BouncedOnPad();
+			//}
+
+		//}
 	}
 }
 

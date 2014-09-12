@@ -155,21 +155,27 @@ void BOPhysics::CheckCollisionSphereToLine(sphere p_sphere, float2 p_point1, flo
 	}
 }
 
-int BOPhysics::CheckCollisioPadSphere(float2 p_centerPad, float p_radiusPad, double p_padRotation, float2 p_centerBall, float p_radiusBall)
+int BOPhysics::CheckCollisioPadSphere(sphere p_sphere, float2 p_sphereDir, sphere p_padSphere, double p_startAngle, double p_endAngle)
 {
-	if (CollisionRadiusRadius(p_centerPad, p_radiusPad, p_centerBall, p_radiusBall))
+	float2 centerPad, centerBall;
+	float padRadius, ballRadius;
+	centerPad = p_padSphere.pos;
+	centerBall = p_sphere.pos;
+	padRadius = p_padSphere.radius;
+	ballRadius = p_sphere.radius;
+	if (CollisionRadiusRadius(centerPad, padRadius, centerBall, ballRadius))
 	{
-		//if (CheckBallInPadAngle(p_centerPad, p_radiusPad, p_PadRotation, p_centerBall, p_radiusBall))
-		//{
-			if		((p_centerBall.x <= (p_centerPad.x + 80.0f)) && (p_centerBall.x >= (p_centerPad.x - 80.0f)) && (p_centerBall.y <= p_centerPad.y))
+		if (MattiasBallPadCollision(p_sphere, p_sphereDir, p_padSphere, p_startAngle, p_endAngle))
+		{
+			if ((centerBall.x <= (centerPad.x + 80.0f)) && (centerBall.x >= (centerPad.x - 80.0f)) && (centerBall.y <= centerPad.y))
 			{
 				return 1;
 			}
-			else if ((p_centerBall.x <= (p_centerPad.x + 80.0f)) && (p_centerBall.x >= (p_centerPad.x - 80.0f)) && (p_centerBall.y >= p_centerPad.y))
+			else if ((centerBall.x <= (centerPad.x + 80.0f)) && (centerBall.x >= (centerPad.x - 80.0f)) && (centerBall.y >= centerPad.y))
 			{
 				return 2;
 			}
-			else if ((p_centerBall.y <= (p_centerPad.y + 80.0f)) && (p_centerBall.y >= (p_centerPad.y - 80.0f)) && (p_centerBall.x <= p_centerPad.x))
+			else if ((centerBall.y <= (centerPad.y + 80.0f)) && (centerBall.y >= (centerPad.y - 80.0f)) && (centerBall.x <= centerPad.x))
 			{
 				return 3;
 			}
@@ -177,7 +183,7 @@ int BOPhysics::CheckCollisioPadSphere(float2 p_centerPad, float p_radiusPad, dou
 			{
 				return 4;
 			}
-		//}
+		}
 	}
 	return 0;
 }
