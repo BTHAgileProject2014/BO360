@@ -20,11 +20,18 @@ bool BOBall::Initialize(float2 p_position, int2 p_size, std::string p_fileName, 
 	// Load texture.
 	m_sprite = BOGraphicInterface::LoadTexture(p_fileName);
 
+	m_mouseCheat = false;
+
 	return true;
 }
 
 void BOBall::Update()
 {
+	if (m_mouseCheat)
+	{
+		return;
+	}
+
 	m_position.x = m_speed * m_direction.x + m_position.x;
 	m_position.y = m_speed * m_direction.y + m_position.y;
 
@@ -73,4 +80,24 @@ void BOBall::BouncedOnPad()
 box BOBall::GetBoundingBox()
 {
 	return box(m_position, m_size);
+}
+
+void BOBall::Handle(InputMessages p_inputMessages)
+{
+	if (p_inputMessages.spacebarKey)
+	{
+		if (m_mouseCheat)
+		{
+			m_mouseCheat = false;
+		}
+		else
+		{
+			m_mouseCheat = true;
+		}
+	}
+	if (m_mouseCheat)
+	{
+		m_position.x = p_inputMessages.mouseX;
+		m_position.y = p_inputMessages.mouseY;
+	}
 }
