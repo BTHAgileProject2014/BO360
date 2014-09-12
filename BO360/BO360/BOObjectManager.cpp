@@ -104,8 +104,11 @@ void BOObjectManager::Update()
 	if (m_ballList[0].CanColide())
 	{
 		
-		int bounceTest = BOPhysics::CheckCollisioPadSphere(m_ballList[0].GetBoundingSphere(), m_ballList[0].GetDirection(), m_paddle.GetBoundingSphere(), m_paddle.GetRotation() - 20, 40);
-
+		int bounceTest = BOPhysics::CheckCollisioPadSphere(m_ballList[0].GetBoundingSphere(), m_ballList[0].GetDirection(), m_paddle.GetBoundingSphere(), m_paddle.GetRotation() - 15, 30);
+		if (bounceTest > 0)
+		{
+			m_ballList[0].BouncedOnPad();
+		}
 		BallDirectionChange(bounceTest);
 	/*	if (BOPhysics::MattiasBallPadCollision(m_ballList[0].GetBoundingSphere(), m_ballList[0].GetDirection(), m_paddle.GetBoundingSphere(), m_paddle.GetRotation() - 20, 40))
 		{*/

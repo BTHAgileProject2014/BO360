@@ -61,7 +61,7 @@ bool BOInput::Update()
 							m_buttonsPressed[BOInput_Up] = true;
 							m_publisher.Notify(upArrow, true);
 #ifdef DEBUG
-							std::cout << "UP is pressed\n";
+							//std::cout << "UP is pressed\n";
 #endif
 						}
 						break;

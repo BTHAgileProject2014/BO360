@@ -11,7 +11,7 @@ BOBall::~BOBall()
 
 bool BOBall::Initialize(float2 p_position, int2 p_size, std::string p_fileName, float p_speed, float2 p_direction)
 {
-	m_canColide = false;
+	m_canColide = true;
 	m_position = p_position;
 	m_size = p_size;
 	m_speed = p_speed;
