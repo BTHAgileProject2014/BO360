@@ -50,6 +50,7 @@ bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight)
 	}
 
 	m_ballList.push_back(ball);
+	BOPublisher::AddSubscriber(&m_ballList[0]);
 
 	for (int i = 0; i < 9; i++)
 	{

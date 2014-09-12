@@ -2,8 +2,9 @@
 #define BOBALL_H_
 
 #include "BOObject.h"
+#include "BOSubscriber.h"
 
-class BOBall: public BOObject
+class BOBall: public BOObject, public BOSubscriber
 {
 public:
 	BOBall();
@@ -17,11 +18,12 @@ public:
 	bool CanColide();
 	void BouncedOnPad();
 	box GetBoundingBox();
+	void Handle(InputMessages p_inputMessages);
 
 private:
 	bool m_canColide;
 	float m_speed;
 	float2 m_direction;
-
+	bool m_mouseCheat;
 };
 #endif
