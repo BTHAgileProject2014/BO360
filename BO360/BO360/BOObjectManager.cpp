@@ -162,12 +162,12 @@ void BOObjectManager::BallDirectionChange(int p_bounceCorner)
 	if (p_bounceCorner == 1 || p_bounceCorner == 2)//Straight up and down corner
 	{
 		ballDir.y *= (-1);
-		std::cout << "Krock" << std::endl;
+		//std::cout << "Krock" << std::endl;
 	}
 	else//Straight right and left corner
 	{
 		ballDir.x *= (-1);
-		std::cout << "Krock" << std::endl;
+		//std::cout << "Krock" << std::endl;
 	}
 	m_ballList[0].SetDirection(ballDir);
 }
