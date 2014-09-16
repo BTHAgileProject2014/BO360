@@ -11,6 +11,9 @@ BOObjectManager::~BOObjectManager()
 
 bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight)
 {
+	int2 windowSize;
+	windowSize.x = p_windowWidth;
+	windowSize.y = p_windowHeight;
 	bool result;
 	m_hasColided = false;
 
@@ -22,28 +25,28 @@ bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight)
 	}
 
 	// Initialize the black hole.
-	result = m_blackHole.Initialize(float2((p_windowWidth / 2.0f), (p_windowHeight / 2.0f)), int2(250, 250), "Bilder/placeholderBlackhole.png");
+	result = m_blackHole.Initialize(float2((p_windowWidth / 2.0f), (p_windowHeight / 2.0f)), int2(200, 200), "Bilder/placeholderBlackhole110x110.png");
 	if (!result)
 	{
 		return false;
 	}
 
 	// Initialize the pad.
-	result = m_paddle.Initialize(float2((p_windowWidth / 2.0f), (p_windowHeight / 2.0f)), int2(300, 300), "Bilder/placeholderPad2.png");
+	result = m_paddle.Initialize(float2((p_windowWidth / 2.0f), (p_windowHeight / 2.0f)), int2(240, 240), "Bilder/placeholderPad2.png");
 	if (!result)
 	{
 		return false;
 	}
 
 	// Initialize primary ball.
-	int2 ballSize = int2(30, 30);
+	int2 ballSize = int2(15, 15);
 
 	float2 ballPosition = float2(30, 30);
 	float ballSpeed = 0.1f;
 	float2 ballDirection = float2(10, 10);
 
 	BOBall ball;
-	result = ball.Initialize(ballPosition, ballSize, "Bilder/placeholderBoll.png", ballSpeed, ballDirection);
+	result = ball.Initialize(ballPosition, ballSize, "Bilder/placeholderBoll10x10.png", ballSpeed, ballDirection, windowSize);
 	if (!result)
 	{
 		return false;
@@ -52,12 +55,19 @@ bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight)
 	m_ballList.push_back(ball);
 	BOPublisher::AddSubscriber(&m_ballList[0]);
 
-	for (int i = 0; i < 9; i++)
+	float diff = 17;
+	for (int i = 0; i < 38; i++)
 	{
-		for (int j = 0; j < 2; j++)
+		for (int j = 0; j < 24; j++)
 		{
 			BOBlock block;
-			result = block.Initialize(float2(((85*i) + 60), (45+(510*j))), int2(80,80), "Bilder/placeholderHexagon.png");
+			float x = (32 * i) + 60;
+			float y = (35 * j) + 45;
+			if (i % 2 == 0)
+			{
+				y += diff;
+			}
+			result = block.Initialize(float2(x, y), int2(40,40), "Bilder/placeholderHexagon40x40.png");
 			if (!result)
 			{
 				return false;

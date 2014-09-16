@@ -1,6 +1,6 @@
 #ifndef BOSYSTEM_H_
 #define BOSYSTEM_H_
-//#define DEBUG
+#define DEBUG
 
 #include "BOComponent.h"
 #include "BOWindow.h"
