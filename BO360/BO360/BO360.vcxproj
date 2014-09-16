@@ -80,6 +80,7 @@
     <ClInclude Include="BOObjectManager.h" />
     <ClInclude Include="BOPaddle.h" />
     <ClInclude Include="BOPhysics.h" />
+    <ClInclude Include="BOPowerUp.h" />
     <ClInclude Include="BOPublisher.h" />
     <ClInclude Include="BOSubscriber.h" />
     <ClInclude Include="BOSystem.h" />
@@ -100,6 +101,7 @@
     <ClCompile Include="BOObjectManager.cpp" />
     <ClCompile Include="BOPaddle.cpp" />
     <ClCompile Include="BOPhysics.cpp" />
+    <ClCompile Include="BOPowerUp.cpp" />
     <ClCompile Include="BOPublisher.cpp" />
     <ClCompile Include="BOSubscriber.cpp" />
     <ClCompile Include="BOSystem.cpp" />
