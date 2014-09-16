@@ -15,28 +15,28 @@ bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight)
 	m_hasColided = false;
 
 	// Initialize the background.
-	result = m_background.Initialize(float2(400, 300), int2(800, 600), "Bilder/background.png");
+	result = m_background.Initialize(float2(p_windowWidth / 2, p_windowHeight / 2), int2(p_windowWidth, p_windowHeight), "Bilder/background.png");
 	if (!result)
 	{
 		return false;
 	}
 
 	// Initialize the black hole.
-	result = m_blackHole.Initialize(float2((p_windowWidth / 2.0f), (p_windowHeight / 2.0f)), int2(220, 220), "Bilder/placeholderBlackhole.png");
+	result = m_blackHole.Initialize(float2((p_windowWidth / 2.0f), (p_windowHeight / 2.0f)), int2(250, 250), "Bilder/placeholderBlackhole.png");
 	if (!result)
 	{
 		return false;
 	}
 
 	// Initialize the pad.
-	result = m_paddle.Initialize(float2((p_windowWidth / 2.0f), (p_windowHeight / 2.0f)), int2(180, 180), "Bilder/placeholderPad2.png");
+	result = m_paddle.Initialize(float2((p_windowWidth / 2.0f), (p_windowHeight / 2.0f)), int2(300, 300), "Bilder/placeholderPad2.png");
 	if (!result)
 	{
 		return false;
 	}
 
 	// Initialize primary ball.
-	int2 ballSize = int2(40, 40);
+	int2 ballSize = int2(30, 30);
 
 	float2 ballPosition = float2(30, 30);
 	float ballSpeed = 0.1f;
