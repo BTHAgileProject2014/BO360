@@ -111,6 +111,7 @@
     <ClCompile Include="BOWindow.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Maps\Default.bom" />
     <None Include="Maps\Empty.bom" />
     <None Include="Maps\Filled.bom" />
   </ItemGroup>

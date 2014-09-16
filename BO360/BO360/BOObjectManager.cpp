@@ -63,7 +63,7 @@ bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight)
 	BOPublisher::AddSubscriber(&m_ballList[0]);
 
 	// Load a map.
-	m_mapLoader.LoadMap("Filled.bom");
+	m_mapLoader.LoadMap("Default.bom");
 	m_blockPositions = m_mapLoader.GetBlockPositions();
 
 	float x = 0;

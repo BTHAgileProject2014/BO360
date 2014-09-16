@@ -142,5 +142,8 @@
     <None Include="Maps\Filled.bom">
       <Filter>Resource Files\Maps</Filter>
     </None>
+    <None Include="Maps\Default.bom">
+      <Filter>Resource Files\Maps</Filter>
+    </None>
   </ItemGroup>
 </Project>
