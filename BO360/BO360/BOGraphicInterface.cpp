@@ -136,7 +136,7 @@ SDL_Texture* BOGraphicInterface::LoadTexture(std::string p_path)
 	if (surface == NULL)
 	{
 		std::cout << "Failed to load image: " + p_path << std::endl;
-		std::cout << IMG_GetError();
+		std::cout << IMG_GetError() << std::endl;
 		// Failed to load! 
 		// This should be handled
 	}
