@@ -32,14 +32,12 @@ bool BOGraphicInterface::Initialize(int p_windowWidth, int p_windowHeight)
 	}
 	SDL_SetRenderDrawColor(GetInstance().m_renderer, 0, 0, 0, SDL_ALPHA_OPAQUE);
 
-
 	int imgFlags = IMG_INIT_PNG;
 	if (!(IMG_Init(imgFlags) & imgFlags))
 	{
 		std::cout << "Failed to init SDL_Image:" << IMG_GetError() << std::endl;
 		return false;
 	}
-
 	return true;
 }
 
