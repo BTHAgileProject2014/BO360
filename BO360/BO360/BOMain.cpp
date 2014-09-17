@@ -8,5 +8,6 @@ int main(int argc, char* args[])
 	{
 		while (system.Run());
 	}
+	system.Shutdown();
 	return 0;
 }

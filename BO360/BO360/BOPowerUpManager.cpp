@@ -10,9 +10,11 @@ BOPowerUpManager::~BOPowerUpManager()
 {
 }
 
-bool BOPowerUpManager::Initialize()
+bool BOPowerUpManager::Initialize(int p_windowsWidth, int p_windowHeight)
 {
 	m_powerUps = std::vector<BOPowerUp>();
+	m_windowSize.x = p_windowsWidth;
+	m_windowSize.y = p_windowHeight;
 
 	return true;
 }

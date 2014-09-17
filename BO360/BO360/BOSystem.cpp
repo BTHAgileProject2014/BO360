@@ -40,6 +40,8 @@ bool BOSystem::Initialize()
 		return false;
 	}
 
+	result = m_powerUpManager.Initialize(windowWidth, windowHeight);
+
 	m_deltaTime = 0;
 	m_totalTime = 0;
 	m_FPS = 0;
@@ -74,6 +76,9 @@ bool BOSystem::Run()
 		// Update all of the objects
 		m_objectManager.Update(m_deltaTime);
 
+		// Update the power-ups
+		m_powerUpManager.Update(m_deltaTime);
+
 		// ============================
 
 		// ========== RENDER ==========
@@ -94,4 +99,6 @@ bool BOSystem::Run()
 void BOSystem::Shutdown()
 {
 	m_input.Shutdown();
+	m_objectManager.Shutdown();
+	m_powerUpManager.Shutdown();
 }
