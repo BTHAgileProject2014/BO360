@@ -60,6 +60,16 @@ struct float2
 
 		return temp;
 	}
+
+	float2 scalar(float p_input)
+	{
+		return float2(x * p_input, y * p_input);
+	}
+
+	float dot(float2 p_input)
+	{
+		return ((x * p_input.x) + (y * p_input.y));
+	}
 };
 
 struct float3
