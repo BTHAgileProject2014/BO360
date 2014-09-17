@@ -60,6 +60,16 @@ struct float2
 
 		return temp;
 	}
+
+	float2 scalar(float p_input)
+	{
+		return float2(x * p_input, y * p_input);
+	}
+
+	float dot(float2 p_input)
+	{
+		return ((x * p_input.x) + (y * p_input.y));
+	}
 };
 
 struct float3
@@ -372,30 +382,30 @@ struct hexagon
 	float2 pos;
 	int2 size;
 	float2 pointUpLeft, pointUpRight, pointRight, pointDownRight, pointDownLeft, pointLeft;
-	float2 offset;
 
 	hexagon(){}
 
 	hexagon(float2 p_pos, int2 p_size)
 	{
-		offset = float2(40, 40);
+		pos = p_pos;
+		size = p_size;
 		
-		pointUpLeft.x = p_pos.x - 19;
-		pointUpLeft.y = p_pos.y - 34;
+		pointUpLeft.x = p_pos.x - (p_size.x / 4.0f);
+		pointUpLeft.y = p_pos.y - (p_size.y / 2.28f);
 
-		pointUpRight.x = p_pos.x + 20;
-		pointUpRight.y = p_pos.y - 34;
+		pointUpRight.x = p_pos.x + (p_size.x / 4.0f);
+		pointUpRight.y = p_pos.y - (p_size.y / 2.28f);
 
-		pointRight.x = p_pos.x + 40;
+		pointRight.x = p_pos.x + (p_size.x / 2.0f);
 		pointRight.y = p_pos.y;
 
-		pointDownRight.x = p_pos.x + 20;
-		pointDownRight.y = p_pos.y + 35;
+		pointDownRight.x = p_pos.x + (p_size.x / 4.0f);
+		pointDownRight.y = p_pos.y + (p_size.y / 2.28f);
 
-		pointDownLeft.x = p_pos.x - 19;
-		pointDownLeft.y = p_pos.y + 35;
+		pointDownLeft.x = p_pos.x - (p_size.x / 4.0f);
+		pointDownLeft.y = p_pos.y + (p_size.y / 2.28f);
 
-		pointLeft.x = p_pos.x - 39;
+		pointLeft.x = p_pos.x - (p_size.x / 2.0f);
 		pointLeft.y = p_pos.y;
 	}
 };

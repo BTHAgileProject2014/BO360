@@ -76,10 +76,12 @@
     <ClInclude Include="BOComponent.h" />
     <ClInclude Include="BOGraphicInterface.h" />
     <ClInclude Include="BOInput.h" />
+    <ClInclude Include="BOMapLoader.h" />
     <ClInclude Include="BOObject.h" />
     <ClInclude Include="BOObjectManager.h" />
     <ClInclude Include="BOPaddle.h" />
     <ClInclude Include="BOPhysics.h" />
+    <ClInclude Include="BOPowerUp.h" />
     <ClInclude Include="BOPublisher.h" />
     <ClInclude Include="BOSubscriber.h" />
     <ClInclude Include="BOSystem.h" />
@@ -96,15 +98,22 @@
     <ClCompile Include="BOGraphicInterface.cpp" />
     <ClCompile Include="BOInput.cpp" />
     <ClCompile Include="BOMain.cpp" />
+    <ClCompile Include="BOMapLoader.cpp" />
     <ClCompile Include="BOObject.cpp" />
     <ClCompile Include="BOObjectManager.cpp" />
     <ClCompile Include="BOPaddle.cpp" />
     <ClCompile Include="BOPhysics.cpp" />
+    <ClCompile Include="BOPowerUp.cpp" />
     <ClCompile Include="BOPublisher.cpp" />
     <ClCompile Include="BOSubscriber.cpp" />
     <ClCompile Include="BOSystem.cpp" />
     <ClCompile Include="BOTimer.cpp" />
     <ClCompile Include="BOWindow.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Maps\Default.bom" />
+    <None Include="Maps\Empty.bom" />
+    <None Include="Maps\Filled.bom" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

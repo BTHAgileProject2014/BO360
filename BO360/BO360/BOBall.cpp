@@ -60,7 +60,10 @@ float BOBall::GetSpeed()
 
 void BOBall::SetDirection(float2 p_direction)
 {
-	m_direction = p_direction.normalized();
+	if (!(p_direction.x == 0 && p_direction.y == 0))
+	{
+		m_direction = p_direction.normalized();
+	}
 }
 
 float2 BOBall::GetDirection()
