@@ -19,6 +19,7 @@ public:
 	void BouncedOnPad();
 	box GetBoundingBox();
 	void Handle(InputMessages p_inputMessages);
+	void BouncedOnHexagon();
 
 private:
 	bool m_canColide;

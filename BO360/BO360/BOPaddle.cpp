@@ -13,7 +13,7 @@ BOPaddle::~BOPaddle()
 bool BOPaddle::Initialize(float2 p_position, int2 p_size, std::string p_fileName)
 {
 	m_rotation = 0.0f;
-	m_deltaRotation = 0.8f;
+	m_deltaRotation = 0.4f;
 	BOPublisher::AddSubscriber(this);
 	return BOObject::Initialize(p_position, p_size, p_fileName);
 	

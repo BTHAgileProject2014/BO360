@@ -4,6 +4,7 @@
 #include "BOUtility.h"
 #include <math.h>
 #include <iostream>
+#include <string>
 
 class BOPhysics
 {

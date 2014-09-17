@@ -48,8 +48,8 @@ bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight)
 	// Initialize primary ball.
 	int2 ballSize = int2(15, 15);
 
-	float2 ballPosition = float2(30, 30);
-	float ballSpeed = 1.0f;
+	float2 ballPosition = float2(p_windowWidth / 2.0f, p_windowHeight / 2.0f);
+	float ballSpeed = 4.0f;
 	float2 ballDirection = float2(10, 10);
 
 	BOBall ball;
@@ -130,7 +130,8 @@ void BOObjectManager::Update()
 				m_ballList[0].SetDirection(float2(0, 0));
 				if (BOPhysics::CheckCollisionSphereToHexagon(m_ballList[0].GetBoundingSphere(), m_blockList[i].GetBoundingHexagon(), normal))
 			{
-				m_blockList[i].SetDead();
+					m_blockList[i].SetDead();
+					m_ballList[0].BouncedOnHexagon();
 					float2 invNormalX, invNormalY;
 					invNormalX = float2(normal.x * -1, normal.y);
 					invNormalY = float2(normal.x, normal.y * -1);

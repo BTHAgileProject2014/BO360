@@ -234,9 +234,23 @@ bool BOPhysics::BallPadCollision(sphere p_sphere, float2 p_sphereDir, sphere p_p
 	double padSpread = p_padSpread;
 	startAngle *= degreesToRadians;
 	padSpread *= degreesToRadians;
-
-
+	
 	double startAngleMA = HALF_PI - startAngle;
+
+	double padCenterAngle = startAngleMA - (padSpread / 2);
+	while (padCenterAngle >= 2 * PI)
+	{
+		padCenterAngle -= 2 * PI;
+	}
+	while (padCenterAngle < 0)
+	{
+		padCenterAngle += 2 * PI;
+	}
+
+	// Calculate a vector pointing towards the pad's center in SDL-Draw-Space
+	float dirX = cos(padCenterAngle);
+	float dirY = -sin(padCenterAngle);
+	float2 padCenterVector = float2(dirX, dirY).normalized();
 
 
 	float2 centerToSphere = (p_sphere.pos - p_padSphere.pos).normalized();
@@ -281,10 +295,15 @@ bool BOPhysics::BallPadCollision(sphere p_sphere, float2 p_sphereDir, sphere p_p
 	{
 		//std::cout << "Hit!";
 		std::cout << "1" << std::endl;
+		std::cout << "StartAngle: " << startAngleMA << std::endl;
+		std::cout << "PadSpread: " << padSpread << std::endl;
+		std::cout << "CenterOfPadRotation: " + std::to_string(padCenterAngle) << std::endl;
+		std::cout << "Center to Pad: (" + std::to_string(padCenterVector.x) + "," + std::to_string(padCenterVector.y) + ")" << std::endl;
+
 		return true;
 	}
 
-	//ctpAngle = center to pad angle
+	//ctpAngle = center to ball angle
 	//startAngleMa = pad corner 1
 	//padAngle = pad corner 2
 	if ((startAngleMA - padSpread) < 0)
@@ -295,6 +314,11 @@ bool BOPhysics::BallPadCollision(sphere p_sphere, float2 p_sphereDir, sphere p_p
 		{
 			//std::cout << "Hit!";
 			std::cout << "2" << std::endl;
+			std::cout << "StartAngle: " << startAngleMA << std::endl;
+			std::cout << "PadSpread: " << padSpread << std::endl;
+			std::cout << "CenterOfPadRotation: " + std::to_string(padCenterAngle) << std::endl;
+			std::cout << "Center to Pad: (" + std::to_string(padCenterVector.x) + "," + std::to_string(padCenterVector.y) + ")" << std::endl;
+
 			return true;
 		}
 
@@ -302,7 +326,15 @@ bool BOPhysics::BallPadCollision(sphere p_sphere, float2 p_sphereDir, sphere p_p
 	return false;
 }
 
-void CalculateNewDir(float2 currentDir, float distanceFromCenter, float maxDistanceFromCenter)
+void CalculateNewDir(float2 currentDir, float2 padNormal, float distanceFromCenter, float maxDistanceFromCenter)
 {
+	if (!(distanceFromCenter > 0 && maxDistanceFromCenter > 0))
+	{
 
+		std::cout << "One of the distances is negative" << std::endl;
+	}
+
+	if (distanceFromCenter )
+
+	float normalx = cos(distanceFromCenter);
 }
