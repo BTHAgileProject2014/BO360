@@ -26,10 +26,12 @@ bool BOSystem::Initialize()
 		return false;
 	}
 	
-	windowWidth = 800;
-	windowHeight = 600;
+	//windowWidth = 800;
+	//windowHeight = 600;
+	windowWidth = 1300;
+	windowHeight = 900;
 
-	if (!BOGraphicInterface::Initialize())
+	if (!BOGraphicInterface::Initialize(windowWidth, windowHeight))
 	{
 		return false;
 	}

@@ -190,25 +190,28 @@ int BOPhysics::CheckCollisioPadSphere(sphere p_sphere, float2 p_sphereDir, spher
 	centerBall = p_sphere.pos;
 	padRadius = p_padSphere.radius;
 	ballRadius = p_sphere.radius;
-	if (CollisionRadiusRadius(centerPad, padRadius, centerBall, ballRadius))
+	if (CheckCollisionSpheres(p_sphere, p_padSphere))
 	{
-		if (MattiasBallPadCollision(p_sphere, p_sphereDir, p_padSphere, p_startAngle, p_endAngle))
+		if (!CollisionRadiusRadius(centerPad, (padRadius - 10), centerBall, ballRadius))
 		{
-			if ((centerBall.x <= (centerPad.x + 80.0f)) && (centerBall.x >= (centerPad.x - 80.0f)) && (centerBall.y <= centerPad.y))
+			if (MattiasBallPadCollision(p_sphere, p_sphereDir, p_padSphere, p_startAngle, p_endAngle))
 			{
-				return 1;
-			}
-			else if ((centerBall.x <= (centerPad.x + 80.0f)) && (centerBall.x >= (centerPad.x - 80.0f)) && (centerBall.y >= centerPad.y))
-			{
-				return 2;
-			}
-			else if ((centerBall.y <= (centerPad.y + 80.0f)) && (centerBall.y >= (centerPad.y - 80.0f)) && (centerBall.x <= centerPad.x))
-			{
-				return 3;
-			}
-			else
-			{
-				return 4;
+				if ((centerBall.x <= (centerPad.x + 80.0f)) && (centerBall.x >= (centerPad.x - 80.0f)) && (centerBall.y <= centerPad.y))
+				{
+					return 1;
+				}
+				else if ((centerBall.x <= (centerPad.x + 80.0f)) && (centerBall.x >= (centerPad.x - 80.0f)) && (centerBall.y >= centerPad.y))
+				{
+					return 2;
+				}
+				else if ((centerBall.y <= (centerPad.y + 80.0f)) && (centerBall.y >= (centerPad.y - 80.0f)) && (centerBall.x <= centerPad.x))
+				{
+					return 3;
+				}
+				else
+				{
+					return 4;
+				}
 			}
 		}
 	}
@@ -222,146 +225,81 @@ bool BOPhysics::CheckBallInPadAngle(float2 p_centerPad, float p_radiusPad, doubl
 
 bool BOPhysics::MattiasBallPadCollision(sphere p_sphere, float2 p_sphereDir, sphere p_padSphere, double p_startAngle, double p_padSpread)
 {
-	if (CheckCollisionSpheres(p_sphere, p_padSphere))
+
+	float2 up = float2(0, 1);
+	double alpha = acos(up.x);
+
+
+	double degreesToRadians = (2 * PI) / 360;
+	double rToDegrees = 360 / (2 * PI);
+	double startAngle = p_startAngle;
+	double padSpread = p_padSpread;
+	startAngle *= degreesToRadians;
+	padSpread *= degreesToRadians;
+
+
+	double startAngleMA = HALF_PI - startAngle;
+
+
+	float2 centerToSphere = (p_sphere.pos - p_padSphere.pos).normalized();
+	centerToSphere.y *= -1;
+
+	double arccos = acos(centerToSphere.x);
+	double arcsin = asin(centerToSphere.y);
+
+	float ctpAngle = acos(centerToSphere.x);
+	//ctpAngle -= HALF_PI;
+	if (centerToSphere.x < 0 && centerToSphere.y < 0)
 	{
-		float2 up = float2(0, 1);
-		double alpha = acos(up.x);
+		ctpAngle *= -1;
+	}
 
+	if (centerToSphere.x < 0 && centerToSphere.y > 0)
+	{
+		// Rätt?
+	}
 
-		double degreesToRadians = (2 * PI) / 360;
-		double rToDegrees = 360 / (2 * PI);
-		double startAngle = p_startAngle;
-		double padSpread = p_padSpread;
-		startAngle *= degreesToRadians;
-		padSpread *= degreesToRadians;
+	if (centerToSphere.x > 0 && centerToSphere.y < 0)
+	{
+		ctpAngle *= -1;
+	}
 
-
-		double startAngleMA = HALF_PI - startAngle;
-
-
-		float2 centerToSphere = (p_sphere.pos - p_padSphere.pos).normalized();
-		centerToSphere.y *= -1;
-
-		double arccos = acos(centerToSphere.x);
-		double arcsin = asin(centerToSphere.y);
-
-		float ctpAngle = acos(centerToSphere.x);
-		//ctpAngle -= HALF_PI;
-		if (centerToSphere.x < 0 && centerToSphere.y < 0)
-		{
-			ctpAngle *= -1;
-		}
-
-		if (centerToSphere.x < 0 && centerToSphere.y > 0)
-		{
-			// Rätt?
-		}
-
-		if (centerToSphere.x > 0 && centerToSphere.y < 0)
-		{
-			ctpAngle *= -1;
-		}
-
-		if (centerToSphere.x > 0 && centerToSphere.y > 0)
-		{
-			// Rätt?
-		}
+	if (centerToSphere.x > 0 && centerToSphere.y > 0)
+	{
+		// Rätt?
+	}
 	
-		if (ctpAngle < 0.0f)
-		{
-			ctpAngle += 2 * PI;
-		}
+	if (ctpAngle < 0.0f)
+	{
+		ctpAngle += 2 * PI;
+	}
 
-		if (startAngleMA < 0.0f)
-		{
-			startAngleMA += 2 * PI;
-		}
+	if (startAngleMA < 0.0f)
+	{
+		startAngleMA += 2 * PI;
+	}
 
-		if ((ctpAngle < startAngleMA) && (ctpAngle > (startAngleMA - padSpread)))
+	if ((ctpAngle < startAngleMA) && (ctpAngle > (startAngleMA - padSpread)))
+	{
+		//std::cout << "Hit!";
+		std::cout << "1" << std::endl;
+		return true;
+	}
+
+	//ctpAngle = center to pad angle
+	//startAngleMa = pad corner 1
+	//padAngle = pad corner 2
+	if ((startAngleMA - padSpread) < 0)
+	{
+		double padAngle = startAngleMA - padSpread + (2 * PI);
+
+		if ((ctpAngle > 0) && (ctpAngle < startAngleMA) || ((ctpAngle > padAngle) && (ctpAngle < (2 * PI))))
 		{
 			//std::cout << "Hit!";
+			std::cout << "2" << std::endl;
 			return true;
 		}
 
-		if ((startAngleMA - padSpread) < 0)
-		{
-			double padAngle = startAngleMA - padSpread + (2 * PI);
-			if (((ctpAngle > 0) && (ctpAngle < startAngleMA)) || ((ctpAngle > padAngle < (2 * PI))))
-			{
-				//std::cout << "Hit!";
-				return true;
-			}
-		}
-
-		return false;
-	
-		/*
-		if (ctpAngle < 0)
-		{
-			ctpAngle += 2 * PI;
-		}
-		*/
-
-		if (ctpAngle < 0.0f)
-		{
-			ctpAngle += 2 * PI;
-		}
-
-		if (startAngle < 0.0f)
-		{
-			startAngle += PI * 2;
-		}
-
-		//std::cout << "Start Angle: " << startAngle * rToDegrees << "End Angle: " << rToDegrees * (startAngle + padSpread) << "CTP Angle: " << rToDegrees * ctpAngle << std::endl;
-
-		if (ctpAngle > startAngle && ctpAngle < startAngle + padSpread)
-		{
-			return true;
-		}
-		float overlap = -((2 * PI) - (startAngle + padSpread));
-		if ((overlap > 0) && (ctpAngle < overlap))
-		{
-			return true;
-		}
-
-		
 	}
 	return false;
-	//if (CheckCollisionSpheres(p_sphere, p_padSphere))
-	//{
-	float2 big, small;
-	big = float2(0.0f, 0.0f);
-
-	small = float2(1.0f, 1.0f);
-	float2 smallDir = float2(-0.5f, -0.5f);
-
-	float2 smallToBig = big - small; // should be -1, -1
-
-	float x = 1.0f;
-	float y = 0.001f;
-
-
-	// ??????????
-	double test = cos(1.58);
-	double test2 = acos(test); // <-- Should be 1.9
-	// ?????????????????
-
-
-
-	float2 exampleVector = float2(-1, -1);
-	float2 normalizedExampleVector = exampleVector.normalized();
-	float angle = acos(normalizedExampleVector.x);
-	if (exampleVector.y < 0)
-	{
-		angle += HALF_PI;
-	}
-	float anglePlusHalf = angle + 1.57;
-
-	float normalizedAngleA = acos(normalizedExampleVector.x);
-	float normalizedAngleB = asin(test);
-
-	return true;
-	//}
-
-	return 0;
 }

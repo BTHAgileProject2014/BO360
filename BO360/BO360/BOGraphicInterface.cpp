@@ -32,14 +32,12 @@ bool BOGraphicInterface::Initialize(int p_windowWidth, int p_windowHeight)
 	}
 	SDL_SetRenderDrawColor(GetInstance().m_renderer, 0, 0, 0, SDL_ALPHA_OPAQUE);
 
-
 	int imgFlags = IMG_INIT_PNG;
 	if (!(IMG_Init(imgFlags) & imgFlags))
 	{
 		std::cout << "Failed to init SDL_Image:" << IMG_GetError() << std::endl;
 		return false;
 	}
-
 	return true;
 }
 
@@ -136,6 +134,7 @@ SDL_Texture* BOGraphicInterface::LoadTexture(std::string p_path)
 	if (surface == NULL)
 	{
 		std::cout << "Failed to load image: " + p_path << std::endl;
+		std::cout << IMG_GetError() << std::endl;
 		// Failed to load! 
 		// This should be handled
 	}

@@ -11,39 +11,49 @@ BOObjectManager::~BOObjectManager()
 
 bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight)
 {
+	int2 windowSize;
+	windowSize.x = p_windowWidth;
+	windowSize.y = p_windowHeight;
 	bool result;
 	m_hasColided = false;
 
+	// Initialize the map loader.
+	result = m_mapLoader.Initialize();
+	if (!result)
+	{
+		return false;
+	}
+
 	// Initialize the background.
-	result = m_background.Initialize(float2(400, 300), int2(800, 600), "Bilder/background.png");
+	result = m_background.Initialize(float2(p_windowWidth / 2, p_windowHeight / 2), int2(p_windowWidth, p_windowHeight), "Bilder/background.png");
 	if (!result)
 	{
 		return false;
 	}
 
 	// Initialize the black hole.
-	result = m_blackHole.Initialize(float2((p_windowWidth / 2.0f), (p_windowHeight / 2.0f)), int2(220, 220), "Bilder/placeholderBlackhole.png");
+	result = m_blackHole.Initialize(float2((p_windowWidth / 2.0f), (p_windowHeight / 2.0f)), int2(200, 200), "Bilder/placeholderBlackhole110x110.png");
 	if (!result)
 	{
 		return false;
 	}
 
 	// Initialize the pad.
-	result = m_paddle.Initialize(float2((p_windowWidth / 2.0f), (p_windowHeight / 2.0f)), int2(180, 180), "Bilder/placeholderPad2.png");
+	result = m_paddle.Initialize(float2((p_windowWidth / 2.0f), (p_windowHeight / 2.0f)), int2(240, 240), "Bilder/placeholderPad2.png");
 	if (!result)
 	{
 		return false;
 	}
 
 	// Initialize primary ball.
-	int2 ballSize = int2(40, 40);
+	int2 ballSize = int2(15, 15);
 
 	float2 ballPosition = float2(100, 300);
 	float ballSpeed = 0.01f;
 	float2 ballDirection = float2(20, 10);
 
 	BOBall ball;
-	result = ball.Initialize(ballPosition, ballSize, "Bilder/placeholderBoll.png", ballSpeed, ballDirection);
+	result = ball.Initialize(ballPosition, ballSize, "Bilder/placeholderBoll10x10.png", ballSpeed, ballDirection, windowSize);
 	if (!result)
 	{
 		return false;
@@ -52,19 +62,33 @@ bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight)
 	m_ballList.push_back(ball);
 	BOPublisher::AddSubscriber(&m_ballList[0]);
 
-	for (int i = 0; i < 9; i++)
+	// Load a map.
+	m_mapLoader.LoadMap("Default.bom");
+	m_blockPositions = m_mapLoader.GetBlockPositions();
+
+	float x = 0;
+	float y = 0;
+	float l_blockHeightDifference = 19;
+
+	// Load blocks.
+	for (int i = 0; i < m_blockPositions.size();  i++)
 	{
-		for (int j = 0; j < 2; j++)
+		BOBlock l_block;
+		x = (32 * m_blockPositions[i].x) + 60;
+		y = (37 * m_blockPositions[i].y) + 50;
+
+		if ((int)m_blockPositions[i].x % 2 == 0)
 		{
-			BOBlock block;
-			result = block.Initialize(float2(((85*i) + 60), (45+(510*j))), int2(80,80), "Bilder/placeholderHexagon.png");
-			//result = block.Initialize(float2(200,400), int2(80, 80), "Bilder/placeholderHexagon.png");
-			if (!result)
-			{
-				return false;
-			}
-			m_blockList.push_back(block);
+			y += l_blockHeightDifference;
 		}
+
+		// Create block.
+		result = l_block.Initialize(float2(x, y), int2(40, 40), "Bilder/placeholderHexagon40x40.png");
+		if (!result)
+		{
+			return false;
+		}
+		m_blockList.push_back(l_block);
 	}
 	/*float2 test = m_ballList[0].GetDirection();
 	test = float2(10,10);*/
@@ -205,10 +229,12 @@ void BOObjectManager::BallDirectionChange(int p_bounceCorner)
 	if (p_bounceCorner == 1 || p_bounceCorner == 2)//Straight up and down corner
 	{
 		ballDir.y *= (-1);
+		//std::cout << "Krock" << std::endl;
 	}
 	else//Straight right and left corner
 	{
 		ballDir.x *= (-1);
+		//std::cout << "Krock" << std::endl;
 	}
 	m_ballList[0].SetDirection(ballDir);
 }
