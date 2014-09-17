@@ -9,6 +9,7 @@
 #include "BOPaddle.h"
 #include "BOBlock.h"
 #include "BOPhysics.h"
+#include "BOMapLoader.h"
 #include <vector>
 
 class BOObjectManager : public BOComponent
@@ -25,6 +26,9 @@ public:
 private:
 	void BallDirectionChange(int p_bounceCorner);
 	bool m_hasColided;
+
+	BOMapLoader m_mapLoader;
+	std::vector<float2> m_blockPositions;
 
 	BOBackground m_background;
 	BOBlackHole m_blackHole;
