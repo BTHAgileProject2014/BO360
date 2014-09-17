@@ -61,6 +61,7 @@ bool BOSystem::Initialize()
 	{
 		return false;
 	}
+	BOTextManager::AddText("FUNKAR!", float2(0, 0), int3(255, 255, 255));
 
 	return true;
 }
