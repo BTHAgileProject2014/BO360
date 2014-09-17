@@ -38,9 +38,9 @@ bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight)
 	// Initialize primary ball.
 	int2 ballSize = int2(40, 40);
 
-	float2 ballPosition = float2(30, 30);
-	float ballSpeed = 0.1f;
-	float2 ballDirection = float2(10, 10);
+	float2 ballPosition = float2(100, 300);
+	float ballSpeed = 0.01f;
+	float2 ballDirection = float2(20, 10);
 
 	BOBall ball;
 	result = ball.Initialize(ballPosition, ballSize, "Bilder/placeholderBoll.png", ballSpeed, ballDirection);
@@ -58,6 +58,7 @@ bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight)
 		{
 			BOBlock block;
 			result = block.Initialize(float2(((85*i) + 60), (45+(510*j))), int2(80,80), "Bilder/placeholderHexagon.png");
+			//result = block.Initialize(float2(200,400), int2(80, 80), "Bilder/placeholderHexagon.png");
 			if (!result)
 			{
 				return false;
@@ -65,7 +66,8 @@ bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight)
 			m_blockList.push_back(block);
 		}
 	}
-
+	/*float2 test = m_ballList[0].GetDirection();
+	test = float2(10,10);*/
 	return true;
 }
 
@@ -77,6 +79,11 @@ void BOObjectManager::Shutdown()
 void BOObjectManager::Update()
 {
 	bool result;
+	float2 normal;
+	float2 newBallDirection;
+	float vDotN;
+	float2 nMinusV;
+	float angleBallDirectionVsNormal;
 	m_blackHole.Update();
 
 	m_paddle.Update();
@@ -92,13 +99,47 @@ void BOObjectManager::Update()
 
 	for (int i = 0; i < m_blockList.size(); i++)
 	{
-		if (BOPhysics::CheckCollisionBoxToBox(m_ballList[0].GetBoundingBox(), m_blockList[i].GetBoundingBox()))
+		if (!m_blockList[i].GetDead())
 		{
-			if (BOPhysics::CheckCollisionSphereToHexagon(m_ballList[0].GetBoundingSphere(), m_blockList[i].GetBoundingHexagon()))
+			if (BOPhysics::CheckCollisionBoxToBox(m_ballList[0].GetBoundingBox(), m_blockList[i].GetBoundingBox()))
 			{
-				m_blockList[i].SetDead();
+				m_ballList[0].SetDirection(float2(0, 0));
+				if (BOPhysics::CheckCollisionSphereToHexagon(m_ballList[0].GetBoundingSphere(), m_blockList[i].GetBoundingHexagon(), normal))
+				{
+					m_blockList[i].SetDead();
+					float2 invNormalX, invNormalY;
+					invNormalX = float2(normal.x * -1, normal.y);
+					invNormalY = float2(normal.x, normal.y * -1);
+					float2 ballDir;
+					ballDir = m_ballList[0].GetDirection();
+					//ballDir.x *= -1;
+					//ballDir.y *= -1;
+					m_ballList[0].SetDirection(ballDir);
+					/*if (invNormalX.x == m_ballList[0].GetDirection().x && invNormalX.y == m_ballList[0].GetDirection().y)
+					{
+						newBallDirection = float2(m_ballList[0].GetDirection().x * -1, m_ballList[0].GetDirection().y);
+					}
+					else if (invNormalY.x == m_ballList[0].GetDirection().x && invNormalY.y == m_ballList[0].GetDirection().y)
+					{
+						newBallDirection = float2(m_ballList[0].GetDirection().x, m_ballList[0].GetDirection().y  * -1);
+					}
+					else
+					{*/
+						//angleBallDirectionVsNormal = acos(normal.dot(m_ballList[0].GetDirection()));
+						vDotN = m_ballList[0].GetDirection().dot(normal);
+						vDotN *= 2;
+						normal = normal * vDotN;
+						nMinusV = (m_ballList[0].GetDirection() - normal);
+						newBallDirection = (nMinusV);
+
+					//}
+					//newBallDirection = normal;
+					m_ballList[0].SetDirection(newBallDirection);
+					std::cout << m_ballList[0].GetDirection().x << " " << m_ballList[0].GetDirection().y << std::endl;
+
+				}
 			}
-		}		
+		}
 	}
 
 
@@ -128,6 +169,8 @@ void BOObjectManager::Update()
 
 		//}
 	}
+
+
 }
 
 void BOObjectManager::Draw()
