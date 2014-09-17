@@ -22,6 +22,8 @@ public:
 	void Shutdown();
 	void Update(Uint32 p_deltaTime);
 	void Draw();
+	bool GetPop();
+	void SetPop(bool p_pop);
 
 private:
 	void BallDirectionChange(int p_bounceCorner);
@@ -37,5 +39,8 @@ private:
 	std::vector<BOBlock> m_blockList;
 	//std::vector<BOParticle> m_particleList;
 	//std::vector<BOPowerUp> m_powerUPlist;
+
+	bool m_pop;
+	
 };
 #endif

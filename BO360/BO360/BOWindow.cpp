@@ -18,7 +18,7 @@ bool BOWindow::Initialize()
 
 bool BOWindow::Initialize(std::string p_windowText, int p_windowWidth, int p_windowHeight)
 {
-	if (SDL_Init(SDL_INIT_VIDEO) > 0)
+	if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO ) > 0)
 	{
 #ifdef DEBUG
 		std::cout << "SDL_Init() call failed in BOWindow::Initialize()";
