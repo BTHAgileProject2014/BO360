@@ -17,6 +17,13 @@ bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight)
 	bool result;
 	m_hasColided = false;
 
+	// Initialize the map loader.
+	result = m_mapLoader.Initialize();
+	if (!result)
+	{
+		return false;
+	}
+
 	// Initialize the background.
 	result = m_background.Initialize(float2(p_windowWidth / 2, p_windowHeight / 2), int2(p_windowWidth, p_windowHeight), "Bilder/background.png");
 	if (!result)
@@ -55,27 +62,36 @@ bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight)
 	m_ballList.push_back(ball);
 	BOPublisher::AddSubscriber(&m_ballList[0]);
 
-	float diff = 17;
-	for (int i = 0; i < 38; i++)
+	// Load a map.
+	m_mapLoader.LoadMap("Default.bom");
+	m_blockPositions = m_mapLoader.GetBlockPositions();
+
+	float x = 0;
+	float y = 0;
+	float l_blockHeightDifference = 19;
+
+	// Load blocks.
+	for (int i = 0; i < m_blockPositions.size();  i++)
 	{
-		for (int j = 0; j < 24; j++)
+		BOBlock l_block;
+		x = (32 * m_blockPositions[i].x) + 60;
+		y = (37 * m_blockPositions[i].y) + 50;
+
+		if ((int)m_blockPositions[i].x % 2 == 0)
 		{
-			BOBlock block;
-			float x = (32 * i) + 60;
-			float y = (35 * j) + 45;
-			if (i % 2 == 0)
-			{
-				y += diff;
+			y += l_blockHeightDifference;
 			}
-			result = block.Initialize(float2(x, y), int2(40,40), "Bilder/placeholderHexagon40x40.png");
+
+		// Create block.
+		result = l_block.Initialize(float2(x, y), int2(40, 40), "Bilder/placeholderHexagon40x40.png");
 			if (!result)
 			{
 				return false;
 			}
-			m_blockList.push_back(block);
+		m_blockList.push_back(l_block);
 		}
-	}
-
+	/*float2 test = m_ballList[0].GetDirection();
+	test = float2(10,10);*/
 	return true;
 }
 
@@ -87,6 +103,11 @@ void BOObjectManager::Shutdown()
 void BOObjectManager::Update()
 {
 	bool result;
+	float2 normal;
+	float2 newBallDirection;
+	float vDotN;
+	float2 nMinusV;
+	float angleBallDirectionVsNormal;
 	m_blackHole.Update();
 
 	m_paddle.Update();
@@ -102,11 +123,45 @@ void BOObjectManager::Update()
 
 	for (int i = 0; i < m_blockList.size(); i++)
 	{
+		if (!m_blockList[i].GetDead())
+		{
 		if (BOPhysics::CheckCollisionBoxToBox(m_ballList[0].GetBoundingBox(), m_blockList[i].GetBoundingBox()))
 		{
-			if (BOPhysics::CheckCollisionSphereToHexagon(m_ballList[0].GetBoundingSphere(), m_blockList[i].GetBoundingHexagon()))
+				m_ballList[0].SetDirection(float2(0, 0));
+				if (BOPhysics::CheckCollisionSphereToHexagon(m_ballList[0].GetBoundingSphere(), m_blockList[i].GetBoundingHexagon(), normal))
 			{
 				m_blockList[i].SetDead();
+					float2 invNormalX, invNormalY;
+					invNormalX = float2(normal.x * -1, normal.y);
+					invNormalY = float2(normal.x, normal.y * -1);
+					float2 ballDir;
+					ballDir = m_ballList[0].GetDirection();
+					//ballDir.x *= -1;
+					//ballDir.y *= -1;
+					m_ballList[0].SetDirection(ballDir);
+					/*if (invNormalX.x == m_ballList[0].GetDirection().x && invNormalX.y == m_ballList[0].GetDirection().y)
+					{
+						newBallDirection = float2(m_ballList[0].GetDirection().x * -1, m_ballList[0].GetDirection().y);
+					}
+					else if (invNormalY.x == m_ballList[0].GetDirection().x && invNormalY.y == m_ballList[0].GetDirection().y)
+					{
+						newBallDirection = float2(m_ballList[0].GetDirection().x, m_ballList[0].GetDirection().y  * -1);
+					}
+					else
+					{*/
+						//angleBallDirectionVsNormal = acos(normal.dot(m_ballList[0].GetDirection()));
+						vDotN = m_ballList[0].GetDirection().dot(normal);
+						vDotN *= 2;
+						normal = normal * vDotN;
+						nMinusV = (m_ballList[0].GetDirection() - normal);
+						newBallDirection = (nMinusV);
+
+					//}
+					//newBallDirection = normal;
+					m_ballList[0].SetDirection(newBallDirection);
+					std::cout << m_ballList[0].GetDirection().x << " " << m_ballList[0].GetDirection().y << std::endl;
+
+				}
 			}
 		}		
 	}
@@ -138,6 +193,8 @@ void BOObjectManager::Update()
 
 		//}
 	}
+
+
 }
 
 void BOObjectManager::Draw()
