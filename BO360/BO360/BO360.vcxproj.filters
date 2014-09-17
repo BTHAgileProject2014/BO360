@@ -78,6 +78,15 @@
     <ClCompile Include="BOShield.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="BOState.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="BOButton.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="BOStateManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BOSystem.h">
@@ -141,6 +150,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="BOShield.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BOButton.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BOState.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BOStateManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
