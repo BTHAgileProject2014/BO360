@@ -42,9 +42,17 @@ bool BOPhysics::CheckCollisionBoxToBox(box p_box1, box p_box2)
 
 bool BOPhysics::CheckCollisionSphereToHexagon(sphere p_sphere, hexagon p_hexagon, float2& normal)
 {
+	// Create 2 points for checking collision point on line
 	float2 point1, point2;
 
+	// Check collision with the sphere and each line in the hexagon
+	// Same code 6 times with differents points from the hexagon
+	//					   __	
+	//				      /  \
+	//					  \__/
+	// Upper Line _.
 	CheckCollisionSphereToLine(p_sphere, p_hexagon.pointUpLeft, p_hexagon.pointUpRight, point1, point2);
+	// Checking if collision in one point
 	if (point1.x >= p_hexagon.pointUpLeft.x && point1.x <= p_hexagon.pointUpRight.x && point1.y == p_hexagon.pointUpLeft.y && point1.y == p_hexagon.pointUpRight.y && point2.x == -1000)
 	{
 		normal = float2(p_hexagon.pointUpRight.y - p_hexagon.pointUpRight.y, -1 * (p_hexagon.pointUpRight.x - p_hexagon.pointUpLeft.x));
@@ -52,6 +60,7 @@ bool BOPhysics::CheckCollisionSphereToHexagon(sphere p_sphere, hexagon p_hexagon
 		normal.y *= -1;
 		return true;
 	}
+	// Checking if the ball collision with the line in two points
 	else if ((point1.x >= p_hexagon.pointUpLeft.x && point1.x <= p_hexagon.pointUpRight.x && point1.y == p_hexagon.pointUpLeft.y && point1.y == p_hexagon.pointUpRight.y) 
 		|| (point2.x >= p_hexagon.pointUpLeft.x && point2.x <= p_hexagon.pointUpRight.x && point2.y == p_hexagon.pointUpLeft.y && point2.y == p_hexagon.pointUpRight.y))
 	{
@@ -61,13 +70,16 @@ bool BOPhysics::CheckCollisionSphereToHexagon(sphere p_sphere, hexagon p_hexagon
 		return true;
 	}
 
+	// Upper right line \.
 	CheckCollisionSphereToLine(p_sphere, p_hexagon.pointUpRight, p_hexagon.pointRight, point1, point2);
+	// Checking if collision in one point
 	if (point1.x >= p_hexagon.pointUpRight.x && point1.x <= p_hexagon.pointRight.x && point1.y >= p_hexagon.pointUpRight.y && point1.y <= p_hexagon.pointRight.y && point2.x == -1000)
 	{
 		normal = float2(p_hexagon.pointRight.y - p_hexagon.pointUpRight.y, -1 * (p_hexagon.pointRight.x - p_hexagon.pointUpRight.x));
 		normal = normal.normalized();
 		return true;
 	}
+	// Checking if the ball collision with the line in two points
 	else if ((point1.x >= p_hexagon.pointUpRight.x && point1.x <= p_hexagon.pointRight.x && point1.y >= p_hexagon.pointUpRight.y && point1.y <= p_hexagon.pointRight.y)
 		|| (point2.x >= p_hexagon.pointUpRight.x && point2.x <= p_hexagon.pointRight.x && point2.y >= p_hexagon.pointUpRight.y && point2.y <= p_hexagon.pointRight.y))
 	{
@@ -76,13 +88,16 @@ bool BOPhysics::CheckCollisionSphereToHexagon(sphere p_sphere, hexagon p_hexagon
 		return true;
 	}
 	
+	// Lower right line /.
 	CheckCollisionSphereToLine(p_sphere, p_hexagon.pointRight, p_hexagon.pointDownRight, point1, point2);
+	// Checking if collision in one point
 	if (point1.x <= p_hexagon.pointRight.x && point1.x >= p_hexagon.pointDownRight.x && point1.y >= p_hexagon.pointRight.y && point1.y <= p_hexagon.pointDownRight.y && point2.x == -1000)
 	{
 		normal = float2(p_hexagon.pointDownRight.y - p_hexagon.pointRight.y, -1 * (p_hexagon.pointDownRight.x - p_hexagon.pointRight.x));
 		normal = normal.normalized();
 		return true;
 	}
+	// Checking if the ball collision with the line in two points
 	else if ((point1.x <= p_hexagon.pointRight.x && point1.x >= p_hexagon.pointDownRight.x && point1.y >= p_hexagon.pointRight.y && point1.y <= p_hexagon.pointDownRight.y)
 		|| (point2.x <= p_hexagon.pointRight.x && point2.x >= p_hexagon.pointDownRight.x && point2.y >= p_hexagon.pointRight.y && point2.y <= p_hexagon.pointDownRight.y))
 	{
@@ -91,13 +106,16 @@ bool BOPhysics::CheckCollisionSphereToHexagon(sphere p_sphere, hexagon p_hexagon
 		return true;
 	}
 	
+	// Lower middle line _.
 	CheckCollisionSphereToLine(p_sphere, p_hexagon.pointDownRight, p_hexagon.pointDownLeft, point1, point2);
+	// Checking if collision in one point
 	if (point1.x <= p_hexagon.pointDownRight.x && point1.x >= p_hexagon.pointDownLeft.x && point1.y >= p_hexagon.pointDownRight.y && point1.y <= p_hexagon.pointDownLeft.y && point2.x == -1000)
 	{
 		normal = float2(p_hexagon.pointDownLeft.y - p_hexagon.pointDownRight.y, -1 * (p_hexagon.pointDownLeft.x - p_hexagon.pointDownRight.x));
 		normal = normal.normalized();
 		return true;
 	}
+	// Checking if the ball collision with the line in two points
 	else if ((point1.x <= p_hexagon.pointDownRight.x && point1.x >= p_hexagon.pointDownLeft.x && point1.y >= p_hexagon.pointDownRight.y && point1.y <= p_hexagon.pointDownLeft.y)
 		|| (point2.x <= p_hexagon.pointDownRight.x && point2.x >= p_hexagon.pointDownLeft.x && point2.y >= p_hexagon.pointDownRight.y && point2.y <= p_hexagon.pointDownLeft.y))
 	{
@@ -106,13 +124,16 @@ bool BOPhysics::CheckCollisionSphereToHexagon(sphere p_sphere, hexagon p_hexagon
 		return true;
 	}
 	
+	// Lower Left line \.
 	CheckCollisionSphereToLine(p_sphere, p_hexagon.pointDownLeft, p_hexagon.pointLeft, point1, point2);
+	// Checking if collision in one point
 	if (point1.x <= p_hexagon.pointDownLeft.x && point1.x >= p_hexagon.pointLeft.x && point1.y <= p_hexagon.pointDownLeft.y && point1.y >= p_hexagon.pointLeft.y && point2.x == -1000)
 	{
 		normal = float2(p_hexagon.pointLeft.y - p_hexagon.pointDownLeft.y, -1 * (p_hexagon.pointLeft.x - p_hexagon.pointDownLeft.x));
 		normal = normal.normalized();
 		return true;
 	}
+	// Checking if the ball collision with the line in two points
 	else if ((point1.x <= p_hexagon.pointDownLeft.x && point1.x >= p_hexagon.pointLeft.x && point1.y <= p_hexagon.pointDownLeft.y && point1.y >= p_hexagon.pointLeft.y)
 		|| (point2.x <= p_hexagon.pointDownLeft.x && point2.x >= p_hexagon.pointLeft.x && point2.y <= p_hexagon.pointDownLeft.y && point2.y >= p_hexagon.pointLeft.y))
 	{
@@ -121,13 +142,16 @@ bool BOPhysics::CheckCollisionSphereToHexagon(sphere p_sphere, hexagon p_hexagon
 		return true;
 	}
 
+	// Upper left line /.
 	CheckCollisionSphereToLine(p_sphere, p_hexagon.pointLeft, p_hexagon.pointUpLeft, point1, point2);
+	// Checking if collision in one point
 	if (point1.x >= p_hexagon.pointLeft.x && point1.x <= p_hexagon.pointUpLeft.x && point1.y <= p_hexagon.pointLeft.y && point1.y >= p_hexagon.pointUpLeft.y && point2.x == -1000)
 	{
 		normal = float2(p_hexagon.pointLeft.y - p_hexagon.pointUpLeft.y, -1 * (p_hexagon.pointLeft.x - p_hexagon.pointUpLeft.x));
 		normal = normal.normalized();
 		return true;
 	}
+	// Checking if the ball collision with the line in two points
 	else if ((point1.x >= p_hexagon.pointLeft.x && point1.x <= p_hexagon.pointUpLeft.x && point1.y <= p_hexagon.pointLeft.y && point1.y >= p_hexagon.pointUpLeft.y)
 		|| (point2.x >= p_hexagon.pointLeft.x && point2.x <= p_hexagon.pointUpLeft.x && point2.y <= p_hexagon.pointLeft.y && point2.y >= p_hexagon.pointUpLeft.y))
 	{
@@ -136,6 +160,7 @@ bool BOPhysics::CheckCollisionSphereToHexagon(sphere p_sphere, hexagon p_hexagon
 		return true;
 	}
 
+	// No collision therefore collision point = -1000 // Happens in line collison
 	if (point1.x = -1000)
 	{
 		return false;
@@ -159,6 +184,7 @@ void BOPhysics::CheckCollisionSphereToLine(sphere p_sphere, float2 p_point1, flo
 	delta = b * b - (4 * a * c);
 	if (delta < 0)	// No intersection
 	{
+		// Return "null" for no intersection
 		p_returnValue1 = float2(-1000, -1000);
 		p_returnValue2 = float2(-1000, -1000);
 	}
@@ -167,7 +193,7 @@ void BOPhysics::CheckCollisionSphereToLine(sphere p_sphere, float2 p_point1, flo
 		// Code for returning intersecting point
 		u1 = -b / (2 * a);
 		p_returnValue1 = p_point1 + (point2MinusPoint1 * u1);
-		p_returnValue2 = float2(-1000, -1000);
+		p_returnValue2 = float2(-1000, -1000);		// Return "null" for no intersect at second point
 	}
 	else if (delta > 0) // Two intersections
 	{

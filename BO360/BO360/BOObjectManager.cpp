@@ -125,42 +125,21 @@ void BOObjectManager::Update(Uint32 p_deltaTime)
 	{
 		if (!m_blockList[i].GetDead())
 		{
-			if (BOPhysics::CheckCollisionBoxToBox(m_ballList[0].GetBoundingBox(), m_blockList[i].GetBoundingBox()))
+			if (BOPhysics::CheckCollisionSpheres(m_ballList[0].GetBoundingSphere(), m_blockList[i].GetBoundingSphere()))
 			{
 				m_ballList[0].SetDirection(float2(0, 0));
 				if (BOPhysics::CheckCollisionSphereToHexagon(m_ballList[0].GetBoundingSphere(), m_blockList[i].GetBoundingHexagon(), normal))
 				{
 					m_blockList[i].SetDead();
-					float2 invNormalX, invNormalY;
-					invNormalX = float2(normal.x * -1, normal.y);
-					invNormalY = float2(normal.x, normal.y * -1);
-					float2 ballDir;
-					ballDir = m_ballList[0].GetDirection();
-					//ballDir.x *= -1;
-					//ballDir.y *= -1;
-					m_ballList[0].SetDirection(ballDir);
-					/*if (invNormalX.x == m_ballList[0].GetDirection().x && invNormalX.y == m_ballList[0].GetDirection().y)
-					{
-						newBallDirection = float2(m_ballList[0].GetDirection().x * -1, m_ballList[0].GetDirection().y);
-					}
-					else if (invNormalY.x == m_ballList[0].GetDirection().x && invNormalY.y == m_ballList[0].GetDirection().y)
-					{
-						newBallDirection = float2(m_ballList[0].GetDirection().x, m_ballList[0].GetDirection().y  * -1);
-					}
-					else
-					{*/
-						//angleBallDirectionVsNormal = acos(normal.dot(m_ballList[0].GetDirection()));
-						vDotN = m_ballList[0].GetDirection().dot(normal);
-						vDotN *= 2;
-						normal = normal * vDotN;
-						nMinusV = (m_ballList[0].GetDirection() - normal);
-						newBallDirection = (nMinusV);
 
-					//}
-					//newBallDirection = normal;
+					//Collision with hexagon
+					//Reflect direction
+					// new vector = v -2(v.n)n
+					vDotN = m_ballList[0].GetDirection().dot(normal);
+					vDotN *= 2;
+					normal = normal * vDotN;
+					newBallDirection = (m_ballList[0].GetDirection() - normal);
 					m_ballList[0].SetDirection(newBallDirection);
-					std::cout << m_ballList[0].GetDirection().x << " " << m_ballList[0].GetDirection().y << std::endl;
-
 				}
 			}
 		}
