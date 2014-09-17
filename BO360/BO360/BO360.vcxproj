@@ -84,6 +84,7 @@
     <ClInclude Include="BOPowerUp.h" />
     <ClInclude Include="BOPowerUpManager.h" />
     <ClInclude Include="BOPublisher.h" />
+    <ClInclude Include="BOShield.h" />
     <ClInclude Include="BOState.h" />
     <ClInclude Include="BOStateManager.h" />
     <ClInclude Include="BOSubscriber.h" />
@@ -110,6 +111,7 @@
     <ClCompile Include="BOPowerUp.cpp" />
     <ClCompile Include="BOPowerUpManager.cpp" />
     <ClCompile Include="BOPublisher.cpp" />
+    <ClCompile Include="BOShield.cpp" />
     <ClCompile Include="BOState.cpp" />
     <ClCompile Include="BOStateManager.cpp" />
     <ClCompile Include="BOSubscriber.cpp" />
