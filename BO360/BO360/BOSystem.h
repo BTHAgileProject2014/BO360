@@ -8,6 +8,7 @@
 #include "BOObjectManager.h"
 #include "BOGraphicInterface.h"
 #include "BOTimer.h"
+#include "BOPowerUpManager.h"
 #include "BOSoundManager.h"
 #include <iostream>
 
@@ -25,6 +26,7 @@ private:
 	BOTimer m_timer;
 	BOInput m_input;
 	BOObjectManager m_objectManager;
+	BOPowerUpManager m_powerUpManager;
 	BOSoundManager m_soundManager;
 	int windowWidth, windowHeight;
 

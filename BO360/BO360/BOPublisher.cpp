@@ -31,13 +31,7 @@ bool BOPublisher::Initialize()
 }
 
 void BOPublisher::Shutdown()
-{
-	for (unsigned int i = 0; i < m_subscribers.size(); i++)
-	{
-		delete m_subscribers[i];
-	}
-	m_subscribers.clear();
-	
+{	
 }
 
 // Call the subscribers
