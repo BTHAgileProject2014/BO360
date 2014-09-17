@@ -13,6 +13,9 @@ public:
 
 	bool Initialize();
 	void Shutdown();
+
+	void Update(Uint32 p_deltaTime);
+	void Draw();
 private:
 	std::vector<BOPowerUp> m_powerUps;
 };

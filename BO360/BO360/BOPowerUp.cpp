@@ -28,6 +28,11 @@ void BOPowerUp::Shutdown()
 {
 }
 
+void BOPowerUp::Draw()
+{
+	BOObject::Draw();
+}
+
 void BOPowerUp::Update(Uint32 p_delaTime)
 {
 	if (m_hasSpawned)
