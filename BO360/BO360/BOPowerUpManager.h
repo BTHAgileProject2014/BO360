@@ -5,13 +5,16 @@
 #include "BOComponent.h"
 #include <vector>
 
-class BOPowerUpManager
+class BOPowerUpManager : BOComponent
 {
 public:
 	BOPowerUpManager();
 	~BOPowerUpManager();
+
+	bool Initialize();
+	void Shutdown();
 private:
-	std::vector<BOPowerUp> m_PowerUps;
+	std::vector<BOPowerUp> m_powerUps;
 };
 
 #endif
