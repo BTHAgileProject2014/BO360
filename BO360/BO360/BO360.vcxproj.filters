@@ -76,6 +76,15 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="BOPowerUpManager.cpp">
+		<Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="BOState.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="BOButton.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="BOStateManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -141,6 +150,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="BOPowerUpManager.h">
+		<Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BOButton.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BOState.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BOStateManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
