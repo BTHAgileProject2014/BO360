@@ -75,6 +75,9 @@
     <ClCompile Include="BOPowerUp.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="BOPowerUpManager.cpp">
+		<Filter>Source Files</Filter>
+	</ClCompile>
     <ClCompile Include="BOShield.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -152,6 +155,9 @@
     <ClInclude Include="BOPowerUp.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="BOPowerUpManager.h">
+		<Filter>Header Files</Filter>
+	</ClInclude>
     <ClInclude Include="BOShield.h">
       <Filter>Header Files</Filter>
     </ClInclude>
