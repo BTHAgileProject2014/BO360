@@ -1,5 +1,8 @@
 #include "BOGraphicInterface.h"
 
+TTF_Font* BOGraphicInterface::m_font;
+SDL_Renderer* BOGraphicInterface::m_renderer;
+
 BOGraphicInterface::~BOGraphicInterface()
 {
 }
@@ -157,4 +160,33 @@ BOGraphicInterface& BOGraphicInterface::GetInstance()
 {
 	static BOGraphicInterface instance;
 	return instance;
+}
+
+SDL_Texture* BOGraphicInterface::DrawTextToTexture(std::string p_text, int3 p_textColor, int2* p_size)
+{
+	// The new texture
+	SDL_Texture* texture;
+
+	// Conversion
+	SDL_Color textColor = { p_textColor.x, p_textColor.y, p_textColor.z, 255 };
+
+	// Render text surface
+	SDL_Surface* textSurface = TTF_RenderText_Solid(m_font, p_text.c_str(), textColor);
+
+	// Create texture from surface pixels
+	texture = SDL_CreateTextureFromSurface(m_renderer, textSurface);
+
+	//Get image dimensions
+	p_size->x = textSurface->w;
+	p_size->y = textSurface->h;
+
+	// Get rid of the surface
+	SDL_FreeSurface(textSurface);
+
+	return texture;
+}
+
+void BOGraphicInterface::DestroyTexture(SDL_Texture* p_texture)
+{
+	SDL_DestroyTexture(p_texture);
 }
