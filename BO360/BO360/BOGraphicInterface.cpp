@@ -41,12 +41,30 @@ bool BOGraphicInterface::Initialize(int p_windowWidth, int p_windowHeight)
 		std::cout << "Failed to init SDL_Image:" << IMG_GetError() << std::endl;
 		return false;
 	}
+
+	if (TTF_Init() == -1)
+	{
+		std::cout << "SDL_ttf could not initialize! SDL_ttf Error: " << TTF_GetError() << "\n";
+		return false;
+	}
+
+	m_font = TTF_OpenFont("Font/lazy.ttf", 20);
+	if (m_font == NULL)
+	{
+		std::cout << "Failed to load font! SDL_ttf Error: " << TTF_GetError() << "\n";
+		return false;
+	}
+
 	return true;
 }
 
 void BOGraphicInterface::Shutdown()
 {
 	GetInstance().m_window.Shutdown();
+
+	// Free up the TTF library
+	TTF_CloseFont(m_font);
+	TTF_Quit();
 }
 
 
