@@ -118,4 +118,5 @@ void BOSystem::Shutdown()
 	m_input.Shutdown();
 	m_objectManager.Shutdown();
 	m_powerUpManager.Shutdown();
+	m_soundManager.Shutdown();
 }
