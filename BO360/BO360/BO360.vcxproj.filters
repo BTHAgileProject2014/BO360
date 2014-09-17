@@ -131,6 +131,9 @@
     <ClInclude Include="BOBackground.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="BOPowerUp.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="BOMapLoader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
