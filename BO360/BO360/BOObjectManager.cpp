@@ -190,7 +190,6 @@ void BOObjectManager::Update(Uint32 p_deltaTime)
 			//	m_ballList[0].SetDirection(newDir);
 			//	m_ballList[0].BouncedOnPad();
 			//}
-
 		//}
 	}
 

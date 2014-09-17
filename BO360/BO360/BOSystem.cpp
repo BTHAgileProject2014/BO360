@@ -59,7 +59,6 @@ bool BOSystem::Run()
 
 		// Tick the timer.
 		m_timer.Tick();
-
 		m_totalTime = m_timer.GetTotalTimeS();
 		m_FPS = m_timer.FPS();
 
@@ -76,7 +75,6 @@ bool BOSystem::Run()
 		m_objectManager.Update(m_deltaTime);
 
 		// ============================
-
 
 		// ========== RENDER ==========
 		BOGraphicInterface::Clear();
