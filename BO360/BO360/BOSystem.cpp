@@ -45,6 +45,7 @@ bool BOSystem::Initialize()
 	m_deltaTime = 0;
 	m_totalTime = 0;
 	m_FPS = 0;
+	m_timePassedMS = 0;
 
 	return true;
 }
@@ -53,39 +54,46 @@ bool BOSystem::Run()
 {
 	bool result = true;
 
-	// ========== UPDATE =========
-
 	// Tick the timer.
 	m_timer.Tick();
 
+	m_totalTime = m_timer.GetTotalTimeS();
+	m_deltaTime = m_timer.GetDeltaTime();
+	m_FPS = m_timer.FPS();
+
 	// Output the total time and delta time to the window title for debugging.
-#ifdef DEBUG
-		m_totalTime = m_timer.GetTotalTimeS();
-		m_deltaTime = m_timer.GetDeltaTime();
-		m_FPS = m_timer.FPS();
-		
+	#ifdef DEBUG	
 		m_string = "Total time: " + std::to_string(m_totalTime) + " seconds. Delta time: " + std::to_string(m_deltaTime) + " milliseconds. FPS: " + std::to_string(m_FPS);
 		BOGraphicInterface::SetWindowTitle(m_string);
-#endif
+	#endif
 
-	// Update the input manager.
-	result = m_input.Update();
+	m_timePassedMS += m_deltaTime;
 
-	// Update all of the objects
-	m_objectManager.Update();
+	if (m_timePassedMS > 2)
+	{
+		// ========== UPDATE =========
 
-	// ============================
+		// Update the input manager.
+		result = m_input.Update();
+
+		// Update all of the objects
+		m_objectManager.Update();
+
+		// ============================
 
 
-	// ========== RENDER ==========
-	BOGraphicInterface::Clear();
+		// ========== RENDER ==========
+		BOGraphicInterface::Clear();
 
-	// Render all of the objects.
-	m_objectManager.Draw();
+		// Render all of the objects.
+		m_objectManager.Draw();
 
-	BOGraphicInterface::Present();
-	// ============================
+		BOGraphicInterface::Present();
+		// ============================
 
+		m_timePassedMS = 0;
+	}
+	
 	return result;
 }
 

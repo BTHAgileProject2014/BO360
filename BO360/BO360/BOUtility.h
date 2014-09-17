@@ -314,6 +314,15 @@ struct InputMessages
 	bool downArrow;
 };
 
+enum GameState
+{
+	MENU,
+	RUNNING,
+	PAUSED,
+	ENDSCREEN
+};
+static GameState CURRENT_GAMESTATE = MENU;
+
 enum KeyMessages
 {
 	upArrow,
