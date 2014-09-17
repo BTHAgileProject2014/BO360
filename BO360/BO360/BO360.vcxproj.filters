@@ -76,8 +76,8 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="BOPowerUpManager.cpp">
-		<Filter>Source Files</Filter>
-	</ClCompile>
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="BOShield.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -91,6 +91,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="BOSoundManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="BODrawableText.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="BOTextManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -156,8 +162,8 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="BOPowerUpManager.h">
-		<Filter>Header Files</Filter>
-	</ClInclude>
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="BOShield.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -171,6 +177,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="BOSoundManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BODrawableText.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BOTextManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
