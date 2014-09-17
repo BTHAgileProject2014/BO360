@@ -9,9 +9,8 @@ public:
 	BOShield();
 	~BOShield();
 
-	bool Initialize(float2 p_ShieldPos, int2 p_ShieldSize, std::string p_ShieldFN,
-				float2 p_POPos, int2 p_POSize, std::string p_POFN);
-	void Update();
+	bool Initialize(int2 p_ShieldSize, int p_ShieldRadius , std::string p_ShieldFN,	float2 p_POPos, int2 p_POSize, std::string p_POFN, int2 p_WindowSize, float p_POSpeed);
+	int Update(sphere p_Ball);
 	void Draw();
 
 	void SetActive(bool p_IsActive);
@@ -22,10 +21,13 @@ public:
 
 
 private:
+	void ChangeBallDirection(int p_BounceCorner);
+
+
 	bool m_IsActive;
 	SDL_Texture* m_ShieldSprite;
 	int2 m_ShieldSize;
-	float2 m_ShieldPosition;
+	sphere m_ShieldSphere;
 
 };
 

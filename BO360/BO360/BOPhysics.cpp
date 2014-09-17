@@ -276,3 +276,32 @@ bool BOPhysics::MattiasBallPadCollision(sphere p_sphere, float2 p_sphereDir, sph
 	}
 	return false;
 }
+int BOPhysics::CheckCollisionBallShield(sphere p_sphere, sphere p_padSphere)
+{
+	float2 centerPad, centerBall;
+	float padRadius, ballRadius;
+	centerPad = p_padSphere.pos;
+	centerBall = p_sphere.pos;
+	padRadius = p_padSphere.radius;
+	ballRadius = p_sphere.radius;
+	if (CheckCollisionSpheres(p_sphere, p_padSphere))
+	{
+		if ((centerBall.x <= (centerPad.x + 70.0f)) && (centerBall.x >= (centerPad.x - 70.0f)) && (centerBall.y <= centerPad.y))
+		{
+			return 1;
+		}
+		else if ((centerBall.x <= (centerPad.x + 70.0f)) && (centerBall.x >= (centerPad.x - 70.0f)) && (centerBall.y >= centerPad.y))
+		{
+			return 2;
+		}
+		else if ((centerBall.y <= (centerPad.y + 70.0f)) && (centerBall.y >= (centerPad.y - 70.0f)) && (centerBall.x <= centerPad.x))
+		{
+			return 3;
+		}
+		else
+		{
+			return 4;
+		}
+	}
+	return 0;
+}

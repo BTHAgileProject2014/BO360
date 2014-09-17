@@ -150,7 +150,6 @@ void BOObjectManager::Update()
 			//	m_ballList[0].SetDirection(newDir);
 			//	m_ballList[0].BouncedOnPad();
 			//}
-
 		//}
 	}
 }
