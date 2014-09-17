@@ -42,7 +42,7 @@ bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight)
 	int2 ballSize = int2(15, 15);
 
 	float2 ballPosition = float2(30, 30);
-	float ballSpeed = 0.1f;
+	float ballSpeed = 1.0f;
 	float2 ballDirection = float2(10, 10);
 
 	BOBall ball;

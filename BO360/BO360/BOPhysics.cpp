@@ -167,7 +167,7 @@ int BOPhysics::CheckCollisioPadSphere(sphere p_sphere, float2 p_sphereDir, spher
 	{
 		if (!CollisionRadiusRadius(centerPad, (padRadius - 10), centerBall, ballRadius))
 		{
-			if (MattiasBallPadCollision(p_sphere, p_sphereDir, p_padSphere, p_startAngle, p_endAngle))
+			if (BallPadCollision(p_sphere, p_sphereDir, p_padSphere, p_startAngle, p_endAngle))
 			{
 				if ((centerBall.x <= (centerPad.x + 80.0f)) && (centerBall.x >= (centerPad.x - 80.0f)) && (centerBall.y <= centerPad.y))
 				{
@@ -196,12 +196,10 @@ bool BOPhysics::CheckBallInPadAngle(float2 p_centerPad, float p_radiusPad, doubl
 	return true;
 }
 
-bool BOPhysics::MattiasBallPadCollision(sphere p_sphere, float2 p_sphereDir, sphere p_padSphere, double p_startAngle, double p_padSpread)
+bool BOPhysics::BallPadCollision(sphere p_sphere, float2 p_sphereDir, sphere p_padSphere, double p_startAngle, double p_padSpread)
 {
-
 	float2 up = float2(0, 1);
 	double alpha = acos(up.x);
-
 
 	double degreesToRadians = (2 * PI) / 360;
 	double rToDegrees = 360 / (2 * PI);
@@ -275,4 +273,9 @@ bool BOPhysics::MattiasBallPadCollision(sphere p_sphere, float2 p_sphereDir, sph
 
 	}
 	return false;
+}
+
+void CalculateNewDir(float2 currentDir, float distanceFromCenter, float maxDistanceFromCenter)
+{
+
 }
