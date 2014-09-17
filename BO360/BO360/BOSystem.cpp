@@ -40,7 +40,17 @@ bool BOSystem::Initialize()
 		return false;
 	}
 
+	result = m_soundManager.Initialize();
+	if (!result)
+	{
+		return false;
+	}
+
 	result = m_powerUpManager.Initialize(windowWidth, windowHeight);
+	if (!result)
+	{
+		return false;
+	}
 
 	m_deltaTime = 0;
 	m_totalTime = 0;
@@ -78,6 +88,13 @@ bool BOSystem::Run()
 
 		// Update the power-ups
 		m_powerUpManager.Update(m_deltaTime);
+
+		// Update Sound 
+		m_soundManager.Update(); // Empty so far.
+		if (m_objectManager.GetPop())
+		{
+			m_soundManager.PlayPopSound();
+		}
 
 		// ============================
 

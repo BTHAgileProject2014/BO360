@@ -9,6 +9,7 @@
 #include "BOGraphicInterface.h"
 #include "BOTimer.h"
 #include "BOPowerUpManager.h"
+#include "BOSoundManager.h"
 #include <iostream>
 
 class BOSystem : BOComponent
@@ -26,6 +27,7 @@ private:
 	BOInput m_input;
 	BOObjectManager m_objectManager;
 	BOPowerUpManager m_powerUpManager;
+	BOSoundManager m_soundManager;
 	int windowWidth, windowHeight;
 
 	std::string m_string;

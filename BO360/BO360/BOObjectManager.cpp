@@ -2,6 +2,7 @@
 
 BOObjectManager::BOObjectManager()
 {
+	m_pop = false;
 }
 
 
@@ -120,7 +121,8 @@ void BOObjectManager::Update(Uint32 p_deltaTime)
 	{
 		m_blockList[i].Update();
 	}
-
+	// Bool for playing sound when collision
+	SetPop(false);
 	for (int i = 0; i < m_blockList.size(); i++)
 	{
 		if (!m_blockList[i].GetDead())
@@ -140,6 +142,8 @@ void BOObjectManager::Update(Uint32 p_deltaTime)
 					normal = normal * vDotN;
 					newBallDirection = (m_ballList[0].GetDirection() - normal);
 					m_ballList[0].SetDirection(newBallDirection);
+					// Collision therfore play popsound
+					SetPop(true);
 				}
 			}
 		}
@@ -215,4 +219,14 @@ void BOObjectManager::BallDirectionChange(int p_bounceCorner)
 		//std::cout << "Krock" << std::endl;
 	}
 	m_ballList[0].SetDirection(ballDir);
+}
+
+bool BOObjectManager::GetPop()
+{
+	return m_pop;
+}
+
+void BOObjectManager::SetPop(bool p_pop)
+{
+	m_pop = p_pop;
 }
