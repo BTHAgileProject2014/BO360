@@ -20,7 +20,7 @@ public:
 
 	bool Initialize(int windowWidth, int windowHeight);
 	void Shutdown();
-	void Update();
+	void Update(Uint32 p_deltaTime);
 	void Draw();
 
 private:

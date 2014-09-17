@@ -30,7 +30,5 @@ private:
 	Uint32 m_deltaTime;
 	float m_totalTime;
 	int m_FPS;
-
-	Uint32 m_timePassedMS;
 };
 #endif

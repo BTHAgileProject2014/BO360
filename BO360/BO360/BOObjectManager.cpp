@@ -100,7 +100,7 @@ void BOObjectManager::Shutdown()
 
 }
 
-void BOObjectManager::Update()
+void BOObjectManager::Update(Uint32 p_deltaTime)
 {
 	bool result;
 	float2 normal;
