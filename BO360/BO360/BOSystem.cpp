@@ -95,7 +95,6 @@ bool BOSystem::Run()
 		{
 			m_soundManager.PlayPopSound();
 		}
-
 		// ============================
 
 		// ========== RENDER ==========
