@@ -26,15 +26,15 @@ bool BOBall::Initialize(float2 p_position, int2 p_size, std::string p_fileName, 
 	return true;
 }
 
-void BOBall::Update()
+void BOBall::Update(Uint32 p_deltaTime)
 {
 	if (m_mouseCheat)
 	{
 		return;
 	}
 
-	m_position.x = m_speed * m_direction.x + m_position.x;
-	m_position.y = m_speed * m_direction.y + m_position.y;
+	m_position.x = (m_speed * p_deltaTime) * m_direction.x + m_position.x;
+	m_position.y = (m_speed * p_deltaTime) * m_direction.y + m_position.y;
 
 	if (m_position.x < (m_size.x / 2) || m_position.x > (m_windowSize.x - (m_size.x / 2)))
 	{

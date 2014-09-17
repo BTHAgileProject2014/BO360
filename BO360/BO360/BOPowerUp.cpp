@@ -28,7 +28,7 @@ void BOPowerUp::Shutdown()
 {
 }
 
-void BOPowerUp::Update()
+void BOPowerUp::Update(Uint32 p_delaTime)
 {
 	if (m_hasSpawned)
 	{

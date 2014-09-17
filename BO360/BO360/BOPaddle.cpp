@@ -40,11 +40,11 @@ void BOPaddle::Handle(InputMessages p_inputMessages)
 	}
 }
 
-void BOPaddle::Update()
+void BOPaddle::Update(Uint32 p_deltaTime)
 {
 	if (m_movingLeft)
 	{
-		m_rotation -= m_deltaRotation;
+		m_rotation -= m_deltaRotation * p_deltaTime;
 		if (m_rotation < 0)
 		{
 			m_rotation += 360;
@@ -52,7 +52,7 @@ void BOPaddle::Update()
 	}
 	else if (m_movingRight)
 	{
-		m_rotation += m_deltaRotation;
+		m_rotation += m_deltaRotation * p_deltaTime;
 		if (m_rotation > 360)
 		{
 			m_rotation -= 360;
