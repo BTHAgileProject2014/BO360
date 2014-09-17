@@ -49,7 +49,7 @@ bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight)
 	int2 ballSize = int2(15, 15);
 
 	float2 ballPosition = float2(100, 300);
-	float ballSpeed = 0.01f;
+	float ballSpeed = 0.5f;
 	float2 ballDirection = float2(20, 10);
 
 	BOBall ball;
@@ -110,11 +110,11 @@ void BOObjectManager::Update(Uint32 p_deltaTime)
 	float angleBallDirectionVsNormal;
 	m_blackHole.Update();
 
-	m_paddle.Update();
+	m_paddle.Update(p_deltaTime);
 
 	for (int i = 0; i < m_ballList.size(); i++)
 	{
-		m_ballList[i].Update();
+		m_ballList[i].Update(p_deltaTime);
 	}
 	for (int i = 0; i < m_blockList.size(); i++)
 	{

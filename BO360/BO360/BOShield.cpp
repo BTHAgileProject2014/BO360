@@ -23,7 +23,7 @@ bool BOShield::Initialize(int2 p_ShieldSize, int p_ShieldRadius, std::string p_S
 
 	return true;
 }
-int BOShield::Update(sphere p_Ball)
+int BOShield::Update(Uint32 p_deltaTime, sphere p_Ball)
 {
 	int bounceResult;
 	if (m_IsActive)
@@ -35,7 +35,7 @@ int BOShield::Update(sphere p_Ball)
 		}
 	}
 
-	BOPowerUp::Update();
+	BOPowerUp::Update(p_deltaTime);
 	return bounceResult;
 }
 void BOShield::Draw()

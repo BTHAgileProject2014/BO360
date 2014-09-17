@@ -10,7 +10,7 @@ public:
 	~BOShield();
 
 	bool Initialize(int2 p_ShieldSize, int p_ShieldRadius , std::string p_ShieldFN,	float2 p_POPos, int2 p_POSize, std::string p_POFN, int2 p_WindowSize, float p_POSpeed);
-	int Update(sphere p_Ball);
+	int Update(Uint32 p_deltaTime, sphere p_Ball);
 	void Draw();
 
 	void SetActive(bool p_IsActive);
