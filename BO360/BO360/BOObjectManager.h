@@ -12,6 +12,7 @@
 #include "BOMapLoader.h"
 #include "BOPUSubscriber.h"
 #include "BOPowerUpManager.h"
+#include "BOSoundManager.h"
 #include <vector>
 
 class BOObjectManager : public BOComponent, public BOPUSubscriber
