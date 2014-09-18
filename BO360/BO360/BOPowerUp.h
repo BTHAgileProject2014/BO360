@@ -2,7 +2,6 @@
 #define BOPOWERUP_H_
 
 #include "BOObject.h"
-#include "BOPowerUpManager.h"
 
 class BOPowerUp : BOObject
 {

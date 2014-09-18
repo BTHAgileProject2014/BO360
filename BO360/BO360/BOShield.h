@@ -2,6 +2,7 @@
 #define BOSHIELD_H_
 #include "BOPowerUp.h"
 #include "BOPhysics.h"
+#include "BOPowerUpManager.h"
 
 class BOShield : BOPowerUp
 {
