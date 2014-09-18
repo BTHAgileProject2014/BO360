@@ -40,7 +40,7 @@ bool BOSystem::Initialize()
 		return false;
 	}
 
-	result = m_soundManager.Initialize();
+	if(!BOSoundManager::Initialize())
 	if (!result)
 	{
 		return false;
@@ -96,10 +96,10 @@ bool BOSystem::Run()
 		m_powerUpManager.Update(m_deltaTime);
 
 		// Update Sound 
-		m_soundManager.Update(); // Empty so far.
+		BOSoundManager::Update(); // Empty so far.
 		if (m_objectManager.GetPop())
 		{
-			m_soundManager.PlayPopSound();
+			BOSoundManager::PlayPopSound();
 		}
 
 		// ============================
@@ -127,6 +127,6 @@ void BOSystem::Shutdown()
 	m_input.Shutdown();
 	m_objectManager.Shutdown();
 	m_powerUpManager.Shutdown();
-	m_soundManager.Shutdown();
+	BOSoundManager::Shutdown();
 	BOTextManager::Shutdown();
 }

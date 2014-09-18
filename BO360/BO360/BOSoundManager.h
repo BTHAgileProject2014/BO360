@@ -8,13 +8,15 @@
 class BOSoundManager
 {
 public:
-	BOSoundManager();
 	~BOSoundManager();
-	bool Initialize();
-	void Shutdown();
-	void Update();
-	void PlayPopSound();
+	static bool Initialize();
+	static void Shutdown();
+	static void Update();
+	static void PlayPopSound();
 private:
+	BOSoundManager() {}
+	static BOSoundManager& GetInstance();
+
 	Mix_Music *m_music;
 	Mix_Chunk *m_popHex;
 	Mix_Chunk *m_dying;
