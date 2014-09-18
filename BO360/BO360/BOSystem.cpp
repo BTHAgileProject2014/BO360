@@ -52,6 +52,12 @@ bool BOSystem::Initialize()
 		return false;
 	}
 
+	result = m_powerUpManager.Initialize(windowWidth, windowHeight);
+	if (!result)
+	{
+		return false;
+	}
+
 	m_deltaTime = 0;
 	m_totalTime = 0;
 	m_FPS = 0;
