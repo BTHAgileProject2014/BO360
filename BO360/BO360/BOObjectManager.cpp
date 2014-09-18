@@ -135,7 +135,7 @@ void BOObjectManager::Update(Uint32 p_deltaTime)
 					m_ballList[0].SetDirection(BOPhysics::ReflectBallAroundNormal(m_ballList[0].GetDirection(), normal));
 					
 					// Collision therfore play popsound
-					BOSoundManager::PlayPopSound();
+					BOSoundManager::PlaySound(sound_pop);
 					break;
 				}
 			}

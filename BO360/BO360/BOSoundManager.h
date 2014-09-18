@@ -3,6 +3,7 @@
 
 #include <SDL.h>
 #include <SDL_mixer.h>
+#include "BOUtility.h"
 
 
 class BOSoundManager
@@ -13,6 +14,7 @@ public:
 	static void Shutdown();
 	static void Update();
 	static void PlayPopSound();
+	static void PlaySound(Sound p_sound);
 private:
 	BOSoundManager() {}
 	static BOSoundManager& GetInstance();
