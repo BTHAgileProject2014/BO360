@@ -409,16 +409,21 @@ float2 BOPhysics::CalculateNewDir(float2 currentDir, float2 padNormal, float p_p
 		std::cout << "AngleDiffA: " << angleDiffA << "AngleDiffB: " << angleDiffB;
 		std::cout << "Please check if this happens around the pad angle 0. (Pad angle: " << p_padAngle;
 	}
+	float padAngleAmp = p_padAngle + 2 * PI;
+	float ballAngleAmp = p_ballAngle + 2 * PI;
+	float maxWidthAngleAmp = p_maxWidthAngle;
 
-	float biasAngle = 3.14;
-	float diffVal = (p_padAngle - p_ballAngle) / p_maxWidthAngle;
-	NormalizeAngle(biasAngle);
+	float biasAngle = 0.57;
+	float diffVal = (padAngleAmp - ballAngleAmp);
+	//NormalizeAngle(diffVal);
+	diffVal /= -maxWidthAngleAmp;
 	float diff = diffVal * biasAngle;
-	NormalizeAngle(diff);
 	float2 biasedNormal;
-	biasedNormal.x = cos(p_padAngle + diff);
-	biasedNormal.y = -sin(p_padAngle + diff);
+	biasedNormal.x = cos(padAngleAmp + diff);
+	biasedNormal.y = -sin(padAngleAmp + diff);
 	biasedNormal = biasedNormal.normalized();
+
+
 	/*	float dirX = cos(padCenterAngle);
 	float dirY = -sin(padCenterAngle);
 	float2 padCenterVector = float2(dirX, dirY).normalized();
@@ -432,11 +437,11 @@ float2 BOPhysics::CalculateNewDir(float2 currentDir, float2 padNormal, float p_p
 	std::cout << "angle from center: " << (p_padAngle - p_ballAngle) << std::endl;
 	std::cout << "diff factor: " << diffVal << std::endl;
 
-	float vDotN = currentDir.dot(padNormal);
+	float vDotN = currentDir.dot(biasedNormal);
 	//std::cout << "vDotN: " << vDotN << std::endl;
-	float2 newDir = currentDir - (padNormal * vDotN * 2);
+	float2 newDir = currentDir - (biasedNormal * vDotN * 2);
 	
-	newDir = newDir.normalized();
+	//newDir = biasedNormal;
 	// TMP
 	//newDir = biasedNormal;
 	std::cout << "New direction: (" << newDir.x << "," << newDir.y << ")" << std::endl;
