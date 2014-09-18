@@ -28,7 +28,10 @@ private:
 	BOInput m_input;
 	BOObjectManager m_objectManager;
 	BOPowerUpManager m_powerUpManager;
+<<<<<<< HEAD
+=======
 	BOSoundManager m_soundManager;
+>>>>>>> origin/Ljud
 	int windowWidth, windowHeight;
 
 	std::string m_string;

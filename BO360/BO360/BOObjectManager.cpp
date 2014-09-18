@@ -129,7 +129,6 @@ void BOObjectManager::Update(Uint32 p_deltaTime)
 		{
 			if (BOPhysics::CheckCollisionSpheres(m_ballList[0].GetBoundingSphere(), m_blockList[i].GetBoundingSphere()))
 			{
-				m_ballList[0].SetDirection(float2(0, 0));
 				if (BOPhysics::CheckCollisionSphereToHexagon(m_ballList[0].GetBoundingSphere(), m_blockList[i].GetBoundingHexagon(), normal))
 				{
 					m_blockList[i].SetDead();
@@ -144,6 +143,7 @@ void BOObjectManager::Update(Uint32 p_deltaTime)
 					m_ballList[0].SetDirection(newBallDirection);
 					// Collision therfore play popsound
 					SetPop(true);
+					break;
 				}
 			}
 		}
