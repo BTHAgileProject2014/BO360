@@ -345,6 +345,14 @@ enum KeyMessages
 	spacebarKey
 };
 
+enum Sound
+{
+	sound_pop,
+	sound_die,
+	sound_powerup,
+	sound_teleport
+};
+
 // Sphere for collision check
 struct sphere
 {

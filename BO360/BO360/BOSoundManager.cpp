@@ -39,11 +39,11 @@ bool BOSoundManager::Initialize()
 		return false;
 	}
 
-	/*GetInstance().m_powerup = Mix_LoadWAV("Sound/powerup.wav");
+	GetInstance().m_powerup = Mix_LoadWAV("Sound/powerup.wav");
 	if (GetInstance().m_powerup == NULL)
 	{
 		return false;
-	}*/
+	}
 
 	GetInstance().m_teleport = Mix_LoadWAV("Sound/teleport.wav");
 	if (GetInstance().m_teleport == NULL)
@@ -80,10 +80,24 @@ void BOSoundManager::Update()
 
 }
 
-void BOSoundManager::PlayPopSound()
+void BOSoundManager::PlaySound(Sound p_sound)
 {
-	// Play in channel 0, so if repeated previous pop is stopped
-	Mix_PlayChannel(0, GetInstance().m_popHex, 0);
+	switch (p_sound)
+	{
+	case sound_pop:
+		// Play in channel 0 so pop sound resets every time it plays
+		Mix_PlayChannel(0, GetInstance().m_popHex, 0);
+		break;
+	case sound_die:
+		Mix_PlayChannel(-1, GetInstance().m_dying, 0);	// Channel -1 is nearest avaiable channel
+		break;
+	case sound_powerup:
+		Mix_PlayChannel(-1, GetInstance().m_powerup, 0);
+		break;
+	case sound_teleport:
+		Mix_PlayChannel(-1, GetInstance().m_teleport, 0);
+		break;
+	}
 }
 
 BOSoundManager& BOSoundManager::GetInstance()

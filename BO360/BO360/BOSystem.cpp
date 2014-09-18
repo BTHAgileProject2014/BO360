@@ -97,10 +97,6 @@ bool BOSystem::Run()
 
 		// Update Sound 
 		BOSoundManager::Update(); // Empty so far.
-		if (m_objectManager.GetPop())
-		{
-			BOSoundManager::PlayPopSound();
-		}
 
 		// ============================
 

@@ -42,8 +42,5 @@ private:
 	std::vector<BOBlock> m_blockList;
 	//std::vector<BOParticle> m_particleList;
 	//std::vector<BOPowerUp> m_powerUPlist;
-
-	bool m_pop;
-	
 };
 #endif

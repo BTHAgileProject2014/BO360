@@ -15,6 +15,7 @@ public:
 	static void CheckCollisionSphereToLine(sphere p_sphere, float2 point1, float2 point2, float2& p_returnValue1, float2& p_returnValue2);
 	static int CheckCollisioPadSphere(sphere p_sphere, float2 p_sphereDir, sphere p_padSphere, double p_startAngle, double p_endAngle);
 	static bool MattiasBallPadCollision(sphere p_sphere, float2 p_sphereDir, sphere p_padSphere, double p_startAngle, double p_endAngle);
+	static float2 ReflectBallAroundNormal(float2 p_ballDir,float2 p_normal);
 	static int CheckCollisionBallShield(sphere p_sphere, sphere p_padSphere);
 
 private:

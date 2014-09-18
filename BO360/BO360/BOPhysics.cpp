@@ -358,3 +358,20 @@ int BOPhysics::CheckCollisionBallShield(sphere p_sphere, sphere p_padSphere)
 	}
 	return 0;
 }
+
+float2 BOPhysics::ReflectBallAroundNormal(float2 p_ballDir, float2 p_normal)
+{
+	float2 newBallDir, normal;
+	float vDotN;
+	newBallDir = p_ballDir;
+	normal = p_normal;
+	
+	//Reflect direction
+	// new vector = v -2(v.n)n
+	vDotN = newBallDir.dot(p_normal);
+	vDotN *= 2;
+	normal = normal * vDotN;
+	newBallDir = (newBallDir - normal);
+
+	return newBallDir;
+}
