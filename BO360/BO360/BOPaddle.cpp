@@ -45,7 +45,7 @@ void BOPaddle::Handle(PowerUpTypes p_type, bool p_activated)
 {
 	switch (p_type)
 	{
-	case biggerPad:
+	case POBiggerPad:
 		if (p_activated)
 		{
 			// Make the paddle bigger
@@ -55,7 +55,7 @@ void BOPaddle::Handle(PowerUpTypes p_type, bool p_activated)
 			// Revert to normal paddle
 		}
 		break;
-	case smallerPad:
+	case POSmallerPad:
 		if (p_activated)
 		{
 			// Make the paddle smaller
@@ -64,6 +64,7 @@ void BOPaddle::Handle(PowerUpTypes p_type, bool p_activated)
 		{
 			// Revert to normal paddle
 		}
+		break;
 	}
 }
 

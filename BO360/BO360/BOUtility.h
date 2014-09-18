@@ -422,9 +422,9 @@ struct hexagon
 // What types of power-ups we use
 enum PowerUpTypes
 {
-	biggerPad,
-	smallerPad,
-	shield,
-	extraBall
+	POBiggerPad,
+	POSmallerPad,
+	POShield,
+	POExtraBall
 };
 #endif
