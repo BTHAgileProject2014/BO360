@@ -230,3 +230,16 @@ void BOObjectManager::SetPop(bool p_pop)
 {
 	m_pop = p_pop;
 }
+
+void BOObjectManager::Handle(PowerUpTypes p_type, bool p_activated)
+{
+	switch (p_type)
+	{
+	case PUShield:
+		// Add shield??
+		break;
+	case PUExtraBall:
+		// Add ball to the vector
+		break;
+	}
+}

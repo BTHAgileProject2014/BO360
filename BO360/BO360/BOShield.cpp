@@ -67,10 +67,10 @@ bool BOShield::GetActive()
 
 void BOShield::Activate()
 {
-	BOPowerUpManager::Notify(POShield, true);
+	BOPowerUpManager::Notify(PUShield, true);
 }
 
 void BOShield::Deactivate()
 {
-	BOPowerUpManager::Notify(POShield, false);
+	BOPowerUpManager::Notify(PUShield, false);
 }
