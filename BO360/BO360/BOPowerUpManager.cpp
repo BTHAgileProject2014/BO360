@@ -1,4 +1,5 @@
 #include "BOPowerUpManager.h"
+std::vector<BOPUSubscriber*> BOPowerUpManager::m_subscribers;
 
 
 BOPowerUpManager::BOPowerUpManager()
@@ -23,6 +24,14 @@ void BOPowerUpManager::Shutdown()
 {
 }
 
+void BOPowerUpManager::Notify(PowerUpTypes p_type, bool p_activated)
+{
+	for (unsigned int i = 0; i < m_subscribers.size(); i++)
+	{
+		m_subscribers[i]->Handle(p_type, p_activated);
+	}
+}
+
 void BOPowerUpManager::Update(Uint32 p_deltaTime)
 {
 	for (unsigned int i = 0; i < m_powerUps.size(); i++)
@@ -36,5 +45,22 @@ void BOPowerUpManager::Draw()
 	for (unsigned int i = 0; i < m_powerUps.size(); i++)
 	{
 		m_powerUps[i].Draw();
+	}
+}
+
+void BOPowerUpManager::AddSubscriber(BOPUSubscriber* p_subscriber)
+{
+	m_subscribers.push_back(p_subscriber);
+}
+
+void BOPowerUpManager::Unsubscribe(BOPUSubscriber* p_subscriber)
+{
+	for (unsigned int i = 0; i < m_subscribers.size(); i++)
+	{
+		if (m_subscribers[i] == p_subscriber)
+		{
+			m_subscribers.erase(m_subscribers.begin() + i);
+			break;
+		}
 	}
 }

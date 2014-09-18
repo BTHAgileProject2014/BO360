@@ -17,7 +17,8 @@ public:
 	void SwitchActive();
 	bool GetActive();
 
-	
+	void Activate();
+	void Deactivate();
 
 
 private:

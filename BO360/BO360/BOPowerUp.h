@@ -2,6 +2,7 @@
 #define BOPOWERUP_H_
 
 #include "BOObject.h"
+#include "BOPowerUpManager.h"
 
 class BOPowerUp : BOObject
 {
@@ -15,6 +16,7 @@ public:
 	virtual void Update(Uint32 p_deltaTime);
 	void Draw();
 	virtual void Activate();
+	virtual void Deactivate();
 
 protected:
 	bool m_hasSpawned;
