@@ -56,6 +56,12 @@ bool BOSystem::Initialize()
 	m_totalTime = 0;
 	m_FPS = 0;
 
+	result = BOTextManager::Initialize();
+	if (!result)
+	{
+		return false;
+	}
+
 	return true;
 }
 
@@ -104,6 +110,9 @@ bool BOSystem::Run()
 		// Render all of the objects.
 		m_objectManager.Draw();
 
+		// Render text
+		BOTextManager::DrawTexts();
+
 		BOGraphicInterface::Present();
 		// ============================
 
@@ -119,4 +128,5 @@ void BOSystem::Shutdown()
 	m_objectManager.Shutdown();
 	m_powerUpManager.Shutdown();
 	m_soundManager.Shutdown();
+	BOTextManager::Shutdown();
 }
