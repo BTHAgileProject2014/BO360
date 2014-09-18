@@ -25,8 +25,6 @@ public:
 	void Shutdown();
 	void Update(Uint32 p_deltaTime);
 	void Draw();
-	bool GetPop();
-	void SetPop(bool p_pop);
 	void Handle(PowerUpTypes p_type, bool p_activated);
 
 private:

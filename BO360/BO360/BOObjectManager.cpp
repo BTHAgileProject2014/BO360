@@ -214,16 +214,6 @@ void BOObjectManager::BallDirectionChange(int p_bounceCorner)
 	m_ballList[0].SetDirection(ballDir);
 }
 
-bool BOObjectManager::GetPop()
-{
-	return m_pop;
-}
-
-void BOObjectManager::SetPop(bool p_pop)
-{
-	m_pop = p_pop;
-}
-
 void BOObjectManager::Handle(PowerUpTypes p_type, bool p_activated)
 {
 	switch (p_type)
