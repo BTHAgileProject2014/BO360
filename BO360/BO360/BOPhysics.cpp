@@ -40,6 +40,16 @@ bool BOPhysics::CheckCollisionBoxToBox(box p_box1, box p_box2)
 	return true;
 }
 
+bool BOPhysics::CheckCollisionPointToBox(int2 p_point, box p_box)
+{
+	if (p_point.x > p_box.pos.x && p_point.x < (p_box.pos.x + p_box.size.x) && p_point.y > p_box.pos.y && p_point.y < (p_box.pos.y + p_box.size.y))
+	{
+		return true;
+	}
+
+	return false;
+}
+
 bool BOPhysics::CheckCollisionSphereToHexagon(sphere p_sphere, hexagon p_hexagon, float2& normal)
 {
 	// Create 2 points for checking collision point on line

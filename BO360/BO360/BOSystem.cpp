@@ -34,6 +34,11 @@ bool BOSystem::Initialize()
 		return false;
 	}
 
+	if (!m_stateManager.Initialize(RUNNING, int2(windowWidth, windowHeight)))
+	{
+		return false;
+	}
+
 	result = m_objectManager.Initialize(windowWidth, windowHeight);
 	if (!result)
 	{

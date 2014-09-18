@@ -11,6 +11,7 @@
 #include "BOPowerUpManager.h"
 #include "BOSoundManager.h"
 #include "BOTextManager.h"
+#include "BOStateManager.h"
 #include <iostream>
 
 class BOSystem : BOComponent
@@ -29,6 +30,7 @@ private:
 	BOObjectManager m_objectManager;
 	BOPowerUpManager m_powerUpManager;
 	BOSoundManager m_soundManager;
+	BOStateManager m_stateManager;
 	int windowWidth, windowHeight;
 
 	std::string m_string;
