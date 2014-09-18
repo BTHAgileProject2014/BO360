@@ -14,6 +14,7 @@ BOPowerUpManager::~BOPowerUpManager()
 bool BOPowerUpManager::Initialize(int p_windowsWidth, int p_windowHeight)
 {
 	m_powerUps = std::vector<BOPowerUp>();
+	m_subscribers = std::vector<BOPUSubscriber*>();
 	m_windowSize.x = p_windowsWidth;
 	m_windowSize.y = p_windowHeight;
 
@@ -30,6 +31,11 @@ void BOPowerUpManager::Notify(PowerUpTypes p_type, bool p_activated)
 	{
 		m_subscribers[i]->Handle(p_type, p_activated);
 	}
+}
+
+void BOPowerUpManager::AddPowerUp(BOPowerUp p_powerUp)
+{
+	m_powerUps.push_back(p_powerUp);
 }
 
 void BOPowerUpManager::Update(Uint32 p_deltaTime)
