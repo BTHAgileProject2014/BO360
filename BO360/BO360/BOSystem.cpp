@@ -54,6 +54,12 @@ bool BOSystem::Run()
 
 	if (m_deltaTime > 2)
 	{
+		// low-cap the fps to never do less than 10 updates / sec
+		if (m_deltaTime > 100)
+		{
+			m_deltaTime = 100;
+		}
+
 		// ========== UPDATE =========
 
 		// Tick the timer.

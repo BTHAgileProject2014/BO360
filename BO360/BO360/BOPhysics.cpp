@@ -251,9 +251,16 @@ bool BOPhysics::CheckBallInPadAngle(float2 p_centerPad, float p_radiusPad, doubl
 
 float2 BOPhysics::BallPadCollision(sphere p_sphere, float2 p_sphereDir, sphere p_padSphere, double p_startAngle, double p_padSpread)
 {
-	float2 up = float2(0, 1);
-	double alpha = acos(up.x);
+	if (!CheckCollisionSpheres(p_sphere, p_padSphere))
+	{
+		return float2(0, 0);
+	}
+	if (CheckCollisionSpheres(p_sphere, sphere(p_padSphere.pos, p_padSphere.radius - 20)))
+	{
+		return float2(0, 0);
+	}
 
+	float2 toSphereNormal = p_sphere.pos - p_padSphere.pos;
 	double degreesToRadians = (2 * PI) / 360;
 	double rToDegrees = 360 / (2 * PI);
 	double startAngle = p_startAngle;
@@ -320,15 +327,14 @@ float2 BOPhysics::BallPadCollision(sphere p_sphere, float2 p_sphereDir, sphere p
 	if ((ctpAngle < startAngleMA) && (ctpAngle > (startAngleMA - padSpread)))
 	{
 		//std::cout << "Hit!";
-		std::cout << "1" << std::endl;
-		std::cout << "StartAngle: " << startAngleMA << std::endl;
-		std::cout << "PadSpread: " << padSpread << std::endl;
-		std::cout << "CenterOfPadRotation: " + std::to_string(padCenterAngle) << std::endl;
-		std::cout << "Ball dir: (" << p_sphereDir.x << "," << p_sphereDir.y << ")" << std::endl;
-		std::cout << "Center to Pad: (" + std::to_string(padCenterVector.x) + "," + std::to_string(padCenterVector.y) + ")" << std::endl;
-
+		//std::cout << "1" << std::endl;
+		//std::cout << "StartAngle: " << startAngleMA << std::endl;
+		//std::cout << "PadSpread: " << padSpread << std::endl;
+		//std::cout << "CenterOfPadRotation: " + std::to_string(padCenterAngle) << std::endl;
+		//std::cout << "Ball dir: (" << p_sphereDir.x << "," << p_sphereDir.y << ")" << std::endl;
+		//std::cout << "Center to Pad: (" + std::to_string(padCenterVector.x) + "," + std::to_string(padCenterVector.y) + ")" << std::endl;
 		// Should not send padCenterAngle here, just testing
-		return CalculateNewDir(p_sphereDir, padCenterVector.normalized(), padCenterAngle, padCenterAngle);
+		return CalculateNewDir(p_sphereDir, padCenterVector, padCenterAngle, padSpread / 2, ctpAngle);
 	}
 
 	//ctpAngle = center to ball angle
@@ -341,18 +347,18 @@ float2 BOPhysics::BallPadCollision(sphere p_sphere, float2 p_sphereDir, sphere p
 		if ((ctpAngle > 0) && (ctpAngle < startAngleMA) || ((ctpAngle > padAngle) && (ctpAngle < (2 * PI))))
 		{
 			//std::cout << "Hit!";
-			std::cout << "2" << std::endl;
-			std::cout << "StartAngle: " << startAngleMA << std::endl;
-			std::cout << "PadSpread: " << padSpread << std::endl;
-			std::cout << "CenterOfPadRotation: " + std::to_string(padCenterAngle) << std::endl;
-			std::cout << "Center to Pad: (" + std::to_string(padCenterVector.x) + "," + std::to_string(padCenterVector.y) + ")" << std::endl;
+			//std::cout << "2" << std::endl;
+			//std::cout << "StartAngle: " << startAngleMA << std::endl;
+			//std::cout << "PadSpread: " << padSpread << std::endl;
+			//std::cout << "CenterOfPadRotation: " + std::to_string(padCenterAngle) << std::endl;
+			//std::cout << "Center to Pad: (" + std::to_string(padCenterVector.x) + "," + std::to_string(padCenterVector.y) + ")" << std::endl;
 
 			// Should not send padCenterAngle here, just testing
-			return CalculateNewDir(p_sphereDir, padCenterVector.normalized(), padCenterAngle, padCenterAngle);
+			return CalculateNewDir(p_sphereDir, padCenterVector, padCenterAngle, padSpread / 2, ctpAngle);
 		}
 
 	}
-	return float2(-1.0f,-1.0f);
+	return float2(0, 0);
 }
 int BOPhysics::CheckCollisionBallShield(sphere p_sphere, sphere p_padSphere)
 {
@@ -384,18 +390,55 @@ int BOPhysics::CheckCollisionBallShield(sphere p_sphere, sphere p_padSphere)
 	return 0;
 }
 
-float2 BOPhysics::CalculateNewDir(float2 currentDir, float2 padNormal, float distanceFromCenter, float maxDistanceFromCenter)
+float2 BOPhysics::CalculateNewDir(float2 currentDir, float2 padNormal, float p_padAngle, float p_maxWidthAngle, float p_ballAngle)
 {
+	/*
 	if (!(distanceFromCenter > 0 && maxDistanceFromCenter > 0))
 	{
 		std::cout << "One of the distances is negative" << std::endl;
+	}*/
+	if (abs(p_padAngle - p_ballAngle) > p_maxWidthAngle)
+	{
+		std::cout << "Angle to large!" << std::endl << "Pad Center: " << p_padAngle << "Ball angle: " << p_ballAngle << "Max diff: " << p_maxWidthAngle << std::endl;
+	}
+	float angleDiffA = abs(p_padAngle - p_ballAngle);
+	float angleDiffB = abs(p_ballAngle - p_padAngle);
+	if (angleDiffA != angleDiffB)
+	{
+		std::cout << "Bug found! AngleDiffA and AngleDiffB should always be the same." << std::endl;
+		std::cout << "AngleDiffA: " << angleDiffA << "AngleDiffB: " << angleDiffB;
+		std::cout << "Please check if this happens around the pad angle 0. (Pad angle: " << p_padAngle;
 	}
 
+	float biasAngle = 3.14;
+	float diffVal = (p_padAngle - p_ballAngle) / p_maxWidthAngle;
+	NormalizeAngle(biasAngle);
+	float diff = diffVal * biasAngle;
+	NormalizeAngle(diff);
+	float2 biasedNormal;
+	biasedNormal.x = cos(p_padAngle + diff);
+	biasedNormal.y = -sin(p_padAngle + diff);
+	biasedNormal = biasedNormal.normalized();
+	/*	float dirX = cos(padCenterAngle);
+	float dirY = -sin(padCenterAngle);
+	float2 padCenterVector = float2(dirX, dirY).normalized();
+	*/
+
+	std::cout << std::endl << "### Setting new direction ###" << std::endl;
+	std::cout << "Normal: (" << padNormal.x << "," << padNormal.y << ")" << std::endl;
+	std::cout << "New Normal: (" << biasedNormal.x << "," << biasedNormal.y << ")" << std::endl;
+	std::cout << "Bias used: " << diff << std::endl;
+	std::cout << "Original angle: " << p_padAngle << std::endl;
+	std::cout << "angle from center: " << (p_padAngle - p_ballAngle) << std::endl;
+	std::cout << "diff factor: " << diffVal << std::endl;
+
 	float vDotN = currentDir.dot(padNormal);
-	std::cout << "vDotN: " << vDotN << std::endl;
+	//std::cout << "vDotN: " << vDotN << std::endl;
 	float2 newDir = currentDir - (padNormal * vDotN * 2);
+	
 	newDir = newDir.normalized();
+	// TMP
+	//newDir = biasedNormal;
 	std::cout << "New direction: (" << newDir.x << "," << newDir.y << ")" << std::endl;
 	return newDir;
-	float normalx = cos(distanceFromCenter);
 }

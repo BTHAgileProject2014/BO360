@@ -160,7 +160,7 @@ void BOObjectManager::Update(Uint32 p_deltaTime)
 	if (m_ballList[0].CanColide())
 	{
 		float2 result = BOPhysics::BallPadCollision(m_ballList[0].GetBoundingSphere(), m_ballList[0].GetDirection(), m_paddle.GetBoundingSphere(), m_paddle.GetRotation() - 15, 30);
-		if (result.x > 0)
+		if (!(result.x == 0 && result.y == 0))
 		{
 			m_ballList[0].SetDirection(result);
 			m_ballList[0].BouncedOnPad();

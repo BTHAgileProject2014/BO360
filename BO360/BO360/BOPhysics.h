@@ -6,6 +6,11 @@
 #include <iostream>
 #include <string>
 
+inline void NormalizeAngle(float& angle) {
+	while (angle < 0) { angle += 6.28319; }
+	while (angle > 6.28319) { angle -= 6.28319; }
+}
+
 class BOPhysics
 {
 public:
@@ -19,7 +24,7 @@ public:
 	static int CheckCollisionBallShield(sphere p_sphere, sphere p_padSphere);
 
 private:
-	static float2 CalculateNewDir(float2 currentDir, float2 padNormal, float distanceFromCenter, float maxDistanceFromCenter);
+	static float2 CalculateNewDir(float2 currentDir, float2 padNormal, float p_padAngle, float p_maxWidthAngle, float p_ballAngle);
 	static bool CheckBallInPadAngle(float2 p_centerPad, float p_radiusPad, double p_PadRotation, float2 p_centerBall, float p_radiusBall);
 	static const double PI;
 	static const double HALF_PI;
