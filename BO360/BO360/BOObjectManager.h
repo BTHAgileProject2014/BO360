@@ -10,6 +10,7 @@
 #include "BOBlock.h"
 #include "BOPhysics.h"
 #include "BOMapLoader.h"
+#include "BOSoundManager.h"
 #include <vector>
 
 class BOObjectManager : public BOComponent
@@ -22,8 +23,6 @@ public:
 	void Shutdown();
 	void Update(Uint32 p_deltaTime);
 	void Draw();
-	bool GetPop();
-	void SetPop(bool p_pop);
 
 private:
 	void BallDirectionChange(int p_bounceCorner);
@@ -38,9 +37,6 @@ private:
 	BOPaddle m_paddle;
 	std::vector<BOBlock> m_blockList;
 	//std::vector<BOParticle> m_particleList;
-	//std::vector<BOPowerUp> m_powerUPlist;
-
-	bool m_pop;
-	
+	//std::vector<BOPowerUp> m_powerUPlist;	
 };
 #endif
