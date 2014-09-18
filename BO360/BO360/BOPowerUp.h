@@ -15,6 +15,7 @@ public:
 	virtual void Update(Uint32 p_deltaTime);
 	void Draw();
 	virtual void Activate();
+	virtual void Deactivate();
 
 protected:
 	bool m_hasSpawned;

@@ -45,3 +45,7 @@ void BOPowerUp::Update(Uint32 p_delaTime)
 void BOPowerUp::Activate()
 {
 }
+
+void BOPowerUp::Deactivate()
+{
+}

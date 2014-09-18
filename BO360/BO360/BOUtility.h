@@ -426,4 +426,13 @@ struct hexagon
 		pointLeft.y = p_pos.y;
 	}
 };
+
+// What types of power-ups we use
+enum PowerUpTypes
+{
+	biggerPad,
+	smallerPad,
+	shield,
+	extraBall
+};
 #endif
