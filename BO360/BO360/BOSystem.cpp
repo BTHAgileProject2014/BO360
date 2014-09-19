@@ -62,6 +62,17 @@ bool BOSystem::Initialize()
 		return false;
 	}
 
+	result = BOHUDManager::Initialize(true);
+	if (!result)
+	{
+		return false;
+	}
+
+	// Example usage of HUD
+	BOHUDManager::SetScore(1000000);
+	BOHUDManager::SetLives(5);
+	BOHUDManager::SetLevel(1);
+
 	return true;
 }
 
@@ -113,6 +124,9 @@ bool BOSystem::Run()
 		// Render text
 		BOTextManager::DrawTexts();
 
+		//RenderHUD
+		BOHUDManager::Draw();
+
 		BOGraphicInterface::Present();
 		// ============================
 
@@ -129,4 +143,5 @@ void BOSystem::Shutdown()
 	m_powerUpManager.Shutdown();
 	m_soundManager.Shutdown();
 	BOTextManager::Shutdown();
+	BOHUDManager::Shutdown();
 }
