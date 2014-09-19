@@ -150,7 +150,9 @@ void BOObjectManager::Update(Uint32 p_deltaTime)
 					// Spawn powerup if there is one
 					if (m_blockList[i].GetPowerUp() != PUNone)
 					{
-						//BOPowerUpManager::AddPowerUp()
+						BOMultiballs extraBall;
+						extraBall.Initialize(m_blockList[i].GetPosition(), int2(40, 40), "Bilder/placeHolderPowerUp1.png", 1.0f, int2(1300, 900) );
+						BOPowerUpManager::AddPowerUp(extraBall);
 					}
 					// Collision therfore play popsound
 					BOSoundManager::PlaySound(sound_pop);
