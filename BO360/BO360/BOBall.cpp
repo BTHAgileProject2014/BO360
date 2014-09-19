@@ -80,6 +80,10 @@ void BOBall::BouncedOnPad()
 {
 	m_canColide = false;
 }
+void BOBall::BouncedOnHexa()
+{
+	m_canColide = true;
+}
 
 box BOBall::GetBoundingBox()
 {

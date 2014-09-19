@@ -39,8 +39,8 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>$(ProjectDir)\DevLibs\SDL2_image-2.0.0\include;$(ProjectDir)DevLibs\SDL2-2.0.3\include;$(IncludePath)</IncludePath>
-    <LibraryPath>$(ProjectDir)DevLibs\SDL2-2.0.3\lib\x86;$(ProjectDir)\DevLibs\SDL2_image-2.0.0\lib\x86;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(ProjectDir)\DevLibs\SDL2_mixer-2.0.0\include;$(ProjectDir)\DevLibs\SDL2_image-2.0.0\include;$(ProjectDir)DevLibs\SDL2-2.0.3\include;$(ProjectDir)DevLibs\SDL2_ttf-2.0.12\include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(ProjectDir)DevLibs\SDL2_mixer-2.0.0\lib\x86;$(ProjectDir)DevLibs\SDL2-2.0.3\lib\x86;$(ProjectDir)\DevLibs\SDL2_image-2.0.0\lib\x86;$(ProjectDir)DevLibs\SDL2_ttf-2.0.12\lib\x86;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -50,7 +50,7 @@
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;SDL2_mixer.lib;SDL2_ttf.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <SubSystem>Console</SubSystem>
     </Link>
   </ItemDefinitionGroup>
@@ -74,6 +74,7 @@
     <ClInclude Include="BOBlackHole.h" />
     <ClInclude Include="BOBlock.h" />
     <ClInclude Include="BOComponent.h" />
+    <ClInclude Include="BODrawableText.h" />
     <ClInclude Include="BOGraphicInterface.h" />
     <ClInclude Include="BOInput.h" />
     <ClInclude Include="BOMapLoader.h" />
@@ -82,12 +83,16 @@
     <ClInclude Include="BOPaddle.h" />
     <ClInclude Include="BOPhysics.h" />
     <ClInclude Include="BOPowerUp.h" />
+    <ClInclude Include="BOPowerUpManager.h" />
     <ClInclude Include="BOPublisher.h" />
+    <ClInclude Include="BOPUSubscriber.h" />
     <ClInclude Include="BOShield.h" />
+    <ClInclude Include="BOSoundManager.h" />
     <ClInclude Include="BOState.h" />
     <ClInclude Include="BOStateManager.h" />
     <ClInclude Include="BOSubscriber.h" />
     <ClInclude Include="BOSystem.h" />
+    <ClInclude Include="BOTextManager.h" />
     <ClInclude Include="BOTimer.h" />
     <ClInclude Include="BOUtility.h" />
     <ClInclude Include="BOWindow.h" />
@@ -99,6 +104,7 @@
     <ClCompile Include="BOBlackHole.cpp" />
     <ClCompile Include="BOBlock.cpp" />
     <ClCompile Include="BOComponent.cpp" />
+    <ClCompile Include="BODrawableText.cpp" />
     <ClCompile Include="BOGraphicInterface.cpp" />
     <ClCompile Include="BOInput.cpp" />
     <ClCompile Include="BOMain.cpp" />
@@ -108,20 +114,19 @@
     <ClCompile Include="BOPaddle.cpp" />
     <ClCompile Include="BOPhysics.cpp" />
     <ClCompile Include="BOPowerUp.cpp" />
+    <ClCompile Include="BOPowerUpManager.cpp" />
     <ClCompile Include="BOPublisher.cpp" />
+    <ClCompile Include="BOPUSubscriber.cpp" />
     <ClCompile Include="BOShield.cpp" />
+    <ClCompile Include="BOSoundManager.cpp" />
     <ClCompile Include="BOState.cpp" />
     <ClCompile Include="BOStateManager.cpp" />
     <ClCompile Include="BOSubscriber.cpp" />
     <ClCompile Include="BOSystem.cpp" />
+    <ClCompile Include="BOTextManager.cpp" />
     <ClCompile Include="BOTimer.cpp" />
     <ClCompile Include="BOWindow.cpp" />
     <ClCompile Include="BOButton.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Maps\Default.bom" />
-    <None Include="Maps\Empty.bom" />
-    <None Include="Maps\Filled.bom" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Maps\Default.bom" />

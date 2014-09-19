@@ -64,3 +64,13 @@ bool BOShield::GetActive()
 {
 	return m_IsActive;
 }
+
+void BOShield::Activate()
+{
+	BOPowerUpManager::Notify(PUShield, true);
+}
+
+void BOShield::Deactivate()
+{
+	BOPowerUpManager::Notify(PUShield, false);
+}

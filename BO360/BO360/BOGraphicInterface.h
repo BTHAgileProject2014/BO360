@@ -6,6 +6,7 @@
 #include "BOComponent.h"
 #include <iostream>
 #include <SDL_image.h>
+#include <SDL_ttf.h>
 
 class BOGraphicInterface
 {
@@ -23,16 +24,19 @@ public:
 	static void Present();
 	static void SetWindowTitle(std::string p_windowText);
 	static SDL_Texture* LoadTexture(std::string p_path);
+	static SDL_Texture* DrawTextToTexture(std::string p_text, int3 p_textColor, int2* size);
+	static void DestroyTexture(SDL_Texture* p_texture);
 
 private:
 	BOGraphicInterface() {}
 	static BOGraphicInterface& GetInstance();
 
 	BOWindow m_window;
-	SDL_Renderer* m_renderer;
+	static SDL_Renderer* m_renderer;
 	int m_windowWidth;
 	int m_windowHeight;
 	//bool m_fullscreen;	// Use only when fullscreen and resolutions is supported
+	static TTF_Font* m_font;
 	
 };
 #endif

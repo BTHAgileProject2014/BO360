@@ -28,20 +28,33 @@ bool BOSystem::Initialize()
 		return false;
 	}
 
+	result = m_powerUpManager.Initialize(windowWidth, windowHeight);
+	if (!result)
+	{
+		return false;
+	}
+
 	result = m_objectManager.Initialize(windowWidth, windowHeight);
 	if (!result)
 	{
 		return false;
 	}
 
-	result = m_timer.Initialize();
+	if(!BOSoundManager::Initialize())
 	if (!result)
 	{
 		return false;
 	}
+
 	m_deltaTime = 0;
 	m_totalTime = m_timer.GetDeltaTime();
 	m_FPS = 0;
+
+	result = BOTextManager::Initialize();
+	if (!result)
+	{
+		return false;
+	}
 
 	return true;
 }
@@ -60,35 +73,44 @@ bool BOSystem::Run()
 			m_deltaTime = 100;
 		}
 
-		// ========== UPDATE =========
+	// ========== UPDATE =========
 
-		// Tick the timer.
-		m_timer.Tick();
+	// Tick the timer.
+	m_timer.Tick();
 		m_totalTime = m_timer.GetTotalTimeS();
 		m_FPS = m_timer.FPS();
 
-		// Output the total time and delta time to the window title for debugging.
-		#ifdef DEBUG	
-				m_string = "Total time: " + std::to_string(m_totalTime) + " seconds. Delta time: " + std::to_string(m_deltaTime) + " milliseconds. FPS: " + std::to_string(m_FPS);
-				BOGraphicInterface::SetWindowTitle(m_string);
-		#endif
+	// Output the total time and delta time to the window title for debugging.
+#ifdef DEBUG
+		m_string = "Total time: " + std::to_string(m_totalTime) + " seconds. Delta time: " + std::to_string(m_deltaTime) + " milliseconds. FPS: " + std::to_string(m_FPS);
+		BOGraphicInterface::SetWindowTitle(m_string);
+#endif
 
-		// Update the input manager.
-		result = m_input.Update();
+	// Update the input manager.
+	result = m_input.Update();
 
-		// Update all of the objects
+	// Update all of the objects
 		m_objectManager.Update(m_deltaTime);
 
-		// ============================
+		// Update the power-ups
+		m_powerUpManager.Update(m_deltaTime);
 
-		// ========== RENDER ==========
-		BOGraphicInterface::Clear();
+		// Update Sound 
+		BOSoundManager::Update(); // Empty so far.
 
-		// Render all of the objects.
-		m_objectManager.Draw();
+	// ============================
 
-		BOGraphicInterface::Present();
-		// ============================
+	// ========== RENDER ==========
+	BOGraphicInterface::Clear();
+
+	// Render all of the objects.
+	m_objectManager.Draw();
+
+		// Render text
+		BOTextManager::DrawTexts();
+
+	BOGraphicInterface::Present();
+	// ============================
 
 		m_deltaTime = 0;
 	}
@@ -99,4 +121,8 @@ bool BOSystem::Run()
 void BOSystem::Shutdown()
 {
 	m_input.Shutdown();
+	m_objectManager.Shutdown();
+	m_powerUpManager.Shutdown();
+	BOSoundManager::Shutdown();
+	BOTextManager::Shutdown();
 }

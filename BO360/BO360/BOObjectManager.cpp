@@ -2,6 +2,7 @@
 
 BOObjectManager::BOObjectManager()
 {
+	m_GravityIsOn = true;
 }
 
 
@@ -89,7 +90,7 @@ bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight)
 				return false;
 			}
 		m_blockList.push_back(l_block);
-	}
+		}
 	/*float2 test = m_ballList[0].GetDirection();
 	test = float2(10,10);*/
 	return true;
@@ -114,16 +115,6 @@ void BOObjectManager::Update(Uint32 p_deltaTime)
 
 	for (int i = 0; i < m_ballList.size(); i++)
 	{
-		/*
-		float2 ballDir = m_ballList[i].GetDirection();
-		float2 ballToCenter = m_ballList[i].GetPosition() - m_blackHole.GetPosition();
-		ballToCenter.x *= -1;
-		ballToCenter.y *= -1;
-		ballDir.x = ballDir.x * 0.9999 + ballToCenter.x * 0.0001;
-		ballDir.y = ballDir.y * 0.9999 + ballToCenter.y * 0.0001;
-		ballDir = ballDir.normalized();
-		m_ballList[i].SetDirection(ballDir);
-		*/
 		m_ballList[i].Update(p_deltaTime);
 	}
 	for (int i = 0; i < m_blockList.size(); i++)
@@ -137,20 +128,19 @@ void BOObjectManager::Update(Uint32 p_deltaTime)
 		{
 			if (BOPhysics::CheckCollisionSpheres(m_ballList[0].GetBoundingSphere(), m_blockList[i].GetBoundingSphere()))
 		{
-				m_ballList[0].SetDirection(float2(0, 0));
 				if (BOPhysics::CheckCollisionSphereToHexagon(m_ballList[0].GetBoundingSphere(), m_blockList[i].GetBoundingHexagon(), normal))
 			{
+					// Block dead, dead = true, stop checking collision and drawing block
 				m_blockList[i].SetDead();
-
 					//Collision with hexagon
-					//Reflect direction
-					// new vector = v -2(v.n)n
-					vDotN = m_ballList[0].GetDirection().dot(normal);
-					vDotN *= 2;
-					normal = normal * vDotN;
-					newBallDirection = (m_ballList[0].GetDirection() - normal);
+					m_ballList[0].SetDirection(BOPhysics::ReflectBallAroundNormal(m_ballList[0].GetDirection(), normal));
 					m_ballList[0].BouncedOnHexagon();
-					m_ballList[0].SetDirection(newBallDirection);
+					//Changes the gravity to true so it can be pulled into the middle
+					m_GravityIsOn = true;
+					
+					// Collision therfore play popsound
+					BOSoundManager::PlaySound(sound_pop);
+					break;
 				}
 			}
 		}		
@@ -164,6 +154,7 @@ void BOObjectManager::Update(Uint32 p_deltaTime)
 		{
 			m_ballList[0].SetDirection(result);
 			m_ballList[0].BouncedOnPad();
+			m_GravityIsOn = false;//Changes the gravity to false so it doesn't stuck fuck
 		}
 		
 		//int bounceTest = BOPhysics::CheckCollisioPadSphere(m_ballList[0].GetBoundingSphere(), m_ballList[0].GetDirection(), m_paddle.GetBoundingSphere(), m_paddle.GetRotation() - 15, 30);
@@ -188,6 +179,8 @@ void BOObjectManager::Update(Uint32 p_deltaTime)
 			//}
 		//}
 	}
+	//Runs tha gravity... lawl... Rotates the direction depending on distance
+	m_ballList[0].SetDirection(BOPhysics::BlackHoleGravity(m_ballList[0].GetBoundingSphere(), m_ballList[0].GetDirection(), m_ballList[0].GetSpeed(), m_blackHole.GetBoundingSphere(), m_GravityIsOn));
 
 
 }
@@ -232,4 +225,17 @@ void BOObjectManager::BallDirectionChange(int p_bounceCorner)
 		//std::cout << "Krock" << std::endl;
 	}
 	m_ballList[0].SetDirection(ballDir);
+}
+
+void BOObjectManager::Handle(PowerUpTypes p_type, bool p_activated)
+{
+	switch (p_type)
+	{
+	case PUShield:
+		// Add shield??
+		break;
+	case PUExtraBall:
+		// Add ball to the vector
+		break;
+	}
 }

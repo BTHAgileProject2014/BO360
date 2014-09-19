@@ -28,6 +28,11 @@ void BOPowerUp::Shutdown()
 {
 }
 
+void BOPowerUp::Draw()
+{
+	BOObject::Draw();
+}
+
 void BOPowerUp::Update(Uint32 p_delaTime)
 {
 	if (m_hasSpawned)
@@ -38,5 +43,9 @@ void BOPowerUp::Update(Uint32 p_delaTime)
 }
 
 void BOPowerUp::Activate()
+{
+}
+
+void BOPowerUp::Deactivate()
 {
 }
