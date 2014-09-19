@@ -213,3 +213,16 @@ void BOObjectManager::BallDirectionChange(int p_bounceCorner)
 	}
 	m_ballList[0].SetDirection(ballDir);
 }
+
+void BOObjectManager::Handle(PowerUpTypes p_type, bool p_activated)
+{
+	switch (p_type)
+	{
+	case PUShield:
+		// Add shield??
+		break;
+	case PUExtraBall:
+		// Add ball to the vector
+		break;
+	}
+}

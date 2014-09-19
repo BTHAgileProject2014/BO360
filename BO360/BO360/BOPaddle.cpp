@@ -15,6 +15,7 @@ bool BOPaddle::Initialize(float2 p_position, int2 p_size, std::string p_fileName
 	m_rotation = 0.0f;
 	m_deltaRotation = 0.4f;
 	BOPublisher::AddSubscriber(this);
+	BOPowerUpManager::AddSubscriber(this);
 	return BOObject::Initialize(p_position, p_size, p_fileName);
 	
 }
@@ -37,6 +38,33 @@ void BOPaddle::Handle(InputMessages p_inputMessages)
 	else
 	{
 		m_movingRight = false;
+	}
+}
+
+void BOPaddle::Handle(PowerUpTypes p_type, bool p_activated)
+{
+	switch (p_type)
+	{
+	case PUBiggerPad:
+		if (p_activated)
+		{
+			// Make the paddle bigger
+		}
+		else
+		{
+			// Revert to normal paddle
+		}
+		break;
+	case PUSmallerPad:
+		if (p_activated)
+		{
+			// Make the paddle smaller
+		}
+		else
+		{
+			// Revert to normal paddle
+		}
+		break;
 	}
 }
 

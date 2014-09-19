@@ -34,6 +34,12 @@ bool BOSystem::Initialize()
 		return false;
 	}
 
+	result = m_powerUpManager.Initialize(windowWidth, windowHeight);
+	if (!result)
+	{
+		return false;
+	}
+
 	result = m_objectManager.Initialize(windowWidth, windowHeight);
 	if (!result)
 	{
@@ -41,18 +47,6 @@ bool BOSystem::Initialize()
 	}
 
 	if(!BOSoundManager::Initialize())
-	if (!result)
-	{
-		return false;
-	}
-
-	result = m_powerUpManager.Initialize(windowWidth, windowHeight);
-	if (!result)
-	{
-		return false;
-	}
-
-	result = m_powerUpManager.Initialize(windowWidth, windowHeight);
 	if (!result)
 	{
 		return false;
