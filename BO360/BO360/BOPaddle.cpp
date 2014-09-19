@@ -63,7 +63,7 @@ void BOPaddle::Handle(PowerUpTypes p_type, bool p_activated)
 		else
 		{
 			// Revert to normal paddle
-		}
+}
 		break;
 	}
 }

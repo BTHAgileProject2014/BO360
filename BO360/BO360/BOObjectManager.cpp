@@ -49,10 +49,10 @@ bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight)
 	// Initialize primary ball.
 	int2 ballSize = int2(15, 15);
 
-	float2 ballPosition = float2(100, 300);
-	float ballSpeed = 0.5f;
-	float2 ballDirection = float2(20, 10);
-	
+	float2 ballPosition = float2((p_windowWidth / 2.0f), (p_windowHeight / 2.0f));
+	float ballSpeed = 0.1f;
+	float2 ballDirection = float2(20, 10).normalized();
+
 	BOBall ball;
 	result = ball.Initialize(ballPosition, ballSize, "Bilder/placeholderBoll10x10.png", ballSpeed, ballDirection, windowSize);
 	if (!result)
@@ -81,16 +81,16 @@ bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight)
 		if ((int)m_blockPositions[i].x % 2 == 0)
 		{
 			y += l_blockHeightDifference;
-		}
+			}
 
 		// Create block.
 		result = l_block.Initialize(float2(x, y), int2(40, 40), "Bilder/placeholderHexagon40x40.png");
-		if (!result)
-		{
-			return false;
-		}
+			if (!result)
+			{
+				return false;
+			}
 		m_blockList.push_back(l_block);
-	}
+		}
 	/*float2 test = m_ballList[0].GetDirection();
 	test = float2(10,10);*/
 	return true;
@@ -127,14 +127,14 @@ void BOObjectManager::Update(Uint32 p_deltaTime)
 		if (!m_blockList[i].GetDead())
 		{
 			if (BOPhysics::CheckCollisionSpheres(m_ballList[0].GetBoundingSphere(), m_blockList[i].GetBoundingSphere()))
-			{
+		{
 				if (BOPhysics::CheckCollisionSphereToHexagon(m_ballList[0].GetBoundingSphere(), m_blockList[i].GetBoundingHexagon(), normal))
-				{
+			{
 					// Block dead, dead = true, stop checking collision and drawing block
-					m_blockList[i].SetDead();
+				m_blockList[i].SetDead();
 					//Collision with hexagon
 					m_ballList[0].SetDirection(BOPhysics::ReflectBallAroundNormal(m_ballList[0].GetDirection(), normal));
-					m_ballList[0].BouncedOnHexa();
+					m_ballList[0].BouncedOnHexagon();
 					//Changes the gravity to true so it can be pulled into the middle
 					m_GravityIsOn = true;
 					
@@ -143,20 +143,26 @@ void BOObjectManager::Update(Uint32 p_deltaTime)
 					break;
 				}
 			}
-		}
+		}		
 	}
 
 
 	if (m_ballList[0].CanColide())
 	{
-		
-		int bounceTest = BOPhysics::CheckCollisioPadSphere(m_ballList[0].GetBoundingSphere(), m_ballList[0].GetDirection(), m_paddle.GetBoundingSphere(), m_paddle.GetRotation() - 15, 30);
-		if (bounceTest > 0)
+		float2 result = BOPhysics::BallPadCollision(m_ballList[0].GetBoundingSphere(), m_ballList[0].GetDirection(), m_paddle.GetBoundingSphere(), m_paddle.GetRotation() - 15, 30);
+		if (!(result.x == 0 && result.y == 0))
 		{
+			m_ballList[0].SetDirection(result);
 			m_ballList[0].BouncedOnPad();
 			m_GravityIsOn = false;//Changes the gravity to false so it doesn't stuck fuck
 		}
-		BallDirectionChange(bounceTest);
+		
+		//int bounceTest = BOPhysics::CheckCollisioPadSphere(m_ballList[0].GetBoundingSphere(), m_ballList[0].GetDirection(), m_paddle.GetBoundingSphere(), m_paddle.GetRotation() - 15, 30);
+		//if (bounceTest > 0)
+		//{
+		//	m_ballList[0].BouncedOnPad();
+		//}
+		//BallDirectionChange(bounceTest);
 	/*	if (BOPhysics::MattiasBallPadCollision(m_ballList[0].GetBoundingSphere(), m_ballList[0].GetDirection(), m_paddle.GetBoundingSphere(), m_paddle.GetRotation() - 20, 40))
 		{*/
 			//sphere changedSphere = m_paddle.GetBoundingSphere();

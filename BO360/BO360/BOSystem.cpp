@@ -14,12 +14,6 @@ bool BOSystem::Initialize()
 {
 	bool result;
 
-	result = m_timer.Initialize();
-	if (!result)
-	{
-		return false;
-	}
-
 	result = m_input.Initialize();
 	if (!result)
 	{
@@ -53,7 +47,7 @@ bool BOSystem::Initialize()
 	}
 
 	m_deltaTime = 0;
-	m_totalTime = 0;
+	m_totalTime = m_timer.GetDeltaTime();
 	m_FPS = 0;
 
 	result = BOTextManager::Initialize();
@@ -79,23 +73,29 @@ bool BOSystem::Run()
 
 	if (m_deltaTime > 2)
 	{
-		// ========== UPDATE =========
+		// low-cap the fps to never do less than 10 updates / sec
+		if (m_deltaTime > 100)
+		{
+			m_deltaTime = 100;
+		}
 
-		// Tick the timer.
-		m_timer.Tick();
+	// ========== UPDATE =========
+
+	// Tick the timer.
+	m_timer.Tick();
 		m_totalTime = m_timer.GetTotalTimeS();
 		m_FPS = m_timer.FPS();
 
-		// Output the total time and delta time to the window title for debugging.
-		#ifdef DEBUG	
-				m_string = "Total time: " + std::to_string(m_totalTime) + " seconds. Delta time: " + std::to_string(m_deltaTime) + " milliseconds. FPS: " + std::to_string(m_FPS);
-				BOGraphicInterface::SetWindowTitle(m_string);
-		#endif
+	// Output the total time and delta time to the window title for debugging.
+#ifdef DEBUG
+		m_string = "Total time: " + std::to_string(m_totalTime) + " seconds. Delta time: " + std::to_string(m_deltaTime) + " milliseconds. FPS: " + std::to_string(m_FPS);
+		BOGraphicInterface::SetWindowTitle(m_string);
+#endif
 
-		// Update the input manager.
-		result = m_input.Update();
+	// Update the input manager.
+	result = m_input.Update();
 
-		// Update all of the objects
+	// Update all of the objects
 		m_objectManager.Update(m_deltaTime);
 
 		// Update the power-ups
@@ -104,21 +104,21 @@ bool BOSystem::Run()
 		// Update Sound 
 		BOSoundManager::Update(); // Empty so far.
 
-		// ============================
+	// ============================
 
-		// ========== RENDER ==========
-		BOGraphicInterface::Clear();
+	// ========== RENDER ==========
+	BOGraphicInterface::Clear();
 
-		// Render all of the objects.
-		m_objectManager.Draw();
+	// Render all of the objects.
+	m_objectManager.Draw();
 
 		m_powerUpManager.Draw();
 
 		// Render text
 		BOTextManager::DrawTexts();
 
-		BOGraphicInterface::Present();
-		// ============================
+	BOGraphicInterface::Present();
+	// ============================
 
 		m_deltaTime = 0;
 	}
