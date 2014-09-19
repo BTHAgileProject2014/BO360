@@ -40,7 +40,7 @@ bool BOButton::Initialize(float2 p_position, int2 p_size, std::string p_fileName
 	// Load tool tip.
 	std::string l_ToolName = p_fileName;
 	l_ToolName.append("ToolTip.png");
-	if (m_toolTip.Initialize(float2(m_position.x + 250, m_position.y + 220), int2(500, 300), l_ToolName))
+	if (!m_toolTip.Initialize(float2(m_position.x + 125, m_position.y + 222.5f), int2(250, 295), l_ToolName))
 	{
 		std::cout << "Failed to load tool tip " << l_ToolName << "!" << std::endl;
 		return false;
