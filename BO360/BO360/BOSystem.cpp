@@ -23,6 +23,8 @@ bool BOSystem::Initialize()
 	result = m_timer.Initialize();
 	if (!result)
 	{
+		std::cout << "Initialize timer failed!" << std::endl;
+
 		return false;
 	}
 
@@ -30,6 +32,8 @@ bool BOSystem::Initialize()
 	result = m_input.Initialize();
 	if (!result)
 	{
+		std::cout << "Initialize input manager failed!" << std::endl;
+
 		return false;
 	}
 	
@@ -41,6 +45,8 @@ bool BOSystem::Initialize()
 	// Initlialize the graphichs engine.
 	if (!BOGraphicInterface::Initialize(m_windowWidth, m_windowHeight))
 	{
+		std::cout << "Initialize graphics engine failed!" << std::endl;
+
 		return false;
 	}
 
@@ -48,6 +54,8 @@ bool BOSystem::Initialize()
 	result = BOTextManager::Initialize();
 	if (!result)
 	{
+		std::cout << "Initialize text manager failed!" << std::endl;
+
 		return false;
 	}
 
@@ -55,6 +63,8 @@ bool BOSystem::Initialize()
 	m_gameState = MENU;
 	if (!m_stateManager.Initialize(int2(m_windowWidth, m_windowHeight)))
 	{
+		std::cout << "Initialize state manager failed!" << std::endl;
+
 		return false;
 	}
 
@@ -69,12 +79,16 @@ bool BOSystem::InitializeMap()
 	result = m_objectManager.Initialize(m_windowWidth, m_windowHeight);
 	if (!result)
 	{
+		std::cout << "Initialize object manager failed!" << std::endl;
+
 		return false;
 	}
 
 	// Initialize the sound engine.
 	if(!BOSoundManager::Initialize())
 	{
+		std::cout << "Initialize sound manager failed!" << std::endl;
+
 		return false;
 	}
 
@@ -82,12 +96,16 @@ bool BOSystem::InitializeMap()
 	result = m_powerUpManager.Initialize(m_windowWidth, m_windowHeight);
 	if (!result)
 	{
+		std::cout << "Initialize power up manager failed!" << std::endl;
+
 		return false;
 	}
 
 	result = BOHUDManager::Initialize(true);
 	if (!result)
 	{
+		std::cout << "Initialize HUD failed!" << std::endl;
+
 		return false;
 	}
 
@@ -225,7 +243,13 @@ void BOSystem::HandleAction(int p_action)
 			case(1) :
 			{
 				m_gameState = RUNNING;
-				InitializeMap();
+				if (!InitializeMap())
+				{
+					std::cout << "Initialize map failed to complete! Press ENTER to quit." << std::endl;
+					std::cin.get();
+
+					m_quit = true;
+				}
 
 				break;
 			}
