@@ -52,7 +52,7 @@ bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight)
 	float2 ballPosition = float2(100, 300);
 	float ballSpeed = 0.5f;
 	float2 ballDirection = float2(20, 10);
-
+	
 	BOBall ball;
 	result = ball.Initialize(ballPosition, ballSize, "Bilder/placeholderBoll10x10.png", ballSpeed, ballDirection, windowSize);
 	if (!result)
@@ -134,7 +134,7 @@ void BOObjectManager::Update(Uint32 p_deltaTime)
 					m_blockList[i].SetDead();
 					//Collision with hexagon
 					m_ballList[0].SetDirection(BOPhysics::ReflectBallAroundNormal(m_ballList[0].GetDirection(), normal));
-
+					m_ballList[0].BouncedOnHexa();
 					//Changes the gravity to true so it can be pulled into the middle
 					m_GravityIsOn = true;
 					
@@ -173,7 +173,7 @@ void BOObjectManager::Update(Uint32 p_deltaTime)
 			//}
 		//}
 	}
-	//Runs tha gravity... lawl... Changes the direction depending on distance
+	//Runs tha gravity... lawl... Rotates the direction depending on distance
 	m_ballList[0].SetDirection(BOPhysics::BlackHoleGravity(m_ballList[0].GetBoundingSphere(), m_ballList[0].GetDirection(), m_ballList[0].GetSpeed(), m_blackHole.GetBoundingSphere(), m_GravityIsOn));
 
 
