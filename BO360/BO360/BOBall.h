@@ -17,6 +17,7 @@ public:
 	float2 GetDirection();
 	bool CanColide();
 	void BouncedOnPad();
+	void BouncedOnHexa();
 	box GetBoundingBox();
 	void Handle(InputMessages p_inputMessages);
 
