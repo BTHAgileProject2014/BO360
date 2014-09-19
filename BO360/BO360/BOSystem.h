@@ -23,7 +23,10 @@ public:
 	bool Initialize();
 	void Shutdown();
 	bool Run();
+
 private:
+	bool InitializeMap();
+	void HandleAction(int p_action);
 
 	BOTimer m_timer;
 	BOInput m_input;
@@ -31,7 +34,9 @@ private:
 	BOPowerUpManager m_powerUpManager;
 	BOSoundManager m_soundManager;
 	BOStateManager m_stateManager;
-	int windowWidth, windowHeight;
+	GameState m_gameState;
+	bool m_quit;
+	int m_windowWidth, m_windowHeight;
 
 	std::string m_string;
 	Uint32 m_deltaTime;

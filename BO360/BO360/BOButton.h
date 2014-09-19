@@ -10,7 +10,7 @@ public:
 	BOButton();
 	~BOButton();
 
-	bool Initialize(float2 p_position, int2 p_size, std::string p_fileName, int p_action);
+	bool Initialize(float2 p_position, int2 p_size, std::string p_fileName, std::string p_name, int p_action);
 	void Shutdown();
 
 	bool Intersects(int2 p_mousePosition);
@@ -21,6 +21,7 @@ public:
 private:
 	int m_actionValue;
 	bool m_lit;
+	std::string m_name;
 
 	SDL_Texture* m_nonHighlighted;
 	SDL_Texture* m_highlighted;
