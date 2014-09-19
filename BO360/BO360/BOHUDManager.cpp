@@ -48,6 +48,7 @@ void BOHUDManager::Shutdown()
 	m_level.Shutdown();
 	m_lives.Shutdown();
 	m_score.Shutdown();
+	m_life.Shutdown();
 }
 
 void BOHUDManager::Draw()
