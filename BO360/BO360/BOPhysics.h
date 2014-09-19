@@ -7,8 +7,12 @@
 #include <string>
 
 inline void NormalizeAngle(float& angle) {
-	while (angle < 0) { angle += 6.28319; }
-	while (angle > 6.28319) { angle -= 6.28319; }
+	while (angle < 0) { angle += 3.1415926; }
+	while (angle > 3.1415926) { angle -= 3.1415926; }
+}
+inline void NormalizeAngle(double& angle) {
+	while (angle < 0) { angle += 3.141592653589793; }
+	while (angle > 3.141592653589793) { angle -= 3.141592653589793; }
 }
 
 class BOPhysics
@@ -20,6 +24,8 @@ public:
 	static bool CheckCollisionSphereToHexagon(sphere p_sphere, hexagon p_hexagon, float2& normal);
 	static void CheckCollisionSphereToLine(sphere p_sphere, float2 point1, float2 point2, float2& p_returnValue1, float2& p_returnValue2);
 	static int CheckCollisioPadSphere(sphere p_sphere, float2 p_sphereDir, sphere p_padSphere, double p_startAngle, double p_endAngle);
+
+	/// Returns ~
 	static float2 BallPadCollision(sphere p_sphere, float2 p_sphereDir, sphere p_padSphere, double p_startAngle, double p_endAngle);
 	static int CheckCollisionBallShield(sphere p_sphere, sphere p_padSphere);
 
