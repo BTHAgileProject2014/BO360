@@ -72,9 +72,8 @@ bool BOSystem::InitializeMap()
 		return false;
 	}
 
-	// Initilialize the sound engine.
-	result = m_soundManager.Initialize();
-	if (!result)
+	// Initialize the sound engine.
+	if(!BOSoundManager::Initialize())
 	{
 		return false;
 	}
@@ -86,18 +85,35 @@ bool BOSystem::InitializeMap()
 		return false;
 	}
 
-	return result;
+	result = BOHUDManager::Initialize(true);
+	if (!result)
+	{
+		return false;
+	}
+
+	// Example usage of HUD
+	BOHUDManager::SetScore(1000000);
+	BOHUDManager::SetLives(5);
+	BOHUDManager::SetLevel(1);
+
+	return true;
 }
 
 bool BOSystem::Run()
 {
 	bool result = true;
 
-	// Get the initial detla time.
+	// Get the initial delta time.
 	m_deltaTime += m_timer.GetDeltaTime();
 
 	if (m_deltaTime > 2)
 	{
+		// low-cap the fps to never do less than 10 updates / sec
+		if (m_deltaTime > 100)
+		{
+			m_deltaTime = 100;
+		}
+
 		// ========== UPDATE =========
 
 		// Tick the timer.
@@ -116,18 +132,14 @@ bool BOSystem::Run()
 
 		if (m_gameState == RUNNING)
 		{
-			// Update all of the objects
+			// Update all of the objects.
 			m_objectManager.Update(m_deltaTime);
 
-			// Update the power-ups
+			// Update the power ups.
 			m_powerUpManager.Update(m_deltaTime);
 
-			// Update Sound 
-			m_soundManager.Update(); // Empty so far.
-			if (m_objectManager.GetPop())
-			{
-				m_soundManager.PlayPopSound();
-			}
+			// Update the sound Engine.
+			BOSoundManager::Update(); // Empty so far.
 		}
 
 		else
@@ -140,7 +152,7 @@ bool BOSystem::Run()
 				result = false;
 			}
 		}
-		
+
 		// ============================
 
 		// ========== RENDER ==========
@@ -151,8 +163,14 @@ bool BOSystem::Run()
 			// Render all of the objects.
 			m_objectManager.Draw();
 
+			// Render the power-ups
+			m_powerUpManager.Draw();
+
 			// Render text
 			BOTextManager::DrawTexts();
+
+			//RenderHUD
+			BOHUDManager::Draw();
 		}
 
 		else
@@ -175,8 +193,10 @@ void BOSystem::Shutdown()
 	m_input.Shutdown();
 	m_objectManager.Shutdown();
 	m_powerUpManager.Shutdown();
-	m_soundManager.Shutdown();
+	m_stateManager.Shutdown();
+	BOSoundManager::Shutdown();
 	BOTextManager::Shutdown();
+	BOHUDManager::Shutdown();
 }
 
 void BOSystem::HandleAction(int p_action)
