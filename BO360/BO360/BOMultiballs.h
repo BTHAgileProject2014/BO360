@@ -3,21 +3,19 @@
 
 #include "BOObject.h"
 #include "BOPowerUp.h"
+#include "BOPowerUpManager.h"
 
-class BOMultiballs : BOPowerUp
+class BOMultiballs : public BOPowerUp
 {
 public:
 	BOMultiballs();
 	~BOMultiballs();
-	bool Initialize();
-	int Update();
-	void Draw();
 
 	void SetActive(bool p_isActive);
 	void SwitchActive();
 	bool GetActive();
 
-	void Active();
+	void Activate();
 	void Deactivate();
 
 private:

@@ -11,6 +11,7 @@
 #include "BOPowerUpManager.h"
 #include "BOSoundManager.h"
 #include "BOTextManager.h"
+#include "BOMultiballs.h"
 #include <iostream>
 
 class BOSystem : BOComponent
@@ -29,6 +30,7 @@ private:
 	BOObjectManager m_objectManager;
 	BOPowerUpManager m_powerUpManager;
 	int windowWidth, windowHeight;
+	BOMultiballs m_extraBall;
 
 	std::string m_string;
 	Uint32 m_deltaTime;

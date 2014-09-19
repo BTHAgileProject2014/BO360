@@ -3,7 +3,7 @@
 
 #include "BOObject.h"
 
-class BOPowerUp : BOObject
+class BOPowerUp : public BOObject
 {
 public:
 	BOPowerUp();

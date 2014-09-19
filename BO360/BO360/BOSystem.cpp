@@ -62,6 +62,12 @@ bool BOSystem::Initialize()
 		return false;
 	}
 
+	result = m_extraBall.Initialize(float2(10, 10), int2(80, 80), "Bilder/placeholderPowerup1.png", 1.0f, int2(windowWidth, windowHeight));
+	if (!result)
+	{
+		return false;
+	}
+	m_powerUpManager.AddPowerUp(m_extraBall);
 	return true;
 }
 
@@ -105,6 +111,8 @@ bool BOSystem::Run()
 
 		// Render all of the objects.
 		m_objectManager.Draw();
+
+		m_powerUpManager.Draw();
 
 		// Render text
 		BOTextManager::DrawTexts();
