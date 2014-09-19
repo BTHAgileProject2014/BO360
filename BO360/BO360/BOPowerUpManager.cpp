@@ -1,5 +1,6 @@
 #include "BOPowerUpManager.h"
 std::vector<BOPUSubscriber*> BOPowerUpManager::m_subscribers;
+std::vector<BOPowerUp> BOPowerUpManager::m_powerUps;
 
 
 BOPowerUpManager::BOPowerUpManager()
@@ -17,6 +18,8 @@ bool BOPowerUpManager::Initialize(int p_windowsWidth, int p_windowHeight)
 	m_subscribers = std::vector<BOPUSubscriber*>();
 	m_windowSize.x = p_windowsWidth;
 	m_windowSize.y = p_windowHeight;
+	
+	
 
 	return true;
 }
