@@ -117,12 +117,14 @@ bool BOSystem::Run()
 	// Render all of the objects.
 	m_objectManager.Draw();
 
+	// Render the power-ups
+	m_powerUpManager.Draw();
+
 	// Render text
 	BOTextManager::DrawTexts();
 
 	//RenderHUD
 	BOHUDManager::Draw();
-
 	BOGraphicInterface::Present();
 	// ============================
 
