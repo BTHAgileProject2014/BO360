@@ -345,6 +345,14 @@ enum KeyMessages
 	spacebarKey
 };
 
+enum Sound
+{
+	sound_pop,
+	sound_die,
+	sound_powerup,
+	sound_teleport
+};
+
 // Sphere for collision check
 struct sphere
 {
@@ -417,5 +425,14 @@ struct hexagon
 		pointLeft.x = p_pos.x - (p_size.x / 2.0f);
 		pointLeft.y = p_pos.y;
 	}
+};
+
+// What types of power-ups we use
+enum PowerUpTypes
+{
+	PUBiggerPad,
+	PUSmallerPad,
+	PUShield,
+	PUExtraBall
 };
 #endif

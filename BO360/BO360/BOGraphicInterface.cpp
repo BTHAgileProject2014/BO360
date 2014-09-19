@@ -14,7 +14,6 @@ bool BOGraphicInterface::Initialize()
 
 bool BOGraphicInterface::Initialize(int p_windowWidth, int p_windowHeight)
 {
-	BOGraphicInterface* selfPtr = &GetInstance();
 	bool result;
 	GetInstance().m_windowWidth = p_windowWidth;
 	GetInstance().m_windowHeight = p_windowHeight;
