@@ -16,16 +16,16 @@ public:
 	bool Initialize(int p_windowsWidth, int p_windowHeight);
 	void Shutdown();
 
-	void AddPowerUp(BOPowerUp p_powerUp);
 	void Update(Uint32 p_deltaTime);
 	void Draw();
 
 	static void Notify(PowerUpTypes p_type, bool p_acivated);
 	static void AddSubscriber(BOPUSubscriber* p_subscriber);
 	static void Unsubscribe(BOPUSubscriber* p_subscriber);
+	static void AddPowerUp(BOPowerUp p_powerUp);
 private:
 	static std::vector<BOPUSubscriber*> m_subscribers;
-	std::vector<BOPowerUp> m_powerUps;
+	static std::vector<BOPowerUp> m_powerUps;
 	int2 m_windowSize;
 
 	
