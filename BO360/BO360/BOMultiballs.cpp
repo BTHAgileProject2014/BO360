@@ -10,19 +10,9 @@ BOMultiballs::~BOMultiballs()
 {
 }
 
-bool BOMultiballs::GetActive()
-{
-	return m_isActive;
-}
-
-void BOMultiballs::SetActive(bool p_isActive)
-{
-	m_isActive = p_isActive;
-}
-
 void BOMultiballs::SwitchActive()
 {
-	if (m_isActive)
+	if (m_isActive) 
 	{
 		m_isActive = false;
 	}

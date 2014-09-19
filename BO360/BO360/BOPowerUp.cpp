@@ -49,3 +49,14 @@ void BOPowerUp::Activate()
 void BOPowerUp::Deactivate()
 {
 }
+
+
+bool BOPowerUp::GetActive()
+{
+	return m_isActive;
+}
+
+void BOPowerUp::SetActive(bool p_isActive)
+{
+	m_isActive = p_isActive;
+}

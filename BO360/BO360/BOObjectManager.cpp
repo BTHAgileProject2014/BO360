@@ -152,6 +152,7 @@ void BOObjectManager::Update(Uint32 p_deltaTime)
 					{
 						BOMultiballs extraBall;
 						extraBall.Initialize(m_blockList[i].GetPosition(), int2(40, 40), "Bilder/placeHolderPowerUp1.png", 1.0f, int2(1300, 900) );
+						extraBall.SetActive(true);
 						BOPowerUpManager::AddPowerUp(extraBall);
 					}
 					// Collision therfore play popsound
@@ -159,6 +160,17 @@ void BOObjectManager::Update(Uint32 p_deltaTime)
 					break;
 				}
 			}
+		}		
+	}
+	// Tillfällig powerup kollision kod för att testa 
+	for (int i = 0; i < BOPowerUpManager::GetPowerUpSize(); i++)
+	{
+		if (BOPhysics::CheckCollisionSpheres(BOPowerUpManager::GetPowerUp(i).GetBoundingSphere(), sphere(m_paddle.GetPosition(), 5)) && BOPowerUpManager::GetPowerUp(i).GetActive() )
+		{
+			BOBall ball;
+			ball.Initialize(m_ballList[0].GetPosition(), int2(15, 15), "Bilder/placeholderBoll10x10.png", m_ballList[0].GetSpeed(), float2(m_ballList[0].GetDirection().x * -1, m_ballList[0].GetDirection().y * -1), int2(1300,900));
+			m_ballList.push_back(ball);
+			BOPowerUpManager::GetPowerUp(i).SetActive(false);
 		}		
 	}
 

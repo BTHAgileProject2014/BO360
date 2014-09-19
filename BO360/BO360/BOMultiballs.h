@@ -11,9 +11,7 @@ public:
 	BOMultiballs();
 	~BOMultiballs();
 
-	void SetActive(bool p_isActive);
 	void SwitchActive();
-	bool GetActive();
 
 	void Activate();
 	void Deactivate();
