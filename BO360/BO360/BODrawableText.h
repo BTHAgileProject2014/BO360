@@ -17,6 +17,8 @@ public:
 	void Draw();
 	void SetPosition(float2 p_position);
 	void SetText(std::string p_text, int3 p_color);
+	float2 GetPosition();
+	int2 GetSize();
 
 private:
 	std::string m_text;

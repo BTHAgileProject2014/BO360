@@ -39,3 +39,13 @@ void BODrawableText::SetText(std::string p_text, int3 p_color)
 	BOGraphicInterface::DestroyTexture(m_texture);
 	m_texture = BOGraphicInterface::DrawTextToTexture(m_text, p_color, &m_size);
 }
+
+float2 BODrawableText::GetPosition()
+{
+	return m_position;
+}
+
+int2 BODrawableText::GetSize()
+{
+	return m_size;
+}

@@ -2,8 +2,9 @@
 #define BOSHIELD_H_
 #include "BOPowerUp.h"
 #include "BOPhysics.h"
+#include "BOPowerUpManager.h"
 
-class BOShield : BOPowerUp
+class BOShield : public BOPowerUp
 {
 public:
 	BOShield();
@@ -17,7 +18,8 @@ public:
 	void SwitchActive();
 	bool GetActive();
 
-	
+	void Activate();
+	void Deactivate();
 
 
 private:

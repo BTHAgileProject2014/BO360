@@ -2,6 +2,7 @@
 
 BOBall::BOBall()
 {
+	m_Fuel = 0.0f;
 }
 
 
@@ -79,6 +80,11 @@ bool BOBall::CanColide()
 void BOBall::BouncedOnPad()
 {
 	m_canColide = false;
+	m_Fuel = 20.0f;
+}
+void BOBall::BouncedOnHexa()
+{
+	m_canColide = true;
 }
 
 box BOBall::GetBoundingBox()
@@ -104,4 +110,18 @@ void BOBall::Handle(InputMessages p_inputMessages)
 		m_position.x = p_inputMessages.mouseX;
 		m_position.y = p_inputMessages.mouseY;
 	}
+}
+
+void BOBall::BouncedOnHexagon()
+{
+	m_canColide = true;
+}
+
+float BOBall::GetFuel()
+{
+	return m_Fuel;
+}
+void BOBall::SetFuel(float p_Fuel)
+{
+	m_Fuel = p_Fuel;
 }

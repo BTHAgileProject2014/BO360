@@ -19,7 +19,7 @@ bool BOPowerUp::Initialize(float2 p_position, int2 p_size, std::string p_fileNam
 	// Set direction to center of screen
 	m_direction.x = (p_windowSize.x / 2.0f) - m_position.x;
 	m_direction.y = (p_windowSize.y / 2.0f) - m_position.y;
-	m_direction.normalized();
+	m_direction = m_direction.normalized();
 
 	return BOObject::Initialize(p_position, p_size, p_fileName);
 }
@@ -43,5 +43,9 @@ void BOPowerUp::Update(Uint32 p_delaTime)
 }
 
 void BOPowerUp::Activate()
+{
+}
+
+void BOPowerUp::Deactivate()
 {
 }

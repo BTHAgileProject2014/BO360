@@ -1,22 +1,17 @@
 #include "BOSoundManager.h"
 
-
-BOSoundManager::BOSoundManager()
-{
-	m_music = NULL;
-	m_popHex = NULL;
-	m_dying = NULL;
-	m_powerup = NULL;
-	m_teleport = NULL;
-}
-
-
 BOSoundManager::~BOSoundManager()
 {
 }
 
 bool BOSoundManager::Initialize()
 {
+	GetInstance().m_music = NULL;
+	GetInstance().m_popHex = NULL;
+	GetInstance().m_dying = NULL;
+	GetInstance().m_powerup = NULL;
+	GetInstance().m_teleport = NULL;
+
 	// Initialize SDL MIxer
 	if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0)
 	{
@@ -25,38 +20,38 @@ bool BOSoundManager::Initialize()
 	}
 
 	// Load music
-	m_music = Mix_LoadMUS("Sound/theme.wav");
-	if (m_music == NULL)
+	GetInstance().m_music = Mix_LoadMUS("Sound/themeModified.wav");
+	if (GetInstance().m_music == NULL)
 	{
 		return false;
 	}
 
 	// Load sound effects
-	m_popHex = Mix_LoadWAV("Sound/ballCollisionHexagon.wav");
-	if (m_popHex == NULL)
+	GetInstance().m_popHex = Mix_LoadWAV("Sound/ballCollisionHexagon.wav");
+	if (GetInstance().m_popHex == NULL)
 	{
 		return false;
 	}
 
-	m_dying = Mix_LoadWAV("Sound/dying.wav");
-	if (m_dying == NULL)
+	GetInstance().m_dying = Mix_LoadWAV("Sound/dying.wav");
+	if (GetInstance().m_dying == NULL)
 	{
 		return false;
 	}
 
-	/*m_powerup = Mix_LoadWAV("Sound/powerup.wav");
-	if (m_powerup == NULL)
-	{
-		return false;
-	}*/
-
-	m_teleport = Mix_LoadWAV("Sound/teleport.wav");
-	if (m_teleport == NULL)
+	GetInstance().m_powerup = Mix_LoadWAV("Sound/powerup.wav");
+	if (GetInstance().m_powerup == NULL)
 	{
 		return false;
 	}
 
-	Mix_PlayMusic(m_music, -1);
+	GetInstance().m_teleport = Mix_LoadWAV("Sound/teleport.wav");
+	if (GetInstance().m_teleport == NULL)
+	{
+		return false;
+	}
+
+	Mix_PlayMusic(GetInstance().m_music, -1);
 
 	return true;
 }
@@ -64,18 +59,18 @@ bool BOSoundManager::Initialize()
 void BOSoundManager::Shutdown()
 {
 	// Free sound effects
-	Mix_FreeChunk(m_popHex);
-	Mix_FreeChunk(m_dying);
-	Mix_FreeChunk(m_powerup);
-	Mix_FreeChunk(m_teleport);
-	m_popHex = NULL;
-	m_dying = NULL;
-	m_powerup = NULL;
-	m_teleport = NULL;
+	Mix_FreeChunk(GetInstance().m_popHex);
+	Mix_FreeChunk(GetInstance().m_dying);
+	Mix_FreeChunk(GetInstance().m_powerup);
+	Mix_FreeChunk(GetInstance().m_teleport);
+	GetInstance().m_popHex = NULL;
+	GetInstance().m_dying = NULL;
+	GetInstance().m_powerup = NULL;
+	GetInstance().m_teleport = NULL;
 	
 	// Free the music
-	Mix_FreeMusic(m_music);
-	m_music = NULL;
+	Mix_FreeMusic(GetInstance().m_music);
+	GetInstance().m_music = NULL;
 
 	Mix_Quit();
 }
@@ -85,8 +80,28 @@ void BOSoundManager::Update()
 
 }
 
-void BOSoundManager::PlayPopSound()
+void BOSoundManager::PlaySound(Sound p_sound)
 {
-	// Play in channel 0, so if repeated first pop is stopeed
-	Mix_PlayChannel( 0, m_popHex, 0);
+	switch (p_sound)
+	{
+	case sound_pop:
+		// Play in channel 0 so pop sound resets every time it plays
+		Mix_PlayChannel(0, GetInstance().m_popHex, 0);
+		break;
+	case sound_die:
+		Mix_PlayChannel(-1, GetInstance().m_dying, 0);	// Channel -1 is nearest avaiable channel
+		break;
+	case sound_powerup:
+		Mix_PlayChannel(-1, GetInstance().m_powerup, 0);
+		break;
+	case sound_teleport:
+		Mix_PlayChannel(-1, GetInstance().m_teleport, 0);
+		break;
+	}
+}
+
+BOSoundManager& BOSoundManager::GetInstance()
+{
+	static BOSoundManager instance;
+	return instance;
 }

@@ -17,8 +17,12 @@ public:
 	float2 GetDirection();
 	bool CanColide();
 	void BouncedOnPad();
+	void BouncedOnHexa();
 	box GetBoundingBox();
 	void Handle(InputMessages p_inputMessages);
+	void BouncedOnHexagon();
+	float GetFuel();
+	void SetFuel(float p_Fuel);
 
 private:
 	bool m_canColide;
@@ -26,5 +30,6 @@ private:
 	float2 m_direction;
 	bool m_mouseCheat;
 	int2 m_windowSize;
+	float m_Fuel;
 };
 #endif

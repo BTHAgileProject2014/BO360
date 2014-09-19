@@ -14,7 +14,6 @@ bool BOGraphicInterface::Initialize()
 
 bool BOGraphicInterface::Initialize(int p_windowWidth, int p_windowHeight)
 {
-	BOGraphicInterface* selfPtr = &GetInstance();
 	bool result;
 	GetInstance().m_windowWidth = p_windowWidth;
 	GetInstance().m_windowHeight = p_windowHeight;
@@ -48,7 +47,7 @@ bool BOGraphicInterface::Initialize(int p_windowWidth, int p_windowHeight)
 		return false;
 	}
 
-	m_font = TTF_OpenFont("Font/lazy.ttf", 20);
+	GetInstance().m_font = TTF_OpenFont("Font/Neon_Nanoborg.otf", 30);
 	if (m_font == NULL)
 	{
 		std::cout << "Failed to load font! SDL_ttf Error: " << TTF_GetError() << "\n";
@@ -207,4 +206,9 @@ SDL_Texture* BOGraphicInterface::DrawTextToTexture(std::string p_text, int3 p_te
 void BOGraphicInterface::DestroyTexture(SDL_Texture* p_texture)
 {
 	SDL_DestroyTexture(p_texture);
+}
+
+int2 BOGraphicInterface::GetWindowSize()
+{
+	return int2(GetInstance().m_windowWidth, GetInstance().m_windowHeight);
 }
