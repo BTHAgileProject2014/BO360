@@ -321,6 +321,40 @@ float2 BOPhysics::BallPadCollision(sphere p_sphere, float2 p_sphereDir, sphere p
 	}
 	return float2(0, 0);
 }
+
+/// <summary> 
+/// Calculates the bounce around a biased angle
+/// Returns (0,0) if there is no collision.
+/// </summary>
+float2 BOPhysics::CalculateNewDir(float2 currentDir, float2 padNormal, float p_padAngle, float p_maxWidthAngle, float p_ballAngle)
+{
+	// Bounce normals will be biased depending on the position of the pad that we bounce on.
+	// biasAngle is the maximum bias, only reached at the edges of the pad
+	static const float biasAngle = 0.57;
+
+	// Amplify the ball and pad rotations by 2*PI to avoid 0-rotation problems
+	float padAngleAmp = p_padAngle + 2 * PI;
+	float ballAngleAmp = p_ballAngle + 2 * PI;
+
+	// Calculate the percentage of our position from the pad center to edge
+	float diffVal = (padAngleAmp - ballAngleAmp);
+	diffVal /= -p_maxWidthAngle;
+	// And create the actual diff by multiplying with the max bias
+	float diff = diffVal * biasAngle;
+
+	// Create a new, biased normal to bounce against
+	float2 biasedNormal;
+	biasedNormal.x = cos(padAngleAmp + diff);
+	biasedNormal.y = -sin(padAngleAmp + diff);
+	biasedNormal = biasedNormal.normalized();
+
+	// Calculate the outgoing direction
+	float vDotN = currentDir.dot(biasedNormal);
+	float2 newDir = currentDir - (biasedNormal * vDotN * 2);
+
+	return newDir;
+}
+
 int BOPhysics::CheckCollisionBallShield(sphere p_sphere, sphere p_padSphere)
 {
 	float2 centerPad, centerBall;
@@ -351,41 +385,6 @@ int BOPhysics::CheckCollisionBallShield(sphere p_sphere, sphere p_padSphere)
 	return 0;
 	}
 
-
-/// <summary> 
-/// Calculates the bounce around a biased angle
-/// Returns (0,0) if there is no collision.
-/// </summary>
-float2 BOPhysics::CalculateNewDir(float2 currentDir, float2 padNormal, float p_padAngle, float p_maxWidthAngle, float p_ballAngle)
-	{
-	// Bounce normals will be biased depending on the position of the pad that we bounce on.
-	// biasAngle is the maximum bias, only reached at the edges of the pad
-	static const float biasAngle = 0.57;
-
-	
-	// Amplify the ball and pad rotations by 2*PI to avoid 0-rotation problems
-	float padAngleAmp = p_padAngle + 2 * PI;
-	float ballAngleAmp = p_ballAngle + 2 * PI;
-	
-	// Calculate the percentage of our position from the pad center to edge
-	float diffVal = (padAngleAmp - ballAngleAmp);
-	diffVal /= -p_maxWidthAngle;
-	// And create the actual diff by multiplying with the max bias
-	float diff = diffVal * biasAngle;
-
-	// Create a new, biased normal to bounce against
-	float2 biasedNormal;
-	biasedNormal.x = cos(padAngleAmp + diff);
-	biasedNormal.y = -sin(padAngleAmp + diff);
-	biasedNormal = biasedNormal.normalized();
-
-	// Calculate the outgoing direction
-	float vDotN = currentDir.dot(biasedNormal);
-	float2 newDir = currentDir - (biasedNormal * vDotN * 2);
-
-	return newDir;
-}
-
 float2 BOPhysics::ReflectBallAroundNormal(float2 p_ballDir, float2 p_normal)
 {
 	float2 newBallDir, normal;
@@ -402,6 +401,7 @@ float2 BOPhysics::ReflectBallAroundNormal(float2 p_ballDir, float2 p_normal)
 
 	return newBallDir;
 }
+
 float2 BOPhysics::BlackHoleGravity(sphere p_Ball, float2 p_BallDirection, float p_BallSpeed, sphere p_BlackHole, bool p_active)
 {
 	if (p_active)//Only runs if the gravitation is activated. It is deactivated when the ball hits the pad so it doesn't just bounce on pad repeatedly
@@ -427,6 +427,7 @@ float2 BOPhysics::BlackHoleGravity(sphere p_Ball, float2 p_BallDirection, float 
 	}
 	return p_BallDirection;
 }
+
 float BOPhysics::CalculateDistance(float2 p_Ball, float2 p_BlackHole)
 {
 	return sqrt(((p_Ball.x - p_BlackHole.x)*(p_Ball.x - p_BlackHole.x)) + ((p_Ball.y - p_BlackHole.y)*(p_Ball.y - p_BlackHole.y)));
