@@ -5,7 +5,7 @@
 #include "BOObject.h"
 #include "BOGraphicInterface.h"
 
-class BOHUDManager : public BOComponent
+class BOHUDManager
 {
 public:
 	BOHUDManager();
