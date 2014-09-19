@@ -97,6 +97,7 @@
     <ClInclude Include="BOUtility.h" />
     <ClInclude Include="BOWindow.h" />
     <ClInclude Include="BOButton.h" />
+    <ClInclude Include="BOMultiballs.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BOBackground.cpp" />
@@ -127,6 +128,7 @@
     <ClCompile Include="BOTimer.cpp" />
     <ClCompile Include="BOWindow.cpp" />
     <ClCompile Include="BOButton.cpp" />
+    <ClCompile Include="BOMultiballs.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Maps\Default.bom" />
