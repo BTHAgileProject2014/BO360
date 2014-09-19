@@ -80,7 +80,7 @@ void BOHUDManager::Draw()
 	}
 }
 
-void BOHUDManager::ModeState(bool p_lives, bool p_score, bool p_levels)
+void BOHUDManager::ModifyState(bool p_lives, bool p_score, bool p_levels)
 {
 	m_livesEnabled = p_lives;
 	m_scoreEnabled = p_score;
