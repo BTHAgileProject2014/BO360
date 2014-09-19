@@ -4,7 +4,7 @@
 #include "BODrawableText.h"
 #include <vector>
 
-class BOTextManager : public BOComponent
+class BOTextManager
 {
 public:
 	BOTextManager();
