@@ -108,6 +108,9 @@ bool BOSystem::Run()
 		// Render powerups
 		m_powerUpManager.Draw();
 
+		// Render the power-ups
+		m_powerUpManager.Draw();
+
 		// Render text
 		BOTextManager::DrawTexts();
 

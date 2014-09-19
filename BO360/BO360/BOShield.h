@@ -4,7 +4,7 @@
 #include "BOPhysics.h"
 #include "BOPowerUpManager.h"
 
-class BOShield : BOPowerUp
+class BOShield : public BOPowerUp
 {
 public:
 	BOShield();
