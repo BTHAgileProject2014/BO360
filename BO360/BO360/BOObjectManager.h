@@ -29,6 +29,7 @@ public:
 
 private:
 	void BallDirectionChange(int p_bounceCorner);
+	bool m_GravityIsOn;
 	bool m_hasColided;
 
 	BOMapLoader m_mapLoader;

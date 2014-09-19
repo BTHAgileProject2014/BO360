@@ -2,6 +2,7 @@
 
 BOObjectManager::BOObjectManager()
 {
+	m_GravityIsOn = true;
 }
 
 
@@ -133,6 +134,9 @@ void BOObjectManager::Update(Uint32 p_deltaTime)
 					m_blockList[i].SetDead();
 					//Collision with hexagon
 					m_ballList[0].SetDirection(BOPhysics::ReflectBallAroundNormal(m_ballList[0].GetDirection(), normal));
+
+					//Changes the gravity to true so it can be pulled into the middle
+					m_GravityIsOn = true;
 					
 					// Collision therfore play popsound
 					BOSoundManager::PlaySound(sound_pop);
@@ -150,6 +154,7 @@ void BOObjectManager::Update(Uint32 p_deltaTime)
 		if (bounceTest > 0)
 		{
 			m_ballList[0].BouncedOnPad();
+			m_GravityIsOn = false;//Changes the gravity to false so it doesn't stuck fuck
 		}
 		BallDirectionChange(bounceTest);
 	/*	if (BOPhysics::MattiasBallPadCollision(m_ballList[0].GetBoundingSphere(), m_ballList[0].GetDirection(), m_paddle.GetBoundingSphere(), m_paddle.GetRotation() - 20, 40))
@@ -168,6 +173,8 @@ void BOObjectManager::Update(Uint32 p_deltaTime)
 			//}
 		//}
 	}
+	//Runs tha gravity... lawl... Changes the direction depending on distance
+	m_ballList[0].SetDirection(BOPhysics::BlackHoleGravity(m_ballList[0].GetBoundingSphere(), m_ballList[0].GetDirection(), m_ballList[0].GetSpeed(), m_blackHole.GetBoundingSphere(), m_GravityIsOn));
 
 
 }
