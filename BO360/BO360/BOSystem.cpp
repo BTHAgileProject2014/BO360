@@ -245,7 +245,7 @@ void BOSystem::HandleAction(int p_action)
 				m_gameState = RUNNING;
 				if (!InitializeMap())
 				{
-					std::cout << "Initialize map failed to complete! Press ENTER to quit." << std::endl;
+					std::cout << "Press ENTER to quit." << std::endl;
 					std::cin.get();
 
 					m_quit = true;
