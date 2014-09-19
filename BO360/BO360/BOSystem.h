@@ -11,6 +11,7 @@
 #include "BOPowerUpManager.h"
 #include "BOSoundManager.h"
 #include "BOTextManager.h"
+#include "BOHUDManager.h"
 #include <iostream>
 
 class BOSystem : BOComponent
