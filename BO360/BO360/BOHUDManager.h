@@ -16,7 +16,7 @@ public:
 	static void SetLives(int p_lives);
 	static void SetScore(int p_score);
 	static void SetLevel(int p_level);
-	static void ModeState(bool p_lives, bool p_score, bool p_levels);
+	static void ModifyState(bool p_lives, bool p_score, bool p_levels);
 	static void EnableHud(bool p_enable);
 
 private:
