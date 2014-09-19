@@ -64,7 +64,7 @@ bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight)
 	BOPublisher::AddSubscriber(&m_ballList[0]);
 
 	// Load a map.
-	m_mapLoader.LoadMap("Default.bom");
+	m_mapLoader.LoadMap("Empty.bom");
 	m_blockPositions = m_mapLoader.GetBlockPositions();
 
 	float x = 0;
@@ -81,16 +81,25 @@ bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight)
 		if ((int)m_blockPositions[i].x % 2 == 0)
 		{
 			y += l_blockHeightDifference;
-			}
+		}
 
 		// Create block.
-		result = l_block.Initialize(float2(x, y), int2(40, 40), "Bilder/placeholderHexagon40x40.png");
+		if (i != 0)
+		{
+			result = l_block.Initialize(float2(x, y), int2(40, 40), "Bilder/placeholderHexagon40x40.png", PUNone);
 			if (!result)
 			{
 				return false;
 			}
-		m_blockList.push_back(l_block);
 		}
+		else if (i == 0)
+		{
+			result = l_block.Initialize(float2(x, y), int2(40, 40), "Bilder/placeholderHexagon40x40.png", PUExtraBall);
+		}
+		
+
+		m_blockList.push_back(l_block);
+	}
 	/*float2 test = m_ballList[0].GetDirection();
 	test = float2(10,10);*/
 	return true;
@@ -127,17 +136,22 @@ void BOObjectManager::Update(Uint32 p_deltaTime)
 		if (!m_blockList[i].GetDead())
 		{
 			if (BOPhysics::CheckCollisionSpheres(m_ballList[0].GetBoundingSphere(), m_blockList[i].GetBoundingSphere()))
-		{
-				if (BOPhysics::CheckCollisionSphereToHexagon(m_ballList[0].GetBoundingSphere(), m_blockList[i].GetBoundingHexagon(), normal))
 			{
+				if (BOPhysics::CheckCollisionSphereToHexagon(m_ballList[0].GetBoundingSphere(), m_blockList[i].GetBoundingHexagon(), normal))
+				{
 					// Block dead, dead = true, stop checking collision and drawing block
-				m_blockList[i].SetDead();
+					m_blockList[i].SetDead();
 					//Collision with hexagon
 					m_ballList[0].SetDirection(BOPhysics::ReflectBallAroundNormal(m_ballList[0].GetDirection(), normal));
 					m_ballList[0].BouncedOnHexagon();
 					//Changes the gravity to true so it can be pulled into the middle
 					m_GravityIsOn = true;
 					
+					// Spawn powerup if there is one
+					if (m_blockList[i].GetPowerUp() != PUNone)
+					{
+						//BOPowerUpManager::AddPowerUp()
+					}
 					// Collision therfore play popsound
 					BOSoundManager::PlaySound(sound_pop);
 					break;

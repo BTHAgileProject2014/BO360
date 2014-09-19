@@ -55,13 +55,6 @@ bool BOSystem::Initialize()
 	{
 		return false;
 	}
-
-	result = m_extraBall.Initialize(float2(10, 10), int2(80, 80), "Bilder/placeholderPowerup1.png", 1.0f, int2(windowWidth, windowHeight));
-	if (!result)
-	{
-		return false;
-	}
-	m_powerUpManager.AddPowerUp(m_extraBall);
 	return true;
 }
 
@@ -79,23 +72,23 @@ bool BOSystem::Run()
 			m_deltaTime = 100;
 		}
 
-	// ========== UPDATE =========
+		// ========== UPDATE =========
 
-	// Tick the timer.
-	m_timer.Tick();
+		// Tick the timer.
+		m_timer.Tick();
 		m_totalTime = m_timer.GetTotalTimeS();
 		m_FPS = m_timer.FPS();
 
-	// Output the total time and delta time to the window title for debugging.
+		// Output the total time and delta time to the window title for debugging.
 #ifdef DEBUG
 		m_string = "Total time: " + std::to_string(m_totalTime) + " seconds. Delta time: " + std::to_string(m_deltaTime) + " milliseconds. FPS: " + std::to_string(m_FPS);
 		BOGraphicInterface::SetWindowTitle(m_string);
 #endif
 
-	// Update the input manager.
-	result = m_input.Update();
+		// Update the input manager.
+		result = m_input.Update();
 
-	// Update all of the objects
+		// Update all of the objects
 		m_objectManager.Update(m_deltaTime);
 
 		// Update the power-ups
@@ -104,21 +97,22 @@ bool BOSystem::Run()
 		// Update Sound 
 		BOSoundManager::Update(); // Empty so far.
 
-	// ============================
+		// ============================
 
-	// ========== RENDER ==========
-	BOGraphicInterface::Clear();
+		// ========== RENDER ==========
+		BOGraphicInterface::Clear();
 
-	// Render all of the objects.
-	m_objectManager.Draw();
+		// Render all of the objects.
+		m_objectManager.Draw();
 
+		// Render powerups
 		m_powerUpManager.Draw();
 
 		// Render text
 		BOTextManager::DrawTexts();
 
-	BOGraphicInterface::Present();
-	// ============================
+		BOGraphicInterface::Present();
+		// ============================
 
 		m_deltaTime = 0;
 	}

@@ -455,6 +455,7 @@ struct hexagon
 // What types of power-ups we use
 enum PowerUpTypes
 {
+	PUNone,
 	PUBiggerPad,
 	PUSmallerPad,
 	PUShield,
