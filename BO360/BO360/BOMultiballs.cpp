@@ -34,4 +34,5 @@ void BOMultiballs::Activate()
 void BOMultiballs::Deactivate()
 {
 	BOPowerUpManager::Notify(PUExtraBall, false);
+	m_hasActivated = false;
 }

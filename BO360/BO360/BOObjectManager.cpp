@@ -271,9 +271,12 @@ void BOObjectManager::Handle(PowerUpTypes p_type, bool p_activated)
 		// Add shield??
 		break;
 	case PUExtraBall:
-		BOBall* ball2 = new BOBall();
-		ball2->Initialize(m_ballList[0]->GetPosition(), int2(15, 15), "Bilder/placeholderBoll10x10.png", m_ballList[0]->GetSpeed(), float2(m_ballList[0]->GetDirection().x * -1, m_ballList[0]->GetDirection().y * -1), int2(1300,900));
-		m_ballList.push_back(ball2);
+		if (p_activated)
+		{
+			BOBall* ball2 = new BOBall();
+			ball2->Initialize(m_ballList[0]->GetPosition(), int2(15, 15), "Bilder/placeholderBoll10x10.png", m_ballList[0]->GetSpeed(), float2(m_ballList[0]->GetDirection().x * -1, m_ballList[0]->GetDirection().y * -1), int2(1300, 900));
+			m_ballList.push_back(ball2);
+		}
 		break;
 	}
 }
