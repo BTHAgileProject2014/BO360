@@ -75,6 +75,15 @@ bool BOSystem::InitializeMap()
 {
 	bool result;
 
+	// Initlialize the power up manager.
+	result = m_powerUpManager.Initialize(m_windowWidth, m_windowHeight);
+	if (!result)
+	{
+		std::cout << "Initialize power up manager failed!" << std::endl;
+
+		return false;
+	}
+
 	// Initilialize the object manager.
 	result = m_objectManager.Initialize(m_windowWidth, m_windowHeight);
 	if (!result)
@@ -88,15 +97,6 @@ bool BOSystem::InitializeMap()
 	if(!BOSoundManager::Initialize())
 	{
 		std::cout << "Initialize sound manager failed!" << std::endl;
-
-		return false;
-	}
-
-	// Initlialize the power up manager.
-	result = m_powerUpManager.Initialize(m_windowWidth, m_windowHeight);
-	if (!result)
-	{
-		std::cout << "Initialize power up manager failed!" << std::endl;
 
 		return false;
 	}
