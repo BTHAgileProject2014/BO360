@@ -173,8 +173,14 @@ void BOObjectManager::Update(Uint32 p_deltaTime)
 			BOMultiballs* mb = (BOMultiballs*)pu;
 			mb->Activate();
 			BOPowerUpManager::RemovePowerUp(i);
-		}		
+		}
+		else if (BOPhysics::CheckCollisionSpheres(BOPowerUpManager::GetPowerUp(i)->GetBoundingSphere(), sphere(m_blackHole.GetPosition(), 1)))
+		{
+			BOPowerUpManager::RemovePowerUp(i);
+		}
 	}
+
+
 
  	for (int i = 0; i < m_ballList.size(); i++)
 	{
