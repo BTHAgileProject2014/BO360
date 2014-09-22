@@ -33,6 +33,7 @@ private:
 	void BallDirectionChange(int p_bounceCorner);
 	bool m_GravityIsOn;
 	bool m_hasColided;
+	bool testStopPU;
 
 	BOMapLoader m_mapLoader;
 	std::vector<float2> m_blockPositions;

@@ -17,7 +17,7 @@ bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight)
 	windowSize.y = p_windowHeight;
 	bool result;
 	m_hasColided = false;
-
+	testStopPU = false;
 	// Initialize the map loader.
 	result = m_mapLoader.Initialize();
 	if (!result)
@@ -162,15 +162,18 @@ void BOObjectManager::Update(Uint32 p_deltaTime)
 			}
 		}		
 	}
+	
 	// Tillfällig powerup kollision kod för att testa 
 	for (int i = 0; i < BOPowerUpManager::GetPowerUpSize(); i++)
 	{
-		if (BOPhysics::CheckCollisionSpheres(BOPowerUpManager::GetPowerUp(i).GetBoundingSphere(), sphere(m_paddle.GetPosition(), 5)) && BOPowerUpManager::GetPowerUp(i).GetActive() )
+		
+		if (BOPhysics::CheckCollisionSpheres(BOPowerUpManager::GetPowerUp(i).GetBoundingSphere(), sphere(m_paddle.GetPosition(), 5)) && !testStopPU)
 		{
 			BOBall ball;
 			ball.Initialize(m_ballList[0].GetPosition(), int2(15, 15), "Bilder/placeholderBoll10x10.png", m_ballList[0].GetSpeed(), float2(m_ballList[0].GetDirection().x * -1, m_ballList[0].GetDirection().y * -1), int2(1300,900));
 			m_ballList.push_back(ball);
-			BOPowerUpManager::GetPowerUp(i).SetActive(false);
+			testStopPU = true;
+			//BOPowerUpManager::GetPowerUp(i).SetActive(false);
 		}		
 	}
 
