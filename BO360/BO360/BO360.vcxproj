@@ -79,9 +79,11 @@
     <ClInclude Include="BOHUDManager.h" />
     <ClInclude Include="BOInput.h" />
     <ClInclude Include="BOMapLoader.h" />
+    <ClInclude Include="BOMovingParticle.h" />
     <ClInclude Include="BOObject.h" />
     <ClInclude Include="BOObjectManager.h" />
     <ClInclude Include="BOPaddle.h" />
+    <ClInclude Include="BOParticleSystem.h" />
     <ClInclude Include="BOPhysics.h" />
     <ClInclude Include="BOPowerUp.h" />
     <ClInclude Include="BOPowerUpManager.h" />
@@ -91,6 +93,7 @@
     <ClInclude Include="BOSoundManager.h" />
     <ClInclude Include="BOState.h" />
     <ClInclude Include="BOStateManager.h" />
+    <ClInclude Include="BOStationaryParticle.h" />
     <ClInclude Include="BOSubscriber.h" />
     <ClInclude Include="BOSystem.h" />
     <ClInclude Include="BOTextManager.h" />
@@ -111,9 +114,11 @@
     <ClCompile Include="BOInput.cpp" />
     <ClCompile Include="BOMain.cpp" />
     <ClCompile Include="BOMapLoader.cpp" />
+    <ClCompile Include="BOMovingParticle.cpp" />
     <ClCompile Include="BOObject.cpp" />
     <ClCompile Include="BOObjectManager.cpp" />
     <ClCompile Include="BOPaddle.cpp" />
+    <ClCompile Include="BOParticleSystem.cpp" />
     <ClCompile Include="BOPhysics.cpp" />
     <ClCompile Include="BOPowerUp.cpp" />
     <ClCompile Include="BOPowerUpManager.cpp" />
@@ -123,6 +128,7 @@
     <ClCompile Include="BOSoundManager.cpp" />
     <ClCompile Include="BOState.cpp" />
     <ClCompile Include="BOStateManager.cpp" />
+    <ClCompile Include="BOStationaryParticle.cpp" />
     <ClCompile Include="BOSubscriber.cpp" />
     <ClCompile Include="BOSystem.cpp" />
     <ClCompile Include="BOTextManager.cpp" />

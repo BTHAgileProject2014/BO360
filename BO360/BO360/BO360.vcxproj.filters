@@ -16,6 +16,12 @@
     <Filter Include="Resource Files\Maps">
       <UniqueIdentifier>{6b7733ae-2041-4383-8fc2-72f1ffd9a19a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\ParticleSystem">
+      <UniqueIdentifier>{7be6141a-9428-4955-9c80-54d2d45bc407}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ParticleSystem">
+      <UniqueIdentifier>{bad15bf6-299e-4b45-88b7-2e2f8272bcfe}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BOSystem.cpp">
@@ -104,6 +110,15 @@
     </ClCompile>
     <ClCompile Include="BOPUSubscriber.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="BOParticleSystem.cpp">
+      <Filter>Source Files\ParticleSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="BOMovingParticle.cpp">
+      <Filter>Source Files\ParticleSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="BOStationaryParticle.cpp">
+      <Filter>Source Files\ParticleSystem</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -196,6 +211,15 @@
     </ClInclude>
     <ClInclude Include="BOPUSubscriber.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BOParticleSystem.h">
+      <Filter>Header Files\ParticleSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="BOStationaryParticle.h">
+      <Filter>Header Files\ParticleSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="BOMovingParticle.h">
+      <Filter>Header Files\ParticleSystem</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
