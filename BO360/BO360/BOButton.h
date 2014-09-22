@@ -3,6 +3,7 @@
 
 #include "BOObject.h"
 #include "BOPhysics.h"
+#include "BODrawableText.h"
 
 class BOButton : public BOObject
 {
@@ -27,5 +28,8 @@ private:
 	SDL_Texture* m_highlighted;
 
 	BOObject m_toolTip;
+
+	BODrawableText m_buttonText;
+	BODrawableText m_buttonTextLit;
 };
 #endif

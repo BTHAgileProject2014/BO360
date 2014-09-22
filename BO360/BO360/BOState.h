@@ -5,6 +5,8 @@
 #include "BOObject.h"
 #include "BOSubscriber.h"
 #include "BOPublisher.h"
+#include "BOTextManager.h"
+#include "BODrawableText.h"
 #include <vector>
 
 class BOState : public BOSubscriber
@@ -36,5 +38,7 @@ private:
 
 	BOObject m_background;
 	std::vector<BOObject> m_menuBar;
+
+	BODrawableText m_menuText;
 };
 #endif

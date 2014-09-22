@@ -50,6 +50,22 @@ bool BOButton::Initialize(float2 p_position, int2 p_size, std::string p_fileName
 	m_sprite = m_nonHighlighted;
 	m_lit = false;
 
+	// Calculate button text position
+	float2 tempPos = float2(p_position.x + p_size.x / 2, p_position.y + p_size.y / 2);
+
+	// Load button texts
+	if (!m_buttonText.Initialize(tempPos, m_name, int3(0, 148, 255), 44))
+	{
+		std::cout << "Failed to create button text in " << m_name << "!" << std::endl;
+		return false;
+	}
+
+	if (!m_buttonTextLit.Initialize(tempPos, m_name, int3(255, 255, 255), 44))
+	{
+		std::cout << "Failed to create button text (lit) in " << m_name << "!" << std::endl;
+		return false;
+	}
+
 	return true;
 }
 
@@ -78,6 +94,11 @@ void BOButton::Draw()
 	if (m_lit)
 	{
 		m_toolTip.Draw();
+		m_buttonTextLit.Draw();
+	}
+	else
+	{
+		m_buttonText.Draw();
 	}
 }
 
@@ -92,4 +113,6 @@ void BOButton::Shutdown()
 	{
 		BOGraphicInterface::DestroyTexture(m_sprite);
 	}
+	m_buttonText.Shutdown();
+	m_buttonTextLit.Shutdown();
 }
