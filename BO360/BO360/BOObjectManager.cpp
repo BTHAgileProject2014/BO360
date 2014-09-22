@@ -85,7 +85,7 @@ bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight)
 		// Create block.
 		if (i != 0)
 		{
-			result = l_block.Initialize(float2(x, y), int2(40, 40), "Bilder/placeholderHexagon40x40.png", PUNone);
+			result = l_block.Initialize(float2(x, y), int2(40, 40), "Bilder/placeholderHexagon40x40.png", PUExtraBall);
 			if (!result)
 			{
 				return false;
@@ -93,7 +93,7 @@ bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight)
 		}
 		else if (i == 0)
 		{
-			result = l_block.Initialize(float2(x, y), int2(40, 40), "Bilder/placeholderHexagon40x40.png", PUExtraBall);
+			result = l_block.Initialize(float2(x, y), int2(40, 40), "Bilder/placeholderHexagon40x40.png", PUNone);
 		}
 		
 
@@ -148,7 +148,7 @@ void BOObjectManager::Update(Uint32 p_deltaTime)
 						if (m_blockList[i].GetPowerUp() == PUExtraBall)
 						{
 							BOMultiballs* extraBall = new BOMultiballs();
-							extraBall->Initialize(m_blockList[i].GetPosition(), int2(40, 40), "Bilder/placeHolderPowerUp1.png", 1.0f, int2(1300, 900) );
+							extraBall->Initialize(m_blockList[i].GetPosition(), int2(40, 40), "Bilder/placeHolderPowerUp1.png", 0.5f, int2(1300, 900) );
 							extraBall->SetActive(true);
 							BOPowerUpManager::AddPowerUp(extraBall);
 						}
@@ -170,10 +170,11 @@ void BOObjectManager::Update(Uint32 p_deltaTime)
 			BOPowerUp* pu = BOPowerUpManager::GetPowerUp(i);
 			BOMultiballs* mb = (BOMultiballs*)pu;
 			mb->Activate();
+			BOPowerUpManager::RemovePowerUp(i);
 		}		
 	}
 
-	for (int i = 0; i < m_ballList.size(); i++)
+ 	for (int i = 0; i < m_ballList.size(); i++)
 	{
 		if (m_ballList[i]->CanColide())
 		{
@@ -219,6 +220,8 @@ void BOObjectManager::Update(Uint32 p_deltaTime)
 
 		}
 	}
+
+	
 }
 
 void BOObjectManager::Draw()

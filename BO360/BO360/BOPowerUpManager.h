@@ -23,6 +23,7 @@ public:
 	static void AddSubscriber(BOPUSubscriber* p_subscriber);
 	static void Unsubscribe(BOPUSubscriber* p_subscriber);
 	static void AddPowerUp(BOPowerUp* p_powerUp);
+	static void RemovePowerUp(int p_remove);
 	static int GetPowerUpSize();
 	static BOPowerUp* GetPowerUp(int p_nr);
 private:

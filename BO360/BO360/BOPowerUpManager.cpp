@@ -41,6 +41,11 @@ void BOPowerUpManager::AddPowerUp(BOPowerUp* p_powerUp)
 	m_powerUps.push_back(p_powerUp);
 }
 
+void BOPowerUpManager::RemovePowerUp(int p_remove)
+{
+	m_powerUps.erase(m_powerUps.begin() + p_remove);
+}
+
 void BOPowerUpManager::Update(Uint32 p_deltaTime)
 {
 	for (unsigned int i = 0; i < m_powerUps.size(); i++)
