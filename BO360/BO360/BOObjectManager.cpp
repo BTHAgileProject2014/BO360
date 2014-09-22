@@ -16,7 +16,7 @@ bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight)
 	windowSize.y = p_windowHeight;
 	bool result;
 	m_hasColided = false;
-
+	testStopPU = false;
 	// Initialize the map loader.
 	result = m_mapLoader.Initialize();
 	if (!result)
@@ -25,7 +25,7 @@ bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight)
 	}
 
 	// Initialize the background.
-	result = m_background.Initialize(float2(p_windowWidth / 2, p_windowHeight / 2), int2(p_windowWidth, p_windowHeight), "Bilder/background.png");
+	result = m_background.Initialize(float2(p_windowWidth / 2, p_windowHeight / 2), int2(p_windowWidth, p_windowHeight), "Bilder/Background.png");
 	if (!result)
 	{
 		return false;
@@ -63,7 +63,7 @@ bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight)
 	BOPublisher::AddSubscriber(&m_ballList[0]);
 
 	// Load a map.
-	m_mapLoader.LoadMap("Default.bom");
+	m_mapLoader.LoadMap("Empty.bom");
 	m_blockPositions = m_mapLoader.GetBlockPositions();
 
 	float x = 0;
@@ -80,16 +80,25 @@ bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight)
 		if ((int)m_blockPositions[i].x % 2 == 0)
 		{
 			y += l_blockHeightDifference;
-			}
+		}
 
 		// Create block.
-		result = l_block.Initialize(float2(x, y), int2(40, 40), "Bilder/placeholderHexagon40x40.png");
+		if (i != 0)
+		{
+			result = l_block.Initialize(float2(x, y), int2(40, 40), "Bilder/placeholderHexagon40x40.png", PUNone);
 			if (!result)
 			{
 				return false;
 			}
-		m_blockList.push_back(l_block);
 		}
+		else if (i == 0)
+		{
+			result = l_block.Initialize(float2(x, y), int2(40, 40), "Bilder/placeholderHexagon40x40.png", PUExtraBall);
+		}
+		
+
+		m_blockList.push_back(l_block);
+	}
 	/*float2 test = m_ballList[0].GetDirection();
 	test = float2(10,10);*/
 	return true;
@@ -126,20 +135,42 @@ void BOObjectManager::Update(Uint32 p_deltaTime)
 		if (!m_blockList[i].GetDead())
 		{
 			if (BOPhysics::CheckCollisionSpheres(m_ballList[0].GetBoundingSphere(), m_blockList[i].GetBoundingSphere()))
-		{
-				if (BOPhysics::CheckCollisionSphereToHexagon(m_ballList[0].GetBoundingSphere(), m_blockList[i].GetBoundingHexagon(), normal))
 			{
+				if (BOPhysics::CheckCollisionSphereToHexagon(m_ballList[0].GetBoundingSphere(), m_blockList[i].GetBoundingHexagon(), normal))
+				{
 					// Block dead, dead = true, stop checking collision and drawing block
-				m_blockList[i].SetDead();
+					m_blockList[i].SetDead();
 					//Collision with hexagon
 					m_ballList[0].SetDirection(BOPhysics::ReflectBallAroundNormal(m_ballList[0].GetDirection(), normal));
 					m_ballList[0].BouncedOnHexagon();
 					
+					// Spawn powerup if there is one
+					if (m_blockList[i].GetPowerUp() != PUNone)
+					{
+						BOMultiballs extraBall;
+						extraBall.Initialize(m_blockList[i].GetPosition(), int2(40, 40), "Bilder/placeHolderPowerUp1.png", 1.0f, int2(1300, 900) );
+						extraBall.SetActive(true);
+						BOPowerUpManager::AddPowerUp(extraBall);
+					}
 					// Collision therfore play popsound
 					BOSoundManager::PlaySound(sound_pop);
 					break;
 				}
 			}
+		}		
+	}
+	
+	// Tillfällig powerup kollision kod för att testa 
+	for (int i = 0; i < BOPowerUpManager::GetPowerUpSize(); i++)
+	{
+		
+		if (BOPhysics::CheckCollisionSpheres(BOPowerUpManager::GetPowerUp(i).GetBoundingSphere(), sphere(m_paddle.GetPosition(), 5)) && !testStopPU)
+		{
+			/*BOBall ball;
+			ball.Initialize(m_ballList[0].GetPosition(), int2(15, 15), "Bilder/placeholderBoll10x10.png", m_ballList[0].GetSpeed(), float2(m_ballList[0].GetDirection().x * -1, m_ballList[0].GetDirection().y * -1), int2(1300,900));
+			m_ballList.push_back(ball);
+			testStopPU = true;*/
+			//BOPowerUpManager::GetPowerUp(i).SetActive(false);
 		}		
 	}
 

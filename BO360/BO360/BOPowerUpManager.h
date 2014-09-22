@@ -23,6 +23,8 @@ public:
 	static void AddSubscriber(BOPUSubscriber* p_subscriber);
 	static void Unsubscribe(BOPUSubscriber* p_subscriber);
 	static void AddPowerUp(BOPowerUp p_powerUp);
+	static int GetPowerUpSize();
+	static BOPowerUp GetPowerUp(int p_nr);
 private:
 	static std::vector<BOPUSubscriber*> m_subscribers;
 	static std::vector<BOPowerUp> m_powerUps;

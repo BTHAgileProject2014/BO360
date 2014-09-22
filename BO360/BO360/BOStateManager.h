@@ -10,7 +10,16 @@ public:
 	BOStateManager();
 	~BOStateManager();
 
+	bool Initialize(int2 p_screenSize);
+	void Shutdown();
+	ButtonAction Update(GameState p_state);
+	void Draw(GameState p_state);
+
 private:
 
+	BOState m_menu;
+	BOState m_paused;
+	BOState m_victory;
+	BOState m_defeat;
 };
 #endif

@@ -73,3 +73,13 @@ void BOPowerUpManager::Unsubscribe(BOPUSubscriber* p_subscriber)
 		}
 	}
 }
+
+int BOPowerUpManager::GetPowerUpSize()
+{
+	return m_powerUps.size();
+}
+
+BOPowerUp BOPowerUpManager::GetPowerUp(int p_nr)
+{
+	return m_powerUps[p_nr];
+}

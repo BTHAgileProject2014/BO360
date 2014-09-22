@@ -13,6 +13,8 @@
 #include "BOPUSubscriber.h"
 #include "BOPowerUpManager.h"
 #include "BOSoundManager.h"
+#include "BOPowerUp.h"
+#include "BOMultiballs.h"
 #include <vector>
 
 class BOObjectManager : public BOComponent, public BOPUSubscriber
@@ -30,6 +32,7 @@ public:
 private:
 	void BallDirectionChange(int p_bounceCorner);
 	bool m_hasColided;
+	bool testStopPU;
 
 	BOMapLoader m_mapLoader;
 	std::vector<float2> m_blockPositions;

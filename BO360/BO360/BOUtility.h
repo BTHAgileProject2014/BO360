@@ -34,6 +34,17 @@ struct float2
 		return normalizedFloat;
 	}
 
+	void normalize()
+	{
+		float2 normalizedFloat;
+		float lengthFloat;
+		lengthFloat = length();
+		normalizedFloat.x = x / lengthFloat;
+		normalizedFloat.y = y / lengthFloat;
+		x = normalizedFloat.x;
+		y = normalizedFloat.y;
+	}
+
 	float2 operator+(const float2 p_input)
 	{
 		float2 temp;
@@ -103,6 +114,20 @@ struct float3
 		normalizedFloat.z = z / lengthFloat;
 		return normalizedFloat;
 	}
+
+	void normalize()
+	{
+		float3 normalizedFloat;
+		float lengthFloat;
+		lengthFloat = length();
+		normalizedFloat.x = x / lengthFloat;
+		normalizedFloat.y = y / lengthFloat;
+		normalizedFloat.z = z / lengthFloat;
+		x = normalizedFloat.x;
+		y = normalizedFloat.y;
+		z = normalizedFloat.z;
+	}
+
 
 	float3 operator+(const float3 p_input)
 	{
@@ -329,9 +354,22 @@ enum GameState
 	MENU,
 	RUNNING,
 	PAUSED,
-	ENDSCREEN
+	VICTORY,
+	DEFEAT
 };
-static GameState CURRENT_GAMESTATE = MENU;
+
+enum ButtonAction
+{
+	NOACTION,
+	QUIT,
+	EXIT,
+	STORY,
+	ENDLESS,
+	HARDCORE,
+	RESUME,
+	NEXT,
+	RETRY
+};
 
 enum KeyMessages
 {
@@ -430,6 +468,7 @@ struct hexagon
 // What types of power-ups we use
 enum PowerUpTypes
 {
+	PUNone,
 	PUBiggerPad,
 	PUSmallerPad,
 	PUShield,
