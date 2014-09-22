@@ -11,7 +11,7 @@ BOShield::~BOShield(){}
 bool BOShield::Initialize(int2 p_ShieldSize, std::string p_ShieldFN, int2 p_WindowSize)
 {
 	m_WindowSize = p_WindowSize;
-	m_isActive = false;
+	m_IsActive = false;
 	m_ShieldSprite = NULL;
 
 	m_ShieldSphere.pos.x = m_WindowSize.x / 2.0f;
@@ -23,64 +23,48 @@ bool BOShield::Initialize(int2 p_ShieldSize, std::string p_ShieldFN, int2 p_Wind
 
 	return true;
 }
-bool BOShield::InitializePU(float2 p_POPos, int2 p_POSize, std::string p_POFN, float p_POSpeed)
+void BOShield::Shutdown()
 {
-	BOPowerUp::Initialize(p_POPos, p_POSize, p_POFN, p_POSpeed, m_WindowSize);
-	return true;
+	SDL_DestroyTexture(m_ShieldSprite);
+	m_ShieldSprite = NULL;
 }
 int BOShield::Update(Uint32 p_deltaTime, sphere p_Ball)
 {
 	int bounceResult = 0;
-	if (m_isActive)
+	if (m_IsActive)
 	{
 		bounceResult = BOPhysics::CheckCollisionBallShield(p_Ball, m_ShieldSphere);
 		if (bounceResult != 0)
 		{
-			Deactivate();
+			m_IsActive = false;
 		}
 	}
-
-	BOPowerUp::Update(p_deltaTime);
 	return bounceResult;
 }
 void BOShield::Draw()
 {
-	if (m_isActive)
+	if (m_IsActive)
 	{
 		BOGraphicInterface::Draw(m_ShieldSprite, m_ShieldSphere.pos, m_ShieldSize);
 	}
 }
 void BOShield::SetActive(bool p_IsActive)
 {
-	m_isActive = p_IsActive;
+	m_IsActive = p_IsActive;
 }
 void BOShield::SwitchActive()
 {
-	if (m_isActive)
+	if (m_IsActive)
 	{
-		m_isActive = false;
+		m_IsActive = false;
 	}
 	else
 	{
-		m_isActive = true;
+		m_IsActive = true;
 	}
 }
 bool BOShield::GetActive()
 {
-	return m_isActive;
+	return m_IsActive;
 }
 
-void BOShield::Activate()
-{
-	if (!m_isActive)
-	{
-		BOPowerUpManager::Notify(PUShield, true);
-		m_isActive = true;
-	}
-}
-
-void BOShield::Deactivate()
-{
-	BOPowerUpManager::Notify(PUShield, false);
-	m_isActive = false;
-}

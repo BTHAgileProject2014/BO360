@@ -85,7 +85,7 @@ bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight)
 		// Create block.
 		if (i != 0)
 		{
-			result = l_block.Initialize(float2(x, y), int2(40, 40), "Bilder/placeholderHexagon40x40.png", PUExtraBall);
+			result = l_block.Initialize(float2(x, y), int2(40, 40), "Bilder/placeholderHexagon40x40.png", PUNone);
 			if (!result)
 			{
 				return false;
@@ -93,7 +93,7 @@ bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight)
 		}
 		else if (i == 0)
 		{
-			result = l_block.Initialize(float2(x, y), int2(40, 40), "Bilder/placeholderHexagon40x40.png", PUNone);
+			result = l_block.Initialize(float2(x, y), int2(40, 40), "Bilder/placeholderHexagon40x40.png", PUShield);
 		}
 		
 
@@ -109,7 +109,7 @@ bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight)
 
 void BOObjectManager::Shutdown()
 {
-
+	m_Shield.Shutdown();
 }
 
 void BOObjectManager::Update(Uint32 p_deltaTime)
@@ -150,10 +150,17 @@ void BOObjectManager::Update(Uint32 p_deltaTime)
 						if (m_blockList[i].GetPowerUp() == PUExtraBall)
 						{
 							BOMultiballs* extraBall = new BOMultiballs();
-							extraBall->Initialize(m_blockList[i].GetPosition(), int2(40, 40), "Bilder/placeHolderPowerUp1.png", 0.5f, int2(1300, 900) );
+							extraBall->Initialize(m_blockList[i].GetPosition(), int2(40, 40), "Bilder/placeholderPowerupMultBall.png", 0.5f, int2(1300, 900) );
 							extraBall->SetActive(true);
 							BOPowerUpManager::AddPowerUp(extraBall);
 						}
+						else if (m_blockList[i].GetPowerUp() == PUShield)
+						{
+							BOShieldPU* shield = new BOShieldPU();
+							shield->Initialize(m_blockList[i].GetPosition(), int2(40, 40), "Bilder/placeholderSheildPowerUp1.png", 0.5f, int2(1300, 900));
+							BOPowerUpManager::AddPowerUp(shield);
+						}
+
 						// Collision therfore play popsound
 						BOSoundManager::PlaySound(sound_pop);
 						break;
@@ -170,8 +177,11 @@ void BOObjectManager::Update(Uint32 p_deltaTime)
 		if (BOPhysics::CheckCollisionSpheres(BOPowerUpManager::GetPowerUp(i)->GetBoundingSphere(), sphere(m_paddle.GetPosition(), 5)))
 		{
 			BOPowerUp* pu = BOPowerUpManager::GetPowerUp(i);
-			BOMultiballs* mb = (BOMultiballs*)pu;
-			mb->Activate();
+			//BOMultiballs* mb = (BOMultiballs*)pu;
+			//mb->Activate();
+			
+			BOShieldPU* sp = (BOShieldPU*)pu;
+			sp->Activate();
 			BOPowerUpManager::RemovePowerUp(i);
 		}		
 	}
@@ -221,8 +231,8 @@ void BOObjectManager::Update(Uint32 p_deltaTime)
 			m_ballList[i]->SetFuel(BOPhysics::CalculateBallFuel(m_ballList[i]->GetFuel()));
 
 		}
-
-		BallDirectionChange(m_Shield.Update(p_deltaTime, m_ballList[i]->GetBoundingSphere()));
+		//Updaterar skölden
+		BallDirectionChange(m_Shield.Update(p_deltaTime, m_ballList[i]->GetBoundingSphere()), i);
 	}
 
 	
@@ -249,15 +259,14 @@ void BOObjectManager::Draw()
 
 	m_paddle.Draw();
 	m_Shield.Draw();
-
 }
-void BOObjectManager::BallDirectionChange(int p_bounceCorner)
+void BOObjectManager::BallDirectionChange(int p_bounceCorner, int p_Index)
 {
 	if (p_bounceCorner == 0)
 		return;
 	m_hasColided = true;
 
-	float2 ballDir = m_ballList[0]->GetDirection();
+	float2 ballDir = m_ballList[p_Index]->GetDirection();
 	if (p_bounceCorner == 1 || p_bounceCorner == 2)//Straight up and down corner
 	{
 		ballDir.y *= (-1);
@@ -268,7 +277,7 @@ void BOObjectManager::BallDirectionChange(int p_bounceCorner)
 		ballDir.x *= (-1);
 		//std::cout << "Krock" << std::endl;
 	}
-	m_ballList[0]->SetDirection(ballDir);
+	m_ballList[p_Index]->SetDirection(ballDir);
 }
 
 void BOObjectManager::Handle(PowerUpTypes p_type, bool p_activated)
