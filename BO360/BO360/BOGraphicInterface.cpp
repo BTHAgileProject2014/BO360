@@ -187,11 +187,12 @@ SDL_Texture* BOGraphicInterface::DrawTextToTexture(std::string p_text, int3 p_te
 	SDL_Color textColor = { p_textColor.x, p_textColor.y, p_textColor.z, 255 };
 
 	// Render text surface
-	SDL_Surface* textSurface = TTF_RenderText_Solid(font, p_text.c_str(), textColor);
+	//SDL_Surface* textSurface = TTF_RenderText_Solid(font, p_text.c_str(), textColor);
+	SDL_Surface* textSurface = TTF_RenderText_Blended_Wrapped(font, p_text.c_str(), textColor, GetInstance().GetWindowSize().x);
 
 	// Create texture from surface pixels
 	texture = SDL_CreateTextureFromSurface(m_renderer, textSurface);
-
+	
 	//Get image dimensions
 	p_size->x = textSurface->w;
 	p_size->y = textSurface->h;
