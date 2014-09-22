@@ -10,16 +10,16 @@ public:
 	BOButton();
 	~BOButton();
 
-	bool Initialize(float2 p_position, int2 p_size, std::string p_fileName, std::string p_name, int p_action);
+	bool Initialize(float2 p_position, int2 p_size, std::string p_fileName, std::string p_name, ButtonAction p_action);
 	void Shutdown();
 
 	bool Intersects(int2 p_mousePosition);
 	void Draw();
 
-	int GetAction();
+	ButtonAction GetAction();
 
 private:
-	int m_actionValue;
+	ButtonAction m_action;
 	bool m_lit;
 	std::string m_name;
 

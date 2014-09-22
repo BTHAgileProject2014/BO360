@@ -126,7 +126,7 @@ bool BOSystem::Run()
 
 	if (m_deltaTime > 2)
 	{
-		// low-cap the fps to never do less than 10 updates / sec
+		// Low-cap the fps to never do less than 10 updates / sec
 		if (m_deltaTime > 100)
 		{
 			m_deltaTime = 100;
@@ -217,14 +217,14 @@ void BOSystem::Shutdown()
 	BOHUDManager::Shutdown();
 }
 
-void BOSystem::HandleAction(int p_action)
+void BOSystem::HandleAction(ButtonAction p_action)
 {
-	if (p_action != 0)
+	if (p_action != NOACTION)
 	{
 		switch (p_action)
 		{
 			// QUIT, return to main menu.
-			case(-2) :
+			case(QUIT) :
 			{
 				m_gameState = MENU;
 
@@ -232,7 +232,7 @@ void BOSystem::HandleAction(int p_action)
 			}
 
 			// EXIT, quit the game.
-			case(-1) :
+			case(EXIT) :
 			{
 				m_quit = true;
 
@@ -240,7 +240,7 @@ void BOSystem::HandleAction(int p_action)
 			}
 
 			// PLAY STORY MODE.
-			case(1) :
+			case(STORY) :
 			{
 				m_gameState = RUNNING;
 				if (!InitializeMap())
@@ -255,20 +255,20 @@ void BOSystem::HandleAction(int p_action)
 			}
 
 			// PLAY ENDLESS MODE.
-			case(2) :
+			case(ENDLESS) :
 			{
 				break;
 			}
 
 			// PLAY HARDCORE MODE.
-			case(3) :
+			case(HARDCORE) :
 			{
 				break;
 
 			}
 
 			// RESUME, return to running.
-			case(4) :
+			case(RESUME) :
 			{
 				m_gameState = RUNNING;
 
@@ -276,13 +276,13 @@ void BOSystem::HandleAction(int p_action)
 			}
 
 			// NEXT, load next map.
-			case(5) :
+			case(NEXT) :
 			{
 				break;
 			}
 
 			// RETRY, reload the map.
-			case(6) :
+			case(RETRY) :
 			{
 				break;
 

@@ -59,7 +59,7 @@ bool BOState::Initialize(float2 p_position, int2 p_size, float2 p_menuPosition, 
 	return true;
 }
 
-void BOState::AddButton(float2 p_position, int2 p_size, float2 p_menuPosition, std::string p_fileName, std::string p_name, int p_action)
+void BOState::AddButton(float2 p_position, int2 p_size, float2 p_menuPosition, std::string p_fileName, std::string p_name, ButtonAction p_action)
 {
 	BOButton l_button;
 	if (!l_button.Initialize(float2(p_position.x + (250 * m_buttonList.size()), p_position.y), p_size, p_fileName, p_name, p_action))
@@ -80,7 +80,7 @@ void BOState::Handle(InputMessages p_inputMessages)
 	m_mouseDown = p_inputMessages.leftMouseKey;
 }
 
-int BOState::Update()
+ButtonAction BOState::Update()
 {
 	for (int i = 0; i < m_buttonList.size(); i++)
 	{
@@ -93,7 +93,7 @@ int BOState::Update()
 		}
 	}
 
-	return 0;
+	return NOACTION;
 }
 
 void BOState::Draw()

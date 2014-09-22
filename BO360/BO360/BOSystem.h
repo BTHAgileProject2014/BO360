@@ -27,7 +27,7 @@ public:
 
 private:
 	bool InitializeMap();
-	void HandleAction(int p_action);
+	void HandleAction(ButtonAction p_action);
 
 	BOTimer m_timer;
 	BOInput m_input;

@@ -15,18 +15,17 @@ public:
 	
 	bool Initialize(float2 p_position, int2 p_size, float2 p_menuPosition, std::string p_name, std::string p_backgroundFil);
 	void Shutdown();
-	int Update();
+	ButtonAction Update();
 	void Draw();
 
 	void Handle(InputMessages p_inputMessages);
 
-	void AddButton(float2 p_position, int2 p_size, float2 p_menuPosition, std::string p_fileName, std::string p_name, int p_action);
+	void AddButton(float2 p_position, int2 p_size, float2 p_menuPosition, std::string p_fileName, std::string p_name, ButtonAction p_action);
 	void SetName(std::string p_name);
 	void SetBackground(std::string p_fileName);
 
 private:
 	std::vector<BOButton> m_buttonList;
-	int m_action;
 
 	float2 m_position;
 	int2 m_screenSize;

@@ -12,7 +12,7 @@ public:
 
 	bool Initialize(int2 p_screenSize);
 	void Shutdown();
-	int Update(GameState p_state);
+	ButtonAction Update(GameState p_state);
 	void Draw(GameState p_state);
 
 private:

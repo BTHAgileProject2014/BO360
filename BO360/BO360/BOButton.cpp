@@ -10,9 +10,9 @@ BOButton::~BOButton()
 
 }
 
-bool BOButton::Initialize(float2 p_position, int2 p_size, std::string p_fileName, std::string p_name, int p_action)
+bool BOButton::Initialize(float2 p_position, int2 p_size, std::string p_fileName, std::string p_name, ButtonAction p_action)
 {
-	m_actionValue = p_action;
+	m_action = p_action;
 	m_position = p_position;
 	m_size = p_size;
 	m_name = p_name;
@@ -81,9 +81,9 @@ void BOButton::Draw()
 	}
 }
 
-int BOButton::GetAction()
+ButtonAction BOButton::GetAction()
 {
-	return m_actionValue;
+	return m_action;
 }
 
 void BOButton::Shutdown()
