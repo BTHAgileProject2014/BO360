@@ -102,6 +102,8 @@ bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight)
 	/*float2 test = m_ballList[0].GetDirection();
 	test = float2(10,10);*/
 	BOPowerUpManager::AddSubscriber(this);
+
+	m_Shield.Initialize(int2(200, 200), "Bilder/placeholderSheild.png", int2(p_windowWidth, p_windowHeight));
 	return true;
 }
 
@@ -220,6 +222,7 @@ void BOObjectManager::Update(Uint32 p_deltaTime)
 
 		}
 
+		BallDirectionChange(m_Shield.Update(p_deltaTime, m_ballList[i]->GetBoundingSphere()));
 	}
 
 	
@@ -245,6 +248,7 @@ void BOObjectManager::Draw()
 	}
 
 	m_paddle.Draw();
+	m_Shield.Draw();
 
 }
 void BOObjectManager::BallDirectionChange(int p_bounceCorner)
@@ -272,7 +276,10 @@ void BOObjectManager::Handle(PowerUpTypes p_type, bool p_activated)
 	switch (p_type)
 	{
 	case PUShield:
-		// Add shield??
+		if (p_activated)
+		{
+			m_Shield.SetActive(true);
+		}
 		break;
 	case PUExtraBall:
 		if (p_activated)

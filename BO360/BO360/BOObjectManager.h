@@ -15,6 +15,7 @@
 #include "BOSoundManager.h"
 #include "BOPowerUp.h"
 #include "BOMultiballs.h"
+#include "BOShield.h"
 #include <vector>
 
 class BOObjectManager : public BOComponent, public BOPUSubscriber
@@ -41,6 +42,8 @@ private:
 	BOBlackHole m_blackHole;
 	std::vector<BOBall*> m_ballList;
 	BOPaddle m_paddle;
+	BOShield m_Shield;
+  
 	std::vector<BOBlock> m_blockList;
 	//std::vector<BOParticle> m_particleList;
 	//std::vector<BOPowerUp> m_powerUPlist;
