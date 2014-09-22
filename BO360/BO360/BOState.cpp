@@ -56,6 +56,18 @@ bool BOState::Initialize(float2 p_position, int2 p_size, float2 p_menuPosition, 
 
 	m_menuBar.push_back(l_lastEdge);
 
+	
+	// Calculate menu text position
+	float2 tempPos = float2(p_menuPosition.x + 250, p_menuPosition.y + 35);
+
+	// Load menu text
+	if (!m_menuText.Initialize(tempPos, m_name, int3(255, 255, 255), 72))
+	{
+		std::cout << "Failed to create menu text in " << m_name << "!" << std::endl;
+		return false;
+	}
+	
+
 	return true;
 }
 
@@ -112,6 +124,8 @@ void BOState::Draw()
 	{
 		m_buttonList[i].Draw();
 	}
+
+	m_menuText.Draw();
 }
 
 void BOState::SetName(std::string p_name)
@@ -132,4 +146,5 @@ void BOState::Shutdown()
 	}
 
 	m_buttonList.empty();
+	m_menuText.Shutdown();
 }
