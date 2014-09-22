@@ -85,7 +85,7 @@ bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight)
 		// Create block.
 		if (i != 0)
 		{
-			result = l_block.Initialize(float2(x, y), int2(40, 40), "Bilder/placeholderHexagon40x40.png", PUExtraBall);
+			result = l_block.Initialize(float2(x, y), int2(40, 40), "Bilder/placeholderHexagon40x40.png", PUNone);
 			if (!result)
 			{
 				return false;
@@ -93,7 +93,7 @@ bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight)
 		}
 		else if (i == 0)
 		{
-			result = l_block.Initialize(float2(x, y), int2(40, 40), "Bilder/placeholderHexagon40x40.png", PUNone);
+			result = l_block.Initialize(float2(x, y), int2(40, 40), "Bilder/placeholderHexagon40x40.png", PUExtraBall);
 		}
 		
 
