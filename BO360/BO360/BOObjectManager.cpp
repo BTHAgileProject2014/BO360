@@ -219,6 +219,7 @@ void BOObjectManager::Update(Uint32 p_deltaTime)
 			m_ballList[i]->SetFuel(BOPhysics::CalculateBallFuel(m_ballList[i]->GetFuel()));
 
 		}
+
 	}
 
 	

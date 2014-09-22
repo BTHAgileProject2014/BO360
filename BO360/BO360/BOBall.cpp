@@ -2,7 +2,6 @@
 
 BOBall::BOBall()
 {
-	m_Fuel = 0.0f;
 }
 
 
@@ -12,6 +11,7 @@ BOBall::~BOBall()
 
 bool BOBall::Initialize(float2 p_position, int2 p_size, std::string p_fileName, float p_speed, float2 p_direction, int2 p_windowSize)
 {
+	m_Fuel = 0.0f;
 	m_canColide = true;
 	m_position = p_position;
 	m_size = p_size;
@@ -33,16 +33,23 @@ void BOBall::Update(Uint32 p_deltaTime)
 	{
 		return;
 	}
+	if (m_Fuel > 0)
+	{
+		m_position.x = (m_speed * p_deltaTime) * m_direction.x + m_position.x;
+		m_position.y = (m_speed * p_deltaTime) * m_direction.y + m_position.y;
+	}
+	else
+	{
+		m_position.x = (0.75*m_speed * p_deltaTime) * m_direction.x + m_position.x;
+		m_position.y = (0.75*m_speed * p_deltaTime) * m_direction.y + m_position.y;
+	}
 
-	m_position.x = (m_speed * p_deltaTime) * m_direction.x + m_position.x;
-	m_position.y = (m_speed * p_deltaTime) * m_direction.y + m_position.y;
-
-	if (m_position.x < (m_size.x / 2) || m_position.x > (m_windowSize.x - (m_size.x / 2)))
+	if (m_position.x < (m_size.x / 2) || m_position.x >(m_windowSize.x - (m_size.x / 2)))
 	{
 		m_canColide = true;
 		m_direction.x *= -1;
 	}
-	if (m_position.y < (m_size.y / 2) || m_position.y > (m_windowSize.y - (m_size.y / 2)))
+	if (m_position.y < (m_size.y / 2) || m_position.y >(m_windowSize.y - (m_size.y / 2)))
 	{
 		m_canColide = true;
 		m_direction.y *= -1;
