@@ -66,3 +66,8 @@ void BOPowerUp::SetActive(bool p_isActive)
 {
 	m_isActive = p_isActive;
 }
+
+float2 BOPowerUp::GetDirection()
+{
+	return m_direction;
+}

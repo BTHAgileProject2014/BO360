@@ -377,25 +377,25 @@ int BOPhysics::CheckCollisionBallShield(sphere p_sphere, sphere p_padSphere)
 	ballRadius = p_sphere.radius;
 	if (CheckCollisionSpheres(p_sphere, p_padSphere))
 	{
-		if ((centerBall.x <= (centerPad.x + 70.0f)) && (centerBall.x >= (centerPad.x - 70.0f)) && (centerBall.y <= centerPad.y))
-	{
+		if ((centerBall.x <= (centerPad.x + 80.0f)) && (centerBall.x >= (centerPad.x - 80.0f)) && (centerBall.y <= centerPad.y))
+		{
 			return 1;
-	}
-		else if ((centerBall.x <= (centerPad.x + 70.0f)) && (centerBall.x >= (centerPad.x - 70.0f)) && (centerBall.y >= centerPad.y))
-	{
+		}
+		else if ((centerBall.x <= (centerPad.x + 80.0f)) && (centerBall.x >= (centerPad.x - 80.0f)) && (centerBall.y >= centerPad.y))
+		{
 			return 2;
-	}
-		else if ((centerBall.y <= (centerPad.y + 70.0f)) && (centerBall.y >= (centerPad.y - 70.0f)) && (centerBall.x <= centerPad.x))
-	{
+		}
+		else if ((centerBall.y <= (centerPad.y + 80.0f)) && (centerBall.y >= (centerPad.y - 80.0f)) && (centerBall.x <= centerPad.x))
+		{
 			return 3;
-	}
+		}
 		else
-	{
+		{
 			return 4;
 		}
 	}
 	return 0;
-	}
+}
 
 float2 BOPhysics::ReflectBallAroundNormal(float2 p_ballDir, float2 p_normal)
 {
@@ -434,7 +434,7 @@ float2 BOPhysics::BlackHoleGravity(sphere p_Ball, float2 p_BallDirection, float 
 		distanceAdjustment = distanceAdjustment / 20000000;
 	}
 
-	center = center * distanceAdjustment;
+	center = center * distanceAdjustment * 0.75;
 
 	newDirection = float2(newDirection.x * speed, newDirection.y * speed);
 	newDirection = float2(newDirection.x + center.x, newDirection.y + center.y);

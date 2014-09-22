@@ -93,7 +93,7 @@ bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight)
 		}
 		else if (i == 0)
 		{
-			result = l_block.Initialize(float2(x, y), int2(40, 40), "Bilder/placeholderHexagon40x40.png", PUExtraBall);
+			result = l_block.Initialize(float2(x, y), int2(40, 40), "Bilder/placeholderHexagon40x40.png", PUShield);
 		}
 		
 
@@ -102,12 +102,14 @@ bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight)
 	/*float2 test = m_ballList[0].GetDirection();
 	test = float2(10,10);*/
 	BOPowerUpManager::AddSubscriber(this);
+
+	m_Shield.Initialize(int2(200, 200), "Bilder/placeholderSheild.png", int2(p_windowWidth, p_windowHeight));
 	return true;
 }
 
 void BOObjectManager::Shutdown()
 {
-
+	m_Shield.Shutdown();
 }
 
 void BOObjectManager::Update(Uint32 p_deltaTime)
@@ -149,10 +151,17 @@ void BOObjectManager::Update(Uint32 p_deltaTime)
 						if (m_blockList[i].GetPowerUp() == PUExtraBall)
 						{
 							BOMultiballs* extraBall = new BOMultiballs();
-							extraBall->Initialize(m_blockList[i].GetPosition(), int2(40, 40), "Bilder/placeHolderPowerUp1.png", 0.5f, int2(1300, 900) );
+							extraBall->Initialize(m_blockList[i].GetPosition(), int2(40, 40), "Bilder/placeholderPowerupMultBall.png", 0.5f, int2(1300, 900) );
 							extraBall->SetActive(true);
 							BOPowerUpManager::AddPowerUp(extraBall);
 						}
+						else if (m_blockList[i].GetPowerUp() == PUShield)
+						{
+							BOShieldPU* shield = new BOShieldPU();
+							shield->Initialize(m_blockList[i].GetPosition(), int2(40, 40), "Bilder/placeholderSheildPowerUp1.png", 0.5f, int2(1300, 900));
+							BOPowerUpManager::AddPowerUp(shield);
+						}
+
 						// Collision therfore play popsound
 						BOSoundManager::PlaySound(sound_pop);
 						break;
@@ -164,16 +173,27 @@ void BOObjectManager::Update(Uint32 p_deltaTime)
 	}
 	
 	// Tillfällig powerup kollision kod för att testa 
+	// Checks powerup "ball" against the pad, if colliding with pad do powerup effect and remove powerup"ball"
 	for (int i = 0; i < BOPowerUpManager::GetPowerUpSize(); i++)
 	{
-		if (BOPhysics::CheckCollisionSpheres(BOPowerUpManager::GetPowerUp(i)->GetBoundingSphere(), sphere(m_paddle.GetPosition(), 5)))
+		float2 result = BOPhysics::BallPadCollision(BOPowerUpManager::GetPowerUp(i)->GetBoundingSphere(), BOPowerUpManager::GetPowerUp(i)->GetDirection(), m_paddle.GetBoundingSphere(), m_paddle.GetRotation() - 15, 30);
+		if (!(result.x == 0 && result.y == 0))
 		{
 			BOPowerUp* pu = BOPowerUpManager::GetPowerUp(i);
-			BOMultiballs* mb = (BOMultiballs*)pu;
-			mb->Activate();
+			//BOMultiballs* mb = (BOMultiballs*)pu;
+			//mb->Activate();
+			
+			BOShieldPU* sp = (BOShieldPU*)pu;
+			sp->Activate();
 			BOPowerUpManager::RemovePowerUp(i);
 		}		
+		else if (BOPhysics::CheckCollisionSpheres(BOPowerUpManager::GetPowerUp(i)->GetBoundingSphere(), sphere(m_blackHole.GetPosition(), 1)))
+		{
+			BOPowerUpManager::RemovePowerUp(i);
 	}
+	}
+
+
 
  	for (int i = 0; i < m_ballList.size(); i++)
 	{
@@ -198,6 +218,8 @@ void BOObjectManager::Update(Uint32 p_deltaTime)
 			m_ballList[i]->SetFuel(BOPhysics::CalculateBallFuel(m_ballList[i]->GetFuel()));
 
 		}
+		//Updaterar skölden
+		BallDirectionChange(m_Shield.Update(p_deltaTime, m_ballList[i]->GetBoundingSphere()), i);
 	}
 
 	
@@ -223,15 +245,15 @@ void BOObjectManager::Draw()
 	}
 
 	m_paddle.Draw();
-
+	m_Shield.Draw();
 }
-void BOObjectManager::BallDirectionChange(int p_bounceCorner)
+void BOObjectManager::BallDirectionChange(int p_bounceCorner, int p_Index)
 {
 	if (p_bounceCorner == 0)
 		return;
 	m_hasColided = true;
 
-	float2 ballDir = m_ballList[0]->GetDirection();
+	float2 ballDir = m_ballList[p_Index]->GetDirection();
 	if (p_bounceCorner == 1 || p_bounceCorner == 2)//Straight up and down corner
 	{
 		ballDir.y *= (-1);
@@ -242,7 +264,7 @@ void BOObjectManager::BallDirectionChange(int p_bounceCorner)
 		ballDir.x *= (-1);
 		//std::cout << "Krock" << std::endl;
 	}
-	m_ballList[0]->SetDirection(ballDir);
+	m_ballList[p_Index]->SetDirection(ballDir);
 }
 
 void BOObjectManager::Handle(PowerUpTypes p_type, bool p_activated)
@@ -250,7 +272,10 @@ void BOObjectManager::Handle(PowerUpTypes p_type, bool p_activated)
 	switch (p_type)
 	{
 	case PUShield:
-		// Add shield??
+		if (p_activated)
+		{
+			m_Shield.SetActive(true);
+		}
 		break;
 	case PUExtraBall:
 		if (p_activated)

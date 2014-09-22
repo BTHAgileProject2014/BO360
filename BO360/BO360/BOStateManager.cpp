@@ -17,10 +17,10 @@ bool BOStateManager::Initialize(int2 p_screenSize)
 	// Setup main menu.
 	float2 l_menuPosition = float2(50, 50);
 	result = m_menu.Initialize(float2(p_screenSize.x / 2, p_screenSize.y / 2), p_screenSize, l_menuPosition, "MAIN MENU", "Bilder/Menu/MainMenuBackground.png");
-	m_menu.AddButton(float2(l_menuPosition.x, l_menuPosition.y + 70), int2(250, 75), l_menuPosition, "Bilder/Menu/StoryButton", "PLAY STORY MODE", STORY);
+	m_menu.AddButton(float2(l_menuPosition.x, l_menuPosition.y + 70), int2(250, 75), l_menuPosition, "Bilder/Menu/Button", "STORY MODE", STORY);
 	//m_menu.AddButton(float2(l_menuPosition.x, l_menuPosition.y + 70), int2(250, 75), l_menuPosition, "Bilder/Menu/Button", "PLAY ENDLESS MODE", ENDLESS);
 	//m_menu.AddButton(float2(l_menuPosition.x, l_menuPosition.y + 70), int2(250, 75), l_menuPosition, "Bilder/Menu/Button", "PLAY HARDCORE MODE", HARDCORE);
-	m_menu.AddButton(float2(l_menuPosition.x, l_menuPosition.y + 70), int2(250, 75), l_menuPosition, "Bilder/Menu/ExitButton", "EXIT", EXIT);
+	m_menu.AddButton(float2(l_menuPosition.x, l_menuPosition.y + 70), int2(250, 75), l_menuPosition, "Bilder/Menu/Button", "EXIT TO DESKTOP", EXIT);
 
 	// Setup pause menu.
 	l_menuPosition = float2(50, 50);
