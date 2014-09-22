@@ -101,7 +101,7 @@ bool BOSystem::InitializeMap()
 		return false;
 	}
 
-	result = BOHUDManager::Initialize(true);
+	result = BOHUDManager::Initialize();
 	if (!result)
 	{
 		std::cout << "Initialize HUD failed!" << std::endl;
@@ -110,7 +110,7 @@ bool BOSystem::InitializeMap()
 	}
 
 	// Example usage of HUD
-	BOHUDManager::SetScore(1000000);
+	BOHUDManager::SetScore(10);
 	BOHUDManager::SetLives(5);
 	BOHUDManager::SetLevel(1);
 

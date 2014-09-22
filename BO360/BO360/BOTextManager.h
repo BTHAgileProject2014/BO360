@@ -11,7 +11,7 @@ public:
 	~BOTextManager();
 	static bool Initialize();
 	static void Shutdown();
-	static BODrawableText* AddText(std::string p_text, float2 p_position, int3 p_color);
+	static BODrawableText* AddText(std::string p_text, float2 p_position, int3 p_color, int p_fontSize);
 	static void RemoveText(BODrawableText* p_text);
 	static void MoveText(BODrawableText* p_text, float2 p_position);
 	static void ChangeText(BODrawableText* p_text, std::string p_textString, int3 p_color);
