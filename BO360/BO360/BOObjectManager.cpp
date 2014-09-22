@@ -181,7 +181,7 @@ void BOObjectManager::Update(Uint32 p_deltaTime)
 			BOPowerUp* pu = BOPowerUpManager::GetPowerUp(i);
 			//BOMultiballs* mb = (BOMultiballs*)pu;
 			//mb->Activate();
-			
+			//BOMultiballs* spt = dynamic_cast<BOMultiballs*>(pu);
 			BOShieldPU* sp = (BOShieldPU*)pu;
 			sp->Activate();
 			BOPowerUpManager::RemovePowerUp(i);
