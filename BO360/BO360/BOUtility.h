@@ -354,9 +354,22 @@ enum GameState
 	MENU,
 	RUNNING,
 	PAUSED,
-	ENDSCREEN
+	VICTORY,
+	DEFEAT
 };
-static GameState CURRENT_GAMESTATE = MENU;
+
+enum ButtonAction
+{
+	NOACTION,
+	QUIT,
+	EXIT,
+	STORY,
+	ENDLESS,
+	HARDCORE,
+	RESUME,
+	NEXT,
+	RETRY
+};
 
 enum KeyMessages
 {

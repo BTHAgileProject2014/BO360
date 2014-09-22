@@ -27,7 +27,10 @@ bool BOObject::Initialize(float2 p_position, int2 p_size, std::string p_fileName
 // Shutdown and memory release.
 void BOObject::Shutdown()
 {
-
+	if (m_sprite)
+	{
+		BOGraphicInterface::DestroyTexture(m_sprite);
+	}
 }
 
 // Sprite Draw call.
