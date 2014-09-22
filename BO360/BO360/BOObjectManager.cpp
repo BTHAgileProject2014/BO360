@@ -114,10 +114,7 @@ void BOObjectManager::Update(Uint32 p_deltaTime)
 {
 	bool result;
 	float2 normal;
-	float2 newBallDirection;
-	float vDotN;
-	float2 nMinusV;
-	float angleBallDirectionVsNormal;
+	
 	m_blackHole.Update();
 
 	m_paddle.Update(p_deltaTime);
@@ -146,7 +143,7 @@ void BOObjectManager::Update(Uint32 p_deltaTime)
 					m_ballList[0]->BouncedOnHexagon();
 					
 					// Spawn powerup if there is one
-					if (m_blockList[i].GetPowerUp() != PUNone)
+					if (m_blockList[i].GetPowerUp() == PUExtraBall)
 					{
 						BOMultiballs* extraBall = new BOMultiballs();
 						extraBall->Initialize(m_blockList[i].GetPosition(), int2(40, 40), "Bilder/placeHolderPowerUp1.png", 1.0f, int2(1300, 900) );
