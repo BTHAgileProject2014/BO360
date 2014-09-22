@@ -52,14 +52,14 @@ bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight)
 	float ballSpeed = 0.5f;
 	float2 ballDirection = float2(20, 10).normalized();
 
-	BOBall ball;
-	result = ball.Initialize(ballPosition, ballSize, "Bilder/placeholderBoll10x10.png", ballSpeed, ballDirection, windowSize);
+	BOBall* ball = new BOBall();
+	result = ball->Initialize(ballPosition, ballSize, "Bilder/placeholderBoll10x10.png", ballSpeed, ballDirection, windowSize);
 	if (!result)
 	{
 		return false;
 	}
 
-	m_ballList.push_back(&ball);
+	m_ballList.push_back(ball);
 	BOPublisher::AddSubscriber(m_ballList[0]);
 
 	// Load a map.
