@@ -2,7 +2,6 @@
 
 BOObjectManager::BOObjectManager()
 {
-	m_GravityIsOn = true;
 }
 
 
@@ -17,7 +16,7 @@ bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight)
 	windowSize.y = p_windowHeight;
 	bool result;
 	m_hasColided = false;
-
+	testStopPU = false;
 	// Initialize the map loader.
 	result = m_mapLoader.Initialize();
 	if (!result)
@@ -26,7 +25,7 @@ bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight)
 	}
 
 	// Initialize the background.
-	result = m_background.Initialize(float2(p_windowWidth / 2, p_windowHeight / 2), int2(p_windowWidth, p_windowHeight), "Bilder/background.png");
+	result = m_background.Initialize(float2(p_windowWidth / 2, p_windowHeight / 2), int2(p_windowWidth, p_windowHeight), "Bilder/Background.png");
 	if (!result)
 	{
 		return false;
@@ -50,7 +49,7 @@ bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight)
 	int2 ballSize = int2(15, 15);
 
 	float2 ballPosition = float2((p_windowWidth / 2.0f), (p_windowHeight / 2.0f));
-	float ballSpeed = 0.1f;
+	float ballSpeed = 0.5f;
 	float2 ballDirection = float2(20, 10).normalized();
 
 	BOBall ball;
@@ -145,8 +144,6 @@ void BOObjectManager::Update(Uint32 p_deltaTime)
 					//Collision with hexagon
 					m_ballList[0].SetDirection(BOPhysics::ReflectBallAroundNormal(m_ballList[0].GetDirection(), normal));
 					m_ballList[0].BouncedOnHexagon();
-					//Changes the gravity to true so it can be pulled into the middle
-					m_GravityIsOn = true;
 					
 					// Spawn powerup if there is one
 					if (m_blockList[i].GetPowerUp() != PUNone)
@@ -163,6 +160,7 @@ void BOObjectManager::Update(Uint32 p_deltaTime)
 			}
 		}		
 	}
+	
 	// Tillfällig powerup kollision kod för att testa 
 	for (int i = 0; i < BOPowerUpManager::GetPowerUpSize(); i++)
 	{
@@ -182,7 +180,6 @@ void BOObjectManager::Update(Uint32 p_deltaTime)
 		{
 			m_ballList[0].SetDirection(result);
 			m_ballList[0].BouncedOnPad();
-			m_GravityIsOn = false;//Changes the gravity to false so it doesn't stuck fuck
 		}
 		
 		//int bounceTest = BOPhysics::CheckCollisioPadSphere(m_ballList[0].GetBoundingSphere(), m_ballList[0].GetDirection(), m_paddle.GetBoundingSphere(), m_paddle.GetRotation() - 15, 30);
@@ -207,8 +204,17 @@ void BOObjectManager::Update(Uint32 p_deltaTime)
 			//}
 		//}
 	}
+	if (m_ballList[0].GetFuel() <= 0)
+	{
 	//Runs tha gravity... lawl... Rotates the direction depending on distance
-	m_ballList[0].SetDirection(BOPhysics::BlackHoleGravity(m_ballList[0].GetBoundingSphere(), m_ballList[0].GetDirection(), m_ballList[0].GetSpeed(), m_blackHole.GetBoundingSphere(), m_GravityIsOn));
+		m_ballList[0].SetDirection(BOPhysics::BlackHoleGravity(m_ballList[0].GetBoundingSphere(), m_ballList[0].GetDirection(), m_ballList[0].GetSpeed(), m_blackHole.GetBoundingSphere()));
+	}
+	else
+	{
+		//Beräkna bränsle
+		m_ballList[0].SetFuel(BOPhysics::CalculateBallFuel(m_ballList[0].GetFuel()));
+
+	}
 
 
 }

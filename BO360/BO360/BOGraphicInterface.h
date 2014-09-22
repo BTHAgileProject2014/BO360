@@ -24,8 +24,9 @@ public:
 	static void Present();
 	static void SetWindowTitle(std::string p_windowText);
 	static SDL_Texture* LoadTexture(std::string p_path);
-	static SDL_Texture* DrawTextToTexture(std::string p_text, int3 p_textColor, int2* size);
+	static SDL_Texture* DrawTextToTexture(std::string p_text, int3 p_textColor, int2* size, int p_fontSize);
 	static void DestroyTexture(SDL_Texture* p_texture);
+	static int2 GetWindowSize();
 
 private:
 	BOGraphicInterface() {}
@@ -36,8 +37,6 @@ private:
 	int m_windowWidth;
 	int m_windowHeight;
 	//bool m_fullscreen;	// Use only when fullscreen and resolutions is supported
-	static TTF_Font* m_font;
-	
 };
 #endif
 
