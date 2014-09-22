@@ -39,7 +39,7 @@ private:
 
 	BOBackground m_background;
 	BOBlackHole m_blackHole;
-	std::vector<BOBall> m_ballList;
+	std::vector<BOBall*> m_ballList;
 	BOPaddle m_paddle;
 	std::vector<BOBlock> m_blockList;
 	//std::vector<BOParticle> m_particleList;

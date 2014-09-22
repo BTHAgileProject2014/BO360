@@ -59,8 +59,8 @@ bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight)
 		return false;
 	}
 
-	m_ballList.push_back(ball);
-	BOPublisher::AddSubscriber(&m_ballList[0]);
+	m_ballList.push_back(&ball);
+	BOPublisher::AddSubscriber(m_ballList[0]);
 
 	// Load a map.
 	m_mapLoader.LoadMap("Empty.bom");
@@ -123,7 +123,7 @@ void BOObjectManager::Update(Uint32 p_deltaTime)
 
 	for (int i = 0; i < m_ballList.size(); i++)
 	{
-		m_ballList[i].Update(p_deltaTime);
+		m_ballList[i]->Update(p_deltaTime);
 	}
 	for (int i = 0; i < m_blockList.size(); i++)
 	{
@@ -134,15 +134,15 @@ void BOObjectManager::Update(Uint32 p_deltaTime)
 	{
 		if (!m_blockList[i].GetDead())
 		{
-			if (BOPhysics::CheckCollisionSpheres(m_ballList[0].GetBoundingSphere(), m_blockList[i].GetBoundingSphere()))
+			if (BOPhysics::CheckCollisionSpheres(m_ballList[0]->GetBoundingSphere(), m_blockList[i].GetBoundingSphere()))
 			{
-				if (BOPhysics::CheckCollisionSphereToHexagon(m_ballList[0].GetBoundingSphere(), m_blockList[i].GetBoundingHexagon(), normal))
+				if (BOPhysics::CheckCollisionSphereToHexagon(m_ballList[0]->GetBoundingSphere(), m_blockList[i].GetBoundingHexagon(), normal))
 				{
 					// Block dead, dead = true, stop checking collision and drawing block
 					m_blockList[i].SetDead();
 					//Collision with hexagon
-					m_ballList[0].SetDirection(BOPhysics::ReflectBallAroundNormal(m_ballList[0].GetDirection(), normal));
-					m_ballList[0].BouncedOnHexagon();
+					m_ballList[0]->SetDirection(BOPhysics::ReflectBallAroundNormal(m_ballList[0]->GetDirection(), normal));
+					m_ballList[0]->BouncedOnHexagon();
 					
 					// Spawn powerup if there is one
 					if (m_blockList[i].GetPowerUp() != PUNone)
@@ -175,13 +175,13 @@ void BOObjectManager::Update(Uint32 p_deltaTime)
 	}
 
 
-	if (m_ballList[0].CanColide())
+	if (m_ballList[0]->CanColide())
 	{
-		float2 result = BOPhysics::BallPadCollision(m_ballList[0].GetBoundingSphere(), m_ballList[0].GetDirection(), m_paddle.GetBoundingSphere(), m_paddle.GetRotation() - 15, 30);
+		float2 result = BOPhysics::BallPadCollision(m_ballList[0]->GetBoundingSphere(), m_ballList[0]->GetDirection(), m_paddle.GetBoundingSphere(), m_paddle.GetRotation() - 15, 30);
 		if (!(result.x == 0 && result.y == 0))
 		{
-			m_ballList[0].SetDirection(result);
-			m_ballList[0].BouncedOnPad();
+			m_ballList[0]->SetDirection(result);
+			m_ballList[0]->BouncedOnPad();
 		}
 		
 		//int bounceTest = BOPhysics::CheckCollisioPadSphere(m_ballList[0].GetBoundingSphere(), m_ballList[0].GetDirection(), m_paddle.GetBoundingSphere(), m_paddle.GetRotation() - 15, 30);
@@ -206,15 +206,15 @@ void BOObjectManager::Update(Uint32 p_deltaTime)
 			//}
 		//}
 	}
-	if (m_ballList[0].GetFuel() <= 0)
+	if (m_ballList[0]->GetFuel() <= 0)
 	{
 		//Runs tha gravity... lawl... Rotates the direction depending on distance
-		m_ballList[0].SetDirection(BOPhysics::BlackHoleGravity(m_ballList[0].GetBoundingSphere(), m_ballList[0].GetDirection(), m_ballList[0].GetSpeed(), m_blackHole.GetBoundingSphere()));
+		m_ballList[0]->SetDirection(BOPhysics::BlackHoleGravity(m_ballList[0]->GetBoundingSphere(), m_ballList[0]->GetDirection(), m_ballList[0]->GetSpeed(), m_blackHole.GetBoundingSphere()));
 	}
 	else
 	{
 		//Beräkna bränsle
-		m_ballList[0].SetFuel(BOPhysics::CalculateBallFuel(m_ballList[0].GetFuel()));
+		m_ballList[0]->SetFuel(BOPhysics::CalculateBallFuel(m_ballList[0]->GetFuel()));
 
 	}
 
@@ -229,7 +229,7 @@ void BOObjectManager::Draw()
 
 	for (int i = 0; i < m_ballList.size(); i++)
 	{
-		m_ballList[i].Draw();
+		m_ballList[i]->Draw();
 	}
 	for (int i = 0; i < m_blockList.size(); i++)
 	{
@@ -249,7 +249,7 @@ void BOObjectManager::BallDirectionChange(int p_bounceCorner)
 		return;
 	m_hasColided = true;
 
-	float2 ballDir = m_ballList[0].GetDirection();
+	float2 ballDir = m_ballList[0]->GetDirection();
 	if (p_bounceCorner == 1 || p_bounceCorner == 2)//Straight up and down corner
 	{
 		ballDir.y *= (-1);
@@ -260,7 +260,7 @@ void BOObjectManager::BallDirectionChange(int p_bounceCorner)
 		ballDir.x *= (-1);
 		//std::cout << "Krock" << std::endl;
 	}
-	m_ballList[0].SetDirection(ballDir);
+	m_ballList[0]->SetDirection(ballDir);
 }
 
 void BOObjectManager::Handle(PowerUpTypes p_type, bool p_activated)
