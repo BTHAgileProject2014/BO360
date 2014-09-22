@@ -284,9 +284,11 @@ float2 BOPhysics::BallPadCollision(sphere p_sphere, float2 p_sphereDir, sphere p
 	double padSpread = p_padSpread * degreesToRadians;
 
 	// Convert to mathematical coordinate system
-	double startAngleMA = HALF_PI - startAngle;
+	double startAngleMA = (startAngle - HALF_PI) * -1;
+	double normalized = startAngleMA;
+	NormalizeAngle(normalized);
 
-	double padCenterAngle = startAngleMA - (padSpread / 2);
+   	double padCenterAngle = startAngleMA - (padSpread / 2);
 	NormalizeAngle(padCenterAngle);
 
 	// Calculate a vector pointing towards the pad's center in SDL-Draw-Space
@@ -340,7 +342,7 @@ float2 BOPhysics::CalculateNewDir(float2 currentDir, float2 padNormal, float p_p
 {
 	// Bounce normals will be biased depending on the position of the pad that we bounce on.
 	// biasAngle is the maximum bias, only reached at the edges of the pad
-	static const float biasAngle = 0.57;
+	static const float biasAngle = 1.57;
 
 	// Amplify the ball and pad rotations by 2*PI to avoid 0-rotation problems
 	float padAngleAmp = p_padAngle + 2 * PI;
@@ -362,7 +364,7 @@ float2 BOPhysics::CalculateNewDir(float2 currentDir, float2 padNormal, float p_p
 	float vDotN = currentDir.dot(biasedNormal);
 	float2 newDir = currentDir - (biasedNormal * vDotN * 2);
 
-	return newDir;
+	return biasedNormal;
 }
 
 int BOPhysics::CheckCollisionBallShield(sphere p_sphere, sphere p_padSphere)
