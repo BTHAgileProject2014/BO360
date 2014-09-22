@@ -422,7 +422,7 @@ float2 BOPhysics::BlackHoleGravity(sphere p_Ball, float2 p_BallDirection, float 
 		distanceAdjustment = distanceAdjustment / 20000000;
 	}
 
-	center = center * distanceAdjustment;
+	center = center * distanceAdjustment * 0.75;
 
 	newDirection = float2(newDirection.x * speed, newDirection.y * speed);
 	newDirection = float2(newDirection.x + center.x, newDirection.y + center.y);

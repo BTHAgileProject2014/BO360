@@ -183,6 +183,7 @@ void BOObjectManager::Update(Uint32 p_deltaTime)
 	else
 	{
 		//Beräkna bränsle
+		//m_ballList[0].SetFuel(0);
 		m_ballList[0].SetFuel(BOPhysics::CalculateBallFuel(m_ballList[0].GetFuel()));
 
 	}
