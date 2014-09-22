@@ -18,6 +18,7 @@ public:
 	virtual void Deactivate();
 	virtual bool GetActive();
 	virtual void SetActive(bool p_isActive);
+	virtual float2 GetDirection();
 
 protected:
 	bool m_hasSpawned;

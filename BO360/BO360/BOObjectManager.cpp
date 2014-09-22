@@ -163,9 +163,11 @@ void BOObjectManager::Update(Uint32 p_deltaTime)
 	}
 	
 	// Tillfällig powerup kollision kod för att testa 
+	// Checks powerup "ball" against the pad, if colliding with pad do powerup effect and remove powerup"ball"
 	for (int i = 0; i < BOPowerUpManager::GetPowerUpSize(); i++)
 	{
-		if (BOPhysics::CheckCollisionSpheres(BOPowerUpManager::GetPowerUp(i)->GetBoundingSphere(), sphere(m_paddle.GetPosition(), 5)))
+		float2 result = BOPhysics::BallPadCollision(BOPowerUpManager::GetPowerUp(i)->GetBoundingSphere(), BOPowerUpManager::GetPowerUp(i)->GetDirection(), m_paddle.GetBoundingSphere(), m_paddle.GetRotation() - 15, 30);
+		if (!(result.x == 0 && result.y == 0))
 		{
 			BOPowerUp* pu = BOPowerUpManager::GetPowerUp(i);
 			BOMultiballs* mb = (BOMultiballs*)pu;
@@ -184,28 +186,6 @@ void BOObjectManager::Update(Uint32 p_deltaTime)
 				m_ballList[i]->SetDirection(result);
 				m_ballList[i]->BouncedOnPad();
 			}
-		
-			//int bounceTest = BOPhysics::CheckCollisioPadSphere(m_ballList[0].GetBoundingSphere(), m_ballList[0].GetDirection(), m_paddle.GetBoundingSphere(), m_paddle.GetRotation() - 15, 30);
-			//if (bounceTest > 0)
-			//{
-			//	m_ballList[0].BouncedOnPad();
-			//}
-			//BallDirectionChange(bounceTest);
-		/*	if (BOPhysics::MattiasBallPadCollision(m_ballList[0].GetBoundingSphere(), m_ballList[0].GetDirection(), m_paddle.GetBoundingSphere(), m_paddle.GetRotation() - 20, 40))
-			{*/
-				//sphere changedSphere = m_paddle.GetBoundingSphere();
-				//changedSphere.radius -= 1;
-				//if (!BOPhysics::CheckCollisionSpheres(m_ballList[0].GetBoundingSphere(), changedSphere))
-				//{
-				//	std::cout << "Colided!";
-				//	float2 newDir = m_ballList[0].GetDirection();
-				//	newDir.x *= -1.0f;
-				//	newDir.y *= -1.0f;
-				//	newDir = newDir.normalized();
-				//	m_ballList[0].SetDirection(newDir);
-				//	m_ballList[0].BouncedOnPad();
-				//}
-			//}
 		}
 		
 		if (m_ballList[i]->GetFuel() <= 0)
