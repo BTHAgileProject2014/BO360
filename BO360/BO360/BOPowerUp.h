@@ -25,6 +25,7 @@ protected:
 	int2 m_windowSize;
 	float2 m_direction;
 	bool m_isActive;
+	bool m_hasActivated;
 };
 
 #endif

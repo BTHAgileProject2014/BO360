@@ -24,7 +24,11 @@ void BOMultiballs::SwitchActive()
 
 void BOMultiballs::Activate()
 {
-	BOPowerUpManager::Notify(PUExtraBall, true);
+	if (!m_hasActivated)
+	{
+		BOPowerUpManager::Notify(PUExtraBall, true);
+	}
+	m_hasActivated = true;
 }
 
 void BOMultiballs::Deactivate()

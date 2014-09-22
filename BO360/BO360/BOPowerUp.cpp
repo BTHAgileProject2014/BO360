@@ -15,6 +15,7 @@ bool BOPowerUp::Initialize(float2 p_position, int2 p_size, std::string p_fileNam
 	m_hasSpawned = true;
 	m_speed = p_speed;
 	m_windowSize = p_windowSize;
+	m_hasActivated = false;
 
 	// Set direction to center of screen
 	m_direction.x = (m_windowSize.x / 2.0f) - m_position.x;

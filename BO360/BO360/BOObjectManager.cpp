@@ -102,6 +102,7 @@ bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight)
 	}
 	/*float2 test = m_ballList[0].GetDirection();
 	test = float2(10,10);*/
+	BOPowerUpManager::AddSubscriber(this);
 	return true;
 }
 
@@ -150,9 +151,9 @@ void BOObjectManager::Update(Uint32 p_deltaTime)
 					// Spawn powerup if there is one
 					if (m_blockList[i].GetPowerUp() != PUNone)
 					{
-						BOMultiballs extraBall;
-						extraBall.Initialize(m_blockList[i].GetPosition(), int2(40, 40), "Bilder/placeHolderPowerUp1.png", 1.0f, int2(1300, 900) );
-						extraBall.SetActive(true);
+						BOMultiballs* extraBall = new BOMultiballs();
+						extraBall->Initialize(m_blockList[i].GetPosition(), int2(40, 40), "Bilder/placeHolderPowerUp1.png", 1.0f, int2(1300, 900) );
+						extraBall->SetActive(true);
 						BOPowerUpManager::AddPowerUp(extraBall);
 					}
 					// Collision therfore play popsound
@@ -165,12 +166,11 @@ void BOObjectManager::Update(Uint32 p_deltaTime)
 	// Tillfällig powerup kollision kod för att testa 
 	for (int i = 0; i < BOPowerUpManager::GetPowerUpSize(); i++)
 	{
-		if (BOPhysics::CheckCollisionSpheres(BOPowerUpManager::GetPowerUp(i).GetBoundingSphere(), sphere(m_paddle.GetPosition(), 5)) && BOPowerUpManager::GetPowerUp(i).GetActive() )
+		if (BOPhysics::CheckCollisionSpheres(BOPowerUpManager::GetPowerUp(i)->GetBoundingSphere(), sphere(m_paddle.GetPosition(), 5)))
 		{
-			BOBall ball;
-			ball.Initialize(m_ballList[0].GetPosition(), int2(15, 15), "Bilder/placeholderBoll10x10.png", m_ballList[0].GetSpeed(), float2(m_ballList[0].GetDirection().x * -1, m_ballList[0].GetDirection().y * -1), int2(1300,900));
-			m_ballList.push_back(ball);
-			BOPowerUpManager::GetPowerUp(i).SetActive(false);
+			BOPowerUp* pu = BOPowerUpManager::GetPowerUp(i);
+			BOMultiballs* mb = (BOMultiballs*)pu;
+			mb->Activate();
 		}		
 	}
 
@@ -263,7 +263,9 @@ void BOObjectManager::Handle(PowerUpTypes p_type, bool p_activated)
 		// Add shield??
 		break;
 	case PUExtraBall:
-		// Add ball to the vector
+		BOBall ball;
+		ball.Initialize(m_ballList[0].GetPosition(), int2(15, 15), "Bilder/placeholderBoll10x10.png", m_ballList[0].GetSpeed(), float2(m_ballList[0].GetDirection().x * -1, m_ballList[0].GetDirection().y * -1), int2(1300,900));
+		m_ballList.push_back(ball);
 		break;
 	}
 }

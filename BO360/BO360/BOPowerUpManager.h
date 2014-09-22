@@ -22,12 +22,12 @@ public:
 	static void Notify(PowerUpTypes p_type, bool p_acivated);
 	static void AddSubscriber(BOPUSubscriber* p_subscriber);
 	static void Unsubscribe(BOPUSubscriber* p_subscriber);
-	static void AddPowerUp(BOPowerUp p_powerUp);
+	static void AddPowerUp(BOPowerUp* p_powerUp);
 	static int GetPowerUpSize();
-	static BOPowerUp GetPowerUp(int p_nr);
+	static BOPowerUp* GetPowerUp(int p_nr);
 private:
 	static std::vector<BOPUSubscriber*> m_subscribers;
-	static std::vector<BOPowerUp> m_powerUps;
+	static std::vector<BOPowerUp*> m_powerUps;
 	int2 m_windowSize;
 
 	
