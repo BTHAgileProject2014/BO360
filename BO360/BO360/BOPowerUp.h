@@ -3,7 +3,7 @@
 
 #include "BOObject.h"
 
-class BOPowerUp : BOObject
+class BOPowerUp : public BOObject
 {
 public:
 	BOPowerUp();
@@ -16,12 +16,17 @@ public:
 	void Draw();
 	virtual void Activate();
 	virtual void Deactivate();
+	virtual bool GetActive();
+	virtual void SetActive(bool p_isActive);
+	virtual float2 GetDirection();
 
 protected:
 	bool m_hasSpawned;
 	float m_speed;
 	int2 m_windowSize;
 	float2 m_direction;
+	bool m_isActive;
+	bool m_hasActivated;
 };
 
 #endif

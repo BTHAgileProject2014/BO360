@@ -2,7 +2,6 @@
 
 BOObjectManager::BOObjectManager()
 {
-	m_GravityIsOn = true;
 }
 
 
@@ -17,7 +16,7 @@ bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight)
 	windowSize.y = p_windowHeight;
 	bool result;
 	m_hasColided = false;
-
+	testStopPU = false;
 	// Initialize the map loader.
 	result = m_mapLoader.Initialize();
 	if (!result)
@@ -26,7 +25,7 @@ bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight)
 	}
 
 	// Initialize the background.
-	result = m_background.Initialize(float2(p_windowWidth / 2, p_windowHeight / 2), int2(p_windowWidth, p_windowHeight), "Bilder/background.png");
+	result = m_background.Initialize(float2(p_windowWidth / 2, p_windowHeight / 2), int2(p_windowWidth, p_windowHeight), "Bilder/Background.png");
 	if (!result)
 	{
 		return false;
@@ -50,18 +49,18 @@ bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight)
 	int2 ballSize = int2(15, 15);
 
 	float2 ballPosition = float2((p_windowWidth / 2.0f), (p_windowHeight / 2.0f));
-	float ballSpeed = 0.1f;
+	float ballSpeed = 0.5f;
 	float2 ballDirection = float2(20, 10).normalized();
 
-	BOBall ball;
-	result = ball.Initialize(ballPosition, ballSize, "Bilder/placeholderBoll10x10.png", ballSpeed, ballDirection, windowSize);
+	BOBall* ball = new BOBall();
+	result = ball->Initialize(ballPosition, ballSize, "Bilder/placeholderBoll10x10.png", ballSpeed, ballDirection, windowSize);
 	if (!result)
 	{
 		return false;
 	}
 
 	m_ballList.push_back(ball);
-	BOPublisher::AddSubscriber(&m_ballList[0]);
+	BOPublisher::AddSubscriber(m_ballList[0]);
 
 	// Load a map.
 	m_mapLoader.LoadMap("Default.bom");
@@ -81,41 +80,50 @@ bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight)
 		if ((int)m_blockPositions[i].x % 2 == 0)
 		{
 			y += l_blockHeightDifference;
-			}
+		}
 
 		// Create block.
-		result = l_block.Initialize(float2(x, y), int2(40, 40), "Bilder/placeholderHexagon40x40.png");
+		if (i != 0)
+		{
+			result = l_block.Initialize(float2(x, y), int2(40, 40), "Bilder/placeholderHexagon40x40.png", PUNone);
 			if (!result)
 			{
 				return false;
 			}
-		m_blockList.push_back(l_block);
 		}
+		else if (i == 0)
+		{
+			result = l_block.Initialize(float2(x, y), int2(40, 40), "Bilder/placeholderHexagon40x40.png", PUShield);
+		}
+		
+
+		m_blockList.push_back(l_block);
+	}
 	/*float2 test = m_ballList[0].GetDirection();
 	test = float2(10,10);*/
+	BOPowerUpManager::AddSubscriber(this);
+
+	m_Shield.Initialize(int2(200, 200), "Bilder/placeholderSheild.png", int2(p_windowWidth, p_windowHeight));
 	return true;
 }
 
 void BOObjectManager::Shutdown()
 {
-
+	m_Shield.Shutdown();
 }
 
 void BOObjectManager::Update(Uint32 p_deltaTime)
 {
 	bool result;
 	float2 normal;
-	float2 newBallDirection;
-	float vDotN;
-	float2 nMinusV;
-	float angleBallDirectionVsNormal;
+	
 	m_blackHole.Update();
 
 	m_paddle.Update(p_deltaTime);
 
 	for (int i = 0; i < m_ballList.size(); i++)
 	{
-		m_ballList[i].Update(p_deltaTime);
+		m_ballList[i]->Update(p_deltaTime);
 	}
 	for (int i = 0; i < m_blockList.size(); i++)
 	{
@@ -126,63 +134,94 @@ void BOObjectManager::Update(Uint32 p_deltaTime)
 	{
 		if (!m_blockList[i].GetDead())
 		{
-			if (BOPhysics::CheckCollisionSpheres(m_ballList[0].GetBoundingSphere(), m_blockList[i].GetBoundingSphere()))
-		{
-				if (BOPhysics::CheckCollisionSphereToHexagon(m_ballList[0].GetBoundingSphere(), m_blockList[i].GetBoundingHexagon(), normal))
+			for (int j = 0; j < m_ballList.size(); j++)
 			{
-					// Block dead, dead = true, stop checking collision and drawing block
-				m_blockList[i].SetDead();
-					//Collision with hexagon
-					m_ballList[0].SetDirection(BOPhysics::ReflectBallAroundNormal(m_ballList[0].GetDirection(), normal));
-					m_ballList[0].BouncedOnHexagon();
-					//Changes the gravity to true so it can be pulled into the middle
-					m_GravityIsOn = true;
+				if (BOPhysics::CheckCollisionSpheres(m_ballList[j]->GetBoundingSphere(), m_blockList[i].GetBoundingSphere()))
+				{
+					if (BOPhysics::CheckCollisionSphereToHexagon(m_ballList[j]->GetBoundingSphere(), m_blockList[i].GetBoundingHexagon(), normal))
+					{
+						// Block dead, dead = true, stop checking collision and drawing block
+						m_blockList[i].SetDead();
+						//Collision with hexagon
+						m_ballList[j]->SetDirection(BOPhysics::ReflectBallAroundNormal(m_ballList[j]->GetDirection(), normal));
+						m_ballList[j]->BouncedOnHexagon();
 					
-					// Collision therfore play popsound
-					BOSoundManager::PlaySound(sound_pop);
-					break;
+						// Spawn powerup if there is one
+						if (m_blockList[i].GetPowerUp() == PUExtraBall)
+						{
+							BOMultiballs* extraBall = new BOMultiballs();
+							extraBall->Initialize(m_blockList[i].GetPosition(), int2(40, 40), "Bilder/placeholderPowerupMultBall.png", 0.5f, int2(1300, 900) );
+							extraBall->SetActive(true);
+							BOPowerUpManager::AddPowerUp(extraBall);
+						}
+						else if (m_blockList[i].GetPowerUp() == PUShield)
+						{
+							BOShieldPU* shield = new BOShieldPU();
+							shield->Initialize(m_blockList[i].GetPosition(), int2(40, 40), "Bilder/placeholderSheildPowerUp1.png", 0.5f, int2(1300, 900));
+							BOPowerUpManager::AddPowerUp(shield);
+						}
+
+						// Collision therfore play popsound
+						BOSoundManager::PlaySound(sound_pop);
+						break;
+					}
 				}
 			}
+			
 		}		
 	}
-
-
-	if (m_ballList[0].CanColide())
+	
+	// Tillfällig powerup kollision kod för att testa 
+	// Checks powerup "ball" against the pad, if colliding with pad do powerup effect and remove powerup"ball"
+	for (int i = 0; i < BOPowerUpManager::GetPowerUpSize(); i++)
 	{
-		float2 result = BOPhysics::BallPadCollision(m_ballList[0].GetBoundingSphere(), m_ballList[0].GetDirection(), m_paddle.GetBoundingSphere(), m_paddle.GetRotation() - 15, 30);
+		float2 result = BOPhysics::BallPadCollision(BOPowerUpManager::GetPowerUp(i)->GetBoundingSphere(), BOPowerUpManager::GetPowerUp(i)->GetDirection(), m_paddle.GetBoundingSphere(), m_paddle.GetRotation() - 15, 30);
 		if (!(result.x == 0 && result.y == 0))
 		{
-			m_ballList[0].SetDirection(result);
-			m_ballList[0].BouncedOnPad();
-			m_GravityIsOn = false;//Changes the gravity to false so it doesn't stuck fuck
+			BOPowerUp* pu = BOPowerUpManager::GetPowerUp(i);
+			//BOMultiballs* mb = (BOMultiballs*)pu;
+			//mb->Activate();
+			
+			BOShieldPU* sp = (BOShieldPU*)pu;
+			sp->Activate();
+			BOPowerUpManager::RemovePowerUp(i);
+		}		
+		else if (BOPhysics::CheckCollisionSpheres(BOPowerUpManager::GetPowerUp(i)->GetBoundingSphere(), sphere(m_blackHole.GetPosition(), 1)))
+		{
+			BOPowerUpManager::RemovePowerUp(i);
+	}
+	}
+
+
+
+ 	for (int i = 0; i < m_ballList.size(); i++)
+	{
+		if (m_ballList[i]->CanColide())
+		{
+			float2 result = BOPhysics::BallPadCollision(m_ballList[i]->GetBoundingSphere(), m_ballList[i]->GetDirection(), m_paddle.GetBoundingSphere(), m_paddle.GetRotation() - 15, 30);
+			if (!(result.x == 0 && result.y == 0))
+			{
+				m_ballList[i]->SetDirection(result);
+				m_ballList[i]->BouncedOnPad();
+			}
 		}
 		
-		//int bounceTest = BOPhysics::CheckCollisioPadSphere(m_ballList[0].GetBoundingSphere(), m_ballList[0].GetDirection(), m_paddle.GetBoundingSphere(), m_paddle.GetRotation() - 15, 30);
-		//if (bounceTest > 0)
-		//{
-		//	m_ballList[0].BouncedOnPad();
-		//}
-		//BallDirectionChange(bounceTest);
-	/*	if (BOPhysics::MattiasBallPadCollision(m_ballList[0].GetBoundingSphere(), m_ballList[0].GetDirection(), m_paddle.GetBoundingSphere(), m_paddle.GetRotation() - 20, 40))
-		{*/
-			//sphere changedSphere = m_paddle.GetBoundingSphere();
-			//changedSphere.radius -= 1;
-			//if (!BOPhysics::CheckCollisionSpheres(m_ballList[0].GetBoundingSphere(), changedSphere))
-			//{
-			//	std::cout << "Colided!";
-			//	float2 newDir = m_ballList[0].GetDirection();
-			//	newDir.x *= -1.0f;
-			//	newDir.y *= -1.0f;
-			//	newDir = newDir.normalized();
-			//	m_ballList[0].SetDirection(newDir);
-			//	m_ballList[0].BouncedOnPad();
-			//}
-		//}
+		if (m_ballList[i]->GetFuel() <= 0)
+		{
+			//Runs tha gravity... lawl... Rotates the direction depending on distance
+			m_ballList[i]->SetDirection(BOPhysics::BlackHoleGravity(m_ballList[i]->GetBoundingSphere(), m_ballList[i]->GetDirection(), m_ballList[i]->GetSpeed(), m_blackHole.GetBoundingSphere()));
+		}
+		else
+		{
+			//Beräkna bränsle
+			m_ballList[i]->SetFuel(BOPhysics::CalculateBallFuel(m_ballList[i]->GetFuel()));
+
+		}
+		//Updaterar skölden
+		BallDirectionChange(m_Shield.Update(p_deltaTime, m_ballList[i]->GetBoundingSphere()), i);
 	}
-	//Runs tha gravity... lawl... Rotates the direction depending on distance
-	m_ballList[0].SetDirection(BOPhysics::BlackHoleGravity(m_ballList[0].GetBoundingSphere(), m_ballList[0].GetDirection(), m_ballList[0].GetSpeed(), m_blackHole.GetBoundingSphere(), m_GravityIsOn));
 
-
+	
 }
 
 void BOObjectManager::Draw()
@@ -193,7 +232,7 @@ void BOObjectManager::Draw()
 
 	for (int i = 0; i < m_ballList.size(); i++)
 	{
-		m_ballList[i].Draw();
+		m_ballList[i]->Draw();
 	}
 	for (int i = 0; i < m_blockList.size(); i++)
 	{
@@ -205,15 +244,15 @@ void BOObjectManager::Draw()
 	}
 
 	m_paddle.Draw();
-
+	m_Shield.Draw();
 }
-void BOObjectManager::BallDirectionChange(int p_bounceCorner)
+void BOObjectManager::BallDirectionChange(int p_bounceCorner, int p_Index)
 {
 	if (p_bounceCorner == 0)
 		return;
 	m_hasColided = true;
 
-	float2 ballDir = m_ballList[0].GetDirection();
+	float2 ballDir = m_ballList[p_Index]->GetDirection();
 	if (p_bounceCorner == 1 || p_bounceCorner == 2)//Straight up and down corner
 	{
 		ballDir.y *= (-1);
@@ -224,7 +263,7 @@ void BOObjectManager::BallDirectionChange(int p_bounceCorner)
 		ballDir.x *= (-1);
 		//std::cout << "Krock" << std::endl;
 	}
-	m_ballList[0].SetDirection(ballDir);
+	m_ballList[p_Index]->SetDirection(ballDir);
 }
 
 void BOObjectManager::Handle(PowerUpTypes p_type, bool p_activated)
@@ -232,10 +271,18 @@ void BOObjectManager::Handle(PowerUpTypes p_type, bool p_activated)
 	switch (p_type)
 	{
 	case PUShield:
-		// Add shield??
+		if (p_activated)
+		{
+			m_Shield.SetActive(true);
+		}
 		break;
 	case PUExtraBall:
-		// Add ball to the vector
+		if (p_activated)
+		{
+			BOBall* ball2 = new BOBall();
+			ball2->Initialize(m_ballList[0]->GetPosition(), int2(15, 15), "Bilder/placeholderBoll10x10.png", m_ballList[0]->GetSpeed(), float2(m_ballList[0]->GetDirection().x * -1, m_ballList[0]->GetDirection().y * -1), int2(1300, 900));
+			m_ballList.push_back(ball2);
+		}
 		break;
 	}
 }

@@ -13,6 +13,10 @@
 #include "BOPUSubscriber.h"
 #include "BOPowerUpManager.h"
 #include "BOSoundManager.h"
+#include "BOPowerUp.h"
+#include "BOMultiballs.h"
+#include "BOShield.h"
+#include "BOShieldPU.h"
 #include <vector>
 
 class BOObjectManager : public BOComponent, public BOPUSubscriber
@@ -28,17 +32,19 @@ public:
 	void Handle(PowerUpTypes p_type, bool p_activated);
 
 private:
-	void BallDirectionChange(int p_bounceCorner);
-	bool m_GravityIsOn;
+	void BallDirectionChange(int p_bounceCorner, int p_Index);
 	bool m_hasColided;
+	bool testStopPU;
 
 	BOMapLoader m_mapLoader;
 	std::vector<float2> m_blockPositions;
 
 	BOBackground m_background;
 	BOBlackHole m_blackHole;
-	std::vector<BOBall> m_ballList;
+	std::vector<BOBall*> m_ballList;
 	BOPaddle m_paddle;
+	BOShield m_Shield;
+  
 	std::vector<BOBlock> m_blockList;
 	//std::vector<BOParticle> m_particleList;
 	//std::vector<BOPowerUp> m_powerUPlist;
