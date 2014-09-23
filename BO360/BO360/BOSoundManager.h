@@ -25,6 +25,7 @@ private:
 	Mix_Chunk *m_dying;
 	Mix_Chunk *m_powerup;
 	Mix_Chunk *m_teleport;
+	Mix_Chunk* m_bounceOnPad;
 };
 
 #endif // !BOSOUNDMANAGER_H_

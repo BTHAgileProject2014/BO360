@@ -190,9 +190,12 @@ void BOObjectManager::Update(double p_deltaTime)
 	// Checks powerup "ball" against the pad, if colliding with pad do powerup effect and remove powerup"ball"
 	for (int i = 0; i < BOPowerUpManager::GetPowerUpSize(); i++)
 	{
-		float2 result = BOPhysics::BallPadCollision(BOPowerUpManager::GetPowerUp(i)->GetBoundingSphere(), BOPowerUpManager::GetPowerUp(i)->GetDirection(), m_paddle.GetBoundingSphere(), m_paddle.GetRotation() - 15, 30);
+		float2 result = BOPhysics::BallPadCollision(BOPowerUpManager::GetPowerUp(i)->GetBoundingSphere(), BOPowerUpManager::GetPowerUp(i)->GetDirection(), m_paddle.GetBoundingSphere(), m_paddle.GetRotation() - 10.5, m_paddle.GetDegrees());
 		if (!(result.x == 0 && result.y == 0))
 		{
+			// Play sound for PowerUp catched
+			BOSoundManager::PlaySound(sound_powerup);
+
 			BOPowerUp* pu = BOPowerUpManager::GetPowerUp(i);
 			BOShieldPU* puShield;
 			BOMultiballs* puBall;
@@ -224,6 +227,9 @@ void BOObjectManager::Update(double p_deltaTime)
 			{
 				m_ballList[i]->SetDirection(result);
 				m_ballList[i]->BouncedOnPad();
+
+				// Play sound for bounce on pad
+				BOSoundManager::PlaySound(sound_bounceOnPad);
 			}
 		}
 		

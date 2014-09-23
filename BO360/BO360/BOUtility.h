@@ -402,7 +402,8 @@ enum Sound
 	sound_pop,
 	sound_die,
 	sound_powerup,
-	sound_teleport
+	sound_teleport,
+	sound_bounceOnPad
 };
 
 // Sphere for collision check
