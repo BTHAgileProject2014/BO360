@@ -23,6 +23,7 @@ bool BOParticleSystem::Initialize(int p_maxParticles)
 	m_sizes[BALLDEBRIS] = int2(5, 5);
 	m_sizes[BLOCKDEBRIS] = int2(10, 10);
 	m_sizes[POWERUPDEBRIS] = int2(5, 5);
+	m_sizes[DEBUGTRAIL] = int2(3, 3);
 
 	m_maxParticles = p_maxParticles;
 	m_currentParticles = 0;
@@ -53,6 +54,13 @@ bool BOParticleSystem::Initialize(int p_maxParticles)
 	if (m_powerUpDebrisTexture == NULL)
 	{
 		std::cout << "Failed to load 'Power Up Debris' particle texture!" << std::endl;
+		l_result = false;
+	}
+
+	m_debugTrailTexture = BOGraphicInterface::LoadTexture("Bilder/Particles/DebugTrail.png");
+	if (m_debugTrailTexture == NULL)
+	{
+		std::cout << "Failed to load 'Debug Trail' particle texture!" << std::endl;
 		l_result = false;
 	}
 
@@ -88,6 +96,7 @@ void BOParticleSystem::AddMovingParticle(ParticleType p_type, double p_timeS, fl
 		case(BALLDEBRIS) : { l_size = m_sizes[BALLDEBRIS];  break; }
 		case(BLOCKDEBRIS) : { l_size = m_sizes[BLOCKDEBRIS];  break; }
 		case(POWERUPDEBRIS) : { l_size = m_sizes[POWERUPDEBRIS];  break; }
+		case(DEBUGTRAIL) : { l_size = m_sizes[DEBUGTRAIL];  break; }
 		}
 
 		l_particle.Initialize(p_type, p_timeS, p_position, l_size, p_rotate, p_rotation, p_angleIncrement, p_direction, p_speed);
@@ -113,6 +122,7 @@ void BOParticleSystem::AddStationaryParticle(ParticleType p_type, double p_timeS
 		case(BALLDEBRIS) : { l_size = m_sizes[BALLDEBRIS];  break; }
 		case(BLOCKDEBRIS) : { l_size = m_sizes[BLOCKDEBRIS];  break; }
 		case(POWERUPDEBRIS) : { l_size = m_sizes[POWERUPDEBRIS];  break; }
+		case(DEBUGTRAIL) : { l_size = m_sizes[DEBUGTRAIL];  break; }
 		}
 
 		l_particle.Initialize(p_type, p_timeS, p_position, l_size, p_rotate, p_rotation, p_angleIncrement);
@@ -201,6 +211,11 @@ SDL_Texture* BOParticleSystem::GetTexture(ParticleType p_type)
 		case POWERUPDEBRIS:
 		{
 			return m_powerUpDebrisTexture;
+		}
+
+		case DEBUGTRAIL:
+		{
+			return m_debugTrailTexture;
 		}
 
 		default:

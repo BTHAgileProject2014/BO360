@@ -35,6 +35,7 @@ private:
 	SDL_Texture* m_ballDebrisTexture;
 	SDL_Texture* m_blockDebrisTexture;
 	SDL_Texture* m_powerUpDebrisTexture;
+	SDL_Texture* m_debugTrailTexture;
 
 	int2 m_sizes[m_numberOfParticleTypes];
 

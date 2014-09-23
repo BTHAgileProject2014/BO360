@@ -44,8 +44,9 @@ bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight)
 		return false;
 	}
 
-	// Initialize the pad.
-	int l_maxParticles = 500;
+	// Initialize the particle system.
+	SecondsPerParticle = 0.0f;
+	int l_maxParticles = 5000;
 	result = m_particleSystem.Initialize(l_maxParticles);
 	if (!result)
 	{
@@ -243,7 +244,17 @@ void BOObjectManager::Update(double p_deltaTime)
 		m_ballList[i]->SetDirection((m_Shield.Update(p_deltaTime, m_ballList[i]->GetBoundingSphere(), m_ballList[i]->GetDirection())));
 	}
 
-	m_particleSystem.AddStationaryParticle(BALLTRAIL, 1.5, m_ballList[0]->GetPosition(), false, 0, 0);
+	if (BALLDEBUGTRAIL == 1)
+	{
+		SecondsPerParticle -= p_deltaTime;
+
+		if (SecondsPerParticle < 0.0f)
+		{
+			SecondsPerParticle = 0.002f;
+			m_particleSystem.AddStationaryParticle(DEBUGTRAIL, 2, m_ballList[0]->GetPosition(), false, 0, 0);
+		}
+	}
+
 	m_particleSystem.Update(p_deltaTime);
 }
 

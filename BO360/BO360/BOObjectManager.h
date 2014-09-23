@@ -47,6 +47,8 @@ private:
 	int2 m_windowsSize;
   
 	std::vector<BOBlock> m_blockList;
+
+	double SecondsPerParticle;
 	BOParticleSystem m_particleSystem;
 };
 #endif
