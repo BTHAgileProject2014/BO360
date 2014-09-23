@@ -170,7 +170,7 @@ BOGraphicInterface& BOGraphicInterface::GetInstance()
 	return instance;
 }
 
-SDL_Texture* BOGraphicInterface::DrawTextToTexture(std::string p_text, int3 p_textColor, int2* p_size, int p_fontSize)
+SDL_Texture* BOGraphicInterface::DrawTextToTexture(std::string p_text, int3 p_textColor, int2* p_size, int p_fontSize, int p_maxWidth)
 {
 	// Load the font
 	TTF_Font* font = TTF_OpenFont("Font/Neon_Nanoborg.otf", p_fontSize);
@@ -188,7 +188,7 @@ SDL_Texture* BOGraphicInterface::DrawTextToTexture(std::string p_text, int3 p_te
 
 	// Render text surface
 	//SDL_Surface* textSurface = TTF_RenderText_Solid(font, p_text.c_str(), textColor);
-	SDL_Surface* textSurface = TTF_RenderText_Blended_Wrapped(font, p_text.c_str(), textColor, GetInstance().GetWindowSize().x);
+	SDL_Surface* textSurface = TTF_RenderText_Blended_Wrapped(font, p_text.c_str(), textColor, p_maxWidth);
 
 	// Create texture from surface pixels
 	texture = SDL_CreateTextureFromSurface(m_renderer, textSurface);

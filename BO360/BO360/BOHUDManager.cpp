@@ -34,9 +34,9 @@ bool BOHUDManager::Initialize()
 	m_livesAnchor = float2(bounds.x / 2, 0);
 	m_scoreAnchor = float2(bounds.x, 0);
 
-	m_level = BOTextManager::AddText("Level: ", m_levelAnchor, int3(255, 255, 255), 30);
-	m_lives = BOTextManager::AddText("Lives: ", m_livesAnchor, int3(255, 255, 255), 30);
-	m_score = BOTextManager::AddText("Score: ", m_scoreAnchor, int3(255, 255, 255), 30);
+	m_level = BOTextManager::AddText("Level: ", m_levelAnchor, int3(255, 255, 255), 30, 0);
+	m_lives = BOTextManager::AddText("Lives: ", m_livesAnchor, int3(255, 255, 255), 30, 0);
+	m_score = BOTextManager::AddText("Score: ", m_scoreAnchor, int3(255, 255, 255), 30, 0);
 	m_life.Initialize(float2(0, 0), int2(20, 20), "Bilder/placeholderLife.png"); // Always relative to m_lives position
 	return true;
 }
@@ -89,7 +89,7 @@ void BOHUDManager::SetScore(int p_score)
 	// Relative to the left of the anchor
 	std::string temp = "Score: ";
 	temp.append(std::to_string(p_score));
-	m_score->SetText(temp, int3(255, 255, 255));
+	m_score->SetText(temp, int3(255, 255, 255),0);
 	int2 tempSize = m_score->GetSize();
 	m_score->SetPosition(float2(m_scoreAnchor.x + (tempSize.x / 2) - tempSize.x - 10, m_scoreAnchor.y + (tempSize.y / 2)));
 }
@@ -99,7 +99,7 @@ void BOHUDManager::SetLevel(int p_level)
 	// Relative to the right of the anchor
 	std::string temp = "Level: ";
 	temp.append(std::to_string(p_level));
-	m_level->SetText(temp, int3(255, 255, 255));
+	m_level->SetText(temp, int3(255, 255, 255),0);
 	int2 tempSize = m_level->GetSize();
 	m_level->SetPosition(float2(m_levelAnchor.x + (tempSize.x/2), m_levelAnchor.y + (tempSize.y/2)));
 }
