@@ -26,6 +26,8 @@ bool BOPublisher::Initialize()
 	m_inputMessage.downArrow = false;
 	m_inputMessage.leftArrow = false;
 	m_inputMessage.rightArrow = false;
+	m_inputMessage.zKey = false;
+	m_inputMessage.xKey = false;
 
 	return true;
 }
@@ -71,6 +73,12 @@ void BOPublisher::Notify(KeyMessages p_keyMessage, bool p_value)
 		break;
 	case spacebarKey:
 		m_inputMessage.spacebarKey = p_value;
+		break;
+	case zKey:
+		m_inputMessage.zKey = p_value;
+		break;
+	case xKey:
+		m_inputMessage.xKey = p_value;
 		break;
 	}
 

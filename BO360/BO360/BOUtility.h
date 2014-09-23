@@ -347,6 +347,8 @@ struct InputMessages
 	bool leftArrow;
 	bool upArrow;
 	bool downArrow;
+	bool zKey;
+	bool xKey;
 };
 
 enum GameState
@@ -380,7 +382,9 @@ enum KeyMessages
 	leftMouseKey,
 	rightMouseKey,
 	middleMouseKey,
-	spacebarKey
+	spacebarKey,
+	zKey,
+	xKey
 };
 
 enum Sound

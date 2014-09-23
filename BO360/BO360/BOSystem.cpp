@@ -60,13 +60,15 @@ bool BOSystem::Initialize()
 	}
 
 	// Initialize the state handler.
-	m_gameState = MENU;
+	m_gameState = RUNNING;
 	if (!m_stateManager.Initialize(int2(m_windowWidth, m_windowHeight)))
 	{
 		std::cout << "Initialize state manager failed!" << std::endl;
 
 		return false;
 	}
+
+	InitializeMap();
 
 	return true;
 }
