@@ -124,12 +124,12 @@ bool BOSystem::Run()
 	// Get the initial delta time.
 	m_deltaTime = m_timer.GetDeltaTime();
 
-	if (m_deltaTime > 0)
+	if (m_deltaTime > 0.0)
 	{
 		// Low-cap the fps to never do less than 10 updates / sec
-		if (m_deltaTime > 100)
+		if (m_deltaTime > 0.1)
 		{
-			m_deltaTime = 100;
+			m_deltaTime = 0.1;
 		}
 
 		// ========== UPDATE =========

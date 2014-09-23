@@ -12,7 +12,7 @@ public:
 	bool Initialize(float2 p_position, int2 p_size, std::string p_fileName, float p_speed, int2 p_windowSize);
 	void Shutdown();
 
-	virtual void Update(Uint32 p_deltaTime);
+	virtual void Update(double p_deltaTime);
 	void Draw();
 	virtual void Activate();
 	virtual void Deactivate();

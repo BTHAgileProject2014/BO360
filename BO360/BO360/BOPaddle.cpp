@@ -13,7 +13,7 @@ BOPaddle::~BOPaddle()
 bool BOPaddle::Initialize(float2 p_position, int2 p_size, std::string p_fileName)
 {
 	m_rotation = 0.0f;
-	m_deltaRotation = 0.4f;
+	m_deltaRotation = 40;
 	BOPublisher::AddSubscriber(this);
 	BOPowerUpManager::AddSubscriber(this);
 	return BOObject::Initialize(p_position, p_size, p_fileName);
@@ -68,7 +68,7 @@ void BOPaddle::Handle(PowerUpTypes p_type, bool p_activated)
 	}
 }
 
-void BOPaddle::Update(Uint32 p_deltaTime)
+void BOPaddle::Update(double p_deltaTime)
 {
 	if (m_movingLeft)
 	{

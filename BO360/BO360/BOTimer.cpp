@@ -40,6 +40,10 @@ void BOTimer::Tick()
 	Uint64 deltaTime = m_currentTimeStamp - m_previousTimeStamp;
 	m_previousTimeStamp = m_currentTimeStamp;
 	m_deltaTimeS = deltaTime * m_secondsPerClock;
+	if (m_averageFps < 1.0f)
+	{
+		m_averageFps = 1.0f;
+	}
 	double scaleFactor = 1.0f / m_averageFps;
 	m_averageFps = scaleFactor * (m_clocksPerSecond / (double)deltaTime) + (1.0 - scaleFactor) * m_averageFps;
 }

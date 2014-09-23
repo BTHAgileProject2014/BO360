@@ -39,7 +39,7 @@ void BOPowerUp::Draw()
 	BOObject::Draw();
 }
 
-void BOPowerUp::Update(Uint32 p_deltaTime)
+void BOPowerUp::Update(double p_deltaTime)
 {
 	if (m_hasSpawned)
 	{
