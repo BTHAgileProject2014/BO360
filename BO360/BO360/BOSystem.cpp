@@ -119,22 +119,21 @@ bool BOSystem::InitializeMap()
 bool BOSystem::Run()
 {
 	bool result = true;
-
+	m_timer.Tick();
 	// Get the initial delta time.
-	m_deltaTime += m_timer.GetDeltaTime();
+	m_deltaTime = m_timer.GetDeltaTime();
 
-	if (m_deltaTime > 2)
+	if (m_deltaTime > 0.0)
 	{
 		// Low-cap the fps to never do less than 10 updates / sec
-		if (m_deltaTime > 100)
+		if (m_deltaTime > 0.1)
 		{
-			m_deltaTime = 100;
+			m_deltaTime = 0.1;
 		}
 
 	// ========== UPDATE =========
 
 	// Tick the timer.
-	m_timer.Tick();
 		m_totalTime = m_timer.GetTotalTimeS();
 		m_FPS = m_timer.FPS();
 
@@ -147,16 +146,16 @@ bool BOSystem::Run()
 	// Update the input manager.
 	result = m_input.Update();
 
-	if (m_gameState == RUNNING)
-	{
-		// Update all of the objects.
-		m_objectManager.Update(m_deltaTime);
+		if (m_gameState == RUNNING)
+		{
+			// Update all of the objects.
+	m_objectManager.Update(m_deltaTime);
 
-		// Update the power ups.
-		m_powerUpManager.Update(m_deltaTime);
+			// Update the power ups.
+	m_powerUpManager.Update(m_deltaTime);
 
-		// Update the sound Engine.
-		BOSoundManager::Update(); // Empty so far.
+			// Update the sound Engine.
+	BOSoundManager::Update(); // Empty so far.
 
 		if (m_objectManager.LostGame())
 		{
@@ -168,17 +167,17 @@ bool BOSystem::Run()
 			// Go to defeat screen
 			m_gameState = DEFEAT;
 		}
-	}
-	else
-	{
-		// Update approperiate menu and handle the actions.
-		HandleAction(m_stateManager.Update(m_gameState));
-
-		if (m_quit)
-		{
-			result = false;
 		}
-	}
+		else
+		{
+			// Update approperiate menu and handle the actions.
+			HandleAction(m_stateManager.Update(m_gameState));
+
+			if (m_quit)
+			{
+				result = false;
+			}
+		}
 
 	// ============================
 
