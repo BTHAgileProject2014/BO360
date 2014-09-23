@@ -14,7 +14,9 @@ bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight)
 	m_windowsSize = int2(p_windowWidth, p_windowHeight);
 	bool result;
 	m_hasColided = false;
-	testStopPU = false;
+	m_life = 4;
+	BOHUDManager::SetLives(m_life);
+
 	// Initialize the map loader.
 	result = m_mapLoader.Initialize();
 	if (!result)
@@ -91,14 +93,14 @@ bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight)
 		}
 		else if (i == 0)
 		{
-			result = l_block.Initialize(float2(x, y), int2(40, 40), "Bilder/placeholderHexagon40x40.png", PUExtraBall);
+			result = l_block.Initialize(float2(x, y), int2(40, 40), "Bilder/placeholderHexagon40x40.png", PUShield);
 		}
 		
 
 		m_blockList.push_back(l_block);
 	}
-	/*float2 test = m_ballList[0].GetDirection();
-	test = float2(10,10);*/
+
+	// Add subscriber so the object manager knows when a power up activates
 	BOPowerUpManager::AddSubscriber(this);
 
 	m_Shield.Initialize(int2(200, 200), "Bilder/placeholderSheild.png", m_windowsSize);
@@ -205,11 +207,18 @@ void BOObjectManager::Update(Uint32 p_deltaTime)
 	{
 		if (m_ballList[i]->CanColide())
 		{
+			// Check for collison between ball and pad
 			float2 result = BOPhysics::BallPadCollision(m_ballList[i]->GetBoundingSphere(), m_ballList[i]->GetDirection(), m_paddle.GetBoundingSphere(), m_paddle.GetRotation() -45, 90);
 			if (!(result.x == 0 && result.y == 0))
 			{
 				m_ballList[i]->SetDirection(result);
 				m_ballList[i]->BouncedOnPad();
+			}
+
+			// Check if ball has entered the black hole and should die
+			if (BOPhysics::CollisionRadiusRadius(m_ballList[i]->GetPosition(), m_ballList[i]->GetSize().x / 2.0f, m_blackHole.GetPosition(), m_blackHole.GetSize().x / 4.0f))
+			{
+				int a = 0;
 			}
 		}
 		

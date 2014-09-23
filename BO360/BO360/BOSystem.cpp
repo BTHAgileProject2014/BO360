@@ -84,6 +84,14 @@ bool BOSystem::InitializeMap()
 		return false;
 	}
 
+	result = BOHUDManager::Initialize();
+	if (!result)
+	{
+		std::cout << "Initialize HUD failed!" << std::endl;
+
+		return false;
+	}
+
 	// Initilialize the object manager.
 	result = m_objectManager.Initialize(m_windowWidth, m_windowHeight);
 	if (!result)
@@ -101,17 +109,8 @@ bool BOSystem::InitializeMap()
 		return false;
 	}
 
-	result = BOHUDManager::Initialize();
-	if (!result)
-	{
-		std::cout << "Initialize HUD failed!" << std::endl;
-
-		return false;
-	}
-
 	// Example usage of HUD
 	BOHUDManager::SetScore(10);
-	BOHUDManager::SetLives(5);
 	BOHUDManager::SetLevel(1);
 
 	return true;

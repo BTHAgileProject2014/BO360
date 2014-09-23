@@ -17,6 +17,7 @@
 #include "BOMultiballs.h"
 #include "BOShield.h"
 #include "BOShieldPU.h"
+#include "BOHUDManager.h"
 #include <vector>
 
 class BOObjectManager : public BOComponent, public BOPUSubscriber
@@ -34,7 +35,7 @@ public:
 private:
 	void BallDirectionChange(int p_bounceCorner, int p_Index);
 	bool m_hasColided;
-	bool testStopPU;
+	int m_life;
 
 	BOMapLoader m_mapLoader;
 	std::vector<float2> m_blockPositions;
@@ -45,6 +46,7 @@ private:
 	BOPaddle m_paddle;
 	BOShield m_Shield;
 	int2 m_windowsSize;
+	
   
 	std::vector<BOBlock> m_blockList;
 	//std::vector<BOParticle> m_particleList;
