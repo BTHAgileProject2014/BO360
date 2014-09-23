@@ -13,7 +13,7 @@ BOMapLoader::~BOMapLoader()
 bool BOMapLoader::Initialize()
 {
 	m_mapSize = int2(0, 0);
-	m_blockPositions.empty();
+	m_blockPositions.clear();
 
 	return true;
 }

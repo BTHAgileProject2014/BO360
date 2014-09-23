@@ -109,6 +109,16 @@ bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight)
 void BOObjectManager::Shutdown()
 {
 	m_Shield.Shutdown();
+	// Remove all balls
+	for (unsigned int i = 0; i < m_ballList.size(); i++)
+	{
+		delete m_ballList[i];
+	}
+	m_ballList.clear();
+
+	// Clear the blocks
+	m_blockPositions.clear();
+	m_blockList.clear();
 }
 
 void BOObjectManager::Update(Uint32 p_deltaTime)
@@ -230,13 +240,8 @@ void BOObjectManager::Update(Uint32 p_deltaTime)
 				{
 					m_life--;
 					BOHUDManager::SetLives(m_life);
-					if (m_life == 0)
+					if (m_life > 0)
 					{
-						// Go to defeat screen, you loser!
-					}
-					else
-					{
-						// Spawn a new ball
 						AddNewBall();
 					}
 				}
@@ -321,4 +326,9 @@ bool BOObjectManager::AddNewBall()
 	}
 	m_ballList.push_back(ball);
 	return true;
+}
+
+bool BOObjectManager::LostGame()
+{
+	return m_life == 0;
 }

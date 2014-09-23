@@ -147,28 +147,38 @@ bool BOSystem::Run()
 	// Update the input manager.
 	result = m_input.Update();
 
-		if (m_gameState == RUNNING)
+	if (m_gameState == RUNNING)
+	{
+		// Update all of the objects.
+		m_objectManager.Update(m_deltaTime);
+
+		// Update the power ups.
+		m_powerUpManager.Update(m_deltaTime);
+
+		// Update the sound Engine.
+		BOSoundManager::Update(); // Empty so far.
+
+		if (m_objectManager.LostGame())
 		{
-			// Update all of the objects.
-	m_objectManager.Update(m_deltaTime);
+			// Shutdown map
+			m_objectManager.Shutdown();
+			m_powerUpManager.Shutdown();
+			BOHUDManager::Shutdown();
 
-			// Update the power ups.
-	m_powerUpManager.Update(m_deltaTime);
-
-			// Update the sound Engine.
-	BOSoundManager::Update(); // Empty so far.
+			// Go to defeat screen
+			m_gameState = DEFEAT;
 		}
+	}
+	else
+	{
+		// Update approperiate menu and handle the actions.
+		HandleAction(m_stateManager.Update(m_gameState));
 
-		else
+		if (m_quit)
 		{
-			// Update approperiate menu and handle the actions.
-			HandleAction(m_stateManager.Update(m_gameState));
-
-			if (m_quit)
-			{
-				result = false;
-			}
+			result = false;
 		}
+	}
 
 	// ============================
 

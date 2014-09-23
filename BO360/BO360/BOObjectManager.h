@@ -32,6 +32,7 @@ public:
 	void Draw();
 	void Handle(PowerUpTypes p_type, bool p_activated);
 	bool AddNewBall();
+	bool LostGame();
 
 private:
 	bool m_hasColided;
