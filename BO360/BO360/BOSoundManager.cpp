@@ -11,6 +11,7 @@ bool BOSoundManager::Initialize()
 	GetInstance().m_dying = NULL;
 	GetInstance().m_powerup = NULL;
 	GetInstance().m_teleport = NULL;
+	GetInstance().m_bounceOnPad = NULL;
 
 	// Initialize SDL MIxer
 	if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0)
@@ -48,6 +49,12 @@ bool BOSoundManager::Initialize()
 
 	GetInstance().m_teleport = Mix_LoadWAV("Sound/teleport.wav");
 	if (GetInstance().m_teleport == NULL)
+	{
+		return false;
+	}
+
+	GetInstance().m_bounceOnPad = Mix_LoadWAV("Sound/bounceOnPad.wav");
+	if (GetInstance().m_bounceOnPad == NULL)
 	{
 		return false;
 	}
@@ -97,6 +104,9 @@ void BOSoundManager::PlaySound(Sound p_sound)
 		break;
 	case sound_teleport:
 		Mix_PlayChannel(-1, GetInstance().m_teleport, 0);
+		break;
+	case sound_bounceOnPad:
+		Mix_PlayChannel(-1, GetInstance().m_bounceOnPad, 0);
 		break;
 	}
 }

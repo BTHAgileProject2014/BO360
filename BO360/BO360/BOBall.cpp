@@ -27,7 +27,7 @@ bool BOBall::Initialize(float2 p_position, int2 p_size, std::string p_fileName, 
 	return true;
 }
 
-void BOBall::Update(Uint32 p_deltaTime)
+void BOBall::Update(double p_deltaTime)
 {
 	if (m_mouseCheat)
 	{

@@ -14,6 +14,11 @@ bool BOPaddle::Initialize(float2 p_position, int2 p_size, std::string p_fileName
 {
 	m_rotation = 0.0f;
 	m_deltaRotation = 0.4f;
+	m_totalDegrees = 21.2;
+	m_segementDegree = m_totalDegrees;
+	m_segments = 1;
+	AddSegments(2);
+	m_deltaRotation = 400;
 	BOPublisher::AddSubscriber(this);
 	BOPowerUpManager::AddSubscriber(this);
 	return BOObject::Initialize(p_position, p_size, p_fileName);
@@ -39,6 +44,21 @@ void BOPaddle::Handle(InputMessages p_inputMessages)
 	{
 		m_movingRight = false;
 	}
+
+	if (p_inputMessages.zKey)
+	{
+		if (m_segments > 1)
+		{
+			RemoveSegments(1);
+		}
+	}
+	if (p_inputMessages.xKey)
+	{
+		if (m_segments < 17)
+		{
+			AddSegments(1);
+		}
+	}
 }
 
 void BOPaddle::Handle(PowerUpTypes p_type, bool p_activated)
@@ -49,6 +69,7 @@ void BOPaddle::Handle(PowerUpTypes p_type, bool p_activated)
 		if (p_activated)
 		{
 			// Make the paddle bigger
+			AddSegments(1);
 		}
 		else
 		{
@@ -59,6 +80,7 @@ void BOPaddle::Handle(PowerUpTypes p_type, bool p_activated)
 		if (p_activated)
 		{
 			// Make the paddle smaller
+			RemoveSegments(1);
 		}
 		else
 		{
@@ -68,7 +90,7 @@ void BOPaddle::Handle(PowerUpTypes p_type, bool p_activated)
 	}
 }
 
-void BOPaddle::Update(Uint32 p_deltaTime)
+void BOPaddle::Update(double p_deltaTime)
 {
 	if (m_movingLeft)
 	{
@@ -92,10 +114,42 @@ void BOPaddle::Draw()
 {
 	int4 mySource = int4(0, 0, m_size.x, m_size.y);
 	int4 myDest = int4((int)m_position.x - (m_size.x / 2), (int)m_position.y - (m_size.y / 2), m_size.x, m_size.y);
-	BOGraphicInterface::DrawEx(m_sprite, mySource, myDest, m_rotation, int2(m_size.x / 2, m_size.y / 2));
+
+	for (int i = 0; i < m_segments; i++)
+	{
+		BOGraphicInterface::DrawEx(m_sprite, mySource, myDest, m_rotation + ((double)m_segementDegree * i), int2(m_size.x / 2, m_size.y / 2));
+	}
+	
 }
 
 double BOPaddle::GetRotation()
 {
 	return m_rotation;
+}
+
+void BOPaddle::SetSegments(int p_segments)
+{
+	m_segments = p_segments;
+}
+
+int BOPaddle::GetSegments()
+{
+	return m_segments;
+}
+
+void BOPaddle::AddSegments(int p_segments)
+{
+	m_totalDegrees = m_totalDegrees + (m_segementDegree * p_segments);
+	m_segments += p_segments;
+}
+
+void BOPaddle::RemoveSegments(int p_segments)
+{
+	m_totalDegrees = m_totalDegrees - (m_segementDegree * p_segments);
+	m_segments -= p_segments;
+}
+
+int BOPaddle::GetDegrees()
+{
+	return m_totalDegrees;
 }

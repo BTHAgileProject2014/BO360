@@ -347,6 +347,8 @@ struct InputMessages
 	bool leftArrow;
 	bool upArrow;
 	bool downArrow;
+	bool zKey;
+	bool xKey;
 };
 
 enum GameState
@@ -371,6 +373,16 @@ enum ButtonAction
 	RETRY
 };
 
+enum ParticleType
+{
+	BALLTRAIL,
+	BALLDEBRIS,
+	BLOCKDEBRIS,
+	POWERUPDEBRIS,
+
+	m_numberOfParticleTypes
+};
+
 enum KeyMessages
 {
 	upArrow,
@@ -380,7 +392,9 @@ enum KeyMessages
 	leftMouseKey,
 	rightMouseKey,
 	middleMouseKey,
-	spacebarKey
+	spacebarKey,
+	zKey,
+	xKey
 };
 
 enum Sound
@@ -388,7 +402,8 @@ enum Sound
 	sound_pop,
 	sound_die,
 	sound_powerup,
-	sound_teleport
+	sound_teleport,
+	sound_bounceOnPad
 };
 
 // Sphere for collision check
