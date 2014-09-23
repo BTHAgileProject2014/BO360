@@ -31,6 +31,7 @@ public:
 	void Update(Uint32 p_deltaTime);
 	void Draw();
 	void Handle(PowerUpTypes p_type, bool p_activated);
+	bool AddNewBall();
 
 private:
 	bool m_hasColided;
@@ -45,6 +46,11 @@ private:
 	BOPaddle m_paddle;
 	BOShield m_Shield;
 	int2 m_windowsSize;
+
+	int2 m_ballSize;
+	float2 m_ballStartPosition;
+	float m_ballSpeed;
+	float2 m_ballDirection;
 	
   
 	std::vector<BOBlock> m_blockList;

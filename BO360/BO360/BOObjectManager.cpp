@@ -46,14 +46,13 @@ bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight)
 	}
 
 	// Initialize primary ball.
-	int2 ballSize = int2(15, 15);
-
-	float2 ballPosition = float2((p_windowWidth / 2.0f), (p_windowHeight / 2.0f));
-	float ballSpeed = 0.5f;
-	float2 ballDirection = float2(20, 10).normalized();
+	m_ballSize = int2(15, 15);
+	m_ballStartPosition = float2(20, 20);
+	m_ballSpeed = 0.5f;
+	m_ballDirection = float2(20, 10).normalized();
 
 	BOBall* ball = new BOBall();
-	result = ball->Initialize(ballPosition, ballSize, "Bilder/placeholderBoll10x10.png", ballSpeed, ballDirection, m_windowsSize);
+	result = ball->Initialize(m_ballStartPosition, m_ballSize, "Bilder/placeholderBoll10x10.png", m_ballSpeed, m_ballDirection, m_windowsSize);
 	if (!result)
 	{
 		return false;
@@ -205,6 +204,7 @@ void BOObjectManager::Update(Uint32 p_deltaTime)
 
  	for (int i = 0; i < m_ballList.size(); i++)
 	{
+		bool ballDied = false;
 		if (m_ballList[i]->CanColide())
 		{
 			// Check for collison between ball and pad
@@ -216,25 +216,53 @@ void BOObjectManager::Update(Uint32 p_deltaTime)
 			}
 
 			// Check if ball has entered the black hole and should die
+			
 			if (BOPhysics::CollisionRadiusRadius(m_ballList[i]->GetPosition(), m_ballList[i]->GetSize().x / 2.0f, m_blackHole.GetPosition(), m_blackHole.GetSize().x / 4.0f))
 			{
-				int a = 0;
+				// Remove the current ball
+				BOPublisher::Unsubscribe(m_ballList[i]); // Temporary for cheat with first ball
+				delete m_ballList[i];
+				m_ballList.erase(m_ballList.begin() + i);
+				ballDied = true;
+
+				// If no more ball in list then loose a life
+				if (m_ballList.size() == 0)
+				{
+					m_life--;
+					BOHUDManager::SetLives(m_life);
+					if (m_life == 0)
+					{
+						// Go to defeat screen, you loser!
+					}
+					else
+					{
+						// Spawn a new ball
+						AddNewBall();
+					}
+				}
 			}
 		}
 		
-		if (m_ballList[i]->GetFuel() <= 0)
+		if (ballDied)
 		{
-			//Runs tha gravity... lawl... Rotates the direction depending on distance
-			m_ballList[i]->SetDirection(BOPhysics::BlackHoleGravity(m_ballList[i]->GetBoundingSphere(), m_ballList[i]->GetDirection(), m_ballList[i]->GetSpeed(), m_blackHole.GetBoundingSphere(), p_deltaTime));
+			i--;
 		}
 		else
 		{
-			//Beräkna bränsle
-			m_ballList[i]->SetFuel(BOPhysics::CalculateBallFuel(m_ballList[i]->GetFuel()));
+			if (m_ballList[i]->GetFuel() <= 0)
+			{
+				//Runs tha gravity... lawl... Rotates the direction depending on distance
+				m_ballList[i]->SetDirection(BOPhysics::BlackHoleGravity(m_ballList[i]->GetBoundingSphere(), m_ballList[i]->GetDirection(), m_ballList[i]->GetSpeed(), m_blackHole.GetBoundingSphere(), p_deltaTime));
+			}
+			else
+			{
+				//Beräkna bränsle
+				m_ballList[i]->SetFuel(BOPhysics::CalculateBallFuel(m_ballList[i]->GetFuel()));
 
+			}
+			//Updaterar skölden
+			m_ballList[i]->SetDirection((m_Shield.Update(p_deltaTime, m_ballList[i]->GetBoundingSphere(), m_ballList[i]->GetDirection())));
 		}
-		//Updaterar skölden
-		m_ballList[i]->SetDirection((m_Shield.Update(p_deltaTime, m_ballList[i]->GetBoundingSphere(), m_ballList[i]->GetDirection())));
 	}
 
 	
@@ -282,4 +310,15 @@ void BOObjectManager::Handle(PowerUpTypes p_type, bool p_activated)
 		}
 		break;
 	}
+}
+
+bool BOObjectManager::AddNewBall()
+{
+	BOBall* ball = new BOBall();
+	if (!ball->Initialize(m_ballStartPosition, m_ballSize, "Bilder/placeholderBoll10x10.png", m_ballSpeed, m_ballDirection, m_windowsSize))
+	{
+		return false;
+	}
+	m_ballList.push_back(ball);
+	return true;
 }
