@@ -33,7 +33,6 @@ public:
 	void Handle(PowerUpTypes p_type, bool p_activated);
 
 private:
-	void BallDirectionChange(int p_bounceCorner, int p_Index);
 	bool m_hasColided;
 	int m_life;
 
