@@ -12,11 +12,16 @@ BOTimer::~BOTimer()
 
 bool BOTimer::Initialize()
 {
-	m_totalTimeMS = 0;
-	m_deltaTimeMS = 0;
-	m_currentTimeStampMS = 0;
-	m_previousTimeStampMS = 0;
+	m_startTimeStamp = SDL_GetPerformanceCounter();
+	m_totalTime = m_startTimeStamp;
+	//m_deltaTime = 0;
+	m_currentTimeStamp = m_startTimeStamp;
+	m_previousTimeStamp = m_startTimeStamp;
 
+	m_clocksPerSecond = SDL_GetPerformanceFrequency();
+	m_secondsPerClock = 1.0 / m_clocksPerSecond;
+
+	m_averageFps = 1.0f;
 	m_frames = 0;
 	m_milliSecondsPassed = 0;
 	m_offset = 0;
@@ -27,43 +32,34 @@ bool BOTimer::Initialize()
 
 void BOTimer::Tick()
 {
-	m_totalTimeMS = SDL_GetTicks();
-	m_frames++;
+	// Update the total time
+	m_totalTime = SDL_GetPerformanceCounter() - m_startTimeStamp;
 
-	if (m_totalTimeMS - m_offset > 1000)
-	{
-		m_FPS = m_frames;
-
-		m_offset = m_totalTimeMS;
-		m_frames = 0;
-	}
+	// Update m_deltaTimeS
+	m_currentTimeStamp = SDL_GetPerformanceCounter();
+	Uint64 deltaTime = m_currentTimeStamp - m_previousTimeStamp;
+	m_previousTimeStamp = m_currentTimeStamp;
+	m_deltaTimeS = deltaTime * m_secondsPerClock;
+	double scaleFactor = 1.0f / m_averageFps;
+	m_averageFps = scaleFactor * (m_clocksPerSecond / (double)deltaTime) + (1.0 - scaleFactor) * m_averageFps;
 }
 
-float BOTimer::GetTotalTimeS()
+double BOTimer::GetTotalTimeS()
 {
-	return ((float)m_totalTimeMS * 0.001f);
+	return ((double)m_totalTime * m_secondsPerClock);
 }
 
-Uint32 BOTimer::GetTotalTimeMS()
+double BOTimer::GetTotalTimeMS()
 {
-	return m_totalTimeMS;
+	return m_totalTime * m_secondsPerClock * 10e3;
 }
 
-Uint32 BOTimer::GetDeltaTime()
+double BOTimer::GetDeltaTime()
 {
-	// Get current time stamp.
-	m_currentTimeStampMS = SDL_GetTicks();
-
-	// Calculate delta time.
-	m_deltaTimeMS = m_currentTimeStampMS - m_previousTimeStampMS;
-
-	// Set the current time stamp as the previous.
-	m_previousTimeStampMS = m_currentTimeStampMS;
-
-	return m_deltaTimeMS;
+	return m_deltaTimeS;
 }
 
 int BOTimer::FPS()
 {
-	return m_FPS;
+	return (int)m_averageFps;
 }
