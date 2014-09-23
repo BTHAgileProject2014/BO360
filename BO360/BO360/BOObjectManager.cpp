@@ -46,7 +46,7 @@ bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight)
 	// Initialize primary ball.
 	int2 ballSize = int2(15, 15);
 
-	float2 ballPosition = float2((p_windowWidth / 2.0f), (p_windowHeight / 2.0f));
+	float2 ballPosition = float2(20, 20);
 	float ballSpeed = 0.25f;
 	float2 ballDirection = float2(20, 10).normalized();
 
