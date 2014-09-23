@@ -47,7 +47,7 @@ bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight)
 	int2 ballSize = int2(15, 15);
 
 	float2 ballPosition = float2((p_windowWidth / 2.0f), (p_windowHeight / 2.0f));
-	float ballSpeed = 0.25f;
+	float ballSpeed = 0.5f;
 	float2 ballDirection = float2(20, 10).normalized();
 
 	BOBall* ball = new BOBall();
@@ -61,7 +61,7 @@ bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight)
 	BOPublisher::AddSubscriber(m_ballList[0]);
 
 	// Load a map.
-	m_mapLoader.LoadMap("Default.bom");
+	m_mapLoader.LoadMap("Empty.bom");
 	m_blockPositions = m_mapLoader.GetBlockPositions();
 
 	float x = 0;
@@ -216,7 +216,7 @@ void BOObjectManager::Update(Uint32 p_deltaTime)
 		if (m_ballList[i]->GetFuel() <= 0)
 		{
 			//Runs tha gravity... lawl... Rotates the direction depending on distance
-			m_ballList[i]->SetDirection(BOPhysics::BlackHoleGravity(m_ballList[i]->GetBoundingSphere(), m_ballList[i]->GetDirection(), m_ballList[i]->GetSpeed(), m_blackHole.GetBoundingSphere()));
+			m_ballList[i]->SetDirection(BOPhysics::BlackHoleGravity(m_ballList[i]->GetBoundingSphere(), m_ballList[i]->GetDirection(), m_ballList[i]->GetSpeed(), m_blackHole.GetBoundingSphere(), p_deltaTime));
 		}
 		else
 		{
@@ -225,7 +225,7 @@ void BOObjectManager::Update(Uint32 p_deltaTime)
 
 		}
 		//Updaterar skölden
-		BallDirectionChange(m_Shield.Update(p_deltaTime, m_ballList[i]->GetBoundingSphere()), i);
+		m_ballList[i]->SetDirection((m_Shield.Update(p_deltaTime, m_ballList[i]->GetBoundingSphere(), m_ballList[i]->GetDirection())));
 	}
 
 	
@@ -252,25 +252,6 @@ void BOObjectManager::Draw()
 
 	m_paddle.Draw();
 	m_Shield.Draw();
-}
-void BOObjectManager::BallDirectionChange(int p_bounceCorner, int p_Index)
-{
-	if (p_bounceCorner == 0)
-		return;
-	m_hasColided = true;
-
-	float2 ballDir = m_ballList[p_Index]->GetDirection();
-	if (p_bounceCorner == 1 || p_bounceCorner == 2)//Straight up and down corner
-	{
-		ballDir.y *= (-1);
-		//std::cout << "Krock" << std::endl;
-	}
-	else//Straight right and left corner
-	{
-		ballDir.x *= (-1);
-		//std::cout << "Krock" << std::endl;
-	}
-	m_ballList[p_Index]->SetDirection(ballDir);
 }
 
 void BOObjectManager::Handle(PowerUpTypes p_type, bool p_activated)

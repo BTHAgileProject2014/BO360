@@ -28,18 +28,19 @@ void BOShield::Shutdown()
 	SDL_DestroyTexture(m_ShieldSprite);
 	m_ShieldSprite = NULL;
 }
-int BOShield::Update(Uint32 p_deltaTime, sphere p_Ball)
+float2 BOShield::Update(Uint32 p_deltaTime, sphere p_Ball, float2 p_BallDirection)
 {
-	int bounceResult = 0;
+	float2 ballDir = p_BallDirection;
 	if (m_IsActive)
 	{
-		bounceResult = BOPhysics::CheckCollisionBallShield(p_Ball, m_ShieldSphere);
-		if (bounceResult != 0)
+		if (BOPhysics::CheckCollisionBallShield(p_Ball, m_ShieldSphere) !=0)
 		{
 			m_IsActive = false;
+			ballDir.y *= (-1);
+			ballDir.x *= (-1);
 		}
 	}
-	return bounceResult;
+	return ballDir;
 }
 void BOShield::Draw()
 {
