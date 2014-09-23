@@ -12,11 +12,11 @@ class BODrawableText : public BOComponent
 public:
 	BODrawableText();
 	~BODrawableText();
-	bool Initialize(float2 p_position, std::string p_text, int3 p_color, int p_fontSize);
+	bool Initialize(float2 p_position, std::string p_text, int3 p_color, int p_fontSize, int p_maxWidth);
 	void Shutdown();
 	void Draw();
 	void SetPosition(float2 p_position);
-	void SetText(std::string p_text, int3 p_color);
+	void SetText(std::string p_text, int3 p_color, int p_maxWidth);
 	float2 GetPosition();
 	int2 GetSize();
 	void EnableText(bool p_enable);

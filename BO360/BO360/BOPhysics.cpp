@@ -414,29 +414,37 @@ float2 BOPhysics::ReflectBallAroundNormal(float2 p_ballDir, float2 p_normal)
 	return newBallDir;
 }
 
-float2 BOPhysics::BlackHoleGravity(sphere p_Ball, float2 p_BallDirection, float p_BallSpeed, sphere p_BlackHole)
+float2 BOPhysics::BlackHoleGravity(sphere p_Ball, float2 p_BallDirection, float p_BallSpeed, sphere p_BlackHole, double p_DeltaTime)
 {
+	double deltaTime = p_DeltaTime;
+	sphere blackHole = p_BlackHole;
+	blackHole.radius -= 15;
 	float speed = p_BallSpeed;
 	float2 newDirection = p_BallDirection;
 	float2 center = float2(p_BlackHole.pos - p_Ball.pos);
+	double G = 0.067;
 
 	float ballHoleDist = CalculateDistance(p_Ball.pos, p_BlackHole.pos);//Checks how far away the ball is
 	float origoHoleDist = CalculateDistance(float2(0, 0), p_BlackHole.pos);
 	float distanceAdjustment = 0;
-
+	double force = 0;
 	distanceAdjustment = origoHoleDist - ballHoleDist;
-	if (CheckCollisionSpheres(p_Ball, p_BlackHole))//If inside Blackhole perimiter then suck the ball in
+	double rSquare = (distanceAdjustment*distanceAdjustment);
+	if (CheckCollisionSpheres(p_Ball, blackHole))//If inside Blackhole perimiter then suck the ball in
 	{
-		distanceAdjustment = distanceAdjustment / 50000;
+		force = distanceAdjustment / 50000;
+		//force = G * 10 / rSquare;
 	}
 	else//If not then nudge the ball twoards the black hole
 	{
-		distanceAdjustment = distanceAdjustment / 20000000;
+		force = distanceAdjustment / 20000000;
+		//force = G * 10 / rSquare;
+		
 	}
+	//force = G * 100 / rSquare;
+ 	center = center * force;
 
-	center = center * distanceAdjustment * 0.75;
-
-	newDirection = float2(newDirection.x * speed, newDirection.y * speed);
+	newDirection = float2(newDirection.x * speed * deltaTime, newDirection.y * speed * deltaTime);
 	newDirection = float2(newDirection.x + center.x, newDirection.y + center.y);
 
 	newDirection = newDirection.normalized();

@@ -11,9 +11,7 @@ BOObjectManager::~BOObjectManager()
 
 bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight)
 {
-	int2 windowSize;
-	windowSize.x = p_windowWidth;
-	windowSize.y = p_windowHeight;
+	m_windowsSize = int2(p_windowWidth, p_windowHeight);
 	bool result;
 	m_hasColided = false;
 	testStopPU = false;
@@ -49,11 +47,11 @@ bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight)
 	int2 ballSize = int2(15, 15);
 
 	float2 ballPosition = float2((p_windowWidth / 2.0f), (p_windowHeight / 2.0f));
-	float ballSpeed = 0.25f;
+	float ballSpeed = 0.5f;
 	float2 ballDirection = float2(20, 10).normalized();
 
 	BOBall* ball = new BOBall();
-	result = ball->Initialize(ballPosition, ballSize, "Bilder/placeholderBoll10x10.png", ballSpeed, ballDirection, windowSize);
+	result = ball->Initialize(ballPosition, ballSize, "Bilder/placeholderBoll10x10.png", ballSpeed, ballDirection, m_windowsSize);
 	if (!result)
 	{
 		return false;
@@ -93,7 +91,7 @@ bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight)
 		}
 		else if (i == 0)
 		{
-			result = l_block.Initialize(float2(x, y), int2(40, 40), "Bilder/placeholderHexagon40x40.png", PUShield);
+			result = l_block.Initialize(float2(x, y), int2(40, 40), "Bilder/placeholderHexagon40x40.png", PUExtraBall);
 		}
 		
 
@@ -103,7 +101,7 @@ bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight)
 	test = float2(10,10);*/
 	BOPowerUpManager::AddSubscriber(this);
 
-	m_Shield.Initialize(int2(200, 200), "Bilder/placeholderSheild.png", int2(p_windowWidth, p_windowHeight));
+	m_Shield.Initialize(int2(200, 200), "Bilder/placeholderSheild.png", m_windowsSize);
 	return true;
 }
 
@@ -151,14 +149,14 @@ void BOObjectManager::Update(Uint32 p_deltaTime)
 						if (m_blockList[i].GetPowerUp() == PUExtraBall)
 						{
 							BOMultiballs* extraBall = new BOMultiballs();
-							extraBall->Initialize(m_blockList[i].GetPosition(), int2(40, 40), "Bilder/placeholderPowerupMultBall.png", 0.5f, int2(1300, 900) );
+							extraBall->Initialize(m_blockList[i].GetPosition(), int2(40, 40), "Bilder/placeholderPowerupMultBall.png", 0.5f, m_windowsSize);
 							extraBall->SetActive(true);
 							BOPowerUpManager::AddPowerUp(extraBall);
 						}
 						else if (m_blockList[i].GetPowerUp() == PUShield)
 						{
 							BOShieldPU* shield = new BOShieldPU();
-							shield->Initialize(m_blockList[i].GetPosition(), int2(40, 40), "Bilder/placeholderSheildPowerUp1.png", 0.5f, int2(1300, 900));
+							shield->Initialize(m_blockList[i].GetPosition(), int2(40, 40), "Bilder/placeholderSheildPowerUp1.png", 0.5f, m_windowsSize);
 							BOPowerUpManager::AddPowerUp(shield);
 						}
 
@@ -180,11 +178,19 @@ void BOObjectManager::Update(Uint32 p_deltaTime)
 		if (!(result.x == 0 && result.y == 0))
 		{
 			BOPowerUp* pu = BOPowerUpManager::GetPowerUp(i);
-			//BOMultiballs* mb = (BOMultiballs*)pu;
-			//mb->Activate();
-			
-			BOShieldPU* sp = (BOShieldPU*)pu;
-			sp->Activate();
+			BOShieldPU* puShield;
+			BOMultiballs* puBall;
+			switch (pu->GetType())
+			{
+			case PUShield:
+				puShield = (BOShieldPU*)pu;
+				puShield->Activate();
+				break;
+			case PUExtraBall:
+				puBall = (BOMultiballs*)pu;
+				puBall->Activate();
+				break;
+			}
 			BOPowerUpManager::RemovePowerUp(i);
 		}		
 		else if (BOPhysics::CheckCollisionSpheres(BOPowerUpManager::GetPowerUp(i)->GetBoundingSphere(), sphere(m_blackHole.GetPosition(), 1)))
@@ -210,7 +216,7 @@ void BOObjectManager::Update(Uint32 p_deltaTime)
 		if (m_ballList[i]->GetFuel() <= 0)
 		{
 			//Runs tha gravity... lawl... Rotates the direction depending on distance
-			m_ballList[i]->SetDirection(BOPhysics::BlackHoleGravity(m_ballList[i]->GetBoundingSphere(), m_ballList[i]->GetDirection(), m_ballList[i]->GetSpeed(), m_blackHole.GetBoundingSphere()));
+			m_ballList[i]->SetDirection(BOPhysics::BlackHoleGravity(m_ballList[i]->GetBoundingSphere(), m_ballList[i]->GetDirection(), m_ballList[i]->GetSpeed(), m_blackHole.GetBoundingSphere(), p_deltaTime));
 		}
 		else
 		{
@@ -219,7 +225,7 @@ void BOObjectManager::Update(Uint32 p_deltaTime)
 
 		}
 		//Updaterar skölden
-		BallDirectionChange(m_Shield.Update(p_deltaTime, m_ballList[i]->GetBoundingSphere()), i);
+		m_ballList[i]->SetDirection((m_Shield.Update(p_deltaTime, m_ballList[i]->GetBoundingSphere(), m_ballList[i]->GetDirection())));
 	}
 
 	
@@ -246,25 +252,6 @@ void BOObjectManager::Draw()
 
 	m_paddle.Draw();
 	m_Shield.Draw();
-}
-void BOObjectManager::BallDirectionChange(int p_bounceCorner, int p_Index)
-{
-	if (p_bounceCorner == 0)
-		return;
-	m_hasColided = true;
-
-	float2 ballDir = m_ballList[p_Index]->GetDirection();
-	if (p_bounceCorner == 1 || p_bounceCorner == 2)//Straight up and down corner
-	{
-		ballDir.y *= (-1);
-		//std::cout << "Krock" << std::endl;
-	}
-	else//Straight right and left corner
-	{
-		ballDir.x *= (-1);
-		//std::cout << "Krock" << std::endl;
-	}
-	m_ballList[p_Index]->SetDirection(ballDir);
 }
 
 void BOObjectManager::Handle(PowerUpTypes p_type, bool p_activated)

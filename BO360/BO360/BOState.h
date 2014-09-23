@@ -22,7 +22,7 @@ public:
 
 	void Handle(InputMessages p_inputMessages);
 
-	void AddButton(float2 p_position, int2 p_size, float2 p_menuPosition, std::string p_fileName, std::string p_name, ButtonAction p_action);
+	void AddButton(float2 p_position, int2 p_size, float2 p_menuPosition, std::string p_fileName, std::string p_name, ButtonAction p_action, std::string p_tooltip);
 	void SetName(std::string p_name);
 	void SetBackground(std::string p_fileName);
 

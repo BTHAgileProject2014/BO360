@@ -71,3 +71,8 @@ float2 BOPowerUp::GetDirection()
 {
 	return m_direction;
 }
+
+PowerUpTypes BOPowerUp::GetType()
+{
+	return m_type;
+}
