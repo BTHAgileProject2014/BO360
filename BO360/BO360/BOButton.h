@@ -11,7 +11,7 @@ public:
 	BOButton();
 	~BOButton();
 
-	bool Initialize(float2 p_position, int2 p_size, std::string p_fileName, std::string p_name, ButtonAction p_action);
+	bool Initialize(float2 p_position, int2 p_size, std::string p_fileName, std::string p_name, ButtonAction p_action, std::string p_tooltip);
 	void Shutdown();
 
 	bool Intersects(int2 p_mousePosition);
@@ -31,5 +31,6 @@ private:
 
 	BODrawableText m_buttonText;
 	BODrawableText m_buttonTextLit;
+	BODrawableText m_buttonTooltipText;
 };
 #endif

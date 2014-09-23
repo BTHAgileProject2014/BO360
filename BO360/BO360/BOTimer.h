@@ -13,23 +13,29 @@ public:
 	bool Initialize();
 	void Tick();
 
-	Uint32 GetTotalTimeMS();
-	float GetTotalTimeS();
+	double GetTotalTimeMS();
+	double GetTotalTimeS();
 
-	Uint32 GetDeltaTime();
+	double GetDeltaTime();
 
 	int FPS();
 
 private:
-	Uint32 m_totalTimeMS;
+	Uint64 m_totalTime;
+	double m_deltaTimeS;
 
-	Uint32 m_deltaTimeMS;
-	Uint32 m_currentTimeStampMS;
-	Uint32 m_previousTimeStampMS;
+	double m_averageFps;
+
+
+	Uint64 m_startTimeStamp;
+	Uint64 m_currentTimeStamp;
+	Uint64 m_previousTimeStamp;
+	Uint64 m_clocksPerSecond;
+	double m_secondsPerClock;
 
 	int m_frames;
 	int m_FPS;
-	Uint32 m_milliSecondsPassed;
-	Uint32 m_offset;
+	Uint64 m_milliSecondsPassed;
+	Uint64 m_offset;
 };
 #endif

@@ -16,7 +16,7 @@ public:
 	bool Initialize(int p_windowsWidth, int p_windowHeight);
 	void Shutdown();
 
-	void Update(Uint32 p_deltaTime);
+	void Update(double p_deltaTime);
 	void Draw();
 
 	static void Notify(PowerUpTypes p_type, bool p_acivated);

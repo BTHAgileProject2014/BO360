@@ -39,7 +39,7 @@ void BOPowerUp::Draw()
 	BOObject::Draw();
 }
 
-void BOPowerUp::Update(Uint32 p_deltaTime)
+void BOPowerUp::Update(double p_deltaTime)
 {
 	if (m_hasSpawned)
 	{
@@ -70,4 +70,9 @@ void BOPowerUp::SetActive(bool p_isActive)
 float2 BOPowerUp::GetDirection()
 {
 	return m_direction;
+}
+
+PowerUpTypes BOPowerUp::GetType()
+{
+	return m_type;
 }

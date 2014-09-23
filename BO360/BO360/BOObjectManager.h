@@ -17,6 +17,7 @@
 #include "BOMultiballs.h"
 #include "BOShield.h"
 #include "BOShieldPU.h"
+#include "BOParticleSystem.h"
 #include <vector>
 
 class BOObjectManager : public BOComponent, public BOPUSubscriber
@@ -27,12 +28,11 @@ public:
 
 	bool Initialize(int windowWidth, int windowHeight);
 	void Shutdown();
-	void Update(Uint32 p_deltaTime);
+	void Update(double p_deltaTime);
 	void Draw();
 	void Handle(PowerUpTypes p_type, bool p_activated);
 
 private:
-	void BallDirectionChange(int p_bounceCorner, int p_Index);
 	bool m_hasColided;
 	bool testStopPU;
 
@@ -44,9 +44,9 @@ private:
 	std::vector<BOBall*> m_ballList;
 	BOPaddle m_paddle;
 	BOShield m_Shield;
+	int2 m_windowsSize;
   
 	std::vector<BOBlock> m_blockList;
-	//std::vector<BOParticle> m_particleList;
-	//std::vector<BOPowerUp> m_powerUPlist;
+	BOParticleSystem m_particleSystem;
 };
 #endif

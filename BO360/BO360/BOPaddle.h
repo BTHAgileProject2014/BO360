@@ -12,7 +12,7 @@ public:
 	BOPaddle();
 	~BOPaddle();
 
-	void Update(Uint32 p_deltaTime);
+	void Update(double p_deltaTime);
 	double GetRotation();
 
 	// Overloaded functions

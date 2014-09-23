@@ -28,7 +28,7 @@ public:
 	static bool MattiasBallPadCollision(sphere p_sphere, float2 p_sphereDir, sphere p_padSphere, double p_startAngle, double p_endAngle);
 	static float2 ReflectBallAroundNormal(float2 p_ballDir,float2 p_normal);
 	static int CheckCollisionBallShield(sphere p_sphere, sphere p_padSphere);
-	static float2 BlackHoleGravity(sphere p_Ball, float2 p_BallDirection, float p_BallSpeed, sphere p_BlackHole);
+	static float2 BlackHoleGravity(sphere p_Ball, float2 p_BallDirection, float p_BallSpeed, sphere p_BlackHole, double p_DeltaTime);
 	static float2 BallPadCollision(sphere p_sphere, float2 p_sphereDir, sphere p_padSphere, double p_startAngle, double p_endAngle);
 	static float CalculateBallFuel(float p_Fuel);
 

@@ -41,7 +41,7 @@ private:
 	int m_windowWidth, m_windowHeight;
 
 	std::string m_string;
-	Uint32 m_deltaTime;
+	double m_deltaTime;
 	float m_totalTime;
 	int m_FPS;
 
