@@ -17,6 +17,7 @@
 #include "BOMultiballs.h"
 #include "BOShield.h"
 #include "BOShieldPU.h"
+#include "BOParticleSystem.h"
 #include <vector>
 
 class BOObjectManager : public BOComponent, public BOPUSubscriber
@@ -46,7 +47,6 @@ private:
 	int2 m_windowsSize;
   
 	std::vector<BOBlock> m_blockList;
-	//std::vector<BOParticle> m_particleList;
-	//std::vector<BOPowerUp> m_powerUPlist;
+	BOParticleSystem m_particleSystem;
 };
 #endif

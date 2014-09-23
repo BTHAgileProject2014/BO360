@@ -371,6 +371,16 @@ enum ButtonAction
 	RETRY
 };
 
+enum ParticleType
+{
+	BALLTRAIL,
+	BALLDEBRIS,
+	BLOCKDEBRIS,
+	POWERUPDEBRIS,
+
+	m_numberOfParticleTypes
+};
+
 enum KeyMessages
 {
 	upArrow,
