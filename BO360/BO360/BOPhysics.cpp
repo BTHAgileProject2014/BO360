@@ -418,37 +418,42 @@ float2 BOPhysics::BlackHoleGravity(sphere p_Ball, float2 p_BallDirection, float 
 {
 	double deltaTime = p_DeltaTime;
 	sphere blackHole = p_BlackHole;
+	sphere blackHole2 = p_BlackHole;
 	blackHole.radius -= 15;
+	blackHole2.radius += 100;
 	float speed = p_BallSpeed;
 	float2 newDirection = p_BallDirection;
 	float2 center = float2(p_BlackHole.pos - p_Ball.pos);
-	double G = 0.067;
+	double G = 0.000000000067;
 
-	float ballHoleDist = CalculateDistance(p_Ball.pos, p_BlackHole.pos);//Checks how far away the ball is
-	float origoHoleDist = CalculateDistance(float2(0, 0), p_BlackHole.pos);
+	double force;
 	float distanceAdjustment = 0;
-	double force = 0;
-	distanceAdjustment = origoHoleDist - ballHoleDist;
+
+	distanceAdjustment = CalculateDistance(p_Ball.pos, p_BlackHole.pos);
 	double rSquare = (distanceAdjustment*distanceAdjustment);
-	if (CheckCollisionSpheres(p_Ball, blackHole))//If inside Blackhole perimiter then suck the ball in
-	{
-		force = distanceAdjustment / 50000;
-		//force = G * 10 / rSquare;
-	}
-	else//If not then nudge the ball twoards the black hole
-	{
-		force = distanceAdjustment / 20000000;
-		//force = G * 10 / rSquare;
-		
-	}
-	//force = G * 100 / rSquare;
+	//if (CheckCollisionSpheres(p_Ball, blackHole))//If inside Blackhole perimiter then suck the ball in
+	//{
+	//	force = distanceAdjustment;
+	//	//force = G * 10 / rSquare;
+	//	std::cout << "50000" << std::endl;
+	//}	
+	//else//If not then nudge the ball twoards the black hole
+	//{
+	//	//force = distanceAdjustment / 20000000;
+	//	force = G * 7500000000000 / rSquare;
+	//	std::cout << force << std::endl;
+	//	
+	//}
+	double temp = G * 7500000000000;
+	std::cout << rSquare << std::endl;
+	force = temp / rSquare;
+	center = center.normalized();
  	center = center * force;
 
 	newDirection = float2(newDirection.x * speed * deltaTime, newDirection.y * speed * deltaTime);
 	newDirection = float2(newDirection.x + center.x, newDirection.y + center.y);
 
-	newDirection = newDirection.normalized();
-	return newDirection;
+	return newDirection = newDirection.normalized();
 }
 
 float BOPhysics::CalculateDistance(float2 p_Ball, float2 p_BlackHole)
@@ -458,7 +463,15 @@ float BOPhysics::CalculateDistance(float2 p_Ball, float2 p_BlackHole)
 
 float BOPhysics::CalculateBallFuel(float p_Fuel)
 {
-	std::cout << p_Fuel << std::endl;
+	//std::cout << p_Fuel << std::endl;
 	float fuel = p_Fuel - 0.1f;
 	return fuel;
 }
+
+
+//else if (CheckCollisionSpheres(p_Ball, blackHole2))//If inside Blackhole perimiter then suck the ball in
+//{
+//	force = distanceAdjustment / 15000000;
+//	//force = G * 10 / rSquare;
+//	std::cout << "15000000" << std::endl;
+//}
