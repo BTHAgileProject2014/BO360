@@ -444,9 +444,13 @@ float2 BOPhysics::BlackHoleGravity(sphere p_Ball, float2 p_BallDirection, float 
 	//	std::cout << force << std::endl;
 	//	
 	//}
-	double temp = G * 7500000000000;
-	std::cout << rSquare << std::endl;
+	
+	
+	double temp = G * 5000000000000;
 	force = temp / rSquare;
+
+
+	std::cout << force << std::endl;
 	center = center.normalized();
  	center = center * force;
 
