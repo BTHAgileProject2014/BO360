@@ -27,10 +27,10 @@ void BOTextManager::Shutdown()
 	m_texts.clear();
 }
 
-BODrawableText* BOTextManager::AddText(std::string p_text, float2 p_position, int3 p_color)
+BODrawableText* BOTextManager::AddText(std::string p_text, float2 p_position, int3 p_color, int p_fontSize, int p_maxWidth)
 {
 	BODrawableText* newText = new BODrawableText;
-	newText->Initialize(p_position, p_text, p_color);
+	newText->Initialize(p_position, p_text, p_color, p_fontSize, p_maxWidth);
 	m_texts.push_back(newText);
 	return newText;
 }
@@ -41,6 +41,7 @@ void BOTextManager::RemoveText(BODrawableText* p_text)
 	{
 		if (m_texts[i] == p_text)
 		{
+			m_texts[i]->Shutdown();
 			delete m_texts[i];
 			m_texts[i] = 0;
 			m_texts.erase(m_texts.begin() + i);
@@ -61,13 +62,13 @@ void BOTextManager::MoveText(BODrawableText* p_text, float2 p_position)
 	}
 }
 
-void BOTextManager::ChangeText(BODrawableText* p_text, std::string p_textString, int3 p_color)
+void BOTextManager::ChangeText(BODrawableText* p_text, std::string p_textString, int3 p_color, int p_maxWidth)
 {
 	for (unsigned int i = 0; i < m_texts.size(); i++)
 	{
 		if (m_texts[i] == p_text)
 		{
-			m_texts[i]->SetText(p_textString, p_color);
+			m_texts[i]->SetText(p_textString, p_color, p_maxWidth);
 			break;
 		}
 	}

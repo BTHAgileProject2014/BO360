@@ -284,9 +284,11 @@ float2 BOPhysics::BallPadCollision(sphere p_sphere, float2 p_sphereDir, sphere p
 	double padSpread = p_padSpread * degreesToRadians;
 
 	// Convert to mathematical coordinate system
-	double startAngleMA = HALF_PI - startAngle;
+	double startAngleMA = (startAngle - HALF_PI) * -1;
+	double normalized = startAngleMA;
+	NormalizeAngle(normalized);
 
-	double padCenterAngle = startAngleMA - (padSpread / 2);
+   	double padCenterAngle = startAngleMA - (padSpread / 2);
 	NormalizeAngle(padCenterAngle);
 
 	// Calculate a vector pointing towards the pad's center in SDL-Draw-Space
@@ -340,7 +342,7 @@ float2 BOPhysics::CalculateNewDir(float2 currentDir, float2 padNormal, float p_p
 {
 	// Bounce normals will be biased depending on the position of the pad that we bounce on.
 	// biasAngle is the maximum bias, only reached at the edges of the pad
-	static const float biasAngle = 0.57;
+	static const float biasAngle = 1.57;
 
 	// Amplify the ball and pad rotations by 2*PI to avoid 0-rotation problems
 	float padAngleAmp = p_padAngle + 2 * PI;
@@ -362,7 +364,7 @@ float2 BOPhysics::CalculateNewDir(float2 currentDir, float2 padNormal, float p_p
 	float vDotN = currentDir.dot(biasedNormal);
 	float2 newDir = currentDir - (biasedNormal * vDotN * 2);
 
-	return newDir;
+	return biasedNormal;
 }
 
 int BOPhysics::CheckCollisionBallShield(sphere p_sphere, sphere p_padSphere)
@@ -375,25 +377,25 @@ int BOPhysics::CheckCollisionBallShield(sphere p_sphere, sphere p_padSphere)
 	ballRadius = p_sphere.radius;
 	if (CheckCollisionSpheres(p_sphere, p_padSphere))
 	{
-		if ((centerBall.x <= (centerPad.x + 70.0f)) && (centerBall.x >= (centerPad.x - 70.0f)) && (centerBall.y <= centerPad.y))
-	{
+		if ((centerBall.x <= (centerPad.x + 80.0f)) && (centerBall.x >= (centerPad.x - 80.0f)) && (centerBall.y <= centerPad.y))
+		{
 			return 1;
-	}
-		else if ((centerBall.x <= (centerPad.x + 70.0f)) && (centerBall.x >= (centerPad.x - 70.0f)) && (centerBall.y >= centerPad.y))
-	{
+		}
+		else if ((centerBall.x <= (centerPad.x + 80.0f)) && (centerBall.x >= (centerPad.x - 80.0f)) && (centerBall.y >= centerPad.y))
+		{
 			return 2;
-	}
-		else if ((centerBall.y <= (centerPad.y + 70.0f)) && (centerBall.y >= (centerPad.y - 70.0f)) && (centerBall.x <= centerPad.x))
-	{
+		}
+		else if ((centerBall.y <= (centerPad.y + 80.0f)) && (centerBall.y >= (centerPad.y - 80.0f)) && (centerBall.x <= centerPad.x))
+		{
 			return 3;
-	}
+		}
 		else
-	{
+		{
 			return 4;
 		}
 	}
 	return 0;
-	}
+}
 
 float2 BOPhysics::ReflectBallAroundNormal(float2 p_ballDir, float2 p_normal)
 {
@@ -412,29 +414,37 @@ float2 BOPhysics::ReflectBallAroundNormal(float2 p_ballDir, float2 p_normal)
 	return newBallDir;
 }
 
-float2 BOPhysics::BlackHoleGravity(sphere p_Ball, float2 p_BallDirection, float p_BallSpeed, sphere p_BlackHole)
+float2 BOPhysics::BlackHoleGravity(sphere p_Ball, float2 p_BallDirection, float p_BallSpeed, sphere p_BlackHole, double p_DeltaTime)
 {
+	double deltaTime = p_DeltaTime;
+	sphere blackHole = p_BlackHole;
+	blackHole.radius -= 15;
 	float speed = p_BallSpeed;
 	float2 newDirection = p_BallDirection;
 	float2 center = float2(p_BlackHole.pos - p_Ball.pos);
+	double G = 0.067;
 
 	float ballHoleDist = CalculateDistance(p_Ball.pos, p_BlackHole.pos);//Checks how far away the ball is
 	float origoHoleDist = CalculateDistance(float2(0, 0), p_BlackHole.pos);
 	float distanceAdjustment = 0;
-
+	double force = 0;
 	distanceAdjustment = origoHoleDist - ballHoleDist;
-	if (CheckCollisionSpheres(p_Ball, p_BlackHole))//If inside Blackhole perimiter then suck the ball in
+	double rSquare = (distanceAdjustment*distanceAdjustment);
+	if (CheckCollisionSpheres(p_Ball, blackHole))//If inside Blackhole perimiter then suck the ball in
 	{
-		distanceAdjustment = distanceAdjustment / 50000;
+		force = distanceAdjustment / 50000;
+		//force = G * 10 / rSquare;
 	}
 	else//If not then nudge the ball twoards the black hole
 	{
-		distanceAdjustment = distanceAdjustment / 20000000;
+		force = distanceAdjustment / 20000000;
+		//force = G * 10 / rSquare;
+		
 	}
+	//force = G * 100 / rSquare;
+ 	center = center * force;
 
-	center = center * distanceAdjustment;
-
-	newDirection = float2(newDirection.x * speed, newDirection.y * speed);
+	newDirection = float2(newDirection.x * speed * deltaTime, newDirection.y * speed * deltaTime);
 	newDirection = float2(newDirection.x + center.x, newDirection.y + center.y);
 
 	newDirection = newDirection.normalized();

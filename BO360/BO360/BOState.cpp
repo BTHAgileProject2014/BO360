@@ -56,13 +56,25 @@ bool BOState::Initialize(float2 p_position, int2 p_size, float2 p_menuPosition, 
 
 	m_menuBar.push_back(l_lastEdge);
 
+	// Load menu text
+	if (!m_menuText.Initialize(float2(0,0), m_name, int3(255, 255, 255), 72, 0))
+	{
+		std::cout << "Failed to create menu text in " << m_name << "!" << std::endl;
+		return false;
+	}
+
+	// Calculate menu text position
+	int2 tempSize = m_menuText.GetSize();
+	float2 tempPos = float2(25.0f + p_menuPosition.x + tempSize.x / 2, 13 + p_menuPosition.y + tempSize.y / 2);
+	m_menuText.SetPosition(tempPos);
+
 	return true;
 }
 
-void BOState::AddButton(float2 p_position, int2 p_size, float2 p_menuPosition, std::string p_fileName, std::string p_name, ButtonAction p_action)
+void BOState::AddButton(float2 p_position, int2 p_size, float2 p_menuPosition, std::string p_fileName, std::string p_name, ButtonAction p_action, std::string p_tooltip)
 {
 	BOButton l_button;
-	if (!l_button.Initialize(float2(p_position.x + (250 * m_buttonList.size()), p_position.y), p_size, p_fileName, p_name, p_action))
+	if (!l_button.Initialize(float2(p_position.x + (250 * m_buttonList.size()), p_position.y), p_size, p_fileName, p_name, p_action, p_tooltip))
 	{
 		std::cout << "Failed to load button for texture " << p_fileName << "!" << std::endl;
 	}
@@ -112,6 +124,8 @@ void BOState::Draw()
 	{
 		m_buttonList[i].Draw();
 	}
+
+	m_menuText.Draw();
 }
 
 void BOState::SetName(std::string p_name)
@@ -132,4 +146,5 @@ void BOState::Shutdown()
 	}
 
 	m_buttonList.empty();
+	m_menuText.Shutdown();
 }

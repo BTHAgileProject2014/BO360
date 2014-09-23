@@ -1,6 +1,5 @@
 #include "BOGraphicInterface.h"
 
-TTF_Font* BOGraphicInterface::m_font;
 SDL_Renderer* BOGraphicInterface::m_renderer;
 
 BOGraphicInterface::~BOGraphicInterface()
@@ -47,13 +46,6 @@ bool BOGraphicInterface::Initialize(int p_windowWidth, int p_windowHeight)
 		return false;
 	}
 
-	GetInstance().m_font = TTF_OpenFont("Font/Neon_Nanoborg.otf", 30);
-	if (m_font == NULL)
-	{
-		std::cout << "Failed to load font! SDL_ttf Error: " << TTF_GetError() << "\n";
-		return false;
-	}
-
 	return true;
 }
 
@@ -62,7 +54,6 @@ void BOGraphicInterface::Shutdown()
 	GetInstance().m_window.Shutdown();
 
 	// Free up the TTF library
-	TTF_CloseFont(m_font);
 	TTF_Quit();
 }
 
@@ -179,8 +170,16 @@ BOGraphicInterface& BOGraphicInterface::GetInstance()
 	return instance;
 }
 
-SDL_Texture* BOGraphicInterface::DrawTextToTexture(std::string p_text, int3 p_textColor, int2* p_size)
+SDL_Texture* BOGraphicInterface::DrawTextToTexture(std::string p_text, int3 p_textColor, int2* p_size, int p_fontSize, int p_maxWidth)
 {
+	// Load the font
+	TTF_Font* font = TTF_OpenFont("Font/Neon_Nanoborg.otf", p_fontSize);
+	if (font == NULL)
+	{
+		std::cout << "Failed to load font! SDL_ttf Error: " << TTF_GetError() << "\n";
+		return false;
+	}
+
 	// The new texture
 	SDL_Texture* texture;
 
@@ -188,17 +187,21 @@ SDL_Texture* BOGraphicInterface::DrawTextToTexture(std::string p_text, int3 p_te
 	SDL_Color textColor = { p_textColor.x, p_textColor.y, p_textColor.z, 255 };
 
 	// Render text surface
-	SDL_Surface* textSurface = TTF_RenderText_Solid(m_font, p_text.c_str(), textColor);
+	//SDL_Surface* textSurface = TTF_RenderText_Solid(font, p_text.c_str(), textColor);
+	SDL_Surface* textSurface = TTF_RenderText_Blended_Wrapped(font, p_text.c_str(), textColor, p_maxWidth);
 
 	// Create texture from surface pixels
 	texture = SDL_CreateTextureFromSurface(m_renderer, textSurface);
-
+	
 	//Get image dimensions
 	p_size->x = textSurface->w;
 	p_size->y = textSurface->h;
 
 	// Get rid of the surface
 	SDL_FreeSurface(textSurface);
+
+	// Close Font
+	TTF_CloseFont(font);
 
 	return texture;
 }

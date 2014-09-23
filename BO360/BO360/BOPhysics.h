@@ -7,12 +7,12 @@
 #include <string>
 
 inline void NormalizeAngle(float& angle) {
-	while (angle < 0) { angle += 3.1415926; }
-	while (angle > 3.1415926) { angle -= 3.1415926; }
+	while (angle < 0) { angle += 6.2831852; }
+	while (angle > 6.2831852) { angle -= 6.2831852; }
 }
 inline void NormalizeAngle(double& angle) {
-	while (angle < 0) { angle += 3.141592653589793; }
-	while (angle > 3.141592653589793) { angle -= 3.141592653589793; }
+	while (angle < 0) { angle += 6.283185307179586; }
+	while (angle > 6.283185307179586) { angle -= 6.283185307179586; }
 }
 
 class BOPhysics
@@ -28,7 +28,7 @@ public:
 	static bool MattiasBallPadCollision(sphere p_sphere, float2 p_sphereDir, sphere p_padSphere, double p_startAngle, double p_endAngle);
 	static float2 ReflectBallAroundNormal(float2 p_ballDir,float2 p_normal);
 	static int CheckCollisionBallShield(sphere p_sphere, sphere p_padSphere);
-	static float2 BlackHoleGravity(sphere p_Ball, float2 p_BallDirection, float p_BallSpeed, sphere p_BlackHole);
+	static float2 BlackHoleGravity(sphere p_Ball, float2 p_BallDirection, float p_BallSpeed, sphere p_BlackHole, double p_DeltaTime);
 	static float2 BallPadCollision(sphere p_sphere, float2 p_sphereDir, sphere p_padSphere, double p_startAngle, double p_endAngle);
 	static float CalculateBallFuel(float p_Fuel);
 

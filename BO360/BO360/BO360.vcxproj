@@ -90,6 +90,7 @@
     <ClInclude Include="BOPublisher.h" />
     <ClInclude Include="BOPUSubscriber.h" />
     <ClInclude Include="BOShield.h" />
+    <ClInclude Include="BOShieldPU.h" />
     <ClInclude Include="BOSoundManager.h" />
     <ClInclude Include="BOState.h" />
     <ClInclude Include="BOStateManager.h" />
@@ -101,6 +102,7 @@
     <ClInclude Include="BOUtility.h" />
     <ClInclude Include="BOWindow.h" />
     <ClInclude Include="BOButton.h" />
+    <ClInclude Include="BOMultiballs.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BOBackground.cpp" />
@@ -125,6 +127,7 @@
     <ClCompile Include="BOPublisher.cpp" />
     <ClCompile Include="BOPUSubscriber.cpp" />
     <ClCompile Include="BOShield.cpp" />
+    <ClCompile Include="BOShieldPU.cpp" />
     <ClCompile Include="BOSoundManager.cpp" />
     <ClCompile Include="BOState.cpp" />
     <ClCompile Include="BOStateManager.cpp" />
@@ -135,6 +138,7 @@
     <ClCompile Include="BOTimer.cpp" />
     <ClCompile Include="BOWindow.cpp" />
     <ClCompile Include="BOButton.cpp" />
+    <ClCompile Include="BOMultiballs.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Maps\Default.bom" />

@@ -18,7 +18,7 @@ public:
 
 private:
 	ParticleType m_type;
-	Uint32 m_timeLeftMS;
+	int m_timeLeftMS;
 
 	bool m_rotate;
 	float m_rotation;

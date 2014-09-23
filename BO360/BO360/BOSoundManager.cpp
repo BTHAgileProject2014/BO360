@@ -42,6 +42,7 @@ bool BOSoundManager::Initialize()
 	GetInstance().m_powerup = Mix_LoadWAV("Sound/powerup.wav");
 	if (GetInstance().m_powerup == NULL)
 	{
+		std::cout << Mix_GetError() << std::endl;
 		return false;
 	}
 

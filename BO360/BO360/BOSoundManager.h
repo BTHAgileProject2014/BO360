@@ -4,6 +4,7 @@
 #include <SDL.h>
 #include <SDL_mixer.h>
 #include "BOUtility.h"
+#include <iostream>
 
 
 class BOSoundManager

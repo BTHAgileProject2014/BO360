@@ -120,6 +120,12 @@
     <ClCompile Include="BOStationaryParticle.cpp">
       <Filter>Source Files\ParticleSystem</Filter>
     </ClCompile>
+    <ClCompile Include="BOMultiballs.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="BOShieldPU.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BOSystem.h">
@@ -220,6 +226,12 @@
     </ClInclude>
     <ClInclude Include="BOMovingParticle.h">
       <Filter>Header Files\ParticleSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="BOMultiballs.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BOShieldPU.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
