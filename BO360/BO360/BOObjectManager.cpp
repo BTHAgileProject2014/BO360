@@ -37,7 +37,7 @@ bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight)
 	}
 
 	// Initialize the pad.
-	result = m_paddle.Initialize(float2((p_windowWidth / 2.0f), (p_windowHeight / 2.0f)), int2(240, 240), "Bilder/placeholderPad2.png");
+	result = m_paddle.Initialize(float2((p_windowWidth / 2.0f), (p_windowHeight / 2.0f)), int2(220, 220), "Bilder/placeholderPadBIG.png");
 	if (!result)
 	{
 		return false;
@@ -47,7 +47,7 @@ bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight)
 	int2 ballSize = int2(15, 15);
 
 	float2 ballPosition = float2((p_windowWidth / 2.0f), (p_windowHeight / 2.0f));
-	float ballSpeed = 0.5f;
+	float ballSpeed = 0.25f;
 	float2 ballDirection = float2(20, 10).normalized();
 
 	BOBall* ball = new BOBall();
@@ -143,6 +143,7 @@ void BOObjectManager::Update(Uint32 p_deltaTime)
 						//Collision with hexagon
 						m_ballList[j]->SetDirection(BOPhysics::ReflectBallAroundNormal(m_ballList[j]->GetDirection(), normal));
 						m_ballList[j]->BouncedOnHexagon();
+						m_ballList[j]->SetFuel(0.0f);
 					
 						// Spawn powerup if there is one
 						if (m_blockList[i].GetPowerUp() == PUExtraBall)
@@ -204,7 +205,7 @@ void BOObjectManager::Update(Uint32 p_deltaTime)
 	{
 		if (m_ballList[i]->CanColide())
 		{
-			float2 result = BOPhysics::BallPadCollision(m_ballList[i]->GetBoundingSphere(), m_ballList[i]->GetDirection(), m_paddle.GetBoundingSphere(), m_paddle.GetRotation() - 15, 30);
+			float2 result = BOPhysics::BallPadCollision(m_ballList[i]->GetBoundingSphere(), m_ballList[i]->GetDirection(), m_paddle.GetBoundingSphere(), m_paddle.GetRotation() -45, 90);
 			if (!(result.x == 0 && result.y == 0))
 			{
 				m_ballList[i]->SetDirection(result);
