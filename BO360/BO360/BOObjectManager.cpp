@@ -243,7 +243,7 @@ void BOObjectManager::Update(double p_deltaTime)
 		m_ballList[i]->SetDirection((m_Shield.Update(p_deltaTime, m_ballList[i]->GetBoundingSphere(), m_ballList[i]->GetDirection())));
 	}
 
-	m_particleSystem.AddStationaryParticle(BALLTRAIL, 1000, m_ballList[0]->GetPosition(), false, 0, 0);
+	m_particleSystem.AddStationaryParticle(BALLTRAIL, 1.5, m_ballList[0]->GetPosition(), false, 0, 0);
 	m_particleSystem.Update(p_deltaTime);
 }
 

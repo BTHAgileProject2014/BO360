@@ -9,8 +9,8 @@ public:
 	BOMovingParticle();
 	~BOMovingParticle();
 
-	void Initialize(ParticleType p_type, Uint32 p_timeMS, float2 p_position, int2 p_size, bool p_rotate, float p_rotation, float p_angleIncrement, float2 p_direction, float p_speed);
-	void Update(Uint32 p_deltaTime);
+	void Initialize(ParticleType p_type, double p_timeS, float2 p_position, int2 p_size, bool p_rotate, float p_rotation, float p_angleIncrement, float2 p_direction, float p_speed);
+	void Update(double p_deltaTime);
 	void Draw(SDL_Texture* p_texture);
 
 	bool IsDead();
@@ -18,7 +18,7 @@ public:
 
 private:
 	ParticleType m_type;
-	int m_timeLeftMS;
+	double m_timeLeftS;
 
 	bool m_rotate;
 	float m_rotation;

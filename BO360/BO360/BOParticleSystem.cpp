@@ -74,7 +74,7 @@ void BOParticleSystem::Shutdown()
 }
 
 // Add a moving particle to the system.
-void BOParticleSystem::AddMovingParticle(ParticleType p_type, Uint32 p_timeMS, float2 p_position, bool p_rotate, float p_rotation, float p_angleIncrement, float2 p_direction, float p_speed)
+void BOParticleSystem::AddMovingParticle(ParticleType p_type, double p_timeS, float2 p_position, bool p_rotate, float p_rotation, float p_angleIncrement, float2 p_direction, float p_speed)
 {
 	if (m_currentParticles < m_maxParticles)
 	{
@@ -90,7 +90,7 @@ void BOParticleSystem::AddMovingParticle(ParticleType p_type, Uint32 p_timeMS, f
 		case(POWERUPDEBRIS) : { l_size = m_sizes[POWERUPDEBRIS];  break; }
 		}
 
-		l_particle.Initialize(p_type, p_timeMS, p_position, l_size, p_rotate, p_rotation, p_angleIncrement, p_direction, p_speed);
+		l_particle.Initialize(p_type, p_timeS, p_position, l_size, p_rotate, p_rotation, p_angleIncrement, p_direction, p_speed);
 
 		m_movingParticleList.push_back(l_particle);
 
@@ -99,7 +99,7 @@ void BOParticleSystem::AddMovingParticle(ParticleType p_type, Uint32 p_timeMS, f
 }
 
 // Add a particle that does not move to the system.
-void BOParticleSystem::AddStationaryParticle(ParticleType p_type, Uint32 p_timeMS, float2 p_position, bool p_rotate, float p_rotation, float p_angleIncrement)
+void BOParticleSystem::AddStationaryParticle(ParticleType p_type, double p_timeS, float2 p_position, bool p_rotate, float p_rotation, float p_angleIncrement)
 {
 	if (m_currentParticles < m_maxParticles)
 	{
@@ -115,7 +115,7 @@ void BOParticleSystem::AddStationaryParticle(ParticleType p_type, Uint32 p_timeM
 		case(POWERUPDEBRIS) : { l_size = m_sizes[POWERUPDEBRIS];  break; }
 		}
 
-		l_particle.Initialize(p_type, p_timeMS, p_position, l_size, p_rotate, p_rotation, p_angleIncrement);
+		l_particle.Initialize(p_type, p_timeS, p_position, l_size, p_rotate, p_rotation, p_angleIncrement);
 
 		m_stationaryParticleList.push_back(l_particle);
 
@@ -123,7 +123,7 @@ void BOParticleSystem::AddStationaryParticle(ParticleType p_type, Uint32 p_timeM
 	}
 }
 
-void BOParticleSystem::Update(Uint32 p_deltaTime)
+void BOParticleSystem::Update(double p_deltaTime)
 {
 	// Clean the lists from dead particles.
 	CleanLists();

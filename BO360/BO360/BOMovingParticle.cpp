@@ -10,10 +10,10 @@ BOMovingParticle::~BOMovingParticle()
 
 }
 
-void BOMovingParticle::Initialize(ParticleType p_type, Uint32 p_timeMS, float2 p_position, int2 p_size, bool p_rotate, float p_rotation, float p_angleIncrement, float2 p_direction, float p_speed)
+void BOMovingParticle::Initialize(ParticleType p_type, double p_timeS, float2 p_position, int2 p_size, bool p_rotate, float p_rotation, float p_angleIncrement, float2 p_direction, float p_speed)
 {
 	m_type = p_type;
-	m_timeLeftMS = p_timeMS;
+	m_timeLeftS = p_timeS;
 	m_position = p_position;
 	m_size = p_size;
 
@@ -31,7 +31,7 @@ void BOMovingParticle::Initialize(ParticleType p_type, Uint32 p_timeMS, float2 p
 	m_dead = false;
 }
 
-void BOMovingParticle::Update(Uint32 p_deltaTime)
+void BOMovingParticle::Update(double p_deltaTime)
 {
 	// Rotate if ment to be rotated.
 	if (m_rotate)
@@ -49,8 +49,8 @@ void BOMovingParticle::Update(Uint32 p_deltaTime)
 	m_position.y = (m_speed * p_deltaTime) * m_direction.y + m_position.y;
 
 	// Kill the particle if it runs out of time.
-	m_timeLeftMS -= p_deltaTime;
-	if (m_timeLeftMS < 0)
+	m_timeLeftS -= p_deltaTime;
+	if (m_timeLeftS < 0)
 	{
 		m_dead = true;
 	}
