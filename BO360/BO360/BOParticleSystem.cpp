@@ -15,12 +15,12 @@ bool BOParticleSystem::Initialize()
 	bool l_result = true;
 
 	// Empty all the lists.
-	m_movingParticleList.empty();
-	m_stationaryParticleList.empty();
-	m_textures.empty();
+	m_movingParticleList.clear();
+	m_stationaryParticleList.clear();
+	m_textures.clear();
 
 	// Define sizes.
-	m_sizes[BALLTRAIL] = int2(5, 5);
+	m_sizes[BALLTRAIL] = int2(10, 10);
 	m_sizes[BALLDEBRIS] = int2(5, 5);
 	m_sizes[BLOCKDEBRIS] = int2(10, 10);
 	m_sizes[POWERUPDEBRIS] = int2(5, 5);
@@ -59,7 +59,19 @@ bool BOParticleSystem::Initialize()
 
 void BOParticleSystem::Shutdown()
 {
+	for (int i = 0; i < m_textures.size(); i++)
+	{
+		BOGraphicInterface::DestroyTexture(m_textures[i]);
+	}
 
+	m_textures.clear();
+	m_textures.shrink_to_fit();
+
+	m_movingParticleList.clear();
+	m_movingParticleList.shrink_to_fit();
+
+	m_stationaryParticleList.clear();
+	m_stationaryParticleList.shrink_to_fit();
 }
 
 // Add a moving particle to the system.
@@ -71,10 +83,10 @@ void BOParticleSystem::AddMovingParticle(ParticleType p_type, Uint32 p_timeMS, f
 	// Set correct size
 	switch (p_type)
 	{
-	case(BALLTRAIL) :		{ l_size = m_sizes[BALLTRAIL];  break; }
-	case(BALLDEBRIS) :		{ l_size = m_sizes[BALLDEBRIS];  break; }
-	case(BLOCKDEBRIS) :		{ l_size = m_sizes[BLOCKDEBRIS];  break; }
-	case(POWERUPDEBRIS) :	{ l_size = m_sizes[POWERUPDEBRIS];  break; }
+		case(BALLTRAIL) :		{ l_size = m_sizes[BALLTRAIL];  break; }
+		case(BALLDEBRIS) :		{ l_size = m_sizes[BALLDEBRIS];  break; }
+		case(BLOCKDEBRIS) :		{ l_size = m_sizes[BLOCKDEBRIS];  break; }
+		case(POWERUPDEBRIS) :	{ l_size = m_sizes[POWERUPDEBRIS];  break; }
 	}
 
 	l_particle.Initialize(p_type, p_timeMS, p_position, l_size, p_rotate, p_rotation, p_angleIncrement, p_direction, p_speed);
@@ -91,10 +103,10 @@ void BOParticleSystem::AddStationaryParticle(ParticleType p_type, Uint32 p_timeM
 	// Set correct size
 	switch (p_type)
 	{
-	case(BALLTRAIL) : { l_size = m_sizes[BALLTRAIL];  break; }
-	case(BALLDEBRIS) : { l_size = m_sizes[BALLDEBRIS];  break; }
-	case(BLOCKDEBRIS) : { l_size = m_sizes[BLOCKDEBRIS];  break; }
-	case(POWERUPDEBRIS) : { l_size = m_sizes[POWERUPDEBRIS];  break; }
+		case(BALLTRAIL) : { l_size = m_sizes[BALLTRAIL];  break; }
+		case(BALLDEBRIS) : { l_size = m_sizes[BALLDEBRIS];  break; }
+		case(BLOCKDEBRIS) : { l_size = m_sizes[BLOCKDEBRIS];  break; }
+		case(POWERUPDEBRIS) : { l_size = m_sizes[POWERUPDEBRIS];  break; }
 	}
 
 	l_particle.Initialize(p_type, p_timeMS, p_position, l_size, p_rotate, p_rotation, p_angleIncrement);
@@ -122,56 +134,68 @@ void BOParticleSystem::Update(Uint32 p_deltaTime)
 
 void BOParticleSystem::CleanLists()
 {
-	bool l_keepCleaning;
-
-	// Iterate through the moving particles.
-	l_keepCleaning = true;
-	while (l_keepCleaning)
+	// Remove moving particles if they are to old.
+	for (int i = (m_movingParticleList.size() - 1); i > -1; i--)
 	{
-		l_keepCleaning = false;
-
-		// Remove moving particles if they are to old.
-		for (int i = 0; i < m_movingParticleList.size(); i++)
+		if (m_movingParticleList[i].IsDead())
 		{
-			if (m_movingParticleList[i].IsDead())
-			{
-				m_movingParticleList.erase(m_movingParticleList.begin() + i);
-				l_keepCleaning = true;
-
-				break;
-			}
+			m_movingParticleList.erase(m_movingParticleList.begin() + i);
 		}
 	}
 
-	// Iterate through the stationary particles.
-	l_keepCleaning = true;
-	while (l_keepCleaning)
+	// Remove stationary particles if they are to old.
+	for (int i = (m_stationaryParticleList.size() - 1); i > -1; i--)
 	{
-		l_keepCleaning = false;
-
-		// Remove stationary particles if they are to old.
-		for (int i = 0; i < m_stationaryParticleList.size(); i++)
+		if (m_stationaryParticleList[i].IsDead())
 		{
-			if (m_stationaryParticleList[i].IsDead())
-			{
-				m_stationaryParticleList.erase(m_stationaryParticleList.begin() + i);
-				l_keepCleaning = true;
-
-				break;
-			}
+			m_stationaryParticleList.erase(m_stationaryParticleList.begin() + i);
 		}
 	}
 }
 
 void BOParticleSystem::DrawParticles()
 {
+	// Draw all moving particles.
 	for (int i = 0; i < m_movingParticleList.size(); i++)
 	{
-		m_movingParticleList[i].Draw();
+		m_movingParticleList[i].Draw(GetTexture(m_movingParticleList[i].GetType()));
 	}
 
+	// Draw all stationary particles.
 	for (int i = 0; i < m_stationaryParticleList.size(); i++)
 	{
-		m_stationaryParticleList[i].Draw();
+		m_stationaryParticleList[i].Draw(GetTexture(m_movingParticleList[i].GetType()));
+	}
+}
+
+SDL_Texture* BOParticleSystem::GetTexture(ParticleType p_type)
+{
+	switch (p_type)
+	{
+		case BALLTRAIL:
+		{
+			return m_textures[BALLTRAIL];
+		}
+		
+		case BALLDEBRIS:
+		{
+			return m_textures[BALLDEBRIS];
+		}
+
+		case BLOCKDEBRIS:
+		{
+			return m_textures[BLOCKDEBRIS];
+		}
+
+		case POWERUPDEBRIS:
+		{
+			return m_textures[POWERUPDEBRIS];
+		}
+
+		default:
+		{
+			std::cout << "An unhandled particle type was deteced! (BOParticleSystem.cpp, GetTexture() function)" << std::endl;
+			break;
+		}
 	}
 }

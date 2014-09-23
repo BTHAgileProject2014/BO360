@@ -45,6 +45,13 @@ bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight)
 		return false;
 	}
 
+	// Initialize the pad.
+	result = m_particleSystem.Initialize();
+	if (!result)
+	{
+		return false;
+	}
+
 	// Initialize primary ball.
 	int2 ballSize = int2(15, 15);
 
@@ -97,7 +104,8 @@ bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight)
 
 void BOObjectManager::Shutdown()
 {
-
+	// Shut down the particle system.
+	m_particleSystem.Shutdown();
 }
 
 void BOObjectManager::Update(Uint32 p_deltaTime)
@@ -187,7 +195,8 @@ void BOObjectManager::Update(Uint32 p_deltaTime)
 
 	}
 
-
+	m_particleSystem.AddStationaryParticle(BALLTRAIL, 3000, m_ballList[0].GetPosition(), false, 0, 0);
+	m_particleSystem.Update(p_deltaTime);
 }
 
 void BOObjectManager::Draw()
@@ -196,10 +205,6 @@ void BOObjectManager::Draw()
 
 	m_blackHole.Draw();
 
-	for (int i = 0; i < m_ballList.size(); i++)
-	{
-		m_ballList[i].Draw();
-	}
 	for (int i = 0; i < m_blockList.size(); i++)
 	{
 		if (!m_blockList[i].GetDead())
@@ -209,9 +214,16 @@ void BOObjectManager::Draw()
 		
 	}
 
-	m_paddle.Draw();
+	m_particleSystem.DrawParticles();
 
+	for (int i = 0; i < m_ballList.size(); i++)
+	{
+		m_ballList[i].Draw();
+	}
+
+	m_paddle.Draw();
 }
+
 void BOObjectManager::BallDirectionChange(int p_bounceCorner)
 {
 	if (p_bounceCorner == 0)

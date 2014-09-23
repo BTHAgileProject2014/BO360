@@ -26,6 +26,7 @@ public:
 
 private:
 	void CleanLists();
+	SDL_Texture* GetTexture(ParticleType p_type);
 
 	std::vector<BOMovingParticle> m_movingParticleList;
 	std::vector<BOStationaryParticle> m_stationaryParticleList;

@@ -13,6 +13,7 @@
 #include "BOPUSubscriber.h"
 #include "BOPowerUpManager.h"
 #include "BOSoundManager.h"
+#include "BOParticleSystem.h"
 #include <vector>
 
 class BOObjectManager : public BOComponent, public BOPUSubscriber
@@ -39,7 +40,6 @@ private:
 	std::vector<BOBall> m_ballList;
 	BOPaddle m_paddle;
 	std::vector<BOBlock> m_blockList;
-	//std::vector<BOParticle> m_particleList;
-	//std::vector<BOPowerUp> m_powerUPlist;
+	BOParticleSystem m_particleSystem;
 };
 #endif
