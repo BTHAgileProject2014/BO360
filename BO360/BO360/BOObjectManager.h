@@ -44,6 +44,7 @@ private:
 	std::vector<BOBall*> m_ballList;
 	BOPaddle m_paddle;
 	BOShield m_Shield;
+	int2 m_windowsSize;
   
 	std::vector<BOBlock> m_blockList;
 	//std::vector<BOParticle> m_particleList;

@@ -11,9 +11,7 @@ BOObjectManager::~BOObjectManager()
 
 bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight)
 {
-	int2 windowSize;
-	windowSize.x = p_windowWidth;
-	windowSize.y = p_windowHeight;
+	m_windowsSize = int2(p_windowWidth, p_windowHeight);
 	bool result;
 	m_hasColided = false;
 	testStopPU = false;
@@ -53,7 +51,7 @@ bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight)
 	float2 ballDirection = float2(20, 10).normalized();
 
 	BOBall* ball = new BOBall();
-	result = ball->Initialize(ballPosition, ballSize, "Bilder/placeholderBoll10x10.png", ballSpeed, ballDirection, windowSize);
+	result = ball->Initialize(ballPosition, ballSize, "Bilder/placeholderBoll10x10.png", ballSpeed, ballDirection, m_windowsSize);
 	if (!result)
 	{
 		return false;
@@ -93,7 +91,7 @@ bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight)
 		}
 		else if (i == 0)
 		{
-			result = l_block.Initialize(float2(x, y), int2(40, 40), "Bilder/placeholderHexagon40x40.png", PUShield);
+			result = l_block.Initialize(float2(x, y), int2(40, 40), "Bilder/placeholderHexagon40x40.png", PUExtraBall);
 		}
 		
 
@@ -103,7 +101,7 @@ bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight)
 	test = float2(10,10);*/
 	BOPowerUpManager::AddSubscriber(this);
 
-	m_Shield.Initialize(int2(200, 200), "Bilder/placeholderSheild.png", int2(p_windowWidth, p_windowHeight));
+	m_Shield.Initialize(int2(200, 200), "Bilder/placeholderSheild.png", m_windowsSize);
 	return true;
 }
 
@@ -150,14 +148,14 @@ void BOObjectManager::Update(Uint32 p_deltaTime)
 						if (m_blockList[i].GetPowerUp() == PUExtraBall)
 						{
 							BOMultiballs* extraBall = new BOMultiballs();
-							extraBall->Initialize(m_blockList[i].GetPosition(), int2(40, 40), "Bilder/placeholderPowerupMultBall.png", 0.5f, int2(1300, 900) );
+							extraBall->Initialize(m_blockList[i].GetPosition(), int2(40, 40), "Bilder/placeholderPowerupMultBall.png", 0.5f, m_windowsSize);
 							extraBall->SetActive(true);
 							BOPowerUpManager::AddPowerUp(extraBall);
 						}
 						else if (m_blockList[i].GetPowerUp() == PUShield)
 						{
 							BOShieldPU* shield = new BOShieldPU();
-							shield->Initialize(m_blockList[i].GetPosition(), int2(40, 40), "Bilder/placeholderSheildPowerUp1.png", 0.5f, int2(1300, 900));
+							shield->Initialize(m_blockList[i].GetPosition(), int2(40, 40), "Bilder/placeholderSheildPowerUp1.png", 0.5f, m_windowsSize);
 							BOPowerUpManager::AddPowerUp(shield);
 						}
 
@@ -179,11 +177,19 @@ void BOObjectManager::Update(Uint32 p_deltaTime)
 		if (!(result.x == 0 && result.y == 0))
 		{
 			BOPowerUp* pu = BOPowerUpManager::GetPowerUp(i);
-			//BOMultiballs* mb = (BOMultiballs*)pu;
-			//mb->Activate();
-			//BOMultiballs* spt = dynamic_cast<BOMultiballs*>(pu);
-			BOShieldPU* sp = (BOShieldPU*)pu;
-			sp->Activate();
+			BOShieldPU* puShield;
+			BOMultiballs* puBall;
+			switch (pu->GetType())
+			{
+			case PUShield:
+				puShield = (BOShieldPU*)pu;
+				puShield->Activate();
+				break;
+			case PUExtraBall:
+				puBall = (BOMultiballs*)pu;
+				puBall->Activate();
+				break;
+			}
 			BOPowerUpManager::RemovePowerUp(i);
 		}		
 		else if (BOPhysics::CheckCollisionSpheres(BOPowerUpManager::GetPowerUp(i)->GetBoundingSphere(), sphere(m_blackHole.GetPosition(), 1)))

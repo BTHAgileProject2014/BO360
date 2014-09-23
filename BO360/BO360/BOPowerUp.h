@@ -19,6 +19,7 @@ public:
 	virtual bool GetActive();
 	virtual void SetActive(bool p_isActive);
 	virtual float2 GetDirection();
+	PowerUpTypes GetType();
 
 protected:
 	bool m_hasSpawned;
@@ -27,6 +28,7 @@ protected:
 	float2 m_direction;
 	bool m_isActive;
 	bool m_hasActivated;
+	PowerUpTypes m_type;
 };
 
 #endif

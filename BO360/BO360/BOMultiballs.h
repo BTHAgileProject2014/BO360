@@ -13,6 +13,7 @@ public:
 
 	void SwitchActive();
 
+	bool Initialize(float2 p_position, int2 p_size, std::string p_fileName, float p_speed, int2 p_windowSize);
 	void Activate();
 	void Deactivate();
 

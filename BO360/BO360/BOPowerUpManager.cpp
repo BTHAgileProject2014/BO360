@@ -43,6 +43,7 @@ void BOPowerUpManager::AddPowerUp(BOPowerUp* p_powerUp)
 
 void BOPowerUpManager::RemovePowerUp(int p_remove)
 {
+	delete m_powerUps[p_remove];
 	m_powerUps.erase(m_powerUps.begin() + p_remove);
 }
 
