@@ -45,9 +45,8 @@ bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight)
 	}
 
 	// Initialize the particle system.
-	SecondsPerParticle = 0.0f;
-	int l_maxParticles = 5000;
-	result = m_particleSystem.Initialize(l_maxParticles);
+	m_SecondsPerParticle = 0.0f;
+	result = m_particleSystem.Initialize(MAXPARTICLES);
 	if (!result)
 	{
 		return false;
@@ -153,10 +152,21 @@ void BOObjectManager::Update(double p_deltaTime)
 			{
 					if (BOPhysics::CheckCollisionSphereToHexagon(m_ballList[j]->GetBoundingSphere(), m_blockList[i].GetBoundingHexagon(), normal))
 					{
-						// Block dead, dead = true, stop checking collision and drawing block
+						// Block dead, dead = true, stop checking collision and drawing block.
 						m_blockList[i].SetDead();
 
-						//Collision with hexagon
+						int l_parts = rand() % PARTICLESPEREXPLOSION.x + PARTICLESPEREXPLOSION.y;
+						for (int p = 0; p < l_parts; p++)
+						{
+							float2 l_position = m_blockList[i].GetPosition();
+							int l_angle = rand() % PARTICLEROTATIONVARIATION - (PARTICLEROTATIONVARIATION / 2);
+							float2 l_direction = float2(1 * sin(l_angle), 1 * cos(l_angle));
+							float l_speed = rand() % PARTICLESEXPLOSIONSPEED.x + PARTICLESEXPLOSIONSPEED.y;
+
+							m_particleSystem.AddMovingParticle(BLOCKDEBRIS, 0.20f, l_position, false, l_angle, 0, l_direction, l_speed);
+						}
+
+						// Collision with hexagon.
 						m_ballList[j]->SetDirection(BOPhysics::ReflectBallAroundNormal(m_ballList[j]->GetDirection(), normal));
 						m_ballList[j]->BouncedOnHexagon();
 						m_ballList[j]->SetFuel(0.0f);
@@ -207,9 +217,11 @@ void BOObjectManager::Update(double p_deltaTime)
 				puBall = (BOMultiballs*)pu;
 				puBall->Activate();
 				break;
-				}
-			BOPowerUpManager::RemovePowerUp(i);
 			}
+
+			BOPowerUpManager::RemovePowerUp(i);
+		}
+
 		else if (BOPhysics::CheckCollisionSpheres(BOPowerUpManager::GetPowerUp(i)->GetBoundingSphere(), sphere(m_blackHole.GetPosition(), 1)))
 		{
 			BOPowerUpManager::RemovePowerUp(i);
@@ -221,37 +233,64 @@ void BOObjectManager::Update(double p_deltaTime)
 		if (m_ballList[i]->CanColide())
 		{
 			float2 result = BOPhysics::BallPadCollision(m_ballList[i]->GetBoundingSphere(), m_ballList[i]->GetDirection(), m_paddle.GetBoundingSphere(), m_paddle.GetRotation() -45, 90);
-		if (!(result.x == 0 && result.y == 0))
-		{
-				m_ballList[i]->SetDirection(result);
-				m_ballList[i]->BouncedOnPad();
+			
+			if (!(result.x == 0 && result.y == 0))
+			{
+					m_ballList[i]->SetDirection(result);
+					m_ballList[i]->BouncedOnPad();
+			}
 		}
-	}
 		
-	if (m_ballList[i]->GetFuel() <= 0)
-	{
-		//Runs tha gravity... lawl... Rotates the direction depending on distance
+		if (m_ballList[i]->GetFuel() <= 0)
+		{
+			//Runs tha gravity... lawl... Rotates the direction depending on distance
 			m_ballList[i]->SetDirection(BOPhysics::BlackHoleGravity(m_ballList[i]->GetBoundingSphere(), m_ballList[i]->GetDirection(), m_ballList[i]->GetSpeed(), m_blackHole.GetBoundingSphere(), p_deltaTime));
-	}
+		}
 
-	else
-	{
-		//Beräkna bränsle
-		m_ballList[i]->SetFuel(BOPhysics::CalculateBallFuel(m_ballList[i]->GetFuel()));
+		else
+		{
+			//Beräkna bränsle
+			m_ballList[i]->SetFuel(BOPhysics::CalculateBallFuel(m_ballList[i]->GetFuel()));
+		}
 
-	}
 		//Updaterar skölden
 		m_ballList[i]->SetDirection((m_Shield.Update(p_deltaTime, m_ballList[i]->GetBoundingSphere(), m_ballList[i]->GetDirection())));
 	}
 
 	if (BALLDEBUGTRAIL == 1)
 	{
-		SecondsPerParticle -= p_deltaTime;
+		m_SecondsPerParticle -= p_deltaTime;
 
-		if (SecondsPerParticle < 0.0f)
+		if (m_SecondsPerParticle < 0.0f)
 		{
-			SecondsPerParticle = 0.002f;
-			m_particleSystem.AddStationaryParticle(DEBUGTRAIL, 2, m_ballList[0]->GetPosition(), false, 0, 0);
+			m_SecondsPerParticle = 0.002f;
+
+			for (int i = 0; i < m_ballList.size(); i++)
+			{
+				m_particleSystem.AddStationaryParticle(DEBUGTRAIL, 2.0f, m_ballList[i]->GetPosition(), false, 0, 0);
+			}
+		}
+	}
+
+	else
+	{
+		m_SecondsPerParticle -= p_deltaTime;
+
+		if (m_SecondsPerParticle < 0.0f)
+		{
+			m_SecondsPerParticle = 0.025f;
+
+			for (int i = 0; i < m_ballList.size(); i++)
+			{
+				float2 l_position = m_ballList[i]->GetPosition();
+				int l_offset = rand() % PARTICLEPOSITIONOFFSET - (PARTICLEPOSITIONOFFSET / 2);
+				int l_rotation = rand() % PARTICLEROTATIONVARIATION - (PARTICLEROTATIONVARIATION / 2);
+
+				l_position.x += l_offset;
+				l_position.y += l_offset;
+
+				m_particleSystem.AddStationaryParticle(BALLTRAIL, 1.0f, l_position, true, l_rotation, l_rotation);
+			}
 		}
 	}
 

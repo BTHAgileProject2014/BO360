@@ -24,20 +24,20 @@ bool BOStateManager::Initialize(int2 p_screenSize)
 
 	// Setup pause menu.
 	l_menuPosition = float2(50, 50);
-	result = m_paused.Initialize(float2(0, 0), p_screenSize, l_menuPosition, "PAUSE MENU", "Bilder/Menu/MainMenuBackground.png");
+	result = m_paused.Initialize(float2(p_screenSize.x / 2, p_screenSize.y / 2), p_screenSize, l_menuPosition, "PAUSE MENU", "Bilder/Menu/MainMenuBackground.png");
 	m_paused.AddButton(float2(l_menuPosition.x, l_menuPosition.y + 70), int2(250, 75), l_menuPosition, "Bilder/Menu/Button", "RESUME", RESUME, " ");
 	m_paused.AddButton(float2(l_menuPosition.x, l_menuPosition.y + 70), int2(250, 75), l_menuPosition, "Bilder/Menu/Button", "QUIT", QUIT, " ");
 	m_paused.AddButton(float2(l_menuPosition.x, l_menuPosition.y + 70), int2(250, 75), l_menuPosition, "Bilder/Menu/Button", "EXIT", EXIT, " ");
 
 	// Setup end screen menus.
 	l_menuPosition = float2(50, 50);
-	result = m_victory.Initialize(float2(0, 0), p_screenSize, l_menuPosition, "VICTORY", "Bilder/Menu/MainMenuBackground.png");
+	result = m_victory.Initialize(float2(p_screenSize.x / 2, p_screenSize.y / 2), p_screenSize, l_menuPosition, "VICTORY", "Bilder/Menu/MainMenuBackground.png");
 	m_victory.AddButton(float2(l_menuPosition.x, l_menuPosition.y + 70), int2(250, 75), l_menuPosition, "Bilder/Menu/Button", "NEXT", NEXT, " ");
 	m_victory.AddButton(float2(l_menuPosition.x, l_menuPosition.y + 70), int2(250, 75), l_menuPosition, "Bilder/Menu/Button", "QUIT", QUIT, " ");
 	m_victory.AddButton(float2(l_menuPosition.x, l_menuPosition.y + 70), int2(250, 75), l_menuPosition, "Bilder/Menu/Button", "EXIT", EXIT, " ");
 
 	l_menuPosition = float2(50, 50);
-	result = m_defeat.Initialize(float2(0, 0), p_screenSize, l_menuPosition, "DEFEAT", "Bilder/Menu/MainMenuBackground.png");
+	result = m_defeat.Initialize(float2(p_screenSize.x / 2, p_screenSize.y / 2), p_screenSize, l_menuPosition, "DEFEAT", "Bilder/Menu/MainMenuBackground.png");
 	m_defeat.AddButton(float2(l_menuPosition.x, l_menuPosition.y + 70), int2(250, 75), l_menuPosition, "Bilder/Menu/Button", "RETRY", RETRY, " ");
 	m_defeat.AddButton(float2(l_menuPosition.x, l_menuPosition.y + 70), int2(250, 75), l_menuPosition, "Bilder/Menu/Button", "QUIT", QUIT, " ");
 	m_defeat.AddButton(float2(l_menuPosition.x, l_menuPosition.y + 70), int2(250, 75), l_menuPosition, "Bilder/Menu/Button", "EXIT", EXIT, " ");

@@ -20,7 +20,7 @@ bool BOParticleSystem::Initialize(int p_maxParticles)
 
 	// Define sizes.
 	m_sizes[BALLTRAIL] = int2(10, 10);
-	m_sizes[BALLDEBRIS] = int2(5, 5);
+	m_sizes[BALLDEBRIS] = int2(20, 20);
 	m_sizes[BLOCKDEBRIS] = int2(10, 10);
 	m_sizes[POWERUPDEBRIS] = int2(5, 5);
 	m_sizes[DEBUGTRAIL] = int2(3, 3);

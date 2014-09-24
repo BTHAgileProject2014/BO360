@@ -1,6 +1,12 @@
 #ifndef BOOBJECTMANGAGER_H_
 #define BOOBJECTMANGAGER_H_
 
+#define MAXPARTICLES 5000
+#define PARTICLEPOSITIONOFFSET 17
+#define PARTICLEROTATIONVARIATION 361
+#define PARTICLESEXPLOSIONSPEED int2(200, 50) // MAX, MIN
+#define PARTICLESPEREXPLOSION int2(50, 25) // MAX, MIN
+
 #include "BOComponent.h"
 #include "BOBackground.h"
 #include "BOObject.h"
@@ -48,7 +54,7 @@ private:
   
 	std::vector<BOBlock> m_blockList;
 
-	double SecondsPerParticle;
+	double m_SecondsPerParticle;
 	BOParticleSystem m_particleSystem;
 };
 #endif
