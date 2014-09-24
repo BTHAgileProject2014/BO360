@@ -399,11 +399,11 @@ enum KeyMessages
 
 enum Sound
 {
-	sound_pop,
-	sound_die,
-	sound_powerup,
-	sound_teleport,
-	sound_bounceOnPad
+	SOUND_POP,
+	SOUND_DIE,
+	SOUND_POWERUP,
+	SOUND_TELEPORT,
+	SOUND_BOUNCEONPAD
 };
 
 // Sphere for collision check

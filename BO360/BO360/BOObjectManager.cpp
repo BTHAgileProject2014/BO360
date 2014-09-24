@@ -79,7 +79,7 @@ bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight)
 	float l_blockHeightDifference = 19;
 
 	// Load blocks.
-	for (int i = 0; i < m_blockPositions.size();  i++)
+	for (int i = 0; i < m_blockPositions.size(); i++)
 	{
 		BOBlock l_block;
 		x = (32 * m_blockPositions[i].x) + 60;
@@ -91,7 +91,19 @@ bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight)
 		}
 
 		// Create block.
-		if (i != 0)
+		if (i == 0)
+		{
+			result = l_block.Initialize(float2(x, y), int2(40, 40), "Bilder/placeholderHexagon40x40.png", PUShield);
+		}
+		else if (i == 1)
+		{
+			result = l_block.Initialize(float2(x, y), int2(40, 40), "Bilder/placeholderHexagon40x40.png", PUExtraBall);
+		}
+		else if (i == 2)
+		{
+			result = l_block.Initialize(float2(x, y), int2(40, 40), "Bilder/placeholderHexagon40x40.png", PUBiggerPad);
+		}
+		else
 		{
 			result = l_block.Initialize(float2(x, y), int2(40, 40), "Bilder/placeholderHexagon40x40.png", PUNone);
 			if (!result)
@@ -99,11 +111,6 @@ bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight)
 				return false;
 			}
 		}
-		else if (i == 0)
-		{
-			result = l_block.Initialize(float2(x, y), int2(40, 40), "Bilder/placeholderHexagon40x40.png", PUShield);
-		}
-		
 
 		m_blockList.push_back(l_block);
 	}
@@ -186,7 +193,7 @@ void BOObjectManager::Update(double p_deltaTime)
 						}
 
 						// Collision therfore play popsound
-						BOSoundManager::PlaySound(sound_pop);
+						BOSoundManager::PlaySound(SOUND_POP);
 						break;
 					}
 				}
@@ -203,7 +210,7 @@ void BOObjectManager::Update(double p_deltaTime)
 		if (!(result.x == 0 && result.y == 0))
 		{
 			// Play sound for PowerUp catched
-			BOSoundManager::PlaySound(sound_powerup);
+			BOSoundManager::PlaySound(SOUND_POWERUP);
 
 			BOPowerUp* pu = BOPowerUpManager::GetPowerUp(i);
 			BOShieldPU* puShield;
@@ -239,7 +246,7 @@ void BOObjectManager::Update(double p_deltaTime)
 				m_ballList[i]->BouncedOnPad();
 
 				// Play sound for bounce on pad
-				BOSoundManager::PlaySound(sound_bounceOnPad);
+				BOSoundManager::PlaySound(SOUND_BOUNCEONPAD);
 			}
 
 			// Check if ball has entered the black hole and should die

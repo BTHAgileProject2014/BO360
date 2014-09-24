@@ -92,20 +92,20 @@ void BOSoundManager::PlaySound(Sound p_sound)
 {
 	switch (p_sound)
 	{
-	case sound_pop:
+	case SOUND_POP:
 		// Play in channel 0 so pop sound resets every time it plays
 		Mix_PlayChannel(0, GetInstance().m_popHex, 0);
 		break;
-	case sound_die:
+	case SOUND_DIE:
 		Mix_PlayChannel(-1, GetInstance().m_dying, 0);	// Channel -1 is nearest avaiable channel
 		break;
-	case sound_powerup:
+	case SOUND_POWERUP:
 		Mix_PlayChannel(-1, GetInstance().m_powerup, 0);
 		break;
-	case sound_teleport:
+	case SOUND_TELEPORT:
 		Mix_PlayChannel(-1, GetInstance().m_teleport, 0);
 		break;
-	case sound_bounceOnPad:
+	case SOUND_BOUNCEONPAD:
 		Mix_PlayChannel(-1, GetInstance().m_bounceOnPad, 0);
 		break;
 	}
