@@ -294,7 +294,7 @@ void BOObjectManager::Update(double p_deltaTime)
 					{
 						AddNewBall();
 					}
-		}
+				}
 			}
 		}
 		
