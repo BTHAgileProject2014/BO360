@@ -370,7 +370,6 @@ void BOObjectManager::CheckBallOutOfBounds(int p_index)
 	int changePosToo = 10;
 	int checkPixelsInwards = 7;
 	float2 ballPos = m_ballList[p_index]->GetPosition();
-	std::cout << ballPos.y << std::endl;
 
 	if (ballPos.x >= m_windowsSize.x - checkPixelsInwards)//If out of bounds to the right
 	{
