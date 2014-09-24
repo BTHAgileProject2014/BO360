@@ -24,6 +24,7 @@
 #include "BOShield.h"
 #include "BOShieldPU.h"
 #include "BOParticleSystem.h"
+#include "BOHUDManager.h"
 #include <vector>
 
 class BOObjectManager : public BOComponent, public BOPUSubscriber
@@ -37,10 +38,14 @@ public:
 	void Update(double p_deltaTime);
 	void Draw();
 	void Handle(PowerUpTypes p_type, bool p_activated);
+	bool AddNewBall();
+	bool LostGame();
 
 private:
+	void CheckBallOutOfBounds(int p_index);
+
 	bool m_hasColided;
-	bool testStopPU;
+	int m_life;
 
 	BOMapLoader m_mapLoader;
 	std::vector<float2> m_blockPositions;
@@ -51,6 +56,12 @@ private:
 	BOPaddle m_paddle;
 	BOShield m_Shield;
 	int2 m_windowsSize;
+  
+	int2 m_ballSize;
+	float2 m_ballStartPosition;
+	float m_ballSpeed;
+	float2 m_ballDirection;
+	
   
 	std::vector<BOBlock> m_blockList;
 

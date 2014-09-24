@@ -2,7 +2,7 @@
 #define BOUTILITY_H_
 #include <math.h>
 
-#define BALLDEBUGTRAIL 0
+#define BALLDEBUGTRAIL 1
 
 // Floating point value structs.
 struct float2
@@ -348,6 +348,8 @@ struct InputMessages
 	bool leftArrow;
 	bool upArrow;
 	bool downArrow;
+	bool zKey;
+	bool xKey;
 };
 
 enum GameState
@@ -392,15 +394,19 @@ enum KeyMessages
 	leftMouseKey,
 	rightMouseKey,
 	middleMouseKey,
-	spacebarKey
+	spacebarKey,
+	zKey,
+	xKey,
+	escKey
 };
 
 enum Sound
 {
-	sound_pop,
-	sound_die,
-	sound_powerup,
-	sound_teleport
+	SOUND_POP,
+	SOUND_DIE,
+	SOUND_POWERUP,
+	SOUND_TELEPORT,
+	SOUND_BOUNCEONPAD
 };
 
 // Sphere for collision check

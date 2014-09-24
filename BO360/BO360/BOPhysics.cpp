@@ -218,47 +218,6 @@ void BOPhysics::CheckCollisionSphereToLine(sphere p_sphere, float2 p_point1, flo
 	}
 }
 
-int BOPhysics::CheckCollisioPadSphere(sphere p_sphere, float2 p_sphereDir, sphere p_padSphere, double p_startAngle, double p_endAngle)
-{
-	float2 centerPad, centerBall;
-	float padRadius, ballRadius;
-	centerPad = p_padSphere.pos;
-	centerBall = p_sphere.pos;
-	padRadius = p_padSphere.radius;
-	ballRadius = p_sphere.radius;
-	if (CheckCollisionSpheres(p_sphere, p_padSphere))
-	{
-		if (!CollisionRadiusRadius(centerPad, (padRadius - 10), centerBall, ballRadius))
-		{
-			if (BallPadCollision(p_sphere, p_sphereDir, p_padSphere, p_startAngle, p_endAngle).x > 0)
-			{
-				if ((centerBall.x <= (centerPad.x + 80.0f)) && (centerBall.x >= (centerPad.x - 80.0f)) && (centerBall.y <= centerPad.y))
-				{
-					return 1;
-				}
-				else if ((centerBall.x <= (centerPad.x + 80.0f)) && (centerBall.x >= (centerPad.x - 80.0f)) && (centerBall.y >= centerPad.y))
-				{
-					return 2;
-				}
-				else if ((centerBall.y <= (centerPad.y + 80.0f)) && (centerBall.y >= (centerPad.y - 80.0f)) && (centerBall.x <= centerPad.x))
-				{
-					return 3;
-				}
-				else
-				{
-					return 4;
-				}
-			}
-		}
-	}
-	return 0;
-}
-
-bool BOPhysics::CheckBallInPadAngle(float2 p_centerPad, float p_radiusPad, double p_padRotation, float2 p_centerBall, float p_radiusBall)
-{
-	return true;
-}
-
 /// <summary> 
 /// Generates a new direction for the ball if it hits the pad.
 /// Returns (0,0) if there is no collision.
@@ -414,41 +373,24 @@ float2 BOPhysics::ReflectBallAroundNormal(float2 p_ballDir, float2 p_normal)
 	return newBallDir;
 }
 
-float2 BOPhysics::BlackHoleGravity(sphere p_Ball, float2 p_BallDirection, float p_BallSpeed, sphere p_BlackHole, double p_DeltaTime)
+float2 BOPhysics::BlackHoleGravity(sphere p_ball, float2 p_ballDirection, float p_ballSpeed, sphere p_blackHole, double p_deltaTime)
 {
-	double deltaTime = p_DeltaTime;
-	sphere blackHole = p_BlackHole;
-	blackHole.radius -= 15;
-	float speed = p_BallSpeed;
-	float2 newDirection = p_BallDirection;
-	float2 center = float2(p_BlackHole.pos - p_Ball.pos);
-	double G = 0.067;
+	float2 newDirection = p_ballDirection;
+	float2 center = float2(p_blackHole.pos - p_ball.pos); //En vektor mot hålet från bollen
+	const double G = 0.000000000067;		//Gravitations konstant 6,7 * 10^-11
 
-	float ballHoleDist = CalculateDistance(p_Ball.pos, p_BlackHole.pos);//Checks how far away the ball is
-	float origoHoleDist = CalculateDistance(float2(0, 0), p_BlackHole.pos);
-	float distanceAdjustment = 0;
-	double force = 0;
-	distanceAdjustment = origoHoleDist - ballHoleDist;
-	double rSquare = (distanceAdjustment*distanceAdjustment);
-	if (CheckCollisionSpheres(p_Ball, blackHole))//If inside Blackhole perimiter then suck the ball in
-	{
-		force = distanceAdjustment / 50000;
-		//force = G * 10 / rSquare;
-	}
-	else//If not then nudge the ball twoards the black hole
-	{
-		force = distanceAdjustment / 20000000;
-		//force = G * 10 / rSquare;
+	float distanceAdjustment = CalculateDistance(p_ball.pos, p_blackHole.pos);// Beräkna radien mellan bollen och hålet
 		
-	}
-	//force = G * 100 / rSquare;
- 	center = center * force;
+	double force = ((G * 5000000000000) / (distanceAdjustment*distanceAdjustment)); // F = G*M/R^2  -> Gravitations formel
 
-	newDirection = float2(newDirection.x * speed * deltaTime, newDirection.y * speed * deltaTime);
-	newDirection = float2(newDirection.x + center.x, newDirection.y + center.y);
+	center = center.normalized();//Normaliserar vektorn mot hålet 
+ 	center = center * force;//Multiplicerar vektorn mot hålet med kraften
 
-	newDirection = newDirection.normalized();
-	return newDirection;
+	
+	newDirection = float2(newDirection.x * p_ballSpeed * p_deltaTime, newDirection.y * p_ballSpeed * p_deltaTime);//Beräknar längden av bollens riktningsvektor
+	newDirection = float2(newDirection.x + center.x, newDirection.y + center.y);//Lägger på vektorn mot hålet
+
+	return newDirection = newDirection.normalized();//Returnerar den normaliserade riktningsvektorn.
 }
 
 float BOPhysics::CalculateDistance(float2 p_Ball, float2 p_BlackHole)
@@ -458,7 +400,5 @@ float BOPhysics::CalculateDistance(float2 p_Ball, float2 p_BlackHole)
 
 float BOPhysics::CalculateBallFuel(float p_Fuel)
 {
-	std::cout << p_Fuel << std::endl;
-	float fuel = p_Fuel - 0.1f;
-	return fuel;
+	return p_Fuel - 0.1f;
 }

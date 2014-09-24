@@ -177,7 +177,7 @@ SDL_Texture* BOGraphicInterface::DrawTextToTexture(std::string p_text, int3 p_te
 	if (font == NULL)
 	{
 		std::cout << "Failed to load font! SDL_ttf Error: " << TTF_GetError() << "\n";
-		return false;
+		return NULL;
 	}
 
 	// The new texture
@@ -189,6 +189,11 @@ SDL_Texture* BOGraphicInterface::DrawTextToTexture(std::string p_text, int3 p_te
 	// Render text surface
 	//SDL_Surface* textSurface = TTF_RenderText_Solid(font, p_text.c_str(), textColor);
 	SDL_Surface* textSurface = TTF_RenderText_Blended_Wrapped(font, p_text.c_str(), textColor, p_maxWidth);
+	if (textSurface == NULL)
+	{
+		std::cout << "Failed to create surface! (DrawTextToTexture())\n";
+		return NULL;
+	}
 
 	// Create texture from surface pixels
 	texture = SDL_CreateTextureFromSurface(m_renderer, textSurface);

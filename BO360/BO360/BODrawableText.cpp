@@ -15,7 +15,6 @@ bool BODrawableText::Initialize(float2 p_position, std::string p_text, int3 p_co
 	m_position = p_position;
 	m_text = p_text;
 	m_texture = BOGraphicInterface::DrawTextToTexture(m_text, p_color, &m_size, p_fontSize, p_maxWidth);
-	m_enabled = true;
 	m_fontSize = p_fontSize;
 	return true;
 }
@@ -27,10 +26,7 @@ void BODrawableText::Shutdown()
 
 void BODrawableText::Draw()
 {
-	if (m_enabled)
-	{
-		BOGraphicInterface::Draw(m_texture, m_position, m_size);
-	}
+	BOGraphicInterface::Draw(m_texture, m_position, m_size);
 }
 
 void BODrawableText::SetPosition(float2 p_position)
@@ -53,9 +49,4 @@ float2 BODrawableText::GetPosition()
 int2 BODrawableText::GetSize()
 {
 	return m_size;
-}
-
-void BODrawableText::EnableText(bool p_enable)
-{
-	m_enabled = p_enable;
 }

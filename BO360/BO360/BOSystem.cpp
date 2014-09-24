@@ -84,6 +84,14 @@ bool BOSystem::InitializeMap()
 		return false;
 	}
 
+	result = BOHUDManager::Initialize();
+	if (!result)
+	{
+		std::cout << "Initialize HUD failed!" << std::endl;
+
+		return false;
+	}
+
 	// Initilialize the object manager.
 	result = m_objectManager.Initialize(m_windowWidth, m_windowHeight);
 	if (!result)
@@ -101,17 +109,8 @@ bool BOSystem::InitializeMap()
 		return false;
 	}
 
-	result = BOHUDManager::Initialize();
-	if (!result)
-	{
-		std::cout << "Initialize HUD failed!" << std::endl;
-
-		return false;
-	}
-
 	// Example usage of HUD
 	BOHUDManager::SetScore(10);
-	BOHUDManager::SetLives(5);
 	BOHUDManager::SetLevel(1);
 
 	return true;
@@ -132,33 +131,43 @@ bool BOSystem::Run()
 			m_deltaTime = 0.1;
 		}
 
-		// ========== UPDATE =========
+	// ========== UPDATE =========
 
-		// Tick the timer.
+	// Tick the timer.
 		m_totalTime = m_timer.GetTotalTimeS();
 		m_FPS = m_timer.FPS();
 
-		// Output the total time and delta time to the window title for debugging.
-		#ifdef DEBUG	
-				m_string = "Total time: " + std::to_string(m_totalTime) + " seconds. Delta time: " + std::to_string(m_deltaTime) + " milliseconds. FPS: " + std::to_string(m_FPS);
-				BOGraphicInterface::SetWindowTitle(m_string);
-		#endif
+	// Output the total time and delta time to the window title for debugging.
+#ifdef DEBUG
+		m_string = "Total time: " + std::to_string(m_totalTime) + " seconds. Delta time: " + std::to_string(m_deltaTime) + " milliseconds. FPS: " + std::to_string(m_FPS);
+		BOGraphicInterface::SetWindowTitle(m_string);
+#endif
 
-		// Update the input manager.
-		result = m_input.Update();
+	// Update the input manager.
+	result = m_input.Update();
 
 		if (m_gameState == RUNNING)
 		{
 			// Update all of the objects.
-			m_objectManager.Update(m_deltaTime);
+	m_objectManager.Update(m_deltaTime);
 
 			// Update the power ups.
-			m_powerUpManager.Update(m_deltaTime);
+	m_powerUpManager.Update(m_deltaTime);
 
 			// Update the sound Engine.
-			BOSoundManager::Update(); // Empty so far.
-		}
+	BOSoundManager::Update(); // Empty so far.
 
+		if (m_objectManager.LostGame())
+		{
+			// Shutdown map
+			m_objectManager.Shutdown();
+			m_powerUpManager.Shutdown();
+			BOHUDManager::Shutdown();
+
+			// Go to defeat screen
+			m_gameState = DEFEAT;
+		}
+		}
 		else
 		{
 			// Update approperiate menu and handle the actions.
@@ -170,24 +179,24 @@ bool BOSystem::Run()
 			}
 		}
 
-		// ============================
+	// ============================
 
-		// ========== RENDER ==========
-		BOGraphicInterface::Clear();
+	// ========== RENDER ==========
+	BOGraphicInterface::Clear();
 
 		if (m_gameState == RUNNING)
 		{
-			// Render all of the objects.
-			m_objectManager.Draw();
+	// Render all of the objects.
+	m_objectManager.Draw();
 
-			// Render the power-ups
-			m_powerUpManager.Draw();
+	// Render the power-ups
+	m_powerUpManager.Draw();
 
-			// Render text
-			BOTextManager::DrawTexts();
+	// Render text
+	BOTextManager::DrawTexts();
 
-			//RenderHUD
-			BOHUDManager::Draw();
+	//RenderHUD
+	BOHUDManager::Draw();
 		}
 
 		else
@@ -196,8 +205,8 @@ bool BOSystem::Run()
 			m_stateManager.Draw(m_gameState);
 		}
 
-		BOGraphicInterface::Present();
-		// ============================
+	BOGraphicInterface::Present();
+	// ============================
 
 		m_deltaTime = 0;
 	}

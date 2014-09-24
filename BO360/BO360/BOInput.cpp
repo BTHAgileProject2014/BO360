@@ -10,7 +10,9 @@ enum BOInputKey
 	BOInput_Right,
 	BOInput_Space,
 	BOInput_M1,
-	BOInput_M2
+	BOInput_M2,
+	BOInput_z,
+	BOInput_x
 };
 
 BOInput::BOInput()
@@ -24,7 +26,7 @@ BOInput::~BOInput()
 
 bool BOInput::Initialize()
 {
-	for (int i = 0; i < 7; i++)
+	for (int i = 0; i < 9; i++)
 	{
 		m_buttonsPressed[i] = false;
 	}
@@ -122,7 +124,35 @@ bool BOInput::Update()
 					case SDLK_ESCAPE:
 					{
 						// Quit using the Escape key
-						return false;
+						m_publisher.Notify(escKey, true);
+#ifdef DEBUG
+						std::cout << "esc is pressed\n";
+#endif
+						break;
+					}
+					case SDLK_z:
+					{
+						if (!m_buttonsPressed[BOInput_z])
+						{
+							m_buttonsPressed[BOInput_z] = true;
+							m_publisher.Notify(zKey, true);
+#ifdef DEBUG
+							std::cout << "z is pressed\n";
+#endif
+						}
+						break;
+					}
+					case SDLK_x:
+					{
+						if (!m_buttonsPressed[BOInput_x])
+						{
+							m_buttonsPressed[BOInput_x] = true;
+							m_publisher.Notify(xKey, true);
+#ifdef DEBUG
+							std::cout << "x is pressed\n";
+#endif
+						}
+						
 						break;
 					}
 				}
@@ -179,6 +209,33 @@ bool BOInput::Update()
 						m_publisher.Notify(spacebarKey, false);
 #ifdef DEBUG
 						std::cout << "SPACE is released\n";
+#endif
+						break;
+					}
+					case SDLK_ESCAPE:
+					{
+						// Quit using the Escape key
+						m_publisher.Notify(escKey, false);
+#ifdef DEBUG
+						std::cout << "esc is released\n";
+#endif
+						break;
+					}
+					case SDLK_z:
+					{
+						m_buttonsPressed[BOInput_z] = false;
+						m_publisher.Notify(zKey, false);
+#ifdef DEBUG
+						std::cout << "z is released\n";
+#endif
+						break;
+					}
+					case SDLK_x:
+					{
+						m_buttonsPressed[BOInput_x] = false;
+						m_publisher.Notify(xKey, false);
+#ifdef DEBUG
+						std::cout << "x is released\n";
 #endif
 						break;
 					}

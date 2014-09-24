@@ -23,9 +23,9 @@ private:
 	static bool m_livesEnabled;
 	static bool m_scoreEnabled;
 	static bool m_levelEnabled;
-	static BODrawableText* m_lives;
-	static BODrawableText* m_score;
-	static BODrawableText* m_level;
+	static BODrawableText m_lives;
+	static BODrawableText m_score;
+	static BODrawableText m_level;
 	static BOObject m_life;
 	static int m_noLives;
 	static float2 m_livesAnchor;

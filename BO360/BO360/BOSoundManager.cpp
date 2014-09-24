@@ -11,6 +11,7 @@ bool BOSoundManager::Initialize()
 	GetInstance().m_dying = NULL;
 	GetInstance().m_powerup = NULL;
 	GetInstance().m_teleport = NULL;
+	GetInstance().m_bounceOnPad = NULL;
 
 	// Initialize SDL MIxer
 	if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0)
@@ -52,6 +53,12 @@ bool BOSoundManager::Initialize()
 		return false;
 	}
 
+	GetInstance().m_bounceOnPad = Mix_LoadWAV("Sound/bounceOnPad.wav");
+	if (GetInstance().m_bounceOnPad == NULL)
+	{
+		return false;
+	}
+
 	Mix_PlayMusic(GetInstance().m_music, -1);
 
 	return true;
@@ -85,18 +92,21 @@ void BOSoundManager::PlaySound(Sound p_sound)
 {
 	switch (p_sound)
 	{
-	case sound_pop:
+	case SOUND_POP:
 		// Play in channel 0 so pop sound resets every time it plays
 		Mix_PlayChannel(0, GetInstance().m_popHex, 0);
 		break;
-	case sound_die:
+	case SOUND_DIE:
 		Mix_PlayChannel(-1, GetInstance().m_dying, 0);	// Channel -1 is nearest avaiable channel
 		break;
-	case sound_powerup:
+	case SOUND_POWERUP:
 		Mix_PlayChannel(-1, GetInstance().m_powerup, 0);
 		break;
-	case sound_teleport:
+	case SOUND_TELEPORT:
 		Mix_PlayChannel(-1, GetInstance().m_teleport, 0);
+		break;
+	case SOUND_BOUNCEONPAD:
+		Mix_PlayChannel(-1, GetInstance().m_bounceOnPad, 0);
 		break;
 	}
 }
