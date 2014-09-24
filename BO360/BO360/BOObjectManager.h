@@ -15,6 +15,7 @@
 #include "BOSoundManager.h"
 #include "BOPowerUp.h"
 #include "BOMultiballs.h"
+#include "BOPUPadSize.h"
 #include "BOShield.h"
 #include "BOShieldPU.h"
 #include "BOParticleSystem.h"

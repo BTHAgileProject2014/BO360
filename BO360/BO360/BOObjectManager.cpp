@@ -39,7 +39,7 @@ bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight)
 	}
 
 	// Initialize the pad.
-	result = m_paddle.Initialize(float2((p_windowWidth / 2.0f), (p_windowHeight / 2.0f)), int2(220, 220), "Bilder/placeholderPadSegment2.png");
+	result = m_paddle.Initialize(float2((p_windowWidth / 2.0f), (p_windowHeight / 2.0f)), int2(220, 220), "Bilder/placeholderPadSegment3.png");
 	if (!result)
 	{
 		return false;
@@ -91,15 +91,15 @@ bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight)
 		}
 
 		// Create block.
-		if (i == 0)
+		if (i%20 == 0)
 		{
 			result = l_block.Initialize(float2(x, y), int2(40, 40), "Bilder/placeholderHexagon40x40.png", PUShield);
 		}
-		else if (i == 1)
+		else if (i%20 == 5)
 		{
 			result = l_block.Initialize(float2(x, y), int2(40, 40), "Bilder/placeholderHexagon40x40.png", PUExtraBall);
 		}
-		else if (i == 2)
+		else if (i%20 == 10)
 		{
 			result = l_block.Initialize(float2(x, y), int2(40, 40), "Bilder/placeholderHexagon40x40.png", PUBiggerPad);
 		}
@@ -191,6 +191,12 @@ void BOObjectManager::Update(double p_deltaTime)
 							shield->Initialize(m_blockList[i].GetPosition(), int2(40, 40), "Bilder/placeholderSheildPowerUp1.png", 500.0f, m_windowsSize);
 							BOPowerUpManager::AddPowerUp(shield);
 						}
+						else if (m_blockList[i].GetPowerUp() == PUBiggerPad)
+						{
+							BOPUPadSize* biggerPad = new BOPUPadSize();
+							biggerPad->Initialize(m_blockList[i].GetPosition(), int2(40, 40), "Bilder/placeholderPowerUp3.png", 500.0f, m_windowsSize);
+							BOPowerUpManager::AddPowerUp(biggerPad);
+						}
 
 						// Collision therfore play popsound
 						BOSoundManager::PlaySound(SOUND_POP);
@@ -215,6 +221,8 @@ void BOObjectManager::Update(double p_deltaTime)
 			BOPowerUp* pu = BOPowerUpManager::GetPowerUp(i);
 			BOShieldPU* puShield;
 			BOMultiballs* puBall;
+			BOPUPadSize* puPad;
+
 			switch (pu->GetType())
 			{
 			case PUShield:
@@ -224,6 +232,10 @@ void BOObjectManager::Update(double p_deltaTime)
 			case PUExtraBall:
 				puBall = (BOMultiballs*)pu;
 				puBall->Activate();
+				break;
+			case PUBiggerPad:
+				puPad = (BOPUPadSize*)pu;
+				puPad->Activate();
 				break;
 			}
 			BOPowerUpManager::RemovePowerUp(i);
@@ -325,8 +337,9 @@ void BOObjectManager::Draw()
 		m_ballList[i]->Draw();
 	}
 
-	m_paddle.Draw();
 	m_Shield.Draw();
+	m_paddle.Draw();
+	
 }
 
 void BOObjectManager::Handle(PowerUpTypes p_type, bool p_activated)

@@ -47,17 +47,11 @@ void BOPaddle::Handle(InputMessages p_inputMessages)
 
 	if (p_inputMessages.zKey)
 	{
-		if (m_segments > 1)
-		{
 			RemoveSegments(1);
-		}
 	}
 	if (p_inputMessages.xKey)
 	{
-		if (m_segments < 17)
-		{
 			AddSegments(1);
-		}
 	}
 }
 
@@ -139,14 +133,20 @@ int BOPaddle::GetSegments()
 
 void BOPaddle::AddSegments(int p_segments)
 {
-	m_totalDegrees = m_totalDegrees + (m_segementDegree * p_segments);
-	m_segments += p_segments;
+	if (m_segments < 17)
+	{
+		m_totalDegrees = m_totalDegrees + (m_segementDegree * p_segments);
+		m_segments += p_segments;
+	}
 }
 
 void BOPaddle::RemoveSegments(int p_segments)
 {
-	m_totalDegrees = m_totalDegrees - (m_segementDegree * p_segments);
-	m_segments -= p_segments;
+	if (m_segments > 2)
+	{
+		m_totalDegrees = m_totalDegrees - (m_segementDegree * p_segments);
+		m_segments -= p_segments;
+	}
 }
 
 int BOPaddle::GetDegrees()
