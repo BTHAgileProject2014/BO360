@@ -31,6 +31,7 @@ public:
 private:
 	bool InitializeMap();
 	void HandleAction(ButtonAction p_action);
+	void ShutdownMap();
 
 	BOTimer m_timer;
 	BOInput m_input;

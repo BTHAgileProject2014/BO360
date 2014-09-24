@@ -130,6 +130,7 @@ void BOObjectManager::Shutdown()
 	// Remove all balls
 	for (unsigned int i = 0; i < m_ballList.size(); i++)
 	{
+		BOPublisher::Unsubscribe(m_ballList[i]); // Temp for cheat
 		m_ballList[i]->Shutdown();
 		delete m_ballList[i];
 	}

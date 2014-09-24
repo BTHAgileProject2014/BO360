@@ -163,9 +163,7 @@ bool BOSystem::Run()
 		if (m_objectManager.LostGame())
 		{
 			// Shutdown map
-			m_objectManager.Shutdown();
-			m_powerUpManager.Shutdown();
-			BOHUDManager::Shutdown();
+			ShutdownMap();
 
 			// Go to defeat screen
 			m_gameState = DEFEAT;
@@ -238,9 +236,7 @@ void BOSystem::HandleAction(ButtonAction p_action)
 			// QUIT, return to main menu.
 			case(QUIT) :
 			{
-				m_objectManager.Shutdown();
-				m_powerUpManager.Shutdown();
-				BOHUDManager::Shutdown();
+				ShutdownMap();
 				m_gameState = MENU;
 
 				break;
@@ -312,4 +308,11 @@ void BOSystem::Handle(InputMessages p_inputMessages)
 	{
 		m_gameState = PAUSED;
 	}
+}
+
+void BOSystem::ShutdownMap()
+{
+	m_objectManager.Shutdown();
+	m_powerUpManager.Shutdown();
+	BOHUDManager::Shutdown();
 }
