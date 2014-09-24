@@ -33,7 +33,8 @@ bool BOPublisher::Initialize()
 }
 
 void BOPublisher::Shutdown()
-{	
+{
+	m_subscribers.clear();
 }
 
 // Call the subscribers

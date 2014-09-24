@@ -143,6 +143,7 @@ void BOObjectManager::Shutdown()
 	m_mapLoader.Shutdown();
 	m_background.Shutdown();
 	m_blackHole.Shutdown();
+	BOPublisher::Unsubscribe(&m_paddle);
 	m_paddle.Shutdown();
 }
 
