@@ -130,6 +130,7 @@ void BOObjectManager::Shutdown()
 	// Remove all balls
 	for (unsigned int i = 0; i < m_ballList.size(); i++)
 	{
+		m_ballList[i]->Shutdown();
 		delete m_ballList[i];
 	}
 	m_ballList.clear();
@@ -137,6 +138,12 @@ void BOObjectManager::Shutdown()
 	// Clear the blocks
 	m_blockPositions.clear();
 	m_blockList.clear();
+
+	// Call all the shutdowns
+	m_mapLoader.Shutdown();
+	m_background.Shutdown();
+	m_blackHole.Shutdown();
+	m_paddle.Shutdown();
 }
 
 void BOObjectManager::Update(double p_deltaTime)
@@ -281,6 +288,7 @@ void BOObjectManager::Update(double p_deltaTime)
 			{
 				// Remove the current ball
 				BOPublisher::Unsubscribe(m_ballList[i]); // Temporary for cheat with first ball
+				m_ballList[i]->Shutdown();
 				delete m_ballList[i];
 				m_ballList.erase(m_ballList.begin() + i);
 				ballDied = true;
