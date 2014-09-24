@@ -394,7 +394,8 @@ enum KeyMessages
 	middleMouseKey,
 	spacebarKey,
 	zKey,
-	xKey
+	xKey,
+	escKey
 };
 
 enum Sound

@@ -124,7 +124,10 @@ bool BOInput::Update()
 					case SDLK_ESCAPE:
 					{
 						// Quit using the Escape key
-						return false;
+						m_publisher.Notify(escKey, true);
+#ifdef DEBUG
+						std::cout << "esc is pressed\n";
+#endif
 						break;
 					}
 					case SDLK_z:
@@ -206,6 +209,15 @@ bool BOInput::Update()
 						m_publisher.Notify(spacebarKey, false);
 #ifdef DEBUG
 						std::cout << "SPACE is released\n";
+#endif
+						break;
+					}
+					case SDLK_ESCAPE:
+					{
+						// Quit using the Escape key
+						m_publisher.Notify(escKey, false);
+#ifdef DEBUG
+						std::cout << "esc is released\n";
 #endif
 						break;
 					}
