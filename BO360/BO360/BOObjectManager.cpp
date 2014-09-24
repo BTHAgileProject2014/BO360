@@ -236,6 +236,7 @@ void BOObjectManager::Update(double p_deltaTime)
 
  	for (int i = 0; i < m_ballList.size(); i++)
 	{
+		CheckBallOutOfBounds(i);
 		bool ballDied = false;
 		if (m_ballList[i]->CanColide())
 		{
@@ -363,4 +364,31 @@ bool BOObjectManager::AddNewBall()
 bool BOObjectManager::LostGame()
 {
 	return m_life == 0;
+}
+void BOObjectManager::CheckBallOutOfBounds(int p_index)
+{
+	int changePosToo = 10;
+	int checkPixelsInwards = 7;
+	float2 ballPos = m_ballList[p_index]->GetPosition();
+	std::cout << ballPos.y << std::endl;
+
+	if (ballPos.x >= m_windowsSize.x - checkPixelsInwards)//If out of bounds to the right
+	{
+		ballPos.x = m_windowsSize.x - changePosToo;
+	}
+	if (ballPos.x <= checkPixelsInwards)//If out of bounds to the left
+	{
+		ballPos.x = changePosToo;
+	}
+
+	if (ballPos.y >= m_windowsSize.y - checkPixelsInwards)//If out of bounds down
+	{
+		ballPos.y = m_windowsSize.y - changePosToo;
+	}
+	if (ballPos.y <= checkPixelsInwards)//If out of bounds up
+	{
+		ballPos.y = changePosToo;
+	}
+
+	m_ballList[p_index]->SetPosition(ballPos);
 }

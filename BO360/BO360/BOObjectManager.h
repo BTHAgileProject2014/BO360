@@ -36,6 +36,8 @@ public:
 	bool LostGame();
 
 private:
+	void CheckBallOutOfBounds(int p_index);
+
 	bool m_hasColided;
 	int m_life;
 
