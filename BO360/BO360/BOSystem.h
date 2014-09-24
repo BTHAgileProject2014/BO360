@@ -14,9 +14,10 @@
 #include "BOMultiballs.h"
 #include "BOHUDManager.h"
 #include "BOStateManager.h"
+#include "BOSubscriber.h"
 #include <iostream>
 
-class BOSystem : BOComponent
+class BOSystem : BOComponent, public BOSubscriber
 {
 public:
 	BOSystem();
@@ -25,6 +26,7 @@ public:
 	bool Initialize();
 	void Shutdown();
 	bool Run();
+	void Handle(InputMessages p_inputMessages);
 
 private:
 	bool InitializeMap();

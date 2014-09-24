@@ -28,6 +28,7 @@ bool BOPublisher::Initialize()
 	m_inputMessage.rightArrow = false;
 	m_inputMessage.zKey = false;
 	m_inputMessage.xKey = false;
+	m_inputMessage.escKey = false;
 
 	return true;
 }
@@ -80,6 +81,9 @@ void BOPublisher::Notify(KeyMessages p_keyMessage, bool p_value)
 		break;
 	case xKey:
 		m_inputMessage.xKey = p_value;
+		break;
+	case escKey:
+		m_inputMessage.escKey = p_value;
 		break;
 	}
 

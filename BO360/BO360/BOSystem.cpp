@@ -68,6 +68,9 @@ bool BOSystem::Initialize()
 		return false;
 	}
 
+	// Add system as an subscriber
+	BOPublisher::AddSubscriber(this);
+
 	return true;
 }
 
@@ -216,6 +219,7 @@ bool BOSystem::Run()
 
 void BOSystem::Shutdown()
 {
+	BOPublisher::Unsubscribe(this);
 	m_input.Shutdown();
 	m_objectManager.Shutdown();
 	m_powerUpManager.Shutdown();
@@ -234,6 +238,9 @@ void BOSystem::HandleAction(ButtonAction p_action)
 			// QUIT, return to main menu.
 			case(QUIT) :
 			{
+				m_objectManager.Shutdown();
+				m_powerUpManager.Shutdown();
+				BOHUDManager::Shutdown();
 				m_gameState = MENU;
 
 				break;
@@ -296,5 +303,13 @@ void BOSystem::HandleAction(ButtonAction p_action)
 
 			}
 		}
+	}
+}
+
+void BOSystem::Handle(InputMessages p_inputMessages)
+{
+	if (m_gameState == RUNNING && p_inputMessages.escKey)
+	{
+		m_gameState = PAUSED;
 	}
 }

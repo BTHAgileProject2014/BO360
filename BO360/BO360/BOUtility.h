@@ -350,6 +350,7 @@ struct InputMessages
 	bool downArrow;
 	bool zKey;
 	bool xKey;
+	bool escKey;
 };
 
 enum GameState
