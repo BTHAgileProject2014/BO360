@@ -16,6 +16,7 @@ public:
 	void SetDead();
 	bool GetDead();
 	PowerUpTypes GetPowerUp();
+	int GetScore();
 
 private:
 	bool dead;

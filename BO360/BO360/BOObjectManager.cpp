@@ -220,6 +220,9 @@ void BOObjectManager::Update(double p_deltaTime)
 						// Collision therfore play popsound
 						BOSoundManager::PlaySound(SOUND_POP);
 
+						// Add score
+						BOScore::AddScore(m_blockList[i].GetScore());
+
 						break;
 					}
 				}

@@ -51,3 +51,8 @@ PowerUpTypes BOBlock::GetPowerUp()
 {
 	return m_powerup;
 }
+
+int BOBlock::GetScore()
+{
+	return 10;
+}

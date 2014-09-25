@@ -112,8 +112,14 @@ bool BOSystem::InitializeMap()
 		return false;
 	}
 
+	// Initialize score
+	if (!BOScore::Initialize())
+	{
+		std::cout << "Failed to initialize score in system";
+		return false;
+	}
+
 	// Example usage of HUD
-	BOHUDManager::SetScore(10);
 	BOHUDManager::SetLevel(1);
 
 	return true;
@@ -315,4 +321,5 @@ void BOSystem::ShutdownMap()
 	m_objectManager.Shutdown();
 	m_powerUpManager.Shutdown();
 	BOHUDManager::Shutdown();
+	BOScore::Shutdown();
 }

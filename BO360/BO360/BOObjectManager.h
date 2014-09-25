@@ -26,6 +26,7 @@
 #include "BOShieldPU.h"
 #include "BOParticleSystem.h"
 #include "BOHUDManager.h"
+#include "BOScore.h"
 #include <vector>
 
 class BOObjectManager : public BOComponent, public BOPUSubscriber

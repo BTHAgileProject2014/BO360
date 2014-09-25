@@ -90,6 +90,7 @@
     <ClInclude Include="BOPublisher.h" />
     <ClInclude Include="BOPUPadSize.h" />
     <ClInclude Include="BOPUSubscriber.h" />
+    <ClInclude Include="BOScore.h" />
     <ClInclude Include="BOShield.h" />
     <ClInclude Include="BOShieldPU.h" />
     <ClInclude Include="BOSoundManager.h" />
@@ -128,6 +129,7 @@
     <ClCompile Include="BOPublisher.cpp" />
     <ClCompile Include="BOPUPadSize.cpp" />
     <ClCompile Include="BOPUSubscriber.cpp" />
+    <ClCompile Include="BOScore.cpp" />
     <ClCompile Include="BOShield.cpp" />
     <ClCompile Include="BOShieldPU.cpp" />
     <ClCompile Include="BOSoundManager.cpp" />

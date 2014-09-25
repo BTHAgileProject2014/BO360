@@ -129,6 +129,9 @@
     <ClCompile Include="BOPUPadSize.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="BOScore.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BOSystem.h">
@@ -237,6 +240,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="BOPUPadSize.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BOScore.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
