@@ -295,6 +295,14 @@ void BOSystem::HandleAction(ButtonAction p_action)
 			// RETRY, reload the map.
 			case(RETRY) :
 			{
+				m_gameState = RUNNING;
+				if (!InitializeMap())
+				{
+					std::cout << "Press ENTER to quit." << std::endl;
+					std::cin.get();
+
+					m_quit = true;
+				}
 				break;
 
 			}
