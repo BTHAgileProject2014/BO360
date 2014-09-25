@@ -326,7 +326,7 @@ void BOObjectManager::Update(double p_deltaTime)
 		else
 		{
 			//Beräkna bränsle
-			m_ballList[i]->SetFuel(BOPhysics::CalculateBallFuel(m_ballList[i]->GetFuel()));
+			m_ballList[i]->SetFuel(BOPhysics::CalculateBallFuel(m_ballList[i]->GetFuel(), p_deltaTime));
 		}
 
 		//Updaterar skölden
