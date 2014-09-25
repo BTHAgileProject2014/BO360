@@ -379,7 +379,7 @@ float2 BOPhysics::BlackHoleGravity(sphere p_ball, float2 p_ballDirection, float 
 
 	center = center.normalized();//Normaliserar vektorn mot hålet 
  	center = center * force;//Multiplicerar vektorn mot hålet med kraften
-	//std::cout << force << std::endl;
+	std::cout << force << std::endl;
 	
 	newDirection = float2(newDirection.x * (p_ballSpeed * p_deltaTime) + center.x, newDirection.y * (p_ballSpeed * p_deltaTime) + center.y);//Beräknar längden av bollens riktningsvektor
 

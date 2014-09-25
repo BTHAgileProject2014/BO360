@@ -57,11 +57,8 @@ bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight)
 	// Initialize primary ball.
 	m_ballSize = int2(15, 15);
 	m_ballSpeed = 500.0f;
-	m_ballDirection = float2((p_windowWidth / 2.0f), (p_windowHeight / 2.0f)).normalized();
-
 	AddNewBall();
-
-
+	
 	BOPublisher::AddSubscriber(m_ballList[0]);
 
 	// Load a map.
@@ -151,6 +148,7 @@ void BOObjectManager::Update(double p_deltaTime)
 	bool result;
 	float2 normal;
 
+	std::cout << m_paddle.GetSegments() << std::endl;
 	m_blackHole.Update();
 
 	m_paddle.Update(p_deltaTime);
@@ -164,8 +162,8 @@ void BOObjectManager::Update(double p_deltaTime)
 	}
 	else
 	{
-		float tempx = m_paddle.GetPosition().x + (m_paddle.GetSize().x * 0.5f) * cos((-(m_paddle.GetRotation() - 70)) * m_PIDiv180);
-		float tempy = m_paddle.GetPosition().y - (m_paddle.GetSize().y * 0.5f) * sin((-(m_paddle.GetRotation() - 70)) * m_PIDiv180);
+		float tempx = m_paddle.GetPosition().x + (m_paddle.GetSize().x * 0.5f) * cos((-(m_paddle.GetRotation() - (210 / m_paddle.GetSegments())) * m_PIDiv180));
+		float tempy = m_paddle.GetPosition().y - (m_paddle.GetSize().y * 0.5f) * sin((-(m_paddle.GetRotation() - (210 / m_paddle.GetSegments())) * m_PIDiv180));
 
 		m_ballList[0]->SetPosition(float2(tempx, tempy));
 	}
@@ -438,7 +436,8 @@ void BOObjectManager::Handle(InputMessages p_inputMessage)
 bool BOObjectManager::AddNewBall()
 {
 	BOBall* ball = new BOBall();
-	m_ballStartPosition = float2(m_paddle.GetPosition().x + (m_paddle.GetSize().x *0.5f) * cos((-(m_paddle.GetRotation() - 70)) *  m_PIDiv180), m_paddle.GetPosition().y - (m_paddle.GetSize().y * 0.5f) * sin((-(m_paddle.GetRotation() - 70)) * m_PIDiv180));
+	m_ballStartPosition = float2(m_paddle.GetPosition().x + (m_paddle.GetSize().x *0.5f) * cos((-(m_paddle.GetRotation() - (210 / m_paddle.GetSegments()))) *  m_PIDiv180), m_paddle.GetPosition().y - (m_paddle.GetSize().y * 0.5f) * sin((-(m_paddle.GetRotation() - (210 / m_paddle.GetSegments())) * m_PIDiv180)));
+	m_ballDirection = float2((m_windowsSize.x * 0.5f), (m_windowsSize.y *0.5f)).normalized();
 	if (!ball->Initialize(m_ballStartPosition, m_ballSize, "Bilder/placeholderBoll10x10.png", m_ballSpeed, m_ballDirection, m_windowsSize))
 	{
 		return false;
