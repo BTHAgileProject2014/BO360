@@ -85,7 +85,7 @@ bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight)
 		// If block should be an iron block
 		// l_block = new BOBlockIron();
 		// Else
-		l_block = new BOBlock();
+		l_block = new BOBlockIron();
 
 		x = (32 * m_blockPositions[i].x) + 60;
 		y = (37 * m_blockPositions[i].y) + 50;
