@@ -15,6 +15,7 @@
 #include "BOHUDManager.h"
 #include "BOStateManager.h"
 #include "BOSubscriber.h"
+#include "BOScore.h"
 #include <iostream>
 
 class BOSystem : BOComponent, public BOSubscriber

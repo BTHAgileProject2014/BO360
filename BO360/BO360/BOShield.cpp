@@ -16,7 +16,7 @@ bool BOShield::Initialize(int2 p_ShieldSize, std::string p_ShieldFN, int2 p_Wind
 
 	m_ShieldSphere.pos.x = m_WindowSize.x / 2.0f;
 	m_ShieldSphere.pos.y = m_WindowSize.y / 2.0f;
-	m_ShieldSphere.radius = p_ShieldSize.x / 2;
+	m_ShieldSphere.radius = p_ShieldSize.x / 2.0f;
 	m_ShieldSize = p_ShieldSize;
 
 	m_ShieldSprite = BOGraphicInterface::LoadTexture(p_ShieldFN);

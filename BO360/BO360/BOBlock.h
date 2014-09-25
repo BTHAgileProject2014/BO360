@@ -18,6 +18,7 @@ public:
 	bool GetDead();
 	virtual bool Hit(int p_damage); // Returns true if dead
 	PowerUpTypes GetPowerUp();
+	int GetScore();
 
 protected:
 	int m_hp;
