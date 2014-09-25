@@ -58,6 +58,11 @@ PowerUpTypes BOBlock::GetPowerUp()
 	return m_powerup;
 }
 
+int BOBlock::GetScore()
+{
+	return 10;
+}
+
 bool BOBlock::Hit(int p_damage)
 {
 	m_hp -= p_damage;

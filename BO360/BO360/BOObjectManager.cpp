@@ -99,52 +99,54 @@ bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight)
 			{
 				l_block = new BOBlock();
 				// Create block.
-				if (i % 20 == 0)
+				if (i%100 == 1)
 				{
-					result = l_block->Initialize(float2(x, y), int2(40, 40), "Bilder/placeholderHexagon40x40.png", PUShield);
+					result = l_block->Initialize(float2(x, y), int2(40, 40), "Bilder/placeholderHexagonPU2.png", PUShield);
 				}
-						else if (i % 20 == 5)
+				else if (i%100 == 33)
 				{
-					result = l_block->Initialize(float2(x, y), int2(40, 40), "Bilder/placeholderHexagon40x40.png", PUExtraBall);
+					result = l_block->Initialize(float2(x, y), int2(40, 40), "Bilder/placeholderHexagonPU1.png", PUExtraBall);
 				}
-						else if (i % 20 == 10)
+				else if (i%100 == 66)
 				{
-					result = l_block->Initialize(float2(x, y), int2(40, 40), "Bilder/placeholderHexagon40x40.png", PUBiggerPad);
+					result = l_block->Initialize(float2(x, y), int2(40, 40), "Bilder/placeholderHexagonPU3.png", PUBiggerPad);
 				}
 				else
 				{
 					result = l_block->Initialize(float2(x, y), int2(40, 40), "Bilder/placeholderHexagon40x40.png", PUNone);
-					if (!result)
-					{
-						return false;
-					}
+				}
+				if (!result)
+				{
+					return false;
 				}
 				break;
-			}
+		}
 
 			case(DUBBLEHP) :
 			{
 				l_block = new BOBlockMultiTexture();
 				// Create block.
-				if (i % 20 == 0)
+				/*
+				if (i % 100 == 1)
 				{
-					result = l_block->Initialize(float2(x, y), int2(40, 40), "Bilder/placeholderHexagon40x40red1.png", 3, PUShield);
+					result = l_block->Initialize(float2(x, y), int2(40, 40), "Bilder/placeholderHexagonPU2.png", PUShield);
 				}
-				else if (i % 20 == 5)
+				else if (i % 100 == 33)
 				{
-					result = l_block->Initialize(float2(x, y), int2(40, 40), "Bilder/placeholderHexagon40x40red1.png", 3, PUExtraBall);
+					result = l_block->Initialize(float2(x, y), int2(40, 40), "Bilder/placeholderHexagonPU1.png", PUExtraBall);
 				}
-				else if (i % 20 == 10)
+				else if (i % 100 == 66)
 				{
-					result = l_block->Initialize(float2(x, y), int2(40, 40), "Bilder/placeholderHexagon40x40red1.png", 3, PUBiggerPad);
+					result = l_block->Initialize(float2(x, y), int2(40, 40), "Bilder/placeholderHexagonPU3.png", PUBiggerPad);
 				}
 				else
+				*/
 				{
-					result = l_block->Initialize(float2(x, y), int2(40, 40), "Bilder/placeholderHexagon40x40red1.png", 3, PUNone);
-					if (!result)
-					{
-						return false;
-					}
+					result = l_block->Initialize(float2(x, y), int2(40, 40), "Bilder/placeholderHexagon40x40red1.png", 3,  PUNone);
+				}
+				if (!result)
+				{
+					return false;
 				}
 				((BOBlockMultiTexture*)l_block)->AddTextureForHPAbove("Bilder/placeholderHexagon40x40red3.png", 1);
 				((BOBlockMultiTexture*)l_block)->AddTextureForHPAbove("Bilder/placeholderHexagon40x40red2.png", 2);
@@ -218,12 +220,12 @@ void BOObjectManager::Update(double p_deltaTime)
 		m_blockList[i]->Update();
 	}
 
-			for (int j = 0; j < m_ballList.size(); j++)
-			{
+	for (int j = 0; j < m_ballList.size(); j++)
+	{
 		for (int i = 0; i < m_blockList.size(); i++)
-				{
+		{
 			if (BOPhysics::CheckCollisionSpheres(m_ballList[j]->GetBoundingSphere(), m_blockList[i]->GetBoundingSphere()))
-					{
+			{
 				if (BOPhysics::CheckCollisionSphereToHexagon(m_ballList[j]->GetBoundingSphere(), m_blockList[i]->GetBoundingHexagon(), normal))
 				{
 						// Block dead, dead = true, stop checking collision and drawing block.
@@ -234,7 +236,7 @@ void BOObjectManager::Update(double p_deltaTime)
 					m_ballList[j]->SetDirection(BOPhysics::ReflectBallAroundNormal(m_ballList[j]->GetDirection(), normal));
 					m_ballList[j]->BouncedOnHexagon();
 					m_ballList[j]->SetFuel(0.0f);
-					std::cout << "Ball bounced on [" << i << "]" << std::endl;
+					//std::cout << "Ball bounced on [" << i << "]" << std::endl;
 
 					if (bool destroyed = m_blockList[i]->Hit(m_ballList[j]->GetDamage()))
 					{
@@ -261,19 +263,23 @@ void BOObjectManager::Update(double p_deltaTime)
 						else if (m_blockList[i]->GetPowerUp() == PUShield)
 						{
 							BOShieldPU* shield = new BOShieldPU();
-							shield->Initialize(m_blockList[i]->GetPosition(), int2(40, 40), "Bilder/placeholderSheildPowerUp1.png", 500.0f, m_windowsSize);
+							shield->Initialize(m_blockList[i]->GetPosition(), int2(30, 30), "Bilder/placeholderPowerup2.png", 500.0f, m_windowsSize);
 							BOPowerUpManager::AddPowerUp(shield);
 						}
 						else if (m_blockList[i]->GetPowerUp() == PUBiggerPad)
 						{
 							BOPUPadSize* biggerPad = new BOPUPadSize();
-							biggerPad->Initialize(m_blockList[i]->GetPosition(), int2(40, 40), "Bilder/placeholderPowerUp3.png", 500.0f, m_windowsSize);
+							biggerPad->Initialize(m_blockList[i]->GetPosition(), int2(30, 30), "Bilder/placeholderPowerup3.png", 500.0f, m_windowsSize);
 							BOPowerUpManager::AddPowerUp(biggerPad);
 						}
 
 						// Collision therfore play popsound
 
 						BOSoundManager::PlaySound(SOUND_POP);
+
+						// Add score
+						BOScore::AddScore(m_blockList[i]->GetScore());
+
 						m_blockList.erase(m_blockList.begin() + i);
 					}
 				}
@@ -376,7 +382,7 @@ void BOObjectManager::Update(double p_deltaTime)
 		else
 		{
 			//Beräkna bränsle
-			m_ballList[i]->SetFuel(BOPhysics::CalculateBallFuel(m_ballList[i]->GetFuel()));
+			m_ballList[i]->SetFuel(BOPhysics::CalculateBallFuel(m_ballList[i]->GetFuel(), p_deltaTime));
 		}
 
 		//Updaterar skölden
@@ -489,7 +495,7 @@ bool BOObjectManager::LostGame()
 }
 void BOObjectManager::CheckBallOutOfBounds(int p_index)
 {
-	int changePosToo = 10;
+	float changePosToo = 10.0f;
 	int checkPixelsInwards = 7;
 	float2 ballPos = m_ballList[p_index]->GetPosition();
 
