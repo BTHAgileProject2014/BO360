@@ -74,7 +74,6 @@ void BOObject::SetSprite(std::string p_fileName)
 }
 
 sphere BOObject::GetBoundingSphere()
-{
-	int largestSize = (m_size.x > m_size.y ? m_size.x : m_size.y);
+{	int largestSize = (m_size.x > m_size.y ? m_size.x : m_size.y);
 	return sphere(m_position, largestSize / 2.0f);
 }

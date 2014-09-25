@@ -90,7 +90,7 @@ bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight)
 		}
 
 		// Create block.
-		if (i%100 == 1)
+		/*if (i%100 == 1)
 		{
 			result = l_block.Initialize(float2(x, y), int2(40, 40), "Bilder/placeholderHexagonPU2.png", PUShield);
 		}
@@ -103,13 +103,13 @@ bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight)
 			result = l_block.Initialize(float2(x, y), int2(40, 40), "Bilder/placeholderHexagonPU3.png", PUBiggerPad);
 		}
 		else
-		{
+		{*/
 			result = l_block.Initialize(float2(x, y), int2(40, 40), "Bilder/placeholderHexagon40x40.png", PUNone);
 			if (!result)
 			{
 				return false;
 			}
-		}
+		//}
 
 		m_blockList.push_back(l_block);
 	}
@@ -172,58 +172,66 @@ void BOObjectManager::Update(double p_deltaTime)
 		{
 			for (int j = 0; j < m_ballList.size(); j++)
 			{
-				if (BOPhysics::CheckCollisionBoxToBox(m_ballList[j]->GetBoundingBox(), m_blockList[i].GetBoundingBox()))
+				box testBox = m_blockList[i].GetBoundingBox();
+				testBox.left -= 10; testBox.top -= 10; testBox.bottom += 10; testBox.right += 10;
+				if (BOPhysics::CheckCollisionBoxToBox(m_ballList[j]->GetBoundingBox(), testBox))//m_blockList[i].GetBoundingBox()))
 				{
 					if (BOPhysics::CheckCollisionSphereToHexagon(m_ballList[j]->GetBoundingSphere(), m_blockList[i].GetBoundingHexagon(), normal))
 					{
-						// Block dead, dead = true, stop checking collision and drawing block.
-						m_blockList[i].SetDead();
-
-						int l_parts = rand() % PARTICLESPEREXPLOSION.x + PARTICLESPEREXPLOSION.y;
-						for (int p = 0; p < l_parts; p++)
+						float angleBallNormal;
+						float2 ballDir = m_ballList[j]->GetDirection();
+						angleBallNormal = ballDir.dot(normal);
+ 						if (angleBallNormal > -1 && angleBallNormal < 0)
 						{
+							// Block dead, dead = true, stop checking collision and drawing block.
+							m_blockList[i].SetDead();
+
+							int l_parts = rand() % PARTICLESPEREXPLOSION.x + PARTICLESPEREXPLOSION.y;
+							for (int p = 0; p < l_parts; p++)
+							{
 							float2 l_position = m_blockList[i].GetPosition();
 							int l_angle = rand() % PARTICLEROTATIONVARIATION - (PARTICLEROTATIONVARIATION / 2);
 							float2 l_direction = float2(1 * sin(l_angle), 1 * cos(l_angle));
 							float l_speed = rand() % PARTICLESEXPLOSIONSPEED.x + PARTICLESEXPLOSIONSPEED.y;
 
 							m_particleSystem.AddMovingParticle(BLOCKDEBRIS, 0.20f, l_position, false, l_angle, 0, l_direction, l_speed);
-						}
+							}
 
-						// Collision with hexagon.
-						m_ballList[j]->SetDirection(BOPhysics::ReflectBallAroundNormal(m_ballList[j]->GetDirection(), normal));
-						m_ballList[j]->BouncedOnHexagon();
-						m_ballList[j]->SetFuel(0.0f);
-					
-						// Spawn powerup if there is one
-						if (m_blockList[i].GetPowerUp() == PUExtraBall)
-						{
-							BOMultiballs* extraBall = new BOMultiballs();
-							extraBall->Initialize(m_blockList[i].GetPosition(), int2(30, 30), "Bilder/placeholderPowerup1.png", 500.0f, m_windowsSize);
-							extraBall->SetActive(true);
-							BOPowerUpManager::AddPowerUp(extraBall);
-						}
+							// Collision with hexagon.
+							m_ballList[j]->SetDirection(BOPhysics::ReflectBallAroundNormal(m_ballList[j]->GetDirection(), normal));
+							m_ballList[j]->BouncedOnHexagon();
+							m_ballList[j]->SetFuel(0.0f);
 
-						else if (m_blockList[i].GetPowerUp() == PUShield)
-						{
-							BOShieldPU* shield = new BOShieldPU();
-							shield->Initialize(m_blockList[i].GetPosition(), int2(30, 30), "Bilder/placeholderPowerup2.png", 500.0f, m_windowsSize);
-							BOPowerUpManager::AddPowerUp(shield);
-						}
-						else if (m_blockList[i].GetPowerUp() == PUBiggerPad)
-						{
-							BOPUPadSize* biggerPad = new BOPUPadSize();
-							biggerPad->Initialize(m_blockList[i].GetPosition(), int2(30, 30), "Bilder/placeholderPowerup3.png", 500.0f, m_windowsSize);
-							BOPowerUpManager::AddPowerUp(biggerPad);
-						}
+							// Spawn powerup if there is one
+							if (m_blockList[i].GetPowerUp() == PUExtraBall)
+							{
+								BOMultiballs* extraBall = new BOMultiballs();
+								extraBall->Initialize(m_blockList[i].GetPosition(), int2(30, 30), "Bilder/placeholderPowerup1.png", 500.0f, m_windowsSize);
+								extraBall->SetActive(true);
+								BOPowerUpManager::AddPowerUp(extraBall);
+							}
 
-						// Collision therfore play popsound
-						BOSoundManager::PlaySound(SOUND_POP);
+							else if (m_blockList[i].GetPowerUp() == PUShield)
+							{
+								BOShieldPU* shield = new BOShieldPU();
+								shield->Initialize(m_blockList[i].GetPosition(), int2(30, 30), "Bilder/placeholderPowerup2.png", 500.0f, m_windowsSize);
+								BOPowerUpManager::AddPowerUp(shield);
+							}
+							else if (m_blockList[i].GetPowerUp() == PUBiggerPad)
+							{
+								BOPUPadSize* biggerPad = new BOPUPadSize();
+								biggerPad->Initialize(m_blockList[i].GetPosition(), int2(30, 30), "Bilder/placeholderPowerup3.png", 500.0f, m_windowsSize);
+								BOPowerUpManager::AddPowerUp(biggerPad);
+							}
 
-						// Add score
-						BOScore::AddScore(m_blockList[i].GetScore());
+							// Collision therfore play popsound
+							BOSoundManager::PlaySound(SOUND_POP);
 
-						break;
+							// Add score
+							BOScore::AddScore(m_blockList[i].GetScore());
+
+							break;
+						}						
 					}
 				}
 			}
@@ -317,21 +325,21 @@ void BOObjectManager::Update(double p_deltaTime)
 		}
 		else
 		{
-		if (m_ballList[i]->GetFuel() <= 0)
-		{
-			//Runs tha gravity... lawl... Rotates the direction depending on distance
-			m_ballList[i]->SetDirection(BOPhysics::BlackHoleGravity(m_ballList[i]->GetBoundingSphere(), m_ballList[i]->GetDirection(), m_ballList[i]->GetSpeed(), m_blackHole.GetBoundingSphere(), p_deltaTime));
-		}
+			if (m_ballList[i]->GetFuel() <= 0)
+			{
+				//Runs tha gravity... lawl... Rotates the direction depending on distance
+				m_ballList[i]->SetDirection(BOPhysics::BlackHoleGravity(m_ballList[i]->GetBoundingSphere(), m_ballList[i]->GetDirection(), m_ballList[i]->GetSpeed(), m_blackHole.GetBoundingSphere(), p_deltaTime));
+			}
 
-		else
-		{
-			//Beräkna bränsle
-			m_ballList[i]->SetFuel(BOPhysics::CalculateBallFuel(m_ballList[i]->GetFuel(), p_deltaTime));
-		}
+			else
+			{
+				//Beräkna bränsle
+				m_ballList[i]->SetFuel(BOPhysics::CalculateBallFuel(m_ballList[i]->GetFuel(), p_deltaTime));
+			}
 
-		//Updaterar skölden
-		//m_ballList[i]->SetDirection((m_Shield.Update(p_deltaTime, m_ballList[i]->GetBoundingSphere(), m_ballList[i]->GetDirection())));
-	}
+			//Updaterar skölden
+			//m_ballList[i]->SetDirection((m_Shield.Update(p_deltaTime, m_ballList[i]->GetBoundingSphere(), m_ballList[i]->GetDirection())));
+		}
 	}
 
 	if (BALLDEBUGTRAIL == 1)

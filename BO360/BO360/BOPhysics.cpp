@@ -65,18 +65,19 @@ bool BOPhysics::CheckCollisionSphereToHexagon(sphere p_sphere, hexagon p_hexagon
 	// Checking if collision in one point
 	if (point1.x >= p_hexagon.pointUpLeft.x && point1.x <= p_hexagon.pointUpRight.x && point1.y == p_hexagon.pointUpLeft.y && point1.y == p_hexagon.pointUpRight.y && point2.x == -1000)
 	{
-		normal = float2(p_hexagon.pointUpRight.y - p_hexagon.pointUpRight.y, -1 * (p_hexagon.pointUpRight.x - p_hexagon.pointUpLeft.x));
+		//normal = float2(p_hexagon.pointUpRight.y - p_hexagon.pointUpRight.y, -1 * (p_hexagon.pointUpRight.x - p_hexagon.pointUpLeft.x));
+		normal = float2(0, -1);
 		normal = normal.normalized();
-		normal.y *= -1;
+		
 		return true;
 	}
 	// Checking if the ball collision with the line in two points
 	else if ((point1.x >= p_hexagon.pointUpLeft.x && point1.x <= p_hexagon.pointUpRight.x && point1.y >= p_hexagon.pointUpLeft.y && point1.y >= p_hexagon.pointUpRight.y) 
 		|| (point2.x >= p_hexagon.pointUpLeft.x && point2.x <= p_hexagon.pointUpRight.x && point2.y >= p_hexagon.pointUpLeft.y && point2.y >= p_hexagon.pointUpRight.y))
 	{
-		normal = float2(p_hexagon.pointUpRight.y - p_hexagon.pointUpRight.y,-1*( p_hexagon.pointUpRight.x - p_hexagon.pointUpLeft.x));
-		normal = normal.normalized();
-		//normal.y *= -1;
+		//normal = float2(p_hexagon.pointUpRight.y - p_hexagon.pointUpRight.y,-1*( p_hexagon.pointUpRight.x - p_hexagon.pointUpLeft.x));
+		normal = float2(0, -1);
+		normal = normal.normalized(); 
 		return true;
 	}
 	
@@ -85,7 +86,8 @@ bool BOPhysics::CheckCollisionSphereToHexagon(sphere p_sphere, hexagon p_hexagon
 	// Checking if collision in one point
 	if (point1.x >= p_hexagon.pointUpRight.x && point1.x <= p_hexagon.pointRight.x && point1.y >= p_hexagon.pointUpRight.y && point1.y <= p_hexagon.pointRight.y && point2.x == -1000)
 	{
-		normal = float2(p_hexagon.pointRight.y - p_hexagon.pointUpRight.y, -1 * (p_hexagon.pointRight.x - p_hexagon.pointUpRight.x));
+		//normal = float2(p_hexagon.pointRight.y - p_hexagon.pointUpRight.y, -1 * (p_hexagon.pointRight.x - p_hexagon.pointUpRight.x));
+		normal = float2(0.86f, 0.50f);
 		normal = normal.normalized();
 		return true;
 	}
@@ -93,7 +95,8 @@ bool BOPhysics::CheckCollisionSphereToHexagon(sphere p_sphere, hexagon p_hexagon
 	else if ((point1.x >= p_hexagon.pointUpRight.x && point1.x <= p_hexagon.pointRight.x && point1.y >= p_hexagon.pointUpRight.y && point1.y <= p_hexagon.pointRight.y)
 		|| (point2.x >= p_hexagon.pointUpRight.x && point2.x <= p_hexagon.pointRight.x && point2.y >= p_hexagon.pointUpRight.y && point2.y <= p_hexagon.pointRight.y))
 	{
-		normal = float2(p_hexagon.pointRight.y - p_hexagon.pointUpRight.y, -1 * (p_hexagon.pointRight.x - p_hexagon.pointUpRight.x));
+		//normal = float2(p_hexagon.pointRight.y - p_hexagon.pointUpRight.y, -1 * (p_hexagon.pointRight.x - p_hexagon.pointUpRight.x));
+		normal = float2(0.86f, 0.50f);
 		normal = normal.normalized();
 		return true;
 	}
@@ -103,7 +106,8 @@ bool BOPhysics::CheckCollisionSphereToHexagon(sphere p_sphere, hexagon p_hexagon
 	// Checking if collision in one point
 	if (point1.x <= p_hexagon.pointRight.x && point1.x >= p_hexagon.pointDownRight.x && point1.y >= p_hexagon.pointRight.y && point1.y <= p_hexagon.pointDownRight.y && point2.x == -1000)
 	{
-		normal = float2(p_hexagon.pointDownRight.y - p_hexagon.pointRight.y, -1 * (p_hexagon.pointDownRight.x - p_hexagon.pointRight.x));
+		//normal = float2(p_hexagon.pointDownRight.y - p_hexagon.pointRight.y, -1 * (p_hexagon.pointDownRight.x - p_hexagon.pointRight.x));
+		normal = float2(0.84f, 0.53f);
 		normal = normal.normalized();
 		return true;
 	}
@@ -111,7 +115,8 @@ bool BOPhysics::CheckCollisionSphereToHexagon(sphere p_sphere, hexagon p_hexagon
 	else if ((point1.x <= p_hexagon.pointRight.x && point1.x >= p_hexagon.pointDownRight.x && point1.y >= p_hexagon.pointRight.y && point1.y <= p_hexagon.pointDownRight.y)
 		|| (point2.x <= p_hexagon.pointRight.x && point2.x >= p_hexagon.pointDownRight.x && point2.y >= p_hexagon.pointRight.y && point2.y <= p_hexagon.pointDownRight.y))
 	{
-		normal = float2(p_hexagon.pointDownRight.y - p_hexagon.pointRight.y, -1 * (p_hexagon.pointDownRight.x - p_hexagon.pointRight.x));
+		//normal = float2(p_hexagon.pointDownRight.y - p_hexagon.pointRight.y, -1 * (p_hexagon.pointDownRight.x - p_hexagon.pointRight.x));
+		normal = float2(0.84f, 0.53f);
 		normal = normal.normalized();
 		return true;
 	}
@@ -121,7 +126,8 @@ bool BOPhysics::CheckCollisionSphereToHexagon(sphere p_sphere, hexagon p_hexagon
 	// Checking if collision in one point
 	if (point1.x <= p_hexagon.pointDownRight.x && point1.x >= p_hexagon.pointDownLeft.x && point1.y >= p_hexagon.pointDownRight.y && point1.y <= p_hexagon.pointDownLeft.y && point2.x == -1000)
 	{
-		normal = float2(p_hexagon.pointDownLeft.y - p_hexagon.pointDownRight.y, -1 * (p_hexagon.pointDownLeft.x - p_hexagon.pointDownRight.x));
+		//normal = float2(p_hexagon.pointDownLeft.y - p_hexagon.pointDownRight.y, -1 * (p_hexagon.pointDownLeft.x - p_hexagon.pointDownRight.x));
+		normal = float2(0, 1);
 		normal = normal.normalized();
 		return true;
 	}
@@ -129,7 +135,8 @@ bool BOPhysics::CheckCollisionSphereToHexagon(sphere p_sphere, hexagon p_hexagon
 	else if ((point1.x <= p_hexagon.pointDownRight.x && point1.x >= p_hexagon.pointDownLeft.x && point1.y >= p_hexagon.pointDownRight.y && point1.y <= p_hexagon.pointDownLeft.y)
 		|| (point2.x <= p_hexagon.pointDownRight.x && point2.x >= p_hexagon.pointDownLeft.x && point2.y >= p_hexagon.pointDownRight.y && point2.y <= p_hexagon.pointDownLeft.y))
 	{
-		normal = float2(p_hexagon.pointDownLeft.y - p_hexagon.pointDownRight.y, -1 * (p_hexagon.pointDownLeft.x - p_hexagon.pointDownRight.x));
+		//normal = float2(p_hexagon.pointDownLeft.y - p_hexagon.pointDownRight.y, -1 * (p_hexagon.pointDownLeft.x - p_hexagon.pointDownRight.x));
+		normal = float2(0, 1);
 		normal = normal.normalized();
 		return true;
 	}
@@ -139,7 +146,8 @@ bool BOPhysics::CheckCollisionSphereToHexagon(sphere p_sphere, hexagon p_hexagon
 	// Checking if collision in one point
 	if (point1.x <= p_hexagon.pointDownLeft.x && point1.x >= p_hexagon.pointLeft.x && point1.y <= p_hexagon.pointDownLeft.y && point1.y >= p_hexagon.pointLeft.y && point2.x == -1000)
 	{
-		normal = float2(p_hexagon.pointLeft.y - p_hexagon.pointDownLeft.y, -1 * (p_hexagon.pointLeft.x - p_hexagon.pointDownLeft.x));
+		//normal = float2(p_hexagon.pointLeft.y - p_hexagon.pointDownLeft.y, -1 * (p_hexagon.pointLeft.x - p_hexagon.pointDownLeft.x));
+		normal = float2(-0.84f, 0.53f);
 		normal = normal.normalized();
 		return true;
 	}
@@ -147,7 +155,8 @@ bool BOPhysics::CheckCollisionSphereToHexagon(sphere p_sphere, hexagon p_hexagon
 	else if ((point1.x <= p_hexagon.pointDownLeft.x && point1.x >= p_hexagon.pointLeft.x && point1.y <= p_hexagon.pointDownLeft.y && point1.y >= p_hexagon.pointLeft.y)
 		|| (point2.x <= p_hexagon.pointDownLeft.x && point2.x >= p_hexagon.pointLeft.x && point2.y <= p_hexagon.pointDownLeft.y && point2.y >= p_hexagon.pointLeft.y))
 	{
-		normal = float2(p_hexagon.pointLeft.y - p_hexagon.pointDownLeft.y, -1 * (p_hexagon.pointLeft.x - p_hexagon.pointDownLeft.x));
+		//normal = float2(p_hexagon.pointLeft.y - p_hexagon.pointDownLeft.y, -1 * (p_hexagon.pointLeft.x - p_hexagon.pointDownLeft.x));
+		normal = float2(-0.84f, 0.53f);
 		normal = normal.normalized();
 		return true;
 	}
@@ -157,7 +166,8 @@ bool BOPhysics::CheckCollisionSphereToHexagon(sphere p_sphere, hexagon p_hexagon
 	// Checking if collision in one point
 	if (point1.x >= p_hexagon.pointLeft.x && point1.x <= p_hexagon.pointUpLeft.x && point1.y <= p_hexagon.pointLeft.y && point1.y >= p_hexagon.pointUpLeft.y && point2.x == -1000)
 	{
-		normal = float2(p_hexagon.pointLeft.y - p_hexagon.pointUpLeft.y, -1 * (p_hexagon.pointLeft.x - p_hexagon.pointUpLeft.x));
+		//normal = float2(p_hexagon.pointLeft.y - p_hexagon.pointUpLeft.y, (p_hexagon.pointLeft.x - p_hexagon.pointUpLeft.x));
+		normal = float2(-0.86f, -0.50f);
 		normal = normal.normalized();
 		return true;
 	}
@@ -165,7 +175,8 @@ bool BOPhysics::CheckCollisionSphereToHexagon(sphere p_sphere, hexagon p_hexagon
 	else if ((point1.x >= p_hexagon.pointLeft.x && point1.x <= p_hexagon.pointUpLeft.x && point1.y <= p_hexagon.pointLeft.y && point1.y >= p_hexagon.pointUpLeft.y)
 		|| (point2.x >= p_hexagon.pointLeft.x && point2.x <= p_hexagon.pointUpLeft.x && point2.y <= p_hexagon.pointLeft.y && point2.y >= p_hexagon.pointUpLeft.y))
 	{
-		normal = float2(p_hexagon.pointLeft.y - p_hexagon.pointUpLeft.y, -1 *  (p_hexagon.pointLeft.x - p_hexagon.pointUpLeft.x));
+		//normal = float2(p_hexagon.pointLeft.y - p_hexagon.pointUpLeft.y, -1 *  (p_hexagon.pointLeft.x - p_hexagon.pointUpLeft.x));
+		normal = float2(-0.86f, -0.50f);
 		normal = normal.normalized();
 		return true;
 	}
