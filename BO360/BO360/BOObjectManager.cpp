@@ -93,6 +93,8 @@ bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight)
 			y += l_blockHeightDifference;
 		}
 
+		int score = m_loadedBlocks[i].m_worth;
+
 		switch (m_loadedBlocks[i].m_type)
 		{
 			case(REGULAR) :
@@ -101,19 +103,19 @@ bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight)
 				// Create block.
 				if (i%100 == 1)
 				{
-					result = l_block->Initialize(float2(x, y), int2(40, 40), "Bilder/placeholderHexagonPU2.png", PUShield);
+					result = l_block->Initialize(float2(x, y), int2(40, 40), "Bilder/placeholderHexagonPU2.png", PUShield, score);
 				}
 				else if (i%100 == 33)
 				{
-					result = l_block->Initialize(float2(x, y), int2(40, 40), "Bilder/placeholderHexagonPU1.png", PUExtraBall);
+					result = l_block->Initialize(float2(x, y), int2(40, 40), "Bilder/placeholderHexagonPU1.png", PUExtraBall, score);
 				}
 				else if (i%100 == 66)
 				{
-					result = l_block->Initialize(float2(x, y), int2(40, 40), "Bilder/placeholderHexagonPU3.png", PUBiggerPad);
+					result = l_block->Initialize(float2(x, y), int2(40, 40), "Bilder/placeholderHexagonPU3.png", PUBiggerPad, score);
 				}
 				else
 				{
-					result = l_block->Initialize(float2(x, y), int2(40, 40), "Bilder/placeholderHexagon40x40.png", PUNone);
+					result = l_block->Initialize(float2(x, y), int2(40, 40), "Bilder/placeholderHexagon40x40.png", PUNone, score);
 				}
 				if (!result)
 				{
@@ -142,7 +144,7 @@ bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight)
 				else
 				*/
 				{
-					result = l_block->Initialize(float2(x, y), int2(40, 40), "Bilder/placeholderHexagon40x40red1.png", 3,  PUNone);
+					result = l_block->Initialize(float2(x, y), int2(40, 40), "Bilder/placeholderHexagon40x40red1.png", 3, PUNone, score);
 				}
 				if (!result)
 				{
@@ -156,7 +158,7 @@ bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight)
 			case(INDESTRUCTIBLE) :
 			{
 				l_block = new BOBlockIron();
-				result = l_block->Initialize(float2(x, y), int2(40, 40), "Bilder/placeholderHexagon40x40gray.png", PUNone);
+				result = l_block->Initialize(float2(x, y), int2(40, 40), "Bilder/placeholderHexagon40x40gray.png", PUNone, score);
 				break;
 			}
 			default :
@@ -238,7 +240,7 @@ void BOObjectManager::Update(double p_deltaTime)
 					m_ballList[j]->SetFuel(0.0f);
 					//std::cout << "Ball bounced on [" << i << "]" << std::endl;
 
-					if (bool destroyed = m_blockList[i]->Hit(m_ballList[j]->GetDamage()))
+					if (m_blockList[i]->Hit(m_ballList[j]->GetDamage()))
 					{
 						int l_parts = rand() % PARTICLESPEREXPLOSION.x + PARTICLESPEREXPLOSION.y;
 						for (int p = 0; p < l_parts; p++)
