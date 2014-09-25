@@ -22,6 +22,12 @@
     <Filter Include="Source Files\ParticleSystem">
       <UniqueIdentifier>{bad15bf6-299e-4b45-88b7-2e2f8272bcfe}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Blocks">
+      <UniqueIdentifier>{9f3a5965-3b56-4ab6-ba0e-4297e8bf191d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Blocks">
+      <UniqueIdentifier>{74ba8f60-311b-4f63-97d7-3af07db16226}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BOSystem.cpp">
@@ -64,9 +70,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="BOPaddle.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="BOBlock.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="BOTimer.cpp">
@@ -129,6 +132,12 @@
     <ClCompile Include="BOPUPadSize.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="BOBlock.cpp">
+      <Filter>Source Files\Blocks</Filter>
+    </ClCompile>
+    <ClCompile Include="BOBlockIron.cpp">
+      <Filter>Source Files\Blocks</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BOSystem.h">
@@ -171,9 +180,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="BOPaddle.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="BOBlock.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="BOTimer.h">
@@ -238,6 +244,12 @@
     </ClInclude>
     <ClInclude Include="BOPUPadSize.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BOBlock.h">
+      <Filter>Header Files\Blocks</Filter>
+    </ClInclude>
+    <ClInclude Include="BOBlockIron.h">
+      <Filter>Header Files\Blocks</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

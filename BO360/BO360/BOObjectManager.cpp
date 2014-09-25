@@ -80,7 +80,13 @@ bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight)
 	// Load blocks.
 	for (int i = 0; i < m_blockPositions.size(); i++)
 	{
-		BOBlock l_block;
+		BOBlock* l_block;
+
+		// If block should be an iron block
+		// l_block = new BOBlockIron();
+		// Else
+		l_block = new BOBlock();
+
 		x = (32 * m_blockPositions[i].x) + 60;
 		y = (37 * m_blockPositions[i].y) + 50;
 
@@ -92,25 +98,26 @@ bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight)
 		// Create block.
 		if (i%20 == 0)
 		{
-			result = l_block.Initialize(float2(x, y), int2(40, 40), "Bilder/placeholderHexagon40x40.png", PUShield);
+			result = l_block->Initialize(float2(x, y), int2(40, 40), "Bilder/placeholderHexagon40x40.png", PUShield);
 		}
 		else if (i%20 == 5)
 		{
-			result = l_block.Initialize(float2(x, y), int2(40, 40), "Bilder/placeholderHexagon40x40.png", PUExtraBall);
+			result = l_block->Initialize(float2(x, y), int2(40, 40), "Bilder/placeholderHexagon40x40.png", PUExtraBall);
 		}
 		else if (i%20 == 10)
 		{
-			result = l_block.Initialize(float2(x, y), int2(40, 40), "Bilder/placeholderHexagon40x40.png", PUBiggerPad);
+			result = l_block->Initialize(float2(x, y), int2(40, 40), "Bilder/placeholderHexagon40x40.png", PUBiggerPad);
 		}
 		else
 		{
-			result = l_block.Initialize(float2(x, y), int2(40, 40), "Bilder/placeholderHexagon40x40.png", PUNone);
+			result = l_block->Initialize(float2(x, y), int2(40, 40), "Bilder/placeholderHexagon40x40.png", PUNone);
 			if (!result)
 			{
 				return false;
 			}
 		}
 
+		
 		m_blockList.push_back(l_block);
 	}
 
@@ -163,26 +170,33 @@ void BOObjectManager::Update(double p_deltaTime)
 	}
 	for (int i = 0; i < m_blockList.size(); i++)
 	{
-		m_blockList[i].Update();
+		m_blockList[i]->Update();
 	}
 
-	for (int i = 0; i < m_blockList.size(); i++)
+	for (int j = 0; j < m_ballList.size(); j++)
 	{
-		if (!m_blockList[i].GetDead())
+		for (int i = 0; i < m_blockList.size(); i++)
 		{
-			for (int j = 0; j < m_ballList.size(); j++)
+			if (BOPhysics::CheckCollisionSpheres(m_ballList[j]->GetBoundingSphere(), m_blockList[i]->GetBoundingSphere()))
 			{
-				if (BOPhysics::CheckCollisionSpheres(m_ballList[j]->GetBoundingSphere(), m_blockList[i].GetBoundingSphere()))
+				if (BOPhysics::CheckCollisionSphereToHexagon(m_ballList[j]->GetBoundingSphere(), m_blockList[i]->GetBoundingHexagon(), normal))
 				{
-					if (BOPhysics::CheckCollisionSphereToHexagon(m_ballList[j]->GetBoundingSphere(), m_blockList[i].GetBoundingHexagon(), normal))
-					{
-						// Block dead, dead = true, stop checking collision and drawing block.
-						m_blockList[i].SetDead();
+					// Block dead, dead = true, stop checking collision and drawing block.
+					//m_blockList[i].SetDead();
 
+
+					// Collision with hexagon.
+					m_ballList[j]->SetDirection(BOPhysics::ReflectBallAroundNormal(m_ballList[j]->GetDirection(), normal));
+					m_ballList[j]->BouncedOnHexagon();
+					m_ballList[j]->SetFuel(0.0f);
+					std::cout << "Ball bounced on [" << i << "]" << std::endl;
+
+					if (bool destroyed = m_blockList[i]->Hit(m_ballList[j]->GetDamage()))
+					{
 						int l_parts = rand() % PARTICLESPEREXPLOSION.x + PARTICLESPEREXPLOSION.y;
 						for (int p = 0; p < l_parts; p++)
 						{
-							float2 l_position = m_blockList[i].GetPosition();
+							float2 l_position = m_blockList[i]->GetPosition();
 							int l_angle = rand() % PARTICLEROTATIONVARIATION - (PARTICLEROTATIONVARIATION / 2);
 							float2 l_direction = float2(1 * sin(l_angle), 1 * cos(l_angle));
 							float l_speed = rand() % PARTICLESEXPLOSIONSPEED.x + PARTICLESEXPLOSIONSPEED.y;
@@ -190,41 +204,35 @@ void BOObjectManager::Update(double p_deltaTime)
 							m_particleSystem.AddMovingParticle(BLOCKDEBRIS, 0.20f, l_position, false, l_angle, 0, l_direction, l_speed);
 						}
 
-						// Collision with hexagon.
-						m_ballList[j]->SetDirection(BOPhysics::ReflectBallAroundNormal(m_ballList[j]->GetDirection(), normal));
-						m_ballList[j]->BouncedOnHexagon();
-						m_ballList[j]->SetFuel(0.0f);
-					
 						// Spawn powerup if there is one
-						if (m_blockList[i].GetPowerUp() == PUExtraBall)
+						if (m_blockList[i]->GetPowerUp() == PUExtraBall)
 						{
 							BOMultiballs* extraBall = new BOMultiballs();
-							extraBall->Initialize(m_blockList[i].GetPosition(), int2(40, 40), "Bilder/placeholderPowerupMultBall.png", 500.0f, m_windowsSize);
+							extraBall->Initialize(m_blockList[i]->GetPosition(), int2(40, 40), "Bilder/placeholderPowerupMultBall.png", 500.0f, m_windowsSize);
 							extraBall->SetActive(true);
 							BOPowerUpManager::AddPowerUp(extraBall);
 						}
 
-						else if (m_blockList[i].GetPowerUp() == PUShield)
+						else if (m_blockList[i]->GetPowerUp() == PUShield)
 						{
 							BOShieldPU* shield = new BOShieldPU();
-							shield->Initialize(m_blockList[i].GetPosition(), int2(40, 40), "Bilder/placeholderSheildPowerUp1.png", 500.0f, m_windowsSize);
+							shield->Initialize(m_blockList[i]->GetPosition(), int2(40, 40), "Bilder/placeholderSheildPowerUp1.png", 500.0f, m_windowsSize);
 							BOPowerUpManager::AddPowerUp(shield);
 						}
-						else if (m_blockList[i].GetPowerUp() == PUBiggerPad)
+						else if (m_blockList[i]->GetPowerUp() == PUBiggerPad)
 						{
 							BOPUPadSize* biggerPad = new BOPUPadSize();
-							biggerPad->Initialize(m_blockList[i].GetPosition(), int2(40, 40), "Bilder/placeholderPowerUp3.png", 500.0f, m_windowsSize);
+							biggerPad->Initialize(m_blockList[i]->GetPosition(), int2(40, 40), "Bilder/placeholderPowerUp3.png", 500.0f, m_windowsSize);
 							BOPowerUpManager::AddPowerUp(biggerPad);
 						}
 
 						// Collision therfore play popsound
-						BOSoundManager::PlaySound(SOUND_POP);
 
-						break;
+						BOSoundManager::PlaySound(SOUND_POP);
+						m_blockList.erase(m_blockList.begin() + i);
 					}
 				}
 			}
-			
 		}		
 	}
 	
@@ -379,9 +387,9 @@ void BOObjectManager::Draw()
 
 	for (int i = 0; i < m_blockList.size(); i++)
 	{
-		if (!m_blockList[i].GetDead())
+		if (!m_blockList[i]->GetDead())
 		{
-			m_blockList[i].Draw();
+			m_blockList[i]->Draw();
 		}
 		
 	}

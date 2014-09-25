@@ -27,6 +27,7 @@
 #include "BOParticleSystem.h"
 #include "BOHUDManager.h"
 #include <vector>
+#include "BOBlockIron.h"
 
 class BOObjectManager : public BOComponent, public BOPUSubscriber
 {
@@ -64,7 +65,7 @@ private:
 	float2 m_ballDirection;
 	
   
-	std::vector<BOBlock> m_blockList;
+	std::vector<BOBlock*> m_blockList;
 
 	double m_SecondsPerParticle;
 	BOParticleSystem m_particleSystem;
