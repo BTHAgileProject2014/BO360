@@ -56,7 +56,7 @@ bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight)
 	// Initialize primary ball.
 	m_ballSize = int2(15, 15);
 	m_ballStartPosition = float2(20, 20);
-	m_ballSpeed = 500.0f;
+	m_ballSpeed = 50.0f;
 	m_ballDirection = float2(20, 10).normalized();
 
 	BOBall* ball = new BOBall();
@@ -92,11 +92,11 @@ bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight)
 		// Create block.
 		if (i%100 == 0)
 		{
-			result = l_block.Initialize(float2(x, y), int2(40, 40), "Bilder/placeholderHexagonPU1.png", PUShield);
+			result = l_block.Initialize(float2(x, y), int2(40, 40), "Bilder/placeholderHexagonPU2.png", PUShield);
 		}
 		else if (i%100 == 33)
 		{
-			result = l_block.Initialize(float2(x, y), int2(40, 40), "Bilder/placeholderHexagonPU2.png", PUExtraBall);
+			result = l_block.Initialize(float2(x, y), int2(40, 40), "Bilder/placeholderHexagonPU1.png", PUExtraBall);
 		}
 		else if (i%100 == 66)
 		{

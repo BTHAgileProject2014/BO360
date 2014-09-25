@@ -169,12 +169,6 @@ bool BOPhysics::CheckCollisionSphereToHexagon(sphere p_sphere, hexagon p_hexagon
 		normal = normal.normalized();
 		return true;
 	}
-
-	// No collision therefore collision point = -1000 // Happens in line collison
-	if (point1.x = -1000)
-	{
-		return false;
-	}
 	
 	return false;
 }
