@@ -28,6 +28,8 @@
 #include "BOHUDManager.h"
 #include "BOScore.h"
 #include <vector>
+#include "BOBlockIron.h"
+#include "BOBlockMultiTexture.h"
 
 class BOObjectManager : public BOComponent, public BOPUSubscriber ,public BOSubscriber
 {
@@ -53,7 +55,7 @@ private:
 	bool m_releaseBall;
 
 	BOMapLoader m_mapLoader;
-	std::vector<float2> m_blockPositions;
+	std::vector<Block> m_loadedBlocks;
 
 	BOBackground m_background;
 	BOBlackHole m_blackHole;
@@ -68,7 +70,7 @@ private:
 	float2 m_ballDirection;
 	
   
-	std::vector<BOBlock> m_blockList;
+	std::vector<BOBlock*> m_blockList;
 
 	double m_SecondsPerParticle;
 	BOParticleSystem m_particleSystem;

@@ -11,6 +11,7 @@ BOBall::~BOBall()
 
 bool BOBall::Initialize(float2 p_position, int2 p_size, std::string p_fileName, float p_speed, float2 p_direction, int2 p_windowSize)
 {
+	m_damage = 1;
 	m_Fuel = 0.0f;
 	m_canColide = true;
 	m_position = p_position;
@@ -135,4 +136,9 @@ float BOBall::GetFuel()
 void BOBall::SetFuel(float p_Fuel)
 {
 	m_Fuel = p_Fuel;
+}
+
+int BOBall::GetDamage()
+{
+	return m_damage;
 }

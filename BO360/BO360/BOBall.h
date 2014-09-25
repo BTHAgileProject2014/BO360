@@ -23,8 +23,10 @@ public:
 	void BouncedOnHexagon();
 	float GetFuel();
 	void SetFuel(float p_Fuel);
+	int GetDamage();
 
 private:
+	int m_damage;
 	bool m_canColide;
 	float m_speed;
 	float2 m_direction;

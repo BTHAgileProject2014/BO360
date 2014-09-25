@@ -149,7 +149,7 @@ void BOPaddle::RemoveSegments(int p_segments)
 	}
 }
 
-int BOPaddle::GetDegrees()
+double BOPaddle::GetDegrees()
 {
 	return m_totalDegrees;
 }

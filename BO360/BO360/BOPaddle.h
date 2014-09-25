@@ -23,7 +23,7 @@ public:
 	int GetSegments();
 	void AddSegments(int p_segments);
 	void RemoveSegments(int p_segments);
-	int GetDegrees();
+	double GetDegrees();
 	void Draw();
 
 private:
