@@ -31,5 +31,6 @@ private:
 	bool m_mouseCheat;
 	int2 m_windowSize;
 	float m_Fuel;
+	SDL_Texture* m_sprite2,*m_sprite3;
 };
 #endif
