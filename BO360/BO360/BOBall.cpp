@@ -91,7 +91,7 @@ bool BOBall::CanColide()
 void BOBall::BouncedOnPad()
 {
 	//m_canColide = false;
-	m_Fuel = 40.0f;
+	m_Fuel = 5.0f;
 }
 void BOBall::BouncedOnHexa()
 {

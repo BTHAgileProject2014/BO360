@@ -56,7 +56,7 @@ bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight)
 	// Initialize primary ball.
 	m_ballSize = int2(15, 15);
 	m_ballStartPosition = float2(20, 20);
-	m_ballSpeed = 500.0f;
+	m_ballSpeed = 250.0f;
 	m_ballDirection = float2(20, 10).normalized();
 
 	BOBall* ball = new BOBall();
@@ -322,14 +322,14 @@ void BOObjectManager::Update(double p_deltaTime)
 			else
 			{
 				//Beräkna bränsle
-				m_ballList[i]->SetFuel(BOPhysics::CalculateBallFuel(m_ballList[i]->GetFuel()));
+				m_ballList[i]->SetFuel(BOPhysics::CalculateBallFuel(m_ballList[i]->GetFuel(),p_deltaTime));
 			}
 
 			//Updaterar skölden
 			m_ballList[i]->SetDirection((m_Shield.Update(p_deltaTime, m_ballList[i]->GetBoundingSphere(), m_ballList[i]->GetDirection())));
 		}
 	}
-	std::cout << m_ballList.size() << std::endl;
+	//std::cout << m_ballList.size() << std::endl;
 	if (BALLDEBUGTRAIL == 1)
 	{
 		m_SecondsPerParticle -= p_deltaTime;
