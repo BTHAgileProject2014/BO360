@@ -71,8 +71,8 @@ bool BOPhysics::CheckCollisionSphereToHexagon(sphere p_sphere, hexagon p_hexagon
 		return true;
 	}
 	// Checking if the ball collision with the line in two points
-	else if ((point1.x >= p_hexagon.pointUpLeft.x && point1.x <= p_hexagon.pointUpRight.x && point1.y == p_hexagon.pointUpLeft.y && point1.y == p_hexagon.pointUpRight.y) 
-		|| (point2.x >= p_hexagon.pointUpLeft.x && point2.x <= p_hexagon.pointUpRight.x && point2.y == p_hexagon.pointUpLeft.y && point2.y == p_hexagon.pointUpRight.y))
+	else if ((point1.x >= p_hexagon.pointUpLeft.x && point1.x <= p_hexagon.pointUpRight.x && point1.y >= p_hexagon.pointUpLeft.y && point1.y >= p_hexagon.pointUpRight.y) 
+		|| (point2.x >= p_hexagon.pointUpLeft.x && point2.x <= p_hexagon.pointUpRight.x && point2.y >= p_hexagon.pointUpLeft.y && point2.y >= p_hexagon.pointUpRight.y))
 	{
 		normal = float2(p_hexagon.pointUpRight.y - p_hexagon.pointUpRight.y,-1*( p_hexagon.pointUpRight.x - p_hexagon.pointUpLeft.x));
 		normal = normal.normalized();
@@ -169,7 +169,7 @@ bool BOPhysics::CheckCollisionSphereToHexagon(sphere p_sphere, hexagon p_hexagon
 		normal = normal.normalized();
 		return true;
 	}
-	
+
 	return false;
 }
 

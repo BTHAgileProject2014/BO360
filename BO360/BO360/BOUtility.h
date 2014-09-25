@@ -2,7 +2,7 @@
 #define BOUTILITY_H_
 #include <math.h>
 
-#define BALLDEBUGTRAIL 0
+#define BALLDEBUGTRAIL 1
 
 // Floating point value structs.
 struct float2
@@ -414,14 +414,14 @@ enum Sound
 struct sphere
 {
 	float2 pos;
-	int radius;
+	float radius;
 
 	sphere()
 	{
 
 	}
 
-	sphere(float2 p_pos, int p_radius)
+	sphere(float2 p_pos, float p_radius)
 	{
 		pos = p_pos;
 		radius = p_radius;
@@ -464,22 +464,22 @@ struct hexagon
 		pos = p_pos;
 		size = p_size;
 		
-		pointUpLeft.x = p_pos.x - (p_size.x / 4.0f);
-		pointUpLeft.y = p_pos.y - (p_size.y / 2.28f);
+		pointUpLeft.x = p_pos.x - 10;//(p_size.x / 4.0f);
+		pointUpLeft.y = p_pos.y - 17;//(p_size.y / 2.28f);
 
-		pointUpRight.x = p_pos.x + (p_size.x / 4.0f);
-		pointUpRight.y = p_pos.y - (p_size.y / 2.28f);
+		pointUpRight.x = p_pos.x + 9;// (p_size.x / 4.0f);
+		pointUpRight.y = p_pos.y - 17;// (p_size.y / 2.28f);
 
-		pointRight.x = p_pos.x + (p_size.x / 2.0f);
+		pointRight.x = p_pos.x + 19;// (p_size.x / 2.0f);
 		pointRight.y = p_pos.y;
 
-		pointDownRight.x = p_pos.x + (p_size.x / 4.0f);
-		pointDownRight.y = p_pos.y + (p_size.y / 2.28f);
+		pointDownRight.x = p_pos.x + 9;// (p_size.x / 4.0f);
+		pointDownRight.y = p_pos.y + 16;// (p_size.y / 2.28f);
 
-		pointDownLeft.x = p_pos.x - (p_size.x / 4.0f);
-		pointDownLeft.y = p_pos.y + (p_size.y / 2.28f);
+		pointDownLeft.x = p_pos.x - 10;// (p_size.x / 4.0f);
+		pointDownLeft.y = p_pos.y + 16;// (p_size.y / 2.28f);
 
-		pointLeft.x = p_pos.x - (p_size.x / 2.0f);
+		pointLeft.x = p_pos.x - 20;// (p_size.x / 2.0f);
 		pointLeft.y = p_pos.y;
 	}
 };

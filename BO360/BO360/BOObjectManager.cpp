@@ -56,7 +56,7 @@ bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight)
 	// Initialize primary ball.
 	m_ballSize = int2(15, 15);
 	m_ballStartPosition = float2(20, 20);
-	m_ballSpeed = 50.0f;
+	m_ballSpeed = 500.0f;
 	m_ballDirection = float2(20, 10).normalized();
 
 	BOBall* ball = new BOBall();
@@ -90,7 +90,7 @@ bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight)
 		}
 
 		// Create block.
-		if (i%100 == 0)
+		if (i%100 == 1)
 		{
 			result = l_block.Initialize(float2(x, y), int2(40, 40), "Bilder/placeholderHexagonPU2.png", PUShield);
 		}
@@ -172,7 +172,7 @@ void BOObjectManager::Update(double p_deltaTime)
 		{
 			for (int j = 0; j < m_ballList.size(); j++)
 			{
-				if (BOPhysics::CheckCollisionSpheres(m_ballList[j]->GetBoundingSphere(), m_blockList[i].GetBoundingSphere()))
+				if (BOPhysics::CheckCollisionBoxToBox(m_ballList[j]->GetBoundingBox(), m_blockList[i].GetBoundingBox()))
 				{
 					if (BOPhysics::CheckCollisionSphereToHexagon(m_ballList[j]->GetBoundingSphere(), m_blockList[i].GetBoundingHexagon(), normal))
 					{
@@ -330,7 +330,7 @@ void BOObjectManager::Update(double p_deltaTime)
 		}
 
 		//Updaterar skölden
-		m_ballList[i]->SetDirection((m_Shield.Update(p_deltaTime, m_ballList[i]->GetBoundingSphere(), m_ballList[i]->GetDirection())));
+		//m_ballList[i]->SetDirection((m_Shield.Update(p_deltaTime, m_ballList[i]->GetBoundingSphere(), m_ballList[i]->GetDirection())));
 	}
 	}
 
@@ -439,7 +439,7 @@ bool BOObjectManager::LostGame()
 }
 void BOObjectManager::CheckBallOutOfBounds(int p_index)
 {
-	int changePosToo = 10;
+	float changePosToo = 10.0f;
 	int checkPixelsInwards = 7;
 	float2 ballPos = m_ballList[p_index]->GetPosition();
 
