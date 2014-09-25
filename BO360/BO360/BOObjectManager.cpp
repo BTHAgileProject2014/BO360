@@ -89,25 +89,48 @@ bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight)
 			y += l_blockHeightDifference;
 		}
 
-		// Create block.
-		if (i%20 == 0)
+		switch (m_loadedBlocks[i].m_type)
 		{
-			result = l_block.Initialize(float2(x, y), int2(40, 40), "Bilder/placeholderHexagon40x40.png", PUShield);
-		}
-		else if (i%20 == 5)
-		{
-			result = l_block.Initialize(float2(x, y), int2(40, 40), "Bilder/placeholderHexagon40x40.png", PUExtraBall);
-		}
-		else if (i%20 == 10)
-		{
-			result = l_block.Initialize(float2(x, y), int2(40, 40), "Bilder/placeholderHexagon40x40.png", PUBiggerPad);
-		}
-		else
-		{
-			result = l_block.Initialize(float2(x, y), int2(40, 40), "Bilder/placeholderHexagon40x40.png", PUNone);
-			if (!result)
+			case(REGULAR) :
 			{
-				return false;
+				// Create block.
+				if (i % 20 == 0)
+				{
+					result = l_block.Initialize(float2(x, y), int2(40, 40), "Bilder/placeholderHexagon40x40.png", PUShield);
+				}
+				else if (i % 20 == 5)
+				{
+					result = l_block.Initialize(float2(x, y), int2(40, 40), "Bilder/placeholderHexagon40x40.png", PUExtraBall);
+				}
+				else if (i % 20 == 10)
+				{
+					result = l_block.Initialize(float2(x, y), int2(40, 40), "Bilder/placeholderHexagon40x40.png", PUBiggerPad);
+				}
+				else
+				{
+					result = l_block.Initialize(float2(x, y), int2(40, 40), "Bilder/placeholderHexagon40x40.png", PUNone);
+					if (!result)
+					{
+						return false;
+					}
+				}
+
+				break;
+			}
+
+			case(DUBBLEHP) :
+			{
+				break;
+			}
+
+			case(INDESTRUCTIBLE) :
+			{
+				break;
+			}
+
+			default :
+			{
+				break;
 			}
 		}
 
