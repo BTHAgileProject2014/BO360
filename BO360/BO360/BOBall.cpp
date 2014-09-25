@@ -21,6 +21,8 @@ bool BOBall::Initialize(float2 p_position, int2 p_size, std::string p_fileName, 
 
 	// Load texture.
 	m_sprite = BOGraphicInterface::LoadTexture(p_fileName);
+	m_sprite2 = BOGraphicInterface::LoadTexture("Bilder/placeholderBoll2.png");
+	m_sprite3 = m_sprite;
 
 	m_mouseCheat = false;
 
@@ -37,11 +39,13 @@ void BOBall::Update(double p_deltaTime)
 	{
 		m_position.x = (m_speed * p_deltaTime) * m_direction.x + m_position.x;
 		m_position.y = (m_speed * p_deltaTime) * m_direction.y + m_position.y;
+		m_sprite = m_sprite2;
 	}
 	else
 	{
 		m_position.x = (0.75*m_speed * p_deltaTime) * m_direction.x + m_position.x;
 		m_position.y = (0.75*m_speed * p_deltaTime) * m_direction.y + m_position.y;
+		m_sprite = m_sprite3;
 	}
 
 	if (m_position.x < (m_size.x / 2) || m_position.x >(m_windowSize.x - (m_size.x / 2)))
@@ -87,7 +91,7 @@ bool BOBall::CanColide()
 void BOBall::BouncedOnPad()
 {
 	//m_canColide = false;
-	m_Fuel = 40.0f;
+	m_Fuel = 5.0f;
 }
 void BOBall::BouncedOnHexa()
 {

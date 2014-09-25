@@ -91,21 +91,6 @@ void BOGraphicInterface::Draw(SDL_Texture* p_texture, float2 p_position, int2 p_
 	source.y = p_source.y;
 	source.w = p_source.z;
 	source.h = p_source.w;
-	
-	 
-	// Prototype rotation
-	//SDL_Point p;
-	//p.x = p_size.x / 2;
-	//p.y = p_size.y / 2;
-	//double angle = 0;
-	//if (p_size.y == 80)
-	//{
-	//	static double specialAngle = 0.0f;
-	//	specialAngle += 0.05f;
-	//	angle = specialAngle;
-	//}
-	//SDL_RenderCopyEx(GetInstance().m_renderer, p_texture, &source, &target, angle, &p, SDL_FLIP_NONE);
-	//
 
 	SDL_RenderCopy(GetInstance().m_renderer, p_texture, &source, &target);
 }

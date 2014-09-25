@@ -56,7 +56,7 @@ bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight)
 	// Initialize primary ball.
 	m_ballSize = int2(15, 15);
 	m_ballStartPosition = float2(20, 20);
-	m_ballSpeed = 500.0f;
+	m_ballSpeed = 50.0f;
 	m_ballDirection = float2(20, 10).normalized();
 
 	BOBall* ball = new BOBall();
@@ -90,17 +90,17 @@ bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight)
 		}
 
 		// Create block.
-		if (i%20 == 0)
+		if (i%100 == 0)
 		{
-			result = l_block.Initialize(float2(x, y), int2(40, 40), "Bilder/placeholderHexagon40x40.png", PUShield);
+			result = l_block.Initialize(float2(x, y), int2(40, 40), "Bilder/placeholderHexagonPU2.png", PUShield);
 		}
-		else if (i%20 == 5)
+		else if (i%100 == 33)
 		{
-			result = l_block.Initialize(float2(x, y), int2(40, 40), "Bilder/placeholderHexagon40x40.png", PUExtraBall);
+			result = l_block.Initialize(float2(x, y), int2(40, 40), "Bilder/placeholderHexagonPU1.png", PUExtraBall);
 		}
-		else if (i%20 == 10)
+		else if (i%100 == 66)
 		{
-			result = l_block.Initialize(float2(x, y), int2(40, 40), "Bilder/placeholderHexagon40x40.png", PUBiggerPad);
+			result = l_block.Initialize(float2(x, y), int2(40, 40), "Bilder/placeholderHexagonPU3.png", PUBiggerPad);
 		}
 		else
 		{
@@ -199,7 +199,7 @@ void BOObjectManager::Update(double p_deltaTime)
 						if (m_blockList[i].GetPowerUp() == PUExtraBall)
 						{
 							BOMultiballs* extraBall = new BOMultiballs();
-							extraBall->Initialize(m_blockList[i].GetPosition(), int2(40, 40), "Bilder/placeholderPowerupMultBall.png", 500.0f, m_windowsSize);
+							extraBall->Initialize(m_blockList[i].GetPosition(), int2(30, 30), "Bilder/placeholderPowerup1.png", 500.0f, m_windowsSize);
 							extraBall->SetActive(true);
 							BOPowerUpManager::AddPowerUp(extraBall);
 						}
@@ -207,13 +207,13 @@ void BOObjectManager::Update(double p_deltaTime)
 						else if (m_blockList[i].GetPowerUp() == PUShield)
 						{
 							BOShieldPU* shield = new BOShieldPU();
-							shield->Initialize(m_blockList[i].GetPosition(), int2(40, 40), "Bilder/placeholderSheildPowerUp1.png", 500.0f, m_windowsSize);
+							shield->Initialize(m_blockList[i].GetPosition(), int2(30, 30), "Bilder/placeholderPowerup2.png", 500.0f, m_windowsSize);
 							BOPowerUpManager::AddPowerUp(shield);
 						}
 						else if (m_blockList[i].GetPowerUp() == PUBiggerPad)
 						{
 							BOPUPadSize* biggerPad = new BOPUPadSize();
-							biggerPad->Initialize(m_blockList[i].GetPosition(), int2(40, 40), "Bilder/placeholderPowerUp3.png", 500.0f, m_windowsSize);
+							biggerPad->Initialize(m_blockList[i].GetPosition(), int2(30, 30), "Bilder/placeholderPowerup3.png", 500.0f, m_windowsSize);
 							BOPowerUpManager::AddPowerUp(biggerPad);
 						}
 
