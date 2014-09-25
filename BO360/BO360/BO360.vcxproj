@@ -74,6 +74,7 @@
     <ClInclude Include="BOBlackHole.h" />
     <ClInclude Include="BOBlock.h" />
     <ClInclude Include="BOBlockIron.h" />
+    <ClInclude Include="BOBlockMultiTexture.h" />
     <ClInclude Include="BOComponent.h" />
     <ClInclude Include="BODrawableText.h" />
     <ClInclude Include="BOGraphicInterface.h" />
@@ -112,6 +113,7 @@
     <ClCompile Include="BOBlackHole.cpp" />
     <ClCompile Include="BOBlock.cpp" />
     <ClCompile Include="BOBlockIron.cpp" />
+    <ClCompile Include="BOBlockMultiTexture.cpp" />
     <ClCompile Include="BOComponent.cpp" />
     <ClCompile Include="BODrawableText.cpp" />
     <ClCompile Include="BOGraphicInterface.cpp" />

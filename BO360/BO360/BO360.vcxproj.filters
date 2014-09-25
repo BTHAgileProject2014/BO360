@@ -138,6 +138,9 @@
     <ClCompile Include="BOBlockIron.cpp">
       <Filter>Source Files\Blocks</Filter>
     </ClCompile>
+    <ClCompile Include="BOBlockMultiTexture.cpp">
+      <Filter>Source Files\Blocks</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BOSystem.h">
@@ -249,6 +252,9 @@
       <Filter>Header Files\Blocks</Filter>
     </ClInclude>
     <ClInclude Include="BOBlockIron.h">
+      <Filter>Header Files\Blocks</Filter>
+    </ClInclude>
+    <ClInclude Include="BOBlockMultiTexture.h">
       <Filter>Header Files\Blocks</Filter>
     </ClInclude>
   </ItemGroup>

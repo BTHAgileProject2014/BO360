@@ -124,28 +124,30 @@ bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight)
 
 			case(DUBBLEHP) :
 			{
-				l_block = new BOBlock();
+				l_block = new BOBlockMultiTexture();
 				// Create block.
 				if (i % 20 == 0)
 				{
-					result = l_block->Initialize(float2(x, y), int2(40, 40), "Bilder/placeholderHexagon40x40red.png", 2, PUShield);
+					result = l_block->Initialize(float2(x, y), int2(40, 40), "Bilder/placeholderHexagon40x40red1.png", 3, PUShield);
 				}
 				else if (i % 20 == 5)
 				{
-					result = l_block->Initialize(float2(x, y), int2(40, 40), "Bilder/placeholderHexagon40x40red.png", 2, PUExtraBall);
+					result = l_block->Initialize(float2(x, y), int2(40, 40), "Bilder/placeholderHexagon40x40red1.png", 3, PUExtraBall);
 				}
 				else if (i % 20 == 10)
 				{
-					result = l_block->Initialize(float2(x, y), int2(40, 40), "Bilder/placeholderHexagon40x40red.png", 2, PUBiggerPad);
+					result = l_block->Initialize(float2(x, y), int2(40, 40), "Bilder/placeholderHexagon40x40red1.png", 3, PUBiggerPad);
 				}
 				else
 				{
-					result = l_block->Initialize(float2(x, y), int2(40, 40), "Bilder/placeholderHexagon40x40red.png", 2, PUNone);
+					result = l_block->Initialize(float2(x, y), int2(40, 40), "Bilder/placeholderHexagon40x40red1.png", 3, PUNone);
 					if (!result)
 					{
 						return false;
 					}
 				}
+				((BOBlockMultiTexture*)l_block)->AddTextureForHPAbove("Bilder/placeholderHexagon40x40red3.png", 1);
+				((BOBlockMultiTexture*)l_block)->AddTextureForHPAbove("Bilder/placeholderHexagon40x40red2.png", 2);
 				break;
 			}
 

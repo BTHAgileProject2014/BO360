@@ -19,7 +19,7 @@ public:
 	virtual bool Hit(int p_damage); // Returns true if dead
 	PowerUpTypes GetPowerUp();
 
-private:
+protected:
 	int m_hp;
 	bool dead;
 	PowerUpTypes m_powerup;

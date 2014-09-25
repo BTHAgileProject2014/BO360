@@ -28,6 +28,7 @@
 #include "BOHUDManager.h"
 #include <vector>
 #include "BOBlockIron.h"
+#include "BOBlockMultiTexture.h"
 
 class BOObjectManager : public BOComponent, public BOPUSubscriber
 {

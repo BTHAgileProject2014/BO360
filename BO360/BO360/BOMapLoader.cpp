@@ -112,7 +112,7 @@ void BOMapLoader::DetermineAction(int p_type, float x, float y)
 			Block l_block;
 
 			l_block.m_position = float2(x, y);
-			l_block.m_type = DUBBLEHP;
+			l_block.m_type = INDESTRUCTIBLE;
 			l_block.m_worth = 30;
 
 			m_blocks.push_back(l_block);
