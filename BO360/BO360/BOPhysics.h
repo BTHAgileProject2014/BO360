@@ -36,5 +36,7 @@ private:
 	static float CalculateDistance(float2 p_Ball, float2 p_BlackHole);
 	static const double PI;
 	static const double HALF_PI;
+
+
 };
 #endif

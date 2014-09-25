@@ -2,7 +2,7 @@
 #define BOUTILITY_H_
 #include <math.h>
 
-#define BALLDEBUGTRAIL 1
+#define BALLDEBUGTRAIL 0
 
 // Floating point value structs.
 struct float2

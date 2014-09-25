@@ -385,10 +385,9 @@ float2 BOPhysics::BlackHoleGravity(sphere p_ball, float2 p_ballDirection, float 
 
 	center = center.normalized();//Normaliserar vektorn mot hålet 
  	center = center * force;//Multiplicerar vektorn mot hålet med kraften
-
+	/*std::cout << force << std::endl;*/
 	
-	newDirection = float2(newDirection.x * p_ballSpeed * p_deltaTime, newDirection.y * p_ballSpeed * p_deltaTime);//Beräknar längden av bollens riktningsvektor
-	newDirection = float2(newDirection.x + center.x, newDirection.y + center.y);//Lägger på vektorn mot hålet
+	newDirection = float2(newDirection.x * (p_ballSpeed * p_deltaTime) + center.x, newDirection.y * (p_ballSpeed * p_deltaTime) + center.y);//Beräknar längden av bollens riktningsvektor
 
 	return newDirection = newDirection.normalized();//Returnerar den normaliserade riktningsvektorn.
 }
@@ -400,5 +399,6 @@ float BOPhysics::CalculateDistance(float2 p_Ball, float2 p_BlackHole)
 
 float BOPhysics::CalculateBallFuel(float p_Fuel)
 {
+	//std::cout << p_Fuel << std::endl;
 	return p_Fuel - 0.1f;
 }
