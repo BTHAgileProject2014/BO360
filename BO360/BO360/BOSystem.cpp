@@ -140,40 +140,40 @@ bool BOSystem::Run()
 			m_deltaTime = 0.1;
 		}
 
-	// ========== UPDATE =========
+		// ========== UPDATE =========
 
-	// Tick the timer.
+		// Tick the timer.
 		m_totalTime = m_timer.GetTotalTimeS();
 		m_FPS = m_timer.FPS();
 
-	// Output the total time and delta time to the window title for debugging.
+		// Output the total time and delta time to the window title for debugging.
 #ifdef DEBUG
 		m_string = "Total time: " + std::to_string(m_totalTime) + " seconds. Delta time: " + std::to_string(m_deltaTime) + " milliseconds. FPS: " + std::to_string(m_FPS);
 		BOGraphicInterface::SetWindowTitle(m_string);
 #endif
 
-	// Update the input manager.
-	result = m_input.Update();
+		// Update the input manager.
+		result = m_input.Update();
 
 		if (m_gameState == RUNNING)
 		{
 			// Update all of the objects.
-	m_objectManager.Update(m_deltaTime);
+			m_objectManager.Update(m_deltaTime);
 
 			// Update the power ups.
-	m_powerUpManager.Update(m_deltaTime);
+			m_powerUpManager.Update(m_deltaTime);
 
 			// Update the sound Engine.
-	BOSoundManager::Update(); // Empty so far.
+			BOSoundManager::Update(); // Empty so far.
 
-		if (m_objectManager.LostGame())
-		{
-			// Shutdown map
-			ShutdownMap();
+			if (m_objectManager.LostGame())
+			{
+				// Shutdown map
+				ShutdownMap();
 
-			// Go to defeat screen
-			m_gameState = DEFEAT;
-		}
+				// Go to defeat screen
+				m_gameState = DEFEAT;
+			}
 		}
 		else
 		{
@@ -186,37 +186,36 @@ bool BOSystem::Run()
 			}
 		}
 
-	// ============================
+		// ============================
 
-	// ========== RENDER ==========
-	BOGraphicInterface::Clear();
+		// ========== RENDER ==========
+		BOGraphicInterface::Clear();
 
 		if (m_gameState == RUNNING)
 		{
-	// Render all of the objects.
-	m_objectManager.Draw();
+			// Render all of the objects.
+			m_objectManager.Draw();
 
-	// Render the power-ups
-	m_powerUpManager.Draw();
+			// Render the power-ups
+			m_powerUpManager.Draw();
 
-	// Render text
-	BOTextManager::DrawTexts();
+			// Render text
+			BOTextManager::DrawTexts();
 
-	//RenderHUD
-	BOHUDManager::Draw();
+			//RenderHUD
+			BOHUDManager::Draw();
 		}
-
 		else
 		{
 			// Draw approperiate menu.
 			m_stateManager.Draw(m_gameState);
 		}
 
-	BOGraphicInterface::Present();
-	// ============================
+		BOGraphicInterface::Present();
+		// ============================
 
 		m_deltaTime = 0;
-	}
+		}
 	
 	return result;
 }
@@ -301,6 +300,14 @@ void BOSystem::HandleAction(ButtonAction p_action)
 			// RETRY, reload the map.
 			case(RETRY) :
 			{
+				m_gameState = RUNNING;
+				if (!InitializeMap())
+				{
+					std::cout << "Press ENTER to quit." << std::endl;
+					std::cin.get();
+
+					m_quit = true;
+				}
 				break;
 
 			}
