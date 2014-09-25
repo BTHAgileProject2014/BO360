@@ -49,7 +49,7 @@ private:
 	int m_life;
 
 	BOMapLoader m_mapLoader;
-	std::vector<float2> m_blockPositions;
+	std::vector<Block> m_loadedBlocks;
 
 	BOBackground m_background;
 	BOBlackHole m_blackHole;
@@ -63,7 +63,6 @@ private:
 	float m_ballSpeed;
 	float2 m_ballDirection;
 	
-  
 	std::vector<BOBlock> m_blockList;
 
 	double m_SecondsPerParticle;

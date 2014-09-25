@@ -70,21 +70,21 @@ bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight)
 	BOPublisher::AddSubscriber(m_ballList[0]);
 
 	// Load a map.
-	m_mapLoader.LoadMap("Default.bom");
-	m_blockPositions = m_mapLoader.GetBlockPositions();
+	m_mapLoader.LoadMap("Demo.bom");
+	m_loadedBlocks = m_mapLoader.GetLoadedBlocks();
 
 	float x = 0;
 	float y = 0;
 	float l_blockHeightDifference = 19;
 
 	// Load blocks.
-	for (int i = 0; i < m_blockPositions.size(); i++)
+	for (int i = 0; i < m_loadedBlocks.size(); i++)
 	{
 		BOBlock l_block;
-		x = (32 * m_blockPositions[i].x) + 60;
-		y = (37 * m_blockPositions[i].y) + 50;
+		x = (32 * m_loadedBlocks[i].m_position.x) + 60;
+		y = (37 * m_loadedBlocks[i].m_position.y) + 50;
 
-		if ((int)m_blockPositions[i].x % 2 == 0)
+		if ((int)m_loadedBlocks[i].m_position.x % 2 == 0)
 		{
 			y += l_blockHeightDifference;
 		}
@@ -137,7 +137,7 @@ void BOObjectManager::Shutdown()
 	m_ballList.clear();
 
 	// Clear the blocks
-	m_blockPositions.clear();
+	m_loadedBlocks.clear();
 	m_blockList.clear();
 
 	// Call all the shutdowns
