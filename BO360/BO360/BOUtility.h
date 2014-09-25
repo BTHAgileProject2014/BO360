@@ -2,7 +2,7 @@
 #define BOUTILITY_H_
 #include <math.h>
 
-#define BALLDEBUGTRAIL 1
+#define BALLDEBUGTRAIL 0
 
 // Floating point value structs.
 struct float2
@@ -384,6 +384,20 @@ enum ParticleType
 	DEBUGTRAIL,
 
 	m_numberOfParticleTypes
+};
+
+enum BlockType
+{
+	REGULAR,
+	DUBBLEHP,
+	INDESTRUCTIBLE
+};
+
+struct Block
+{
+	float2 m_position;
+	BlockType m_type;
+	int m_worth;
 };
 
 enum KeyMessages

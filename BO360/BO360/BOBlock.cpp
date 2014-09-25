@@ -11,17 +11,23 @@ BOBlock::~BOBlock()
 {
 }
 
-bool BOBlock::Initialize(float2 p_position, int2 p_size, std::string p_fileName, PowerUpTypes p_powerup)
+bool BOBlock::Initialize(float2 p_position, int2 p_size, std::string p_fileName, PowerUpTypes p_powerup, int p_scoreValue)
+{
+	return Initialize(p_position, p_size, p_fileName, 1, p_powerup, p_scoreValue);
+}
+
+bool BOBlock::Initialize(float2 p_position, int2 p_size, std::string p_fileName, int p_hp, PowerUpTypes p_powerup, int p_scoreValue)
 {
 	if (!BOObject::Initialize(p_position, p_size, p_fileName))
 	{
 		return false;
 	}
-
+	m_hp = p_hp;
 	m_powerup = p_powerup;
-
+	m_scoreValue = p_scoreValue;
 	return true;
 }
+
 void BOBlock::Update()
 {
 
@@ -54,5 +60,11 @@ PowerUpTypes BOBlock::GetPowerUp()
 
 int BOBlock::GetScore()
 {
-	return 10;
+	return m_scoreValue;
+}
+
+bool BOBlock::Hit(int p_damage)
+{
+	m_hp -= p_damage;
+	return m_hp < 1 ? true : false;
 }

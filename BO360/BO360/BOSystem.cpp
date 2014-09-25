@@ -130,7 +130,7 @@ bool BOSystem::Run()
 	bool result = true;
 	m_timer.Tick();
 	// Get the initial delta time.
-	m_deltaTime = m_timer.GetDeltaTime();
+	m_deltaTime += m_timer.GetDeltaTime();
 
 	if (m_deltaTime > 0.0)
 	{

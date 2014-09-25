@@ -142,7 +142,7 @@ void BOPaddle::AddSegments(int p_segments)
 
 void BOPaddle::RemoveSegments(int p_segments)
 {
-	if (m_segments > 2)
+	if (m_segments > 1)
 	{
 		m_totalDegrees = m_totalDegrees - (m_segementDegree * p_segments);
 		m_segments -= p_segments;
