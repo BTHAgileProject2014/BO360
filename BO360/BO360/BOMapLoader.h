@@ -16,11 +16,11 @@ public:
 	bool Initialize();
 	bool LoadMap(std::string p_fileName);
 	int2 GetMapSize();
-	std::vector<float2> GetBlockPositions();
+	std::vector<Block> GetLoadedBlocks();
 
 private:
 	int2 m_mapSize;
-	std::vector<float2> m_blockPositions;
+	std::vector<Block> m_blocks;
 
 	void DetermineAction(int p_type, float x, float y);
 };
