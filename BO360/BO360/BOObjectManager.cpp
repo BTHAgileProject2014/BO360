@@ -70,54 +70,97 @@ bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight)
 	BOPublisher::AddSubscriber(m_ballList[0]);
 
 	// Load a map.
-	m_mapLoader.LoadMap("Default.bom");
-	m_blockPositions = m_mapLoader.GetBlockPositions();
+	m_mapLoader.LoadMap("Demo.bom");
+	m_loadedBlocks = m_mapLoader.GetLoadedBlocks();
 
 	float x = 0;
 	float y = 0;
 	float l_blockHeightDifference = 19;
 
 	// Load blocks.
-	for (int i = 0; i < m_blockPositions.size(); i++)
+	for (int i = 0; i < m_loadedBlocks.size(); i++)
 	{
 		BOBlock* l_block;
 
 		// If block should be an iron block
 		// l_block = new BOBlockIron();
 		// Else
-		l_block = new BOBlockIron();
+		x = (32 * m_loadedBlocks[i].m_position.x) + 60;
+		y = (37 * m_loadedBlocks[i].m_position.y) + 50;
 
-		x = (32 * m_blockPositions[i].x) + 60;
-		y = (37 * m_blockPositions[i].y) + 50;
-
-		if ((int)m_blockPositions[i].x % 2 == 0)
+		if ((int)m_loadedBlocks[i].m_position.x % 2 == 0)
 		{
 			y += l_blockHeightDifference;
 		}
 
-		// Create block.
-		if (i%20 == 0)
+		switch (m_loadedBlocks[i].m_type)
 		{
-			result = l_block->Initialize(float2(x, y), int2(40, 40), "Bilder/placeholderHexagon40x40.png", PUShield);
-		}
-		else if (i%20 == 5)
-		{
-			result = l_block->Initialize(float2(x, y), int2(40, 40), "Bilder/placeholderHexagon40x40.png", PUExtraBall);
-		}
-		else if (i%20 == 10)
-		{
-			result = l_block->Initialize(float2(x, y), int2(40, 40), "Bilder/placeholderHexagon40x40.png", PUBiggerPad);
-		}
-		else
-		{
-			result = l_block->Initialize(float2(x, y), int2(40, 40), "Bilder/placeholderHexagon40x40.png", PUNone);
-			if (!result)
+			case(REGULAR) :
 			{
-				return false;
+				l_block = new BOBlock();
+				// Create block.
+				if (i % 20 == 0)
+				{
+					result = l_block->Initialize(float2(x, y), int2(40, 40), "Bilder/placeholderHexagon40x40.png", PUShield);
+				}
+						else if (i % 20 == 5)
+				{
+					result = l_block->Initialize(float2(x, y), int2(40, 40), "Bilder/placeholderHexagon40x40.png", PUExtraBall);
+				}
+						else if (i % 20 == 10)
+				{
+					result = l_block->Initialize(float2(x, y), int2(40, 40), "Bilder/placeholderHexagon40x40.png", PUBiggerPad);
+				}
+				else
+				{
+					result = l_block->Initialize(float2(x, y), int2(40, 40), "Bilder/placeholderHexagon40x40.png", PUNone);
+					if (!result)
+					{
+						return false;
+					}
+				}
+				break;
+			}
+
+			case(DUBBLEHP) :
+			{
+				l_block = new BOBlock();
+				// Create block.
+				if (i % 20 == 0)
+				{
+					result = l_block->Initialize(float2(x, y), int2(40, 40), "Bilder/placeholderHexagon40x40red.png", 2, PUShield);
+				}
+				else if (i % 20 == 5)
+				{
+					result = l_block->Initialize(float2(x, y), int2(40, 40), "Bilder/placeholderHexagon40x40red.png", 2, PUExtraBall);
+				}
+				else if (i % 20 == 10)
+				{
+					result = l_block->Initialize(float2(x, y), int2(40, 40), "Bilder/placeholderHexagon40x40red.png", 2, PUBiggerPad);
+				}
+				else
+				{
+					result = l_block->Initialize(float2(x, y), int2(40, 40), "Bilder/placeholderHexagon40x40red.png", 2, PUNone);
+					if (!result)
+					{
+						return false;
+					}
+				}
+				break;
+			}
+
+			case(INDESTRUCTIBLE) :
+			{
+				l_block = new BOBlockIron();
+				result = l_block->Initialize(float2(x, y), int2(40, 40), "Bilder/placeholderHexagon40x40gray.png", PUNone);
+				break;
+			}
+			default :
+			{
+				break;
 			}
 		}
 
-		
 		m_blockList.push_back(l_block);
 	}
 
@@ -144,7 +187,7 @@ void BOObjectManager::Shutdown()
 	m_ballList.clear();
 
 	// Clear the blocks
-	m_blockPositions.clear();
+	m_loadedBlocks.clear();
 	m_blockList.clear();
 
 	// Call all the shutdowns
@@ -173,15 +216,15 @@ void BOObjectManager::Update(double p_deltaTime)
 		m_blockList[i]->Update();
 	}
 
-	for (int j = 0; j < m_ballList.size(); j++)
-	{
-		for (int i = 0; i < m_blockList.size(); i++)
-		{
-			if (BOPhysics::CheckCollisionSpheres(m_ballList[j]->GetBoundingSphere(), m_blockList[i]->GetBoundingSphere()))
+			for (int j = 0; j < m_ballList.size(); j++)
 			{
+		for (int i = 0; i < m_blockList.size(); i++)
+				{
+			if (BOPhysics::CheckCollisionSpheres(m_ballList[j]->GetBoundingSphere(), m_blockList[i]->GetBoundingSphere()))
+					{
 				if (BOPhysics::CheckCollisionSphereToHexagon(m_ballList[j]->GetBoundingSphere(), m_blockList[i]->GetBoundingHexagon(), normal))
 				{
-					// Block dead, dead = true, stop checking collision and drawing block.
+						// Block dead, dead = true, stop checking collision and drawing block.
 					//m_blockList[i].SetDead();
 
 
