@@ -11,6 +11,7 @@ BOObjectManager::~BOObjectManager()
 
 bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight)
 {
+	m_releaseBall = false;
 	m_windowsSize = int2(p_windowWidth, p_windowHeight);
 	bool result;
 	m_hasColided = false;
@@ -52,21 +53,15 @@ bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight)
 	{
 		return false;
 	}
-
+	
 	// Initialize primary ball.
 	m_ballSize = int2(15, 15);
-	m_ballStartPosition = float2(20, 20);
-	m_ballSpeed = 50.0f;
-	m_ballDirection = float2(20, 10).normalized();
+	m_ballSpeed = 500.0f;
+	m_ballDirection = float2((p_windowWidth / 2.0f), (p_windowHeight / 2.0f)).normalized();
 
-	BOBall* ball = new BOBall();
-	result = ball->Initialize(m_ballStartPosition, m_ballSize, "Bilder/placeholderBoll10x10.png", m_ballSpeed, m_ballDirection, m_windowsSize);
-	if (!result)
-	{
-		return false;
-	}
+	AddNewBall();
 
-	m_ballList.push_back(ball);
+
 	BOPublisher::AddSubscriber(m_ballList[0]);
 
 	// Load a map.
@@ -117,6 +112,8 @@ bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight)
 	// Add subscriber so the object manager knows when a power up activates
 	BOPowerUpManager::AddSubscriber(this);
 
+	BOPublisher::AddSubscriber(this);
+
 	m_Shield.Initialize(int2(200, 200), "Bilder/placeholderSheild.png", m_windowsSize);
 
 	return true;
@@ -145,6 +142,7 @@ void BOObjectManager::Shutdown()
 	m_background.Shutdown();
 	m_blackHole.Shutdown();
 	BOPublisher::Unsubscribe(&m_paddle);
+	BOPublisher::Unsubscribe(this);
 	m_paddle.Shutdown();
 }
 
@@ -152,15 +150,26 @@ void BOObjectManager::Update(double p_deltaTime)
 {
 	bool result;
 	float2 normal;
-	
+
 	m_blackHole.Update();
 
 	m_paddle.Update(p_deltaTime);
-
-	for (int i = 0; i < m_ballList.size(); i++)
+	
+	if (m_releaseBall)
 	{
-		m_ballList[i]->Update(p_deltaTime);
+		for (int i = 0; i < m_ballList.size(); i++)
+		{
+			m_ballList[i]->Update(p_deltaTime);
+		}
 	}
+	else
+	{
+		float tempx = m_paddle.GetPosition().x + (m_paddle.GetSize().x * 0.5f) * cos((-(m_paddle.GetRotation() - 70)) * m_PIDiv180);
+		float tempy = m_paddle.GetPosition().y - (m_paddle.GetSize().y * 0.5f) * sin((-(m_paddle.GetRotation() - 70)) * m_PIDiv180);
+
+		m_ballList[0]->SetPosition(float2(tempx, tempy));
+	}
+
 	for (int i = 0; i < m_blockList.size(); i++)
 	{
 		m_blockList[i].Update();
@@ -227,7 +236,6 @@ void BOObjectManager::Update(double p_deltaTime)
 					}
 				}
 			}
-			
 		}		
 	}
 	
@@ -268,70 +276,70 @@ void BOObjectManager::Update(double p_deltaTime)
 		else if (BOPhysics::CheckCollisionSpheres(BOPowerUpManager::GetPowerUp(i)->GetBoundingSphere(), sphere(m_blackHole.GetPosition(), 1)))
 		{
 			BOPowerUpManager::RemovePowerUp(i);
+		}
 	}
-	}
-
- 	for (int i = 0; i < m_ballList.size(); i++)
+	if (m_releaseBall)
 	{
-		CheckBallOutOfBounds(i);
-		bool ballDied = false;
-		if (m_ballList[i]->CanColide())
+ 		for (int i = 0; i < m_ballList.size(); i++)
 		{
-			float2 result = BOPhysics::BallPadCollision(m_ballList[i]->GetBoundingSphere(), m_ballList[i]->GetDirection(), m_paddle.GetBoundingSphere(), m_paddle.GetRotation() -10.5, m_paddle.GetDegrees());
-			if (!(result.x == 0 && result.y == 0))
+			CheckBallOutOfBounds(i);
+			bool ballDied = false;
+			if (m_ballList[i]->CanColide())
 			{
-				m_ballList[i]->SetDirection(result);
-				m_ballList[i]->BouncedOnPad();
-
-				// Play sound for bounce on pad
-				BOSoundManager::PlaySound(SOUND_BOUNCEONPAD);
-			}
-
-			// Check if ball has entered the black hole and should die
-			
-			if (BOPhysics::CollisionRadiusRadius(m_ballList[i]->GetPosition(), m_ballList[i]->GetSize().x / 2.0f, m_blackHole.GetPosition(), m_blackHole.GetSize().x / 4.0f))
-			{
-				// Remove the current ball
-				BOPublisher::Unsubscribe(m_ballList[i]); // Temporary for cheat with first ball
-				m_ballList[i]->Shutdown();
-				delete m_ballList[i];
-				m_ballList.erase(m_ballList.begin() + i);
-				ballDied = true;
-
-				// If no more ball in list then loose a life
-				if (m_ballList.size() == 0)
+				float2 result = BOPhysics::BallPadCollision(m_ballList[i]->GetBoundingSphere(), m_ballList[i]->GetDirection(), m_paddle.GetBoundingSphere(), m_paddle.GetRotation() -10.5, m_paddle.GetDegrees());
+				if (!(result.x == 0 && result.y == 0))
 				{
-					m_life--;
-					BOHUDManager::SetLives(m_life);
-					if (m_life > 0)
+					m_ballList[i]->SetDirection(result);
+					m_ballList[i]->BouncedOnPad();
+
+					// Play sound for bounce on pad
+					BOSoundManager::PlaySound(SOUND_BOUNCEONPAD);
+				}
+
+				// Check if ball has entered the black hole and should die
+			
+				if (BOPhysics::CollisionRadiusRadius(m_ballList[i]->GetPosition(), m_ballList[i]->GetSize().x / 2.0f, m_blackHole.GetPosition(), m_blackHole.GetSize().x / 4.0f))
+				{
+					// Remove the current ball
+					BOPublisher::Unsubscribe(m_ballList[i]); // Temporary for cheat with first ball
+					m_ballList[i]->Shutdown();
+					delete m_ballList[i];
+					m_ballList.erase(m_ballList.begin() + i);
+					ballDied = true;
+
+					// If no more ball in list then loose a life
+					if (m_ballList.size() == 0)
 					{
-						AddNewBall();
+						m_life--;
+						BOHUDManager::SetLives(m_life);
+						if (m_life > 0)
+						{
+							AddNewBall();
+						}
 					}
 				}
 			}
-		}
 		
-		if (ballDied)
-		{
-			i--;
+			if (ballDied)
+			{
+				i--;
+			}
+			else
+			{
+				if (m_ballList[i]->GetFuel() <= 0)
+				{
+					//Runs tha gravity... lawl... Rotates the direction depending on distance
+					m_ballList[i]->SetDirection(BOPhysics::BlackHoleGravity(m_ballList[i]->GetBoundingSphere(), m_ballList[i]->GetDirection(), m_ballList[i]->GetSpeed(), m_blackHole.GetBoundingSphere(), p_deltaTime));
+				}
+				else
+				{
+					//Beräkna bränsle
+					m_ballList[i]->SetFuel(BOPhysics::CalculateBallFuel(m_ballList[i]->GetFuel(), p_deltaTime));
+				}
+			//Updaterar skölden
+			m_ballList[i]->SetDirection((m_Shield.Update(p_deltaTime, m_ballList[i]->GetBoundingSphere(), m_ballList[i]->GetDirection())));
+			}
 		}
-		else
-		{
-		if (m_ballList[i]->GetFuel() <= 0)
-		{
-			//Runs tha gravity... lawl... Rotates the direction depending on distance
-			m_ballList[i]->SetDirection(BOPhysics::BlackHoleGravity(m_ballList[i]->GetBoundingSphere(), m_ballList[i]->GetDirection(), m_ballList[i]->GetSpeed(), m_blackHole.GetBoundingSphere(), p_deltaTime));
-		}
-
-		else
-		{
-			//Beräkna bränsle
-			m_ballList[i]->SetFuel(BOPhysics::CalculateBallFuel(m_ballList[i]->GetFuel(), p_deltaTime));
-		}
-
-		//Updaterar skölden
-		m_ballList[i]->SetDirection((m_Shield.Update(p_deltaTime, m_ballList[i]->GetBoundingSphere(), m_ballList[i]->GetDirection())));
-	}
 	}
 
 	if (BALLDEBUGTRAIL == 1)
@@ -348,7 +356,6 @@ void BOObjectManager::Update(double p_deltaTime)
 			}
 		}
 	}
-
 	else
 	{
 		m_SecondsPerParticle -= p_deltaTime;
@@ -358,7 +365,7 @@ void BOObjectManager::Update(double p_deltaTime)
 			m_SecondsPerParticle = 0.025f;
 
 			for (int i = 0; i < m_ballList.size(); i++)
-	{
+			{
 				float2 l_position = m_ballList[i]->GetPosition();
 				int l_offset = rand() % PARTICLEPOSITIONOFFSET - (PARTICLEPOSITIONOFFSET / 2);
 				int l_rotation = rand() % PARTICLEROTATIONVARIATION - (PARTICLEROTATIONVARIATION / 2);
@@ -421,14 +428,22 @@ void BOObjectManager::Handle(PowerUpTypes p_type, bool p_activated)
 		break;
 	}
 }
-
+void BOObjectManager::Handle(InputMessages p_inputMessage)
+{
+	if (p_inputMessage.upArrow)
+	{
+		m_releaseBall = true;
+	}
+}
 bool BOObjectManager::AddNewBall()
 {
 	BOBall* ball = new BOBall();
+	m_ballStartPosition = float2(m_paddle.GetPosition().x + (m_paddle.GetSize().x *0.5f) * cos((-(m_paddle.GetRotation() - 70)) *  m_PIDiv180), m_paddle.GetPosition().y - (m_paddle.GetSize().y * 0.5f) * sin((-(m_paddle.GetRotation() - 70)) * m_PIDiv180));
 	if (!ball->Initialize(m_ballStartPosition, m_ballSize, "Bilder/placeholderBoll10x10.png", m_ballSpeed, m_ballDirection, m_windowsSize))
 	{
 		return false;
 	}
+	m_releaseBall = false;
 	m_ballList.push_back(ball);
 	return true;
 }

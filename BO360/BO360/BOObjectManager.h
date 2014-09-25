@@ -29,7 +29,7 @@
 #include "BOScore.h"
 #include <vector>
 
-class BOObjectManager : public BOComponent, public BOPUSubscriber
+class BOObjectManager : public BOComponent, public BOPUSubscriber ,public BOSubscriber
 {
 public:
 	BOObjectManager();
@@ -40,6 +40,7 @@ public:
 	void Update(double p_deltaTime);
 	void Draw();
 	void Handle(PowerUpTypes p_type, bool p_activated);
+	void Handle(InputMessages p_inputMessage);
 	bool AddNewBall();
 	bool LostGame();
 
@@ -48,6 +49,8 @@ private:
 
 	bool m_hasColided;
 	int m_life;
+
+	bool m_releaseBall;
 
 	BOMapLoader m_mapLoader;
 	std::vector<float2> m_blockPositions;
@@ -69,5 +72,7 @@ private:
 
 	double m_SecondsPerParticle;
 	BOParticleSystem m_particleSystem;
+	const double m_PI = 3.14159265359;
+	const double m_PIDiv180 = m_PI / 180;
 };
 #endif
