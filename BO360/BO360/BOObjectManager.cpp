@@ -204,24 +204,20 @@ void BOObjectManager::Update(double p_deltaTime)
 	bool result;
 	float2 normal;
 	
-	std::cout << m_paddle.GetSegments() << std::endl;
 	m_blackHole.Update();
 
 	m_paddle.Update(p_deltaTime);
 
 	if (m_releaseBall)
 	{
-	for (int i = 0; i < m_ballList.size(); i++)
-	{
-		m_ballList[i]->Update(p_deltaTime);
-	}
+		for (int i = 0; i < m_ballList.size(); i++)
+		{
+			m_ballList[i]->Update(p_deltaTime);
+		}
 	}
 	else
 	{
-		float tempx = m_paddle.GetPosition().x + (m_paddle.GetSize().x * 0.5f) * cos((-(m_paddle.GetRotation() - (210 / m_paddle.GetSegments())) * m_PIDiv180));
-		float tempy = m_paddle.GetPosition().y - (m_paddle.GetSize().y * 0.5f) * sin((-(m_paddle.GetRotation() - (210 / m_paddle.GetSegments())) * m_PIDiv180));
-
-		m_ballList[0]->SetPosition(float2(tempx, tempy));
+		m_ballList[0]->SetPosition(ChangeBallPosAtStart());
 	}
 
 	for (int i = 0; i < m_blockList.size(); i++)
@@ -482,7 +478,8 @@ void BOObjectManager::Handle(InputMessages p_inputMessage)
 bool BOObjectManager::AddNewBall()
 {
 	BOBall* ball = new BOBall();
-	m_ballStartPosition = float2(m_paddle.GetPosition().x + (m_paddle.GetSize().x *0.5f) * cos((-(m_paddle.GetRotation() - (210 / m_paddle.GetSegments()))) *  m_PIDiv180), m_paddle.GetPosition().y - (m_paddle.GetSize().y * 0.5f) * sin((-(m_paddle.GetRotation() - (210 / m_paddle.GetSegments())) * m_PIDiv180)));
+
+	m_ballStartPosition = ChangeBallPosAtStart();
 	m_ballDirection = float2((m_windowsSize.x * 0.5f), (m_windowsSize.y *0.5f)).normalized();
 	if (!ball->Initialize(m_ballStartPosition, m_ballSize, "Bilder/placeholderBoll10x10.png", m_ballSpeed, m_ballDirection, m_windowsSize))
 	{
@@ -522,4 +519,13 @@ void BOObjectManager::CheckBallOutOfBounds(int p_index)
 	}
 
 	m_ballList[p_index]->SetPosition(ballPos);
+}
+float2 BOObjectManager::ChangeBallPosAtStart()
+{
+	float2 startPos;
+	float tempx = m_paddle.GetPosition().x + (m_paddle.GetSize().x * 0.5f) * cos(((-m_paddle.GetRotation() - (21 * (m_paddle.GetSegments() - 1))) * m_PIDiv180) + 2);
+	float tempy = m_paddle.GetPosition().y - (m_paddle.GetSize().y * 0.5f) * sin(((-m_paddle.GetRotation() - (21 * (m_paddle.GetSegments() - 1))) * m_PIDiv180) + 2);
+	startPos = float2(tempx, tempy);
+	
+	return startPos;
 }
