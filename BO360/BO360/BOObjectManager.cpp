@@ -240,6 +240,7 @@ void BOObjectManager::Update(double p_deltaTime)
 					m_ballList[j]->SetDirection(BOPhysics::ReflectBallAroundNormal(m_ballList[j]->GetDirection(), normal));
 					m_ballList[j]->BouncedOnHexagon();
 					m_ballList[j]->SetFuel(0.0f);
+					BOSoundManager::PlaySound(SOUND_POP);
 					//std::cout << "Ball bounced on [" << i << "]" << std::endl;
 
 					if (m_blockList[i]->Hit(m_ballList[j]->GetDamage()))
@@ -271,7 +272,6 @@ void BOObjectManager::Update(double p_deltaTime)
 
 						// Collision therfore play popsound
 
-						BOSoundManager::PlaySound(SOUND_POP);
 
 						// Add score
 						BOScore::AddScore(m_blockList[i]->GetScore());
