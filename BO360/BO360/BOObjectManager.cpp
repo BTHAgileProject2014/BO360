@@ -256,16 +256,8 @@ void BOObjectManager::Update(double p_deltaTime)
 
 						if (m_blockList[i]->Hit(m_ballList[j]->GetDamage()))
 						{
-							int l_parts = rand() % PARTICLESPEREXPLOSION.x + PARTICLESPEREXPLOSION.y;
-							for (int p = 0; p < l_parts; p++)
-							{
-								float2 l_position = m_blockList[i]->GetPosition();
-								int l_angle = rand() % PARTICLEROTATIONVARIATION - (PARTICLEROTATIONVARIATION / 2);
-								float2 l_direction = float2(1 * sin(l_angle), 1 * cos(l_angle));
-								float l_speed = rand() % PARTICLESEXPLOSIONSPEED.x + PARTICLESEXPLOSIONSPEED.y;
-
-								m_particleSystem.AddMovingParticle(BLOCKDEBRIS, 0.20f, l_position, false, l_angle, 0, l_direction, l_speed);
-							}
+							// Create explosion.
+							m_particleSystem.RegularBlockExplosion(m_blockList[i]->GetPosition());
 
 							// Spawn powerup if there is one
 							if (m_blockList[i]->GetPowerUp() == PUExtraBall)
@@ -275,6 +267,7 @@ void BOObjectManager::Update(double p_deltaTime)
 								extraBall->SetActive(true);
 								BOPowerUpManager::AddPowerUp(extraBall);
 							}
+
 							else if (m_blockList[i]->GetPowerUp() == PUShield)
 							{
 								BOShieldPU* shield = new BOShieldPU();
@@ -406,40 +399,27 @@ void BOObjectManager::Update(double p_deltaTime)
 	}
 	}
 
-	if (BALLDEBUGTRAIL == 1)
+	// Increment time passed.
+	m_SecondsPerParticle -= p_deltaTime;
+
+	if (BALLDEBUGTRAIL == 1 && m_SecondsPerParticle < 0.0f)
 	{
-		m_SecondsPerParticle -= p_deltaTime;
-
-		if (m_SecondsPerParticle < 0.0f)
+		for (int i = 0; i < m_ballList.size(); i++)
 		{
-			m_SecondsPerParticle = 0.002f;
-
-			for (int i = 0; i < m_ballList.size(); i++)
-			{
-				m_particleSystem.AddStationaryParticle(DEBUGTRAIL, 2.0f, m_ballList[i]->GetPosition(), false, 0, 0);
-			}
+			m_particleSystem.BallDebugTrail(m_ballList[i]->GetPosition());
 		}
+
+		m_SecondsPerParticle = 0.002f;
 	}
-	else
+	
+	else if (m_releaseBall && m_SecondsPerParticle < 0.0f)
 	{
-		m_SecondsPerParticle -= p_deltaTime;
-
-		if (m_SecondsPerParticle < 0.0f)
+		for (int i = 0; i < m_ballList.size(); i++)
 		{
-			m_SecondsPerParticle = 0.025f;
-
-			for (int i = 0; i < m_ballList.size(); i++)
-	{
-				float2 l_position = m_ballList[i]->GetPosition();
-				int l_offset = rand() % PARTICLEPOSITIONOFFSET - (PARTICLEPOSITIONOFFSET / 2);
-				int l_rotation = rand() % PARTICLEROTATIONVARIATION - (PARTICLEROTATIONVARIATION / 2);
-
-				l_position.x += l_offset;
-				l_position.y += l_offset;
-
-				m_particleSystem.AddStationaryParticle(BALLTRAIL, 1.0f, l_position, true, l_rotation, l_rotation);
-			}
+			m_particleSystem.BallTrail(m_ballList[i]->GetPosition());
 		}
+
+		m_SecondsPerParticle = 0.025f;
 	}
 
 	m_particleSystem.Update(p_deltaTime);
