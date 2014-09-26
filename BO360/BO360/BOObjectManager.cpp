@@ -252,7 +252,7 @@ void BOObjectManager::Update(double p_deltaTime)
 						if (m_blockList[i]->GetPowerUp() == PUExtraBall)
 						{
 							BOMultiballs* extraBall = new BOMultiballs();
-							extraBall->Initialize(m_blockList[i]->GetPosition(), int2(40, 40), "Bilder/placeholderPowerupMultBall.png", 500.0f, m_windowsSize);
+							extraBall->Initialize(m_blockList[i]->GetPosition(), int2(40, 40), "Bilder/placeholderPowerupMultBall.png", 250.0f, m_windowsSize);
 							extraBall->SetActive(true);
 							BOPowerUpManager::AddPowerUp(extraBall);
 						}
@@ -260,13 +260,13 @@ void BOObjectManager::Update(double p_deltaTime)
 						else if (m_blockList[i]->GetPowerUp() == PUShield)
 						{
 							BOShieldPU* shield = new BOShieldPU();
-							shield->Initialize(m_blockList[i]->GetPosition(), int2(30, 30), "Bilder/placeholderPowerup2.png", 500.0f, m_windowsSize);
+							shield->Initialize(m_blockList[i]->GetPosition(), int2(30, 30), "Bilder/placeholderPowerup2.png", 250.0f, m_windowsSize);
 							BOPowerUpManager::AddPowerUp(shield);
 						}
 						else if (m_blockList[i]->GetPowerUp() == PUBiggerPad)
 						{
 							BOPUPadSize* biggerPad = new BOPUPadSize();
-							biggerPad->Initialize(m_blockList[i]->GetPosition(), int2(30, 30), "Bilder/placeholderPowerup3.png", 500.0f, m_windowsSize);
+							biggerPad->Initialize(m_blockList[i]->GetPosition(), int2(30, 30), "Bilder/placeholderPowerup3.png", 250.0f, m_windowsSize);
 							BOPowerUpManager::AddPowerUp(biggerPad);
 						}
 
@@ -382,7 +382,8 @@ void BOObjectManager::Update(double p_deltaTime)
 			m_ballList[i]->SetFuel(BOPhysics::CalculateBallFuel(m_ballList[i]->GetFuel(), p_deltaTime));
 		}
 		//Updaterar skölden
-		m_ballList[i]->SetDirection((m_Shield.Update(p_deltaTime, m_ballList[i]->GetBoundingSphere(), m_ballList[i]->GetDirection())));
+		float2 newdir = m_Shield.Update(p_deltaTime, m_ballList[i]->GetBoundingSphere(), m_ballList[i]->GetDirection());
+		m_ballList[i]->SetDirection(newdir);
 	}
 	}
 	}
@@ -403,9 +404,12 @@ void BOObjectManager::Update(double p_deltaTime)
 	else if (m_releaseBall && m_SecondsPerParticle < 0.0f)
 		{
 			for (int i = 0; i < m_ballList.size(); i++)
-	{
-			m_particleSystem.BallTrail(m_ballList[i]->GetPosition());
-		}
+			{
+				if (m_ballList[i]->GetFuel() > 0.0f)
+				{
+					m_particleSystem.BallTrail(m_ballList[i]->GetPosition());
+				}
+			}
 
 		m_SecondsPerParticle = 0.025f;
 	}
