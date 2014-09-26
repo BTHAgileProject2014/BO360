@@ -63,7 +63,10 @@ void BOPaddle::Handle(PowerUpTypes p_type, bool p_activated)
 		if (p_activated)
 		{
 			// Make the paddle bigger
-			AddSegments(1);
+			if (m_segments < 5)
+			{
+				AddSegments(1);
+			}
 		}
 		else
 		{

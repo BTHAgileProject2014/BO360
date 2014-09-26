@@ -119,22 +119,6 @@ bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight)
 			case(DUBBLEHP) :
 			{
 				l_block = new BOBlockMultiTexture();
-				// Create block.
-				/*
-				if (i % 100 == 1)
-				{
-					result = l_block->Initialize(float2(x, y), int2(40, 40), "Bilder/placeholderHexagonPU2.png", PUShield);
-				}
-				else if (i % 100 == 33)
-				{
-					result = l_block->Initialize(float2(x, y), int2(40, 40), "Bilder/placeholderHexagonPU1.png", PUExtraBall);
-				}
-				else if (i % 100 == 66)
-				{
-					result = l_block->Initialize(float2(x, y), int2(40, 40), "Bilder/placeholderHexagonPU3.png", PUBiggerPad);
-		}
-		else
-				*/
 		{
 					result = l_block->Initialize(float2(x, y), int2(40, 40), "Bilder/placeholderHexagon40x40red1.png", 3, PUNone, score);
 				}
@@ -204,17 +188,17 @@ void BOObjectManager::Update(double p_deltaTime)
 	bool result;
 	float2 normal;
 	
-	std::cout << m_paddle.GetSegments() << std::endl;
+	
 	m_blackHole.Update();
 
 	m_paddle.Update(p_deltaTime);
 
 	if (m_releaseBall)
 	{
-	for (int i = 0; i < m_ballList.size(); i++)
-	{
-		m_ballList[i]->Update(p_deltaTime);
-	}
+		for (int i = 0; i < m_ballList.size(); i++)
+		{
+			m_ballList[i]->Update(p_deltaTime);
+		}
 	}
 	else
 	{
@@ -487,7 +471,7 @@ void BOObjectManager::Handle(PowerUpTypes p_type, bool p_activated)
 }
 void BOObjectManager::Handle(InputMessages p_inputMessage)
 {
-	if (p_inputMessage.upArrow)
+	if (p_inputMessage.spacebarKey)
 	{
 		m_releaseBall = true;
 	}

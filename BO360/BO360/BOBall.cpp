@@ -51,11 +51,13 @@ void BOBall::Update(double p_deltaTime)
 
 	if (m_position.x < (m_size.x / 2) || m_position.x >(m_windowSize.x - (m_size.x / 2)))
 	{
+		m_Fuel = 0;
 		m_canColide = true;
 		m_direction.x *= -1;
 	}
 	if (m_position.y < (m_size.y / 2) || m_position.y >(m_windowSize.y - (m_size.y / 2)))
 	{
+		m_Fuel = 0;
 		m_canColide = true;
 		m_direction.y *= -1;
 	}
@@ -106,6 +108,7 @@ box BOBall::GetBoundingBox()
 
 void BOBall::Handle(InputMessages p_inputMessages)
 {
+	/*
 	if (p_inputMessages.spacebarKey)
 	{
 		if (m_mouseCheat)
@@ -122,6 +125,7 @@ void BOBall::Handle(InputMessages p_inputMessages)
 		m_position.x = p_inputMessages.mouseX;
 		m_position.y = p_inputMessages.mouseY;
 	}
+	*/
 }
 
 void BOBall::BouncedOnHexagon()
