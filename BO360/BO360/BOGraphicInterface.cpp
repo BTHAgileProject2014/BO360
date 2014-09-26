@@ -17,7 +17,7 @@ bool BOGraphicInterface::Initialize(int p_windowWidth, int p_windowHeight)
 	GetInstance().m_windowWidth = p_windowWidth;
 	GetInstance().m_windowHeight = p_windowHeight;
 
-	result = GetInstance().m_window.Initialize("ScreenName", GetInstance().m_windowWidth, GetInstance().m_windowHeight);
+	result = GetInstance().m_window.Initialize("Blackout", GetInstance().m_windowWidth, GetInstance().m_windowHeight);
 	if (!result)
 	{
 		// Initialize failed
