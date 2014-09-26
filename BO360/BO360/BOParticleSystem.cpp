@@ -21,7 +21,8 @@ bool BOParticleSystem::Initialize(int p_maxParticles)
 	// Define sizes.
 	m_sizes[BALLTRAIL] = int2(10, 10);
 	m_sizes[BALLDEBRIS] = int2(20, 20);
-	m_sizes[BLOCKDEBRIS] = int2(10, 10);
+	m_sizes[BLOCKDEBRIS] = int2(20, 20);
+	m_sizes[EXPLOSION] = int2(8, 8);
 	m_sizes[POWERUPDEBRIS] = int2(5, 5);
 	m_sizes[DEBUGTRAIL] = int2(3, 3);
 
@@ -50,6 +51,13 @@ bool BOParticleSystem::Initialize(int p_maxParticles)
 		l_result = false;
 	}
 
+	m_explosionTexture = BOGraphicInterface::LoadTexture("Bilder/Particles/Explosion.png");
+	if (m_explosionTexture == NULL)
+	{
+		std::cout << "Failed to load 'Explosion' particle texture!" << std::endl;
+		l_result = false;
+	}
+
 	m_powerUpDebrisTexture = BOGraphicInterface::LoadTexture("Bilder/Particles/PowerUpDebris.png");
 	if (m_powerUpDebrisTexture == NULL)
 	{
@@ -72,7 +80,9 @@ void BOParticleSystem::Shutdown()
 	BOGraphicInterface::DestroyTexture(m_ballTrailTexture);
 	BOGraphicInterface::DestroyTexture(m_ballDebrisTexture);
 	BOGraphicInterface::DestroyTexture(m_blockDebrisTexture);
+	BOGraphicInterface::DestroyTexture(m_explosionTexture);
 	BOGraphicInterface::DestroyTexture(m_powerUpDebrisTexture);
+	BOGraphicInterface::DestroyTexture(m_debugTrailTexture);
 
 	m_movingParticleList.clear();
 	m_movingParticleList.shrink_to_fit();
@@ -95,6 +105,7 @@ void BOParticleSystem::AddMovingParticle(ParticleType p_type, double p_timeS, fl
 		case(BALLTRAIL) : { l_size = m_sizes[BALLTRAIL];  break; }
 		case(BALLDEBRIS) : { l_size = m_sizes[BALLDEBRIS];  break; }
 		case(BLOCKDEBRIS) : { l_size = m_sizes[BLOCKDEBRIS];  break; }
+		case(EXPLOSION) : { l_size = m_sizes[EXPLOSION];  break; }
 		case(POWERUPDEBRIS) : { l_size = m_sizes[POWERUPDEBRIS];  break; }
 		case(DEBUGTRAIL) : { l_size = m_sizes[DEBUGTRAIL];  break; }
 		}
@@ -121,6 +132,7 @@ void BOParticleSystem::AddStationaryParticle(ParticleType p_type, double p_timeS
 		case(BALLTRAIL) : { l_size = m_sizes[BALLTRAIL];  break; }
 		case(BALLDEBRIS) : { l_size = m_sizes[BALLDEBRIS];  break; }
 		case(BLOCKDEBRIS) : { l_size = m_sizes[BLOCKDEBRIS];  break; }
+		case(EXPLOSION) : { l_size = m_sizes[EXPLOSION];  break; }
 		case(POWERUPDEBRIS) : { l_size = m_sizes[POWERUPDEBRIS];  break; }
 		case(DEBUGTRAIL) : { l_size = m_sizes[DEBUGTRAIL];  break; }
 		}
@@ -208,6 +220,11 @@ SDL_Texture* BOParticleSystem::GetTexture(ParticleType p_type)
 			return m_blockDebrisTexture;
 		}
 
+		case EXPLOSION:
+		{
+			return m_explosionTexture;
+		}
+
 		case POWERUPDEBRIS:
 		{
 			return m_powerUpDebrisTexture;
@@ -223,5 +240,54 @@ SDL_Texture* BOParticleSystem::GetTexture(ParticleType p_type)
 			std::cout << "An unhandled particle type was detected! (BOParticleSystem.cpp, GetTexture() function)" << std::endl;
 			break;
 		}
+	}
+}
+
+void BOParticleSystem::BallDebugTrail(float2 p_position)
+{
+	float2 l_position = p_position;
+	l_position.x -= (m_sizes[DEBUGTRAIL].x / 2);
+	l_position.y -= (m_sizes[DEBUGTRAIL].y / 2);
+
+	AddStationaryParticle(DEBUGTRAIL, 2.0f, l_position, false, 0, 0);
+}
+
+void BOParticleSystem::BallTrail(float2 p_position)
+{
+	float2 l_position = p_position;
+	l_position.x -= (m_sizes[BALLTRAIL].x / 2);
+	l_position.y -= (m_sizes[BALLTRAIL].y / 2);
+	l_position.x += rand() % PARTICLEPOSITIONOFFSET - (PARTICLEPOSITIONOFFSET / 2);
+	l_position.y += rand() % PARTICLEPOSITIONOFFSET - (PARTICLEPOSITIONOFFSET / 2);
+
+	int l_rotation = rand() % PARTICLEROTATIONVARIATION - (PARTICLEROTATIONVARIATION / 2);
+
+	AddStationaryParticle(BALLTRAIL, 1.0f, l_position, true, l_rotation, l_rotation);
+}
+
+void BOParticleSystem::RegularBlockExplosion(float2 p_position)
+{
+	int l_parts = rand() % BLOCKDEBIRSPEREXPLOSION.x + BLOCKDEBIRSPEREXPLOSION.y;
+	for (int p = 0; p < l_parts; p++)
+	{
+		int l_angle = rand() % PARTICLEROTATIONVARIATION - (PARTICLEROTATIONVARIATION / 2);
+		float l_speed = rand() % PARTICLESEXPLOSIONSPEED.x + PARTICLESEXPLOSIONSPEED.y;
+
+		float2 l_position = p_position;
+		float2 l_direction = float2(1 * sin(l_angle), 1 * cos(l_angle));
+
+		AddMovingParticle(BLOCKDEBRIS, 0.25f, l_position, true, l_angle, l_angle, l_direction, l_speed);
+	}
+
+	int l_explosions = rand() % EXPLOSIONS.x + EXPLOSIONS.y;
+	for (int e = 0; e < l_explosions; e++)
+	{
+		int l_angle = rand() % PARTICLEROTATIONVARIATION - (PARTICLEROTATIONVARIATION / 2);
+		float l_speed = rand() % PARTICLESEXPLOSIONSPEED.x + PARTICLESEXPLOSIONSPEED.y;
+
+		float2 l_position = p_position;
+		float2 l_direction = float2(1 * sin(l_angle), 1 * cos(l_angle));
+
+		AddMovingParticle(EXPLOSION, 0.15f, l_position, false, l_angle, 0, l_direction, l_speed);
 	}
 }
