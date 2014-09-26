@@ -329,70 +329,70 @@ void BOObjectManager::Update(double p_deltaTime)
 		else if (BOPhysics::CheckCollisionSpheres(BOPowerUpManager::GetPowerUp(i)->GetBoundingSphere(), sphere(m_blackHole.GetPosition(), 1)))
 		{
 			BOPowerUpManager::RemovePowerUp(i);
-	}
+		}
 	}
 	if (m_releaseBall)
 	{
-	for (int i = 0; i < m_ballList.size(); i++)
-	{
-		CheckBallOutOfBounds(i);
-		bool ballDied = false;
-		if (m_ballList[i]->CanColide())
+		for (int i = 0; i < m_ballList.size(); i++)
 		{
-			float2 result = BOPhysics::BallPadCollision(m_ballList[i]->GetBoundingSphere(), m_ballList[i]->GetDirection(), m_paddle.GetBoundingSphere(), m_paddle.GetRotation() -10.5, m_paddle.GetDegrees());
-			if (!(result.x == 0 && result.y == 0))
+			CheckBallOutOfBounds(i);
+			bool ballDied = false;
+			if (m_ballList[i]->CanColide())
 			{
-				m_ballList[i]->SetDirection(result);
-				m_ballList[i]->BouncedOnPad();
-
-				// Play sound for bounce on pad
-				BOSoundManager::PlaySound(SOUND_BOUNCEONPAD);
-			}
-
-			// Check if ball has entered the black hole and should die
-			
-			if (BOPhysics::CollisionRadiusRadius(m_ballList[i]->GetPosition(), m_ballList[i]->GetSize().x / 2.0f, m_blackHole.GetPosition(), m_blackHole.GetSize().x / 4.0f))
-			{
-				// Remove the current ball
-				BOPublisher::Unsubscribe(m_ballList[i]); // Temporary for cheat with first ball
-				m_ballList[i]->Shutdown();
-				delete m_ballList[i];
-				m_ballList.erase(m_ballList.begin() + i);
-				ballDied = true;
-
-				// If no more ball in list then loose a life
-				if (m_ballList.size() == 0)
+				float2 result = BOPhysics::BallPadCollision(m_ballList[i]->GetBoundingSphere(), m_ballList[i]->GetDirection(), m_paddle.GetBoundingSphere(), m_paddle.GetRotation() -10.5, m_paddle.GetDegrees());
+				if (!(result.x == 0 && result.y == 0))
 				{
-					m_life--;
-					BOHUDManager::SetLives(m_life);
-					if (m_life > 0)
+					m_ballList[i]->SetDirection(result);
+					m_ballList[i]->BouncedOnPad();
+
+					// Play sound for bounce on pad
+					BOSoundManager::PlaySound(SOUND_BOUNCEONPAD);
+				}
+
+				// Check if ball has entered the black hole and should die
+			
+				if (BOPhysics::CollisionRadiusRadius(m_ballList[i]->GetPosition(), m_ballList[i]->GetSize().x / 2.0f, m_blackHole.GetPosition(), m_blackHole.GetSize().x / 4.0f))
+				{
+					// Remove the current ball
+					BOPublisher::Unsubscribe(m_ballList[i]); // Temporary for cheat with first ball
+					m_ballList[i]->Shutdown();
+					delete m_ballList[i];
+					m_ballList.erase(m_ballList.begin() + i);
+					ballDied = true;
+
+					// If no more ball in list then loose a life
+					if (m_ballList.size() == 0)
 					{
-						AddNewBall();
+						m_life--;
+						BOHUDManager::SetLives(m_life);
+						if (m_life > 0)
+						{
+							AddNewBall();
+						}
 					}
 				}
 			}
-		}
 		
-		if (ballDied)
-		{
-			i--;
+			if (ballDied)
+			{
+				i--;
+			}
+			else
+			{
+				if (m_ballList[i]->GetFuel() <= 0)
+				{
+					//Runs tha gravity... lawl... Rotates the direction depending on distance
+					m_ballList[i]->SetDirection(BOPhysics::BlackHoleGravity(m_ballList[i]->GetBoundingSphere(), m_ballList[i]->GetDirection(), m_ballList[i]->GetSpeed(), m_blackHole.GetBoundingSphere(), p_deltaTime));
+				}
+				else
+				{
+					//Beräkna bränsle
+					m_ballList[i]->SetFuel(BOPhysics::CalculateBallFuel(m_ballList[i]->GetFuel(), p_deltaTime));
+				}
+			//Updaterar skölden
+			m_ballList[i]->SetDirection((m_Shield.Update(p_deltaTime, m_ballList[i]->GetBoundingSphere(), m_ballList[i]->GetDirection())));
+			}
 		}
-		else
-		{
-		if (m_ballList[i]->GetFuel() <= 0)
-		{
-			//Runs tha gravity... lawl... Rotates the direction depending on distance
-			m_ballList[i]->SetDirection(BOPhysics::BlackHoleGravity(m_ballList[i]->GetBoundingSphere(), m_ballList[i]->GetDirection(), m_ballList[i]->GetSpeed(), m_blackHole.GetBoundingSphere(), p_deltaTime));
-		}
-		else
-		{
-			//Beräkna bränsle
-			m_ballList[i]->SetFuel(BOPhysics::CalculateBallFuel(m_ballList[i]->GetFuel(), p_deltaTime));
-		}
-		//Updaterar skölden
-		m_ballList[i]->SetDirection((m_Shield.Update(p_deltaTime, m_ballList[i]->GetBoundingSphere(), m_ballList[i]->GetDirection())));
-	}
-	}
 	}
 
 	// Increment time passed.
