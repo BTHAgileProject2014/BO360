@@ -195,17 +195,14 @@ void BOObjectManager::Update(double p_deltaTime)
 
 	if (m_releaseBall)
 	{
-		for (int i = 0; i < m_ballList.size(); i++)
-		{
-			m_ballList[i]->Update(p_deltaTime);
-		}
+	for (int i = 0; i < m_ballList.size(); i++)
+	{
+		m_ballList[i]->Update(p_deltaTime);
+	}
 	}
 	else
 	{
-		float tempx = m_paddle.GetPosition().x + (m_paddle.GetSize().x * 0.5f) * cos((-(m_paddle.GetRotation() - (210 / m_paddle.GetSegments())) * m_PIDiv180));
-		float tempy = m_paddle.GetPosition().y - (m_paddle.GetSize().y * 0.5f) * sin((-(m_paddle.GetRotation() - (210 / m_paddle.GetSegments())) * m_PIDiv180));
-
-		m_ballList[0]->SetPosition(float2(tempx, tempy));
+		m_ballList[0]->SetPosition(ChangeBallPosAtStart());
 	}
 
 	for (int i = 0; i < m_blockList.size(); i++)
@@ -217,10 +214,17 @@ void BOObjectManager::Update(double p_deltaTime)
 			{
 		for (int i = 0; i < m_blockList.size(); i++)
 				{
-			if (BOPhysics::CheckCollisionSpheres(m_ballList[j]->GetBoundingSphere(), m_blockList[i]->GetBoundingSphere()))
+			box testBox = m_blockList[i]->GetBoundingBox();
+			testBox.left -= 10; testBox.top -= 10; testBox.bottom += 10; testBox.right += 10;
+			if (BOPhysics::CheckCollisionBoxToBox(m_ballList[j]->GetBoundingBox(), testBox))//m_blockList[i].GetBoundingBox()))
 					{
 				if (BOPhysics::CheckCollisionSphereToHexagon(m_ballList[j]->GetBoundingSphere(), m_blockList[i]->GetBoundingHexagon(), normal))
 				{
+					float angleBallNormal;
+					float2 ballDir = m_ballList[j]->GetDirection();
+					angleBallNormal = ballDir.dot(normal);
+					if (angleBallNormal > -1 && angleBallNormal < 0)
+					{
 						// Block dead, dead = true, stop checking collision and drawing block.
 					//m_blockList[i].SetDead();
 
@@ -233,16 +237,8 @@ void BOObjectManager::Update(double p_deltaTime)
 
 					if (m_blockList[i]->Hit(m_ballList[j]->GetDamage()))
 					{
-						int l_parts = rand() % PARTICLESPEREXPLOSION.x + PARTICLESPEREXPLOSION.y;
-						for (int p = 0; p < l_parts; p++)
-						{
-							float2 l_position = m_blockList[i]->GetPosition();
-							int l_angle = rand() % PARTICLEROTATIONVARIATION - (PARTICLEROTATIONVARIATION / 2);
-							float2 l_direction = float2(1 * sin(l_angle), 1 * cos(l_angle));
-							float l_speed = rand() % PARTICLESEXPLOSIONSPEED.x + PARTICLESEXPLOSIONSPEED.y;
-
-							m_particleSystem.AddMovingParticle(BLOCKDEBRIS, 0.20f, l_position, false, l_angle, 0, l_direction, l_speed);
-						}
+							// Create explosion.
+							m_particleSystem.RegularBlockExplosion(m_blockList[i]->GetPosition());
 
 						// Spawn powerup if there is one
 						if (m_blockList[i]->GetPowerUp() == PUExtraBall)
@@ -274,12 +270,13 @@ void BOObjectManager::Update(double p_deltaTime)
 						BOScore::AddScore(m_blockList[i]->GetScore());
 
 						m_blockList.erase(m_blockList.begin() + i);
+
 					}
 				}
 			}
 		}		
 	}
-	
+	}		
 	// Tillfällig powerup kollision kod för att testa 
 	// Checks powerup "ball" against the pad, if colliding with pad do powerup effect and remove powerup"ball"
 	for (int i = 0; i < BOPowerUpManager::GetPowerUpSize(); i++)
@@ -383,40 +380,27 @@ void BOObjectManager::Update(double p_deltaTime)
 	}
 	}
 
-	if (BALLDEBUGTRAIL == 1)
-	{
+	// Increment time passed.
 		m_SecondsPerParticle -= p_deltaTime;
 
-		if (m_SecondsPerParticle < 0.0f)
+	if (BALLDEBUGTRAIL == 1 && m_SecondsPerParticle < 0.0f)
 		{
-			m_SecondsPerParticle = 0.002f;
-
 			for (int i = 0; i < m_ballList.size(); i++)
 			{
-				m_particleSystem.AddStationaryParticle(DEBUGTRAIL, 2.0f, m_ballList[i]->GetPosition(), false, 0, 0);
-			}
+			m_particleSystem.BallDebugTrail(m_ballList[i]->GetPosition());
 		}
+
+		m_SecondsPerParticle = 0.002f;
 	}
-	else
-	{
-		m_SecondsPerParticle -= p_deltaTime;
 
-		if (m_SecondsPerParticle < 0.0f)
+	else if (m_releaseBall && m_SecondsPerParticle < 0.0f)
 		{
-			m_SecondsPerParticle = 0.025f;
-
 			for (int i = 0; i < m_ballList.size(); i++)
 	{
-				float2 l_position = m_ballList[i]->GetPosition();
-				int l_offset = rand() % PARTICLEPOSITIONOFFSET - (PARTICLEPOSITIONOFFSET / 2);
-				int l_rotation = rand() % PARTICLEROTATIONVARIATION - (PARTICLEROTATIONVARIATION / 2);
-
-				l_position.x += l_offset;
-				l_position.y += l_offset;
-
-				m_particleSystem.AddStationaryParticle(BALLTRAIL, 1.0f, l_position, true, l_rotation, l_rotation);
-			}
+			m_particleSystem.BallTrail(m_ballList[i]->GetPosition());
 		}
+
+		m_SecondsPerParticle = 0.025f;
 	}
 
 	m_particleSystem.Update(p_deltaTime);
@@ -479,7 +463,8 @@ void BOObjectManager::Handle(InputMessages p_inputMessage)
 bool BOObjectManager::AddNewBall()
 {
 	BOBall* ball = new BOBall();
-	m_ballStartPosition = float2(m_paddle.GetPosition().x + (m_paddle.GetSize().x *0.5f) * cos((-(m_paddle.GetRotation() - (210 / m_paddle.GetSegments()))) *  m_PIDiv180), m_paddle.GetPosition().y - (m_paddle.GetSize().y * 0.5f) * sin((-(m_paddle.GetRotation() - (210 / m_paddle.GetSegments())) * m_PIDiv180)));
+
+	m_ballStartPosition = ChangeBallPosAtStart();
 	m_ballDirection = float2((m_windowsSize.x * 0.5f), (m_windowsSize.y *0.5f)).normalized();
 	if (!ball->Initialize(m_ballStartPosition, m_ballSize, "Bilder/placeholderBoll10x10.png", m_ballSpeed, m_ballDirection, m_windowsSize))
 	{
@@ -519,4 +504,13 @@ void BOObjectManager::CheckBallOutOfBounds(int p_index)
 	}
 
 	m_ballList[p_index]->SetPosition(ballPos);
+}
+float2 BOObjectManager::ChangeBallPosAtStart()
+{
+	float2 startPos;
+	float tempx = m_paddle.GetPosition().x + (m_paddle.GetSize().x * 0.5f) * cos(((-m_paddle.GetRotation() - (21 * (m_paddle.GetSegments() - 1))) * m_PIDiv180) + 2);
+	float tempy = m_paddle.GetPosition().y - (m_paddle.GetSize().y * 0.5f) * sin(((-m_paddle.GetRotation() - (21 * (m_paddle.GetSegments() - 1))) * m_PIDiv180) + 2);
+	startPos = float2(tempx, tempy);
+	
+	return startPos;
 }

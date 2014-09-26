@@ -48,6 +48,7 @@ public:
 
 private:
 	void CheckBallOutOfBounds(int p_index);
+	float2 ChangeBallPosAtStart();
 
 	bool m_hasColided;
 	int m_life;
