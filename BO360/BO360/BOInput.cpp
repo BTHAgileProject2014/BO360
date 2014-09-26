@@ -134,8 +134,8 @@ bool BOInput::Update()
 					{
 						if (!m_buttonsPressed[BOInput_z])
 						{
-							m_buttonsPressed[BOInput_z] = true;
-							m_publisher.Notify(zKey, true);
+							//m_buttonsPressed[BOInput_z] = true;
+							//m_publisher.Notify(zKey, true);
 #ifdef DEBUG
 							std::cout << "z is pressed\n";
 #endif
@@ -146,8 +146,8 @@ bool BOInput::Update()
 					{
 						if (!m_buttonsPressed[BOInput_x])
 						{
-							m_buttonsPressed[BOInput_x] = true;
-							m_publisher.Notify(xKey, true);
+							//m_buttonsPressed[BOInput_x] = true;
+							//m_publisher.Notify(xKey, true);
 #ifdef DEBUG
 							std::cout << "x is pressed\n";
 #endif
