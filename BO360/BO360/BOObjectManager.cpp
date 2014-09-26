@@ -114,7 +114,7 @@ bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight)
 					return false;
 				}
 				break;
-		}
+			}
 
 			case(DUBBLEHP) :
 			{
@@ -132,18 +132,21 @@ bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight)
 				else if (i % 100 == 66)
 				{
 					result = l_block->Initialize(float2(x, y), int2(40, 40), "Bilder/placeholderHexagonPU3.png", PUBiggerPad);
-		}
-		else
+				}
+				else
 				*/
-		{
+				{
 					result = l_block->Initialize(float2(x, y), int2(40, 40), "Bilder/placeholderHexagon40x40red1.png", 3, PUNone, score);
 				}
-			if (!result)
-			{
-				return false;
-			}
-				((BOBlockMultiTexture*)l_block)->AddTextureForHPAbove("Bilder/placeholderHexagon40x40red3.png", 1);
-				((BOBlockMultiTexture*)l_block)->AddTextureForHPAbove("Bilder/placeholderHexagon40x40red2.png", 2);
+
+				if (!result)
+				{
+					return false;
+				}
+
+				((BOBlockMultiTexture*)l_block)->AddTextureForHPAbove("Bilder/placeholderHexagon40x40red2.png", 1);
+				((BOBlockMultiTexture*)l_block)->AddTextureForHPAbove("Bilder/placeholderHexagon40x40red3.png", 2);
+
 				break;
 			}
 
@@ -152,7 +155,8 @@ bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight)
 				l_block = new BOBlockIron();
 				result = l_block->Initialize(float2(x, y), int2(40, 40), "Bilder/placeholderHexagon40x40gray.png", PUNone, score);
 				break;
-		}
+			}
+
 			default :
 			{
 				break;
