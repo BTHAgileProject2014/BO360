@@ -35,9 +35,21 @@ bool BOHUDManager::Initialize()
 	m_scoreAnchor = float2(bounds.x, 0);
 
 	m_level.Initialize(m_levelAnchor, "Level: ", int3(255, 255, 255), 30, 0);
+	int2 tempSize = m_level.GetSize();
+	m_level.SetPosition(float2(m_levelAnchor.x + (tempSize.x / 2), m_levelAnchor.y + (tempSize.y / 2)));
+
 	m_lives.Initialize(m_livesAnchor, "Lives: ", int3(255, 255, 255), 30, 0);
-	m_score.Initialize(m_scoreAnchor, "Score: ", int3(255, 255, 255), 30, 0);
 	m_life.Initialize(float2(0, 0), int2(20, 20), "Bilder/placeholderLife.png"); // Always relative to m_lives position
+	int2 tempSizeText = m_lives.GetSize();
+	int2 tempSizeSprite = m_life.GetSize();
+	int compundSizeX = tempSizeText.x + (tempSizeSprite.x + 2)*m_noLives; // Total size of the life component (text + (sprite+padding)*nosprites)
+	m_lives.SetPosition(float2(m_livesAnchor.x - compundSizeX / 2, m_livesAnchor.y + (tempSizeText.y / 2)));
+	m_life.SetPosition(float2(m_livesAnchor.x - (compundSizeX / 2 - tempSizeText.x) - tempSizeSprite.x, m_livesAnchor.y + (tempSizeSprite.y / 2)));
+
+	m_score.Initialize(m_scoreAnchor, "Score: ", int3(255, 255, 255), 30, 0);
+	tempSize = m_score.GetSize();
+	m_score.SetPosition(float2(m_scoreAnchor.x + (tempSize.x / 2) - tempSize.x - 10, m_scoreAnchor.y + (tempSize.y / 2)));
+
 	return true;
 }
 

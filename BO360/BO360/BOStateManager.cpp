@@ -25,22 +25,22 @@ bool BOStateManager::Initialize(int2 p_screenSize)
 	// Setup pause menu.
 	l_menuPosition = float2(50, 50);
 	result = m_paused.Initialize(float2(p_screenSize.x / 2, p_screenSize.y / 2), p_screenSize, l_menuPosition, "PAUSE MENU", "Bilder/Menu/MainMenuBackground.png");
-	m_paused.AddButton(float2(l_menuPosition.x, l_menuPosition.y + 70), int2(250, 75), l_menuPosition, "Bilder/Menu/Button", "RESUME", RESUME, " ");
-	m_paused.AddButton(float2(l_menuPosition.x, l_menuPosition.y + 70), int2(250, 75), l_menuPosition, "Bilder/Menu/Button", "QUIT", QUIT, " ");
-	m_paused.AddButton(float2(l_menuPosition.x, l_menuPosition.y + 70), int2(250, 75), l_menuPosition, "Bilder/Menu/Button", "EXIT", EXIT, " ");
+	m_paused.AddButton(float2(l_menuPosition.x, l_menuPosition.y + 70), int2(250, 75), l_menuPosition, "Bilder/Menu/Button", "RESUME", RESUME, "         Resume the game.");
+	m_paused.AddButton(float2(l_menuPosition.x, l_menuPosition.y + 70), int2(250, 75), l_menuPosition, "Bilder/Menu/Button", "QUIT", QUIT, "         Quit your current game and return to the main menu.");
+	m_paused.AddButton(float2(l_menuPosition.x, l_menuPosition.y + 70), int2(250, 75), l_menuPosition, "Bilder/Menu/Button", "EXIT", EXIT, "         Exit the game and return to desktop.");
 
 	// Setup end screen menus.
 	l_menuPosition = float2(50, 50);
 	result = m_victory.Initialize(float2(p_screenSize.x / 2, p_screenSize.y / 2), p_screenSize, l_menuPosition, "VICTORY", "Bilder/Menu/MainMenuBackground.png");
-	m_victory.AddButton(float2(l_menuPosition.x, l_menuPosition.y + 70), int2(250, 75), l_menuPosition, "Bilder/Menu/Button", "NEXT", NEXT, " ");
-	m_victory.AddButton(float2(l_menuPosition.x, l_menuPosition.y + 70), int2(250, 75), l_menuPosition, "Bilder/Menu/Button", "QUIT", QUIT, " ");
-	m_victory.AddButton(float2(l_menuPosition.x, l_menuPosition.y + 70), int2(250, 75), l_menuPosition, "Bilder/Menu/Button", "EXIT", EXIT, " ");
+	m_victory.AddButton(float2(l_menuPosition.x, l_menuPosition.y + 70), int2(250, 75), l_menuPosition, "Bilder/Menu/Button", "NEXT", NEXT, "         Play the next level.");
+	m_victory.AddButton(float2(l_menuPosition.x, l_menuPosition.y + 70), int2(250, 75), l_menuPosition, "Bilder/Menu/Button", "QUIT", QUIT, "         Quit your current game and return to the main menu.");
+	m_victory.AddButton(float2(l_menuPosition.x, l_menuPosition.y + 70), int2(250, 75), l_menuPosition, "Bilder/Menu/Button", "EXIT", EXIT, "         Exit the game and return to desktop.");
 
 	l_menuPosition = float2(50, 50);
 	result = m_defeat.Initialize(float2(p_screenSize.x / 2, p_screenSize.y / 2), p_screenSize, l_menuPosition, "DEFEAT", "Bilder/Menu/MainMenuBackground.png");
-	m_defeat.AddButton(float2(l_menuPosition.x, l_menuPosition.y + 70), int2(250, 75), l_menuPosition, "Bilder/Menu/Button", "RETRY", RETRY, " ");
-	m_defeat.AddButton(float2(l_menuPosition.x, l_menuPosition.y + 70), int2(250, 75), l_menuPosition, "Bilder/Menu/Button", "QUIT", QUIT, " ");
-	m_defeat.AddButton(float2(l_menuPosition.x, l_menuPosition.y + 70), int2(250, 75), l_menuPosition, "Bilder/Menu/Button", "EXIT", EXIT, " ");
+	m_defeat.AddButton(float2(l_menuPosition.x, l_menuPosition.y + 70), int2(250, 75), l_menuPosition, "Bilder/Menu/Button", "RETRY", RETRY, "         Retry your current level.");
+	m_defeat.AddButton(float2(l_menuPosition.x, l_menuPosition.y + 70), int2(250, 75), l_menuPosition, "Bilder/Menu/Button", "QUIT", QUIT, "         Quit your current game and return to the main menu.");
+	m_defeat.AddButton(float2(l_menuPosition.x, l_menuPosition.y + 70), int2(250, 75), l_menuPosition, "Bilder/Menu/Button", "EXIT", EXIT, "         Exit the game and return to desktop.");
 
 	return result;
 }
