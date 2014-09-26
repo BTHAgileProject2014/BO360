@@ -40,7 +40,7 @@ bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight)
 	}
 
 	// Initialize the pad.
-	result = m_paddle.Initialize(float2((p_windowWidth / 2.0f), (p_windowHeight / 2.0f)), int2(220, 220), "Bilder/placeholderPadSegment3.png");
+	result = m_paddle.Initialize(float2((p_windowWidth / 2.0f), (p_windowHeight / 2.0f)), int2(208, 208), "Bilder/placeholderPadSegment4.png");
 	if (!result)
 	{
 		return false;
@@ -56,7 +56,7 @@ bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight)
 
 	// Initialize primary ball.
 	m_ballSize = int2(15, 15);
-	m_ballSpeed = 500.0f;
+	m_ballSpeed = 400.0f;
 	AddNewBall();
 
 	BOPublisher::AddSubscriber(m_ballList[0]);
@@ -195,14 +195,21 @@ void BOObjectManager::Update(double p_deltaTime)
 
 	if (m_releaseBall)
 	{
-	for (int i = 0; i < m_ballList.size(); i++)
-	{
-		m_ballList[i]->Update(p_deltaTime);
-	}
+		for (int i = 0; i < m_ballList.size(); i++)
+		{
+			m_ballList[i]->Update(p_deltaTime);
+		}
 	}
 	else
 	{
-		m_ballList[0]->SetPosition(ChangeBallPosAtStart());
+		float2 pos = ChangeBallPosAtStart();
+
+		float2 ballDir = pos - float2((m_windowsSize.x * 0.5f), (m_windowsSize.y *0.5f));
+		ballDir.normalize();
+		pos.x += ballDir.x * 8;
+		pos.y += ballDir.y * 8;
+		m_ballList[0]->SetDirection(ballDir);
+		m_ballList[0]->SetPosition(pos);
 	}
 
 	for (int i = 0; i < m_blockList.size(); i++)
@@ -458,6 +465,7 @@ void BOObjectManager::Handle(InputMessages p_inputMessage)
 	if (p_inputMessage.spacebarKey)
 	{
 		m_releaseBall = true;
+
 	}
 }
 bool BOObjectManager::AddNewBall()
@@ -465,7 +473,11 @@ bool BOObjectManager::AddNewBall()
 	BOBall* ball = new BOBall();
 
 	m_ballStartPosition = ChangeBallPosAtStart();
-	m_ballDirection = float2((m_windowsSize.x * 0.5f), (m_windowsSize.y *0.5f)).normalized();
+	m_ballDirection = m_ballStartPosition - float2((m_windowsSize.x * 0.5f), (m_windowsSize.y *0.5f));
+	m_ballDirection.normalize();
+	m_ballStartPosition.x += m_ballDirection.x * 10;
+	m_ballStartPosition.y += m_ballDirection.y * 10;
+
 	if (!ball->Initialize(m_ballStartPosition, m_ballSize, "Bilder/placeholderBoll10x10.png", m_ballSpeed, m_ballDirection, m_windowsSize))
 	{
 		return false;
