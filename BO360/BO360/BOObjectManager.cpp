@@ -416,7 +416,10 @@ void BOObjectManager::Update(double p_deltaTime)
 	{
 		for (int i = 0; i < m_ballList.size(); i++)
 		{
-			m_particleSystem.BallTrail(m_ballList[i]->GetPosition());
+			if (m_ballList[i]->GetFuel() > 0)
+			{
+				m_particleSystem.BallTrail(m_ballList[i]->GetPosition());
+			}
 		}
 
 		m_SecondsPerParticle = 0.025f;
