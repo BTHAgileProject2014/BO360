@@ -53,6 +53,10 @@
       <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;SDL2_mixer.lib;SDL2_ttf.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <SubSystem>Console</SubSystem>
     </Link>
+    <PreLinkEvent>
+      <Command>
+      </Command>
+    </PreLinkEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -66,7 +70,11 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalOptions>$(IntDir)$(TargetName).res %(AdditionalOptions)</AdditionalOptions>
     </Link>
+    <PreLinkEvent>
+      <Command>rc /nologo /fo"$(IntDir)%(Filename).res" $(InitDir)%(Filename).rs </Command>
+    </PreLinkEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="BOBackground.h" />
@@ -107,6 +115,7 @@
     <ClInclude Include="BOWindow.h" />
     <ClInclude Include="BOButton.h" />
     <ClInclude Include="BOMultiballs.h" />
+    <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BOBackground.cpp" />
@@ -152,6 +161,12 @@
     <None Include="Maps\Default.bom" />
     <None Include="Maps\Empty.bom" />
     <None Include="Maps\Filled.bom" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="BO360.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="icon1.ico" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
