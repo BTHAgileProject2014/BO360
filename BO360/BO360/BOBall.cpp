@@ -91,12 +91,7 @@ bool BOBall::CanColide()
 
 void BOBall::BouncedOnPad()
 {
-	//m_canColide = false;
 	m_Fuel = 5.0f;
-}
-void BOBall::BouncedOnHexa()
-{
-	m_canColide = true;
 }
 
 box BOBall::GetBoundingBox()
@@ -133,9 +128,9 @@ float BOBall::GetFuel()
 {
 	return m_Fuel;
 }
-void BOBall::SetFuel(float p_Fuel)
+void BOBall::SetFuel(float p_fuel)
 {
-	m_Fuel = p_Fuel;
+	m_Fuel = p_fuel;
 }
 
 int BOBall::GetDamage()

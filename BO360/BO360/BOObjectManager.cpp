@@ -329,7 +329,7 @@ void BOObjectManager::Update(double p_deltaTime)
 			BOPowerUpManager::RemovePowerUp(i);
 		}		
 
-		else if (BOPhysics::CheckCollisionSpheres(BOPowerUpManager::GetPowerUp(i)->GetBoundingSphere(), sphere(m_blackHole.GetPosition(), 1)))
+		else if (BOPhysics::CollisionRadiusRadius(BOPowerUpManager::GetPowerUp(i)->GetBoundingSphere().pos, BOPowerUpManager::GetPowerUp(i)->GetBoundingSphere().radius, m_blackHole.GetPosition(), 1))
 		{
 			BOPowerUpManager::RemovePowerUp(i);
 		}
