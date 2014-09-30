@@ -37,35 +37,20 @@ public:
 	bool LostGame();
 
 private:
+	bool LoadBlocksFromMap(std::string p_filename);
 	void CheckBallOutOfBounds(int p_index);
+	int m_life;
+	bool m_releaseBall;
 
-	bool m_hasColided; //
-	int m_life; //
-
-	bool m_releaseBall; //
-
-	BOMapLoader m_mapLoader; //
-	std::vector<Block> m_loadedBlocks; // ??
-
-	BOBackground m_background; //
-	BOBlackHole m_blackHole; //
-	std::vector<BOBall*> m_ballList;
-	BOPaddle m_paddle; //
+	BOMapLoader m_mapLoader;
+	BOBackground m_background;
+	BOBlackHole m_blackHole;
+	BOPaddle m_paddle;
 	BOShield m_Shield;
-	int2 m_windowsSize; //
-  
-	int2 m_ballSize; // Should be located in ball
-	float m_ballSpeed; // Should be located in ball
-  
-	float2 m_ballStartPosition;
-	float2 m_ballDirection;
-	
-  
+	BOParticleSystem m_particleSystem;
+	std::vector<BOBall*> m_ballList;
 	std::vector<BOBlock*> m_blockList;
 
 	double m_SecondsPerParticle; // Should be moved into objects that use it
-	BOParticleSystem m_particleSystem; //
-	const double m_PI = 3.14159265359;
-	const double m_PIDiv180 = m_PI / 180;
 };
 #endif

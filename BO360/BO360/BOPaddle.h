@@ -19,7 +19,6 @@ public:
 	bool Initialize(float2 p_position, int2 p_size, std::string p_fileName);
 	void Handle(InputMessages p_inputMessages);
 	void Handle(PowerUpTypes p_type, bool p_activated);
-	void SetSegments(int p_segments);
 	int GetSegments();
 	void AddSegments(int p_segments);
 	void RemoveSegments(int p_segments);

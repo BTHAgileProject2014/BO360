@@ -37,6 +37,8 @@ bool BOBlockMultiTexture::AddTextureForHPAbove(std::string p_filename, int p_hp)
 	{
 		m_currentTextureIndex = m_hpLimits.size() - 1;
 	}
+
+	return true;
 }
 
 void BOBlockMultiTexture::Draw()
@@ -55,7 +57,7 @@ void BOBlockMultiTexture::Draw()
 
 bool BOBlockMultiTexture::Hit(int p_damage)
 {
-	int result = BOBlock::Hit(p_damage);
+	bool result = BOBlock::Hit(p_damage);
 
 	// Drop to lower hp texture if we pass a limit
 	while (m_currentTextureIndex >= 0 && m_hp <= m_hpLimits[m_currentTextureIndex])

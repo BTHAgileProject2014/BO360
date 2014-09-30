@@ -17,7 +17,7 @@ bool BOTextManager::Initialize()
 
 void BOTextManager::Shutdown()
 {
-	for (int i = 0; i < m_texts.size(); i++)
+	for (unsigned int i = 0; i < m_texts.size(); i++)
 	{
 		m_texts[i]->Shutdown();
 		delete m_texts[i];

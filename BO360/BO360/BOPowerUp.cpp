@@ -59,7 +59,7 @@ void BOPowerUp::Update(double p_deltaTime)
 		BOPowerUpManager::RemovePowerUp(this);
 	}
 	// Check if the powerup "ball" is inside the black hole
-	else if (BOPhysics::CheckCollisionSpheres(GetBoundingSphere(), sphere(m_blackholePosition, 1)))
+	else if (BOPhysics::CollisionRadiusRadius(GetBoundingSphere().pos, GetBoundingSphere().radius, m_blackholePosition, 1))
 	{
 		BOPowerUpManager::RemovePowerUp(this);
 	}

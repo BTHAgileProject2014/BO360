@@ -123,11 +123,6 @@ double BOPaddle::GetRotation()
 	return m_rotation;
 }
 
-void BOPaddle::SetSegments(int p_segments)
-{
-	m_segments = p_segments;
-}
-
 int BOPaddle::GetSegments()
 {
 	return m_segments;
@@ -160,5 +155,6 @@ float2 BOPaddle::GetBallSpawnPosition()
 {
 	float tempx = m_position.x + (m_size.x * 0.5f) * cos(((-m_rotation - (21 * (m_segments - 1))) * DEGREES_TO_RADIANS) + 2);
 	float tempy = m_position.y - (m_size.y * 0.5f) * sin(((-m_rotation - (21 * (m_segments - 1))) * DEGREES_TO_RADIANS) + 2);
+	
 	return float2(tempx, tempy);
 }

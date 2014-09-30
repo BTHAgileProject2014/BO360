@@ -22,7 +22,7 @@ bool BOBall::Initialize(float2 p_position, int2 p_size, std::string p_fileName, 
 
 	// Load texture.
 	m_sprite = BOGraphicInterface::LoadTexture(p_fileName);
-	m_sprite2 = BOGraphicInterface::LoadTexture("Bilder/placeholderBoll2.png");
+	m_sprite2 = BOGraphicInterface::LoadTexture("Sprites/PlaceHolderPNG/placeholderBoll2.png");
 	m_sprite3 = m_sprite;
 
 	m_mouseCheat = false;
@@ -38,15 +38,15 @@ void BOBall::Update(double p_deltaTime)
 	}
 	if (m_Fuel > 0)
 	{
-		m_position.x = (m_speed * p_deltaTime) * m_direction.x + m_position.x;
-		m_position.y = (m_speed * p_deltaTime) * m_direction.y + m_position.y;
-		//m_sprite = m_sprite2;
+		m_position.x = (float)(m_speed * p_deltaTime) * m_direction.x + m_position.x;
+		m_position.y = (float)(m_speed * p_deltaTime) * m_direction.y + m_position.y;
+		m_sprite = m_sprite2;
 	}
 	else
 	{
-		m_position.x = (0.75*m_speed * p_deltaTime) * m_direction.x + m_position.x;
-		m_position.y = (0.75*m_speed * p_deltaTime) * m_direction.y + m_position.y;
-		//m_sprite = m_sprite3;
+		m_position.x = (float)(0.75*m_speed * p_deltaTime) * m_direction.x + m_position.x;
+		m_position.y = (float)(0.75*m_speed * p_deltaTime) * m_direction.y + m_position.y;
+		m_sprite = m_sprite3;
 	}
 
 	if (m_position.x < (m_size.x / 2) || m_position.x >(m_windowSize.x - (m_size.x / 2)))
@@ -93,12 +93,7 @@ bool BOBall::CanColide()
 
 void BOBall::BouncedOnPad()
 {
-	//m_canColide = false;
 	m_Fuel = 5.0f;
-}
-void BOBall::BouncedOnHexa()
-{
-	m_canColide = true;
 }
 
 box BOBall::GetBoundingBox()
@@ -122,8 +117,8 @@ void BOBall::Handle(InputMessages p_inputMessages)
 	}
 	if (m_mouseCheat)
 	{
-		m_position.x = p_inputMessages.mouseX;
-		m_position.y = p_inputMessages.mouseY;
+		m_position.x = (float)p_inputMessages.mouseX;
+		m_position.y = (float)p_inputMessages.mouseY;
 	}
 	*/
 }
@@ -137,9 +132,9 @@ float BOBall::GetFuel()
 {
 	return m_Fuel;
 }
-void BOBall::SetFuel(float p_Fuel)
+void BOBall::SetFuel(float p_fuel)
 {
-	m_Fuel = p_Fuel;
+	m_Fuel = p_fuel;
 }
 
 int BOBall::GetDamage()

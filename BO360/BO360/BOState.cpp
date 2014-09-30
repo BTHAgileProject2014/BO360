@@ -28,7 +28,7 @@ bool BOState::Initialize(float2 p_position, int2 p_size, float2 p_menuPosition, 
 
 	// Load the menu bars first edge.
 	BOObject l_firstEdge;
-	if (!l_firstEdge.Initialize(float2(p_menuPosition.x + 2.5f, p_menuPosition.y + 35), int2(5, 70), "Bilder/Menu/MenuEdge.png"))
+	if (!l_firstEdge.Initialize(float2(p_menuPosition.x + 2.5f, p_menuPosition.y + 35), int2(5, 70), "Sprites/Menu/MenuEdge.png"))
 	{
 		std::cout << "Failed to load first edge of menu" << m_name << "!" << std::endl;
 		return false;
@@ -38,7 +38,7 @@ bool BOState::Initialize(float2 p_position, int2 p_size, float2 p_menuPosition, 
 
 	// Load the menu bar.
 	BOObject l_menuBar;
-	if (!l_menuBar.Initialize(float2(p_menuPosition.x + 125, p_menuPosition.y + 35), int2(240, 70), "Bilder/Menu/MenuBar.png"))
+	if (!l_menuBar.Initialize(float2(p_menuPosition.x + 125, p_menuPosition.y + 35), int2(240, 70), "Sprites/Menu/MenuBar.png"))
 	{
 		std::cout << "Failed to load last edge of menu" << m_name << "!" << std::endl;
 		return false;
@@ -48,7 +48,7 @@ bool BOState::Initialize(float2 p_position, int2 p_size, float2 p_menuPosition, 
 
 	// Load the last edge of the menu bars.
 	BOObject l_lastEdge;
-	if (!l_lastEdge.Initialize(float2(p_menuPosition.x + 247.5f, p_menuPosition.y + 35), int2(5, 70), "Bilder/Menu/MenuEdge.png"))
+	if (!l_lastEdge.Initialize(float2(p_menuPosition.x + 247.5f, p_menuPosition.y + 35), int2(5, 70), "Sprites/Menu/MenuEdge.png"))
 	{
 		std::cout << "Failed to load last edge of menu" << m_name << "!" << std::endl;
 		return false;
@@ -83,7 +83,7 @@ void BOState::AddButton(float2 p_position, int2 p_size, float2 p_menuPosition, s
 	// Change position and size of the menu bar
 	m_menuBar[1].SetSize(int2(240 * m_buttonList.size() + 10 * (m_buttonList.size() - 1), 70));
 	m_menuBar[1].SetPosition(float2((p_menuPosition.x + 125) + 120 * (m_buttonList.size() - 1) + 5 * (m_buttonList.size() - 1), p_menuPosition.y + 35));
-	m_menuBar[2].SetPosition(float2((p_menuPosition.x + 7.5) + m_menuBar[1].GetSize().x, p_menuPosition.y + 35));
+	m_menuBar[2].SetPosition(float2((p_menuPosition.x + 7.5f) + m_menuBar[1].GetSize().x, p_menuPosition.y + 35));
 }
 
 void BOState::Handle(InputMessages p_inputMessages)
@@ -94,7 +94,7 @@ void BOState::Handle(InputMessages p_inputMessages)
 
 ButtonAction BOState::Update()
 {
-	for (int i = 0; i < m_buttonList.size(); i++)
+	for (unsigned int i = 0; i < m_buttonList.size(); i++)
 	{
 		if (m_buttonList[i].Intersects(m_mousePosition))
 		{
@@ -114,13 +114,13 @@ void BOState::Draw()
 	m_background.Draw();
 
 	// Draw menu bar.
-	for (int i = 0; i < m_menuBar.size(); i++)
+	for (unsigned int i = 0; i < m_menuBar.size(); i++)
 	{
 		m_menuBar[i].Draw();
 	}
 
 	// Draw Buttons.
-	for (int i = 0; i < m_buttonList.size(); i++)
+	for (unsigned int i = 0; i < m_buttonList.size(); i++)
 	{
 		m_buttonList[i].Draw();
 	}
@@ -140,7 +140,7 @@ void BOState::SetBackground(std::string p_fileName)
 
 void BOState::Shutdown()
 {
-	for (int i = 0; i < m_buttonList.size(); i++)
+	for (unsigned int i = 0; i < m_buttonList.size(); i++)
 	{
 		m_buttonList[i].Shutdown();
 	}

@@ -44,7 +44,7 @@ private:
 
 	std::string m_string;
 	double m_deltaTime;
-	float m_totalTime;
+	double m_totalTime;
 	int m_FPS;
 
 	Uint32 m_timePassedMS;

@@ -21,39 +21,39 @@ bool BOSoundManager::Initialize()
 	}
 
 	// Load music
-	GetInstance().m_music = Mix_LoadMUS("Sound/themeModified.wav");
+	GetInstance().m_music = Mix_LoadMUS("Sounds/themeModified.wav");
 	if (GetInstance().m_music == NULL)
 	{
 		return false;
 	}
 
 	// Load sound effects
-	GetInstance().m_popHex = Mix_LoadWAV("Sound/ballCollisionHexagon.wav");
+	GetInstance().m_popHex = Mix_LoadWAV("Sounds/ballCollisionHexagon.wav");
 	if (GetInstance().m_popHex == NULL)
 	{
 		return false;
 	}
 
-	GetInstance().m_dying = Mix_LoadWAV("Sound/dying.wav");
+	GetInstance().m_dying = Mix_LoadWAV("Sounds/dying.wav");
 	if (GetInstance().m_dying == NULL)
 	{
 		return false;
 	}
 
-	GetInstance().m_powerup = Mix_LoadWAV("Sound/powerup.wav");
+	GetInstance().m_powerup = Mix_LoadWAV("Sounds/powerup.wav");
 	if (GetInstance().m_powerup == NULL)
 	{
 		std::cout << Mix_GetError() << std::endl;
 		return false;
 	}
 
-	GetInstance().m_teleport = Mix_LoadWAV("Sound/teleport.wav");
+	GetInstance().m_teleport = Mix_LoadWAV("Sounds/teleport.wav");
 	if (GetInstance().m_teleport == NULL)
 	{
 		return false;
 	}
 
-	GetInstance().m_bounceOnPad = Mix_LoadWAV("Sound/bounceOnPad.wav");
+	GetInstance().m_bounceOnPad = Mix_LoadWAV("Sounds/bounceOnPad.wav");
 	if (GetInstance().m_bounceOnPad == NULL)
 	{
 		return false;
