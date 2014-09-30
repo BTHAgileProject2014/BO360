@@ -30,42 +30,42 @@ bool BOParticleSystem::Initialize(int p_maxParticles)
 	m_currentParticles = 0;
 
 	// Initialize all the textures. PREFERABLY IN THE ENUM ORDER!
-	m_ballTrailTexture = BOGraphicInterface::LoadTexture("Bilder/Particles/BallTrail.png");
+	m_ballTrailTexture = BOGraphicInterface::LoadTexture("Sprites/Particles/BallTrail.png");
 	if (m_ballTrailTexture == NULL)
 	{
 		std::cout << "Failed to load 'Ball Trail' particle texture!" << std::endl;
 		l_result = false;
 	}
 
-	m_ballDebrisTexture = BOGraphicInterface::LoadTexture("Bilder/Particles/BallDebris.png");
+	m_ballDebrisTexture = BOGraphicInterface::LoadTexture("Sprites/Particles/BallDebris.png");
 	if (m_ballDebrisTexture == NULL)
 	{
 		std::cout << "Failed to load 'Ball Debris' particle texture!" << std::endl;
 		l_result = false;
 	}
 
-	m_blockDebrisTexture = BOGraphicInterface::LoadTexture("Bilder/Particles/BlockDebris.png");
+	m_blockDebrisTexture = BOGraphicInterface::LoadTexture("Sprites/Particles/BlockDebris.png");
 	if (m_blockDebrisTexture == NULL)
 	{
 		std::cout << "Failed to load 'Block Debris' particle texture!" << std::endl;
 		l_result = false;
 	}
 
-	m_explosionTexture = BOGraphicInterface::LoadTexture("Bilder/Particles/Explosion.png");
+	m_explosionTexture = BOGraphicInterface::LoadTexture("Sprites/Particles/Explosion.png");
 	if (m_explosionTexture == NULL)
 	{
 		std::cout << "Failed to load 'Explosion' particle texture!" << std::endl;
 		l_result = false;
 	}
 
-	m_powerUpDebrisTexture = BOGraphicInterface::LoadTexture("Bilder/Particles/PowerUpDebris.png");
+	m_powerUpDebrisTexture = BOGraphicInterface::LoadTexture("Sprites/Particles/PowerUpDebris.png");
 	if (m_powerUpDebrisTexture == NULL)
 	{
 		std::cout << "Failed to load 'Power Up Debris' particle texture!" << std::endl;
 		l_result = false;
 	}
 
-	m_debugTrailTexture = BOGraphicInterface::LoadTexture("Bilder/Particles/DebugTrail.png");
+	m_debugTrailTexture = BOGraphicInterface::LoadTexture("Sprites/Particles/DebugTrail.png");
 	if (m_debugTrailTexture == NULL)
 	{
 		std::cout << "Failed to load 'Debug Trail' particle texture!" << std::endl;
@@ -151,13 +151,13 @@ void BOParticleSystem::Update(double p_deltaTime)
 	CleanLists();
 
 	// Update moving particles.
-	for (int i = 0; i < m_movingParticleList.size(); i++)
+	for (unsigned int i = 0; i < m_movingParticleList.size(); i++)
 	{
 		m_movingParticleList[i].Update(p_deltaTime);
 	}
 
 	// Update stationary particles.
-	for (int i = 0; i < m_stationaryParticleList.size(); i++)
+	for (unsigned int i = 0; i < m_stationaryParticleList.size(); i++)
 	{
 		m_stationaryParticleList[i].Update(p_deltaTime);
 	}
@@ -189,13 +189,13 @@ void BOParticleSystem::CleanLists()
 void BOParticleSystem::DrawParticles()
 {
 	// Draw all moving particles.
-	for (int i = 0; i < m_movingParticleList.size(); i++)
+	for (unsigned int i = 0; i < m_movingParticleList.size(); i++)
 	{
 		m_movingParticleList[i].Draw(GetTexture(m_movingParticleList[i].GetType()));
 	}
 
 	// Draw all stationary particles.
-	for (int i = 0; i < m_stationaryParticleList.size(); i++)
+	for (unsigned int i = 0; i < m_stationaryParticleList.size(); i++)
 	{
 		m_stationaryParticleList[i].Draw(GetTexture(m_stationaryParticleList[i].GetType()));
 	}
@@ -241,6 +241,8 @@ SDL_Texture* BOParticleSystem::GetTexture(ParticleType p_type)
 			break;
 		}
 	}
+
+	return NULL;
 }
 
 void BOParticleSystem::BallDebugTrail(float2 p_position)
@@ -262,7 +264,7 @@ void BOParticleSystem::BallTrail(float2 p_position)
 
 	int l_rotation = rand() % PARTICLEROTATIONVARIATION - (PARTICLEROTATIONVARIATION / 2);
 
-	AddStationaryParticle(BALLTRAIL, 1.0f, l_position, true, l_rotation, l_rotation);
+	AddStationaryParticle(BALLTRAIL, 1.0f, l_position, true, (float)l_rotation, (float)l_rotation);
 }
 
 void BOParticleSystem::RegularBlockExplosion(float2 p_position)
@@ -271,23 +273,23 @@ void BOParticleSystem::RegularBlockExplosion(float2 p_position)
 	for (int p = 0; p < l_parts; p++)
 	{
 		int l_angle = rand() % PARTICLEROTATIONVARIATION - (PARTICLEROTATIONVARIATION / 2);
-		float l_speed = rand() % PARTICLESEXPLOSIONSPEED.x + PARTICLESEXPLOSIONSPEED.y;
+		int l_speed = rand() % PARTICLESEXPLOSIONSPEED.x + PARTICLESEXPLOSIONSPEED.y;
 
 		float2 l_position = p_position;
-		float2 l_direction = float2(1 * sin(l_angle), 1 * cos(l_angle));
+		float2 l_direction = float2(1 * sin((float)l_angle), 1 * cos((float)l_angle));
 
-		AddMovingParticle(BLOCKDEBRIS, 0.25f, l_position, true, l_angle, l_angle, l_direction, l_speed);
+		AddMovingParticle(BLOCKDEBRIS, 0.25f, l_position, true, (float)l_angle, (float)l_angle, l_direction, (float)l_speed);
 	}
 
 	int l_explosions = rand() % EXPLOSIONS.x + EXPLOSIONS.y;
 	for (int e = 0; e < l_explosions; e++)
 	{
 		int l_angle = rand() % PARTICLEROTATIONVARIATION - (PARTICLEROTATIONVARIATION / 2);
-		float l_speed = rand() % PARTICLESEXPLOSIONSPEED.x + PARTICLESEXPLOSIONSPEED.y;
+		int l_speed = rand() % PARTICLESEXPLOSIONSPEED.x + PARTICLESEXPLOSIONSPEED.y;
 
 		float2 l_position = p_position;
-		float2 l_direction = float2(1 * sin(l_angle), 1 * cos(l_angle));
+		float2 l_direction = float2(1 * sin((float)l_angle), 1 * cos((float)l_angle));
 
-		AddMovingParticle(EXPLOSION, 0.15f, l_position, false, l_angle, 0, l_direction, l_speed);
+		AddMovingParticle(EXPLOSION, 0.15f, l_position, false, (float)l_angle, 0.0f, l_direction, (float)l_speed);
 	}
 }

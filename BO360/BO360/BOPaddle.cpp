@@ -123,11 +123,6 @@ double BOPaddle::GetRotation()
 	return m_rotation;
 }
 
-void BOPaddle::SetSegments(int p_segments)
-{
-	m_segments = p_segments;
-}
-
 int BOPaddle::GetSegments()
 {
 	return m_segments;

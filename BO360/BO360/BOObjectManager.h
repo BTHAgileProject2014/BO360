@@ -49,11 +49,11 @@ private:
 	BOMapLoader m_mapLoader;
 	BOBackground m_background;
 	BOBlackHole m_blackHole;
-	BOPaddle m_paddle; 
+	BOPaddle m_paddle;
 	BOShield m_Shield;
 	BOParticleSystem m_particleSystem;
 	std::vector<BOBall*> m_ballList;
-	std::vector<BOBlock*> m_blockList; 
+	std::vector<BOBlock*> m_blockList;
 
 	double m_SecondsPerParticle; // Should be moved into objects that use it
 };
