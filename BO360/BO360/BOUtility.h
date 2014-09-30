@@ -1,8 +1,13 @@
 #ifndef BOUTILITY_H_
 #define BOUTILITY_H_
 #include <math.h>
+#include <iostream>
 
 #define BALLDEBUGTRAIL 0
+
+static const double PI = 3.14159265359;
+static const double HALF_PI = PI * 0.5;
+static const double DEGREES_TO_RADIANS = PI / 180;
 
 // Floating point value structs.
 struct float2
@@ -508,4 +513,10 @@ enum PowerUpTypes
 	PUShield,
 	PUExtraBall
 };
+
+inline void ThrowInitError(std::string p_className)
+{
+	std::cout << "Failed to initialize: " << p_className.c_str() << std::endl;
+}
+
 #endif

@@ -12,7 +12,7 @@ BOBall::~BOBall()
 bool BOBall::Initialize(float2 p_position, int2 p_size, std::string p_fileName, float p_speed, float2 p_direction, int2 p_windowSize)
 {
 	m_damage = 1;
-	m_Fuel = 0.0f;
+	m_Fuel = 5.0f;
 	m_canColide = true;
 	m_position = p_position;
 	m_size = p_size;
@@ -40,22 +40,24 @@ void BOBall::Update(double p_deltaTime)
 	{
 		m_position.x = (m_speed * p_deltaTime) * m_direction.x + m_position.x;
 		m_position.y = (m_speed * p_deltaTime) * m_direction.y + m_position.y;
-		m_sprite = m_sprite2;
+		//m_sprite = m_sprite2;
 	}
 	else
 	{
 		m_position.x = (0.75*m_speed * p_deltaTime) * m_direction.x + m_position.x;
 		m_position.y = (0.75*m_speed * p_deltaTime) * m_direction.y + m_position.y;
-		m_sprite = m_sprite3;
+		//m_sprite = m_sprite3;
 	}
 
 	if (m_position.x < (m_size.x / 2) || m_position.x >(m_windowSize.x - (m_size.x / 2)))
 	{
+		m_Fuel = 0;
 		m_canColide = true;
 		m_direction.x *= -1;
 	}
 	if (m_position.y < (m_size.y / 2) || m_position.y >(m_windowSize.y - (m_size.y / 2)))
 	{
+		m_Fuel = 0;
 		m_canColide = true;
 		m_direction.y *= -1;
 	}
@@ -106,6 +108,7 @@ box BOBall::GetBoundingBox()
 
 void BOBall::Handle(InputMessages p_inputMessages)
 {
+	/*
 	if (p_inputMessages.spacebarKey)
 	{
 		if (m_mouseCheat)
@@ -122,6 +125,7 @@ void BOBall::Handle(InputMessages p_inputMessages)
 		m_position.x = p_inputMessages.mouseX;
 		m_position.y = p_inputMessages.mouseY;
 	}
+	*/
 }
 
 void BOBall::BouncedOnHexagon()

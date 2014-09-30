@@ -13,22 +13,27 @@ bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight)
 {
 	m_releaseBall = false;
 	m_windowsSize = int2(p_windowWidth, p_windowHeight);
-	bool result;
 	m_hasColided = false;
 	m_life = 4;
 	BOHUDManager::SetLives(m_life);
 
 	// Initialize the map loader.
+	bool result;
 	result = m_mapLoader.Initialize();
 	if (!result)
 	{
+		ThrowInitError("BOMapLoader");
 		return false;
 	}
+	// Load a map.
+	m_mapLoader.LoadMap("Demo.bom");
+	m_loadedBlocks = m_mapLoader.GetLoadedBlocks();
 
 	// Initialize the background.
 	result = m_background.Initialize(float2(p_windowWidth / 2, p_windowHeight / 2), int2(p_windowWidth, p_windowHeight), "Bilder/Background.png");
 	if (!result)
 	{
+		ThrowInitError("BOBackground");
 		return false;
 	}
 
@@ -36,13 +41,15 @@ bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight)
 	result = m_blackHole.Initialize(float2((p_windowWidth / 2.0f), (p_windowHeight / 2.0f)), int2(200, 200), "Bilder/placeholderBlackhole110x110.png");
 	if (!result)
 	{
+		ThrowInitError("BOBlackHole");
 		return false;
 	}
 
 	// Initialize the pad.
-	result = m_paddle.Initialize(float2((p_windowWidth / 2.0f), (p_windowHeight / 2.0f)), int2(220, 220), "Bilder/placeholderPadSegment3.png");
+	result = m_paddle.Initialize(float2((p_windowWidth / 2.0f), (p_windowHeight / 2.0f)), int2(208, 208), "Bilder/placeholderPadSegment5.png");
 	if (!result)
 	{
+		ThrowInitError("BOPaddle");
 		return false;
 	}
 
@@ -51,19 +58,18 @@ bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight)
 	result = m_particleSystem.Initialize(MAXPARTICLES);
 	if (!result)
 	{
+		ThrowInitError("BOParticleSystem");
 		return false;
 	}
 
 	// Initialize primary ball.
 	m_ballSize = int2(15, 15);
-	m_ballSpeed = 500.0f;
+	m_ballSpeed = 400.0f;
 	AddNewBall();
 
+	// The first ball is a subscriber for debug purposes (space to control ball)
 	BOPublisher::AddSubscriber(m_ballList[0]);
 
-	// Load a map.
-	m_mapLoader.LoadMap("Demo.bom");
-	m_loadedBlocks = m_mapLoader.GetLoadedBlocks();
 
 	float x = 0;
 	float y = 0;
@@ -114,35 +120,19 @@ bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight)
 					return false;
 				}
 				break;
-			}
+		}
 
 			case(DUBBLEHP) :
 			{
 				l_block = new BOBlockMultiTexture();
-				// Create block.
-				/*
-				if (i % 100 == 1)
-				{
-					result = l_block->Initialize(float2(x, y), int2(40, 40), "Bilder/placeholderHexagonPU2.png", PUShield);
-				}
-				else if (i % 100 == 33)
-				{
-					result = l_block->Initialize(float2(x, y), int2(40, 40), "Bilder/placeholderHexagonPU1.png", PUExtraBall);
-				}
-				else if (i % 100 == 66)
-				{
-					result = l_block->Initialize(float2(x, y), int2(40, 40), "Bilder/placeholderHexagonPU3.png", PUBiggerPad);
-				}
-				else
-				*/
 				{
 					result = l_block->Initialize(float2(x, y), int2(40, 40), "Bilder/placeholderHexagon40x40red1.png", 3, PUNone, score);
 				}
 
-				if (!result)
-				{
-					return false;
-				}
+			if (!result)
+			{
+				return false;
+			}
 
 				((BOBlockMultiTexture*)l_block)->AddTextureForHPAbove("Bilder/placeholderHexagon40x40red2.png", 1);
 				((BOBlockMultiTexture*)l_block)->AddTextureForHPAbove("Bilder/placeholderHexagon40x40red3.png", 2);
@@ -155,7 +145,7 @@ bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight)
 				l_block = new BOBlockIron();
 				result = l_block->Initialize(float2(x, y), int2(40, 40), "Bilder/placeholderHexagon40x40gray.png", PUNone, score);
 				break;
-			}
+		}
 
 			default :
 			{
@@ -208,6 +198,7 @@ void BOObjectManager::Update(double p_deltaTime)
 	bool result;
 	float2 normal;
 	
+	
 	m_blackHole.Update();
 
 	m_paddle.Update(p_deltaTime);
@@ -221,7 +212,14 @@ void BOObjectManager::Update(double p_deltaTime)
 	}
 	else
 	{
-		m_ballList[0]->SetPosition(ChangeBallPosAtStart());
+		float2 pos = m_paddle.GetBallSpawnPosition();
+
+		float2 ballDir = pos - float2((m_windowsSize.x * 0.5f), (m_windowsSize.y *0.5f));
+		ballDir.normalize();
+		pos.x += ballDir.x * 8;
+		pos.y += ballDir.y * 8;
+		m_ballList[0]->SetDirection(ballDir);
+		m_ballList[0]->SetPosition(pos);
 	}
 
 	for (int i = 0; i < m_blockList.size(); i++)
@@ -252,6 +250,7 @@ void BOObjectManager::Update(double p_deltaTime)
 						m_ballList[j]->SetDirection(BOPhysics::ReflectBallAroundNormal(m_ballList[j]->GetDirection(), normal));
 						m_ballList[j]->BouncedOnHexagon();
 						m_ballList[j]->SetFuel(0.0f);
+					BOSoundManager::PlaySound(SOUND_POP);
 						//std::cout << "Ball bounced on [" << i << "]" << std::endl;
 
 						if (m_blockList[i]->Hit(m_ballList[j]->GetDamage()))
@@ -282,7 +281,6 @@ void BOObjectManager::Update(double p_deltaTime)
 
 							// Collision therfore play popsound
 
-							BOSoundManager::PlaySound(SOUND_POP);
 
 							// Add score
 							BOScore::AddScore(m_blockList[i]->GetScore());
@@ -374,7 +372,8 @@ void BOObjectManager::Update(double p_deltaTime)
 					m_ballList[i]->SetFuel(BOPhysics::CalculateBallFuel(m_ballList[i]->GetFuel(), p_deltaTime));
 				}
 			//Updaterar skölden
-			m_ballList[i]->SetDirection((m_Shield.Update(p_deltaTime, m_ballList[i]->GetBoundingSphere(), m_ballList[i]->GetDirection())));
+		float2 newdir = m_Shield.Update(p_deltaTime, m_ballList[i]->GetBoundingSphere(), m_ballList[i]->GetDirection());
+		m_ballList[i]->SetDirection(newdir);
 			}
 		}
 	}
@@ -396,11 +395,11 @@ void BOObjectManager::Update(double p_deltaTime)
 	{
 		for (int i = 0; i < m_ballList.size(); i++)
 		{
-			if (m_ballList[i]->GetFuel() > 0)
-			{
-				m_particleSystem.BallTrail(m_ballList[i]->GetPosition());
-			}
+				if (m_ballList[i]->GetFuel() > 0.0f)
+				{
+			m_particleSystem.BallTrail(m_ballList[i]->GetPosition());
 		}
+			}
 
 		m_SecondsPerParticle = 0.025f;
 	}
@@ -457,17 +456,22 @@ void BOObjectManager::Handle(PowerUpTypes p_type, bool p_activated)
 }
 void BOObjectManager::Handle(InputMessages p_inputMessage)
 {
-	if (p_inputMessage.upArrow)
+	if (p_inputMessage.spacebarKey)
 	{
 		m_releaseBall = true;
+
 	}
 }
 bool BOObjectManager::AddNewBall()
 {
 	BOBall* ball = new BOBall();
 
-	m_ballStartPosition = ChangeBallPosAtStart();
-	m_ballDirection = float2((m_windowsSize.x * 0.5f), (m_windowsSize.y *0.5f)).normalized();
+	m_ballStartPosition = m_paddle.GetBallSpawnPosition();
+	m_ballDirection = m_ballStartPosition - float2((m_windowsSize.x * 0.5f), (m_windowsSize.y *0.5f));
+	m_ballDirection.normalize();
+	m_ballStartPosition.x += m_ballDirection.x * 10;
+	m_ballStartPosition.y += m_ballDirection.y * 10;
+
 	if (!ball->Initialize(m_ballStartPosition, m_ballSize, "Bilder/placeholderBoll10x10.png", m_ballSpeed, m_ballDirection, m_windowsSize))
 	{
 		return false;
@@ -506,13 +510,4 @@ void BOObjectManager::CheckBallOutOfBounds(int p_index)
 	}
 
 	m_ballList[p_index]->SetPosition(ballPos);
-}
-float2 BOObjectManager::ChangeBallPosAtStart()
-{
-	float2 startPos;
-	float tempx = m_paddle.GetPosition().x + (m_paddle.GetSize().x * 0.5f) * cos(((-m_paddle.GetRotation() - (21 * (m_paddle.GetSegments() - 1))) * m_PIDiv180) + 2);
-	float tempy = m_paddle.GetPosition().y - (m_paddle.GetSize().y * 0.5f) * sin(((-m_paddle.GetRotation() - (21 * (m_paddle.GetSegments() - 1))) * m_PIDiv180) + 2);
-	startPos = float2(tempx, tempy);
-	
-	return startPos;
 }

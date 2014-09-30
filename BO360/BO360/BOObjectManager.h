@@ -1,6 +1,7 @@
 #ifndef BOOBJECTMANGAGER_H_
 #define BOOBJECTMANGAGER_H_
 
+#include <vector>
 #include "BOComponent.h"
 #include "BOBackground.h"
 #include "BOObject.h"
@@ -18,7 +19,6 @@
 #include "BOParticleSystem.h"
 #include "BOHUDManager.h"
 #include "BOScore.h"
-#include <vector>
 #include "BOBlockIron.h"
 #include "BOBlockMultiTexture.h"
 
@@ -39,33 +39,33 @@ public:
 
 private:
 	void CheckBallOutOfBounds(int p_index);
-	float2 ChangeBallPosAtStart();
 
-	bool m_hasColided;
-	int m_life;
+	bool m_hasColided; //
+	int m_life; //
 
-	bool m_releaseBall;
+	bool m_releaseBall; //
 
-	BOMapLoader m_mapLoader;
-	std::vector<Block> m_loadedBlocks;
+	BOMapLoader m_mapLoader; //
+	std::vector<Block> m_loadedBlocks; // ??
 
-	BOBackground m_background;
-	BOBlackHole m_blackHole;
+	BOBackground m_background; //
+	BOBlackHole m_blackHole; //
 	std::vector<BOBall*> m_ballList;
-	BOPaddle m_paddle;
+	BOPaddle m_paddle; //
 	BOShield m_Shield;
-	int2 m_windowsSize;
+	int2 m_windowsSize; //
   
-	int2 m_ballSize;
+	int2 m_ballSize; // Should be located in ball
+	float m_ballSpeed; // Should be located in ball
+  
 	float2 m_ballStartPosition;
-	float m_ballSpeed;
 	float2 m_ballDirection;
 	
   
 	std::vector<BOBlock*> m_blockList;
 
-	double m_SecondsPerParticle;
-	BOParticleSystem m_particleSystem;
+	double m_SecondsPerParticle; // Should be moved into objects that use it
+	BOParticleSystem m_particleSystem; //
 	const double m_PI = 3.14159265359;
 	const double m_PIDiv180 = m_PI / 180;
 };

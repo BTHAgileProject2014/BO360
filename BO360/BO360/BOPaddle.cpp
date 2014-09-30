@@ -13,12 +13,11 @@ BOPaddle::~BOPaddle()
 bool BOPaddle::Initialize(float2 p_position, int2 p_size, std::string p_fileName)
 {
 	m_rotation = 0.0f;
-	m_deltaRotation = 0.4f;
 	m_totalDegrees = 21.2;
 	m_segementDegree = m_totalDegrees;
 	m_segments = 1;
 	AddSegments(2);
-	m_deltaRotation = 400;
+	m_deltaRotation = 200;
 	BOPublisher::AddSubscriber(this);
 	BOPowerUpManager::AddSubscriber(this);
 	return BOObject::Initialize(p_position, p_size, p_fileName);
@@ -63,7 +62,10 @@ void BOPaddle::Handle(PowerUpTypes p_type, bool p_activated)
 		if (p_activated)
 		{
 			// Make the paddle bigger
-			AddSegments(1);
+			if (m_segments < 5)
+			{
+				AddSegments(1);
+			}
 		}
 		else
 		{
@@ -152,4 +154,11 @@ void BOPaddle::RemoveSegments(int p_segments)
 double BOPaddle::GetDegrees()
 {
 	return m_totalDegrees;
+}
+
+float2 BOPaddle::GetBallSpawnPosition()
+{
+	float tempx = m_position.x + (m_size.x * 0.5f) * cos(((-m_rotation - (21 * (m_segments - 1))) * DEGREES_TO_RADIANS) + 2);
+	float tempy = m_position.y - (m_size.y * 0.5f) * sin(((-m_rotation - (21 * (m_segments - 1))) * DEGREES_TO_RADIANS) + 2);
+	return float2(tempx, tempy);
 }

@@ -22,7 +22,7 @@ bool BOPublisher::Initialize()
 	m_inputMessage.rightMouseKey = false;
 	m_inputMessage.middleMouseKey = false;
 	m_inputMessage.spacebarKey = false;
-	m_inputMessage.upArrow = false;;
+	m_inputMessage.upArrow = false;
 	m_inputMessage.downArrow = false;
 	m_inputMessage.leftArrow = false;
 	m_inputMessage.rightArrow = false;

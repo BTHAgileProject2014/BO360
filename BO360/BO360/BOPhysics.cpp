@@ -282,9 +282,9 @@ float2 BOPhysics::BallPadCollision(sphere p_sphere, float2 p_sphereDir, sphere p
 		double padAngle = startAngleMA - padSpread + (2 * PI);
 
 		if ((ctpAngle > 0) && (ctpAngle < startAngleMA) || ((ctpAngle > padAngle) && (ctpAngle < (2 * PI))))
-		{
+	{
 			return CalculateNewDir(p_sphereDir, padCenterVector, padCenterAngle, padSpread / 2, ctpAngle);
-		}
+	}
 
 	}
 	return float2(0, 0);
