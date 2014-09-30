@@ -168,7 +168,7 @@ void BOObjectManager::Update(double p_deltaTime)
 						m_particleSystem.RegularBlockExplosion(m_blockList[i]->GetPosition());
 
 						// Spawn powerup if there is one
-						BOPowerUpManager::AddPowerUp(m_blockList[i]->GetPowerUp(), m_blockList[i]->GetPosition(), BOGraphicInterface::GetWindowSize(), &m_paddle, m_blackHole.GetPosition());
+						BOPowerUpManager::AddPowerUp(m_blockList[i]->GetPowerUp(), m_blockList[i]->GetPosition(), &m_paddle, m_blackHole.GetPosition());
 
 						// Add score
 						BOScore::AddScore(m_blockList[i]->GetScore());

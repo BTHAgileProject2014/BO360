@@ -32,7 +32,7 @@ void BOPowerUpManager::Notify(PowerUpTypes p_type, bool p_activated)
 	}
 }
 
-void BOPowerUpManager::AddPowerUp(PowerUpTypes p_type, float2 p_startPosition, int2 p_windowSize, BOPaddle* p_paddle, float2 p_blackholePosition)
+void BOPowerUpManager::AddPowerUp(PowerUpTypes p_type, float2 p_startPosition, BOPaddle* p_paddle, float2 p_blackholePosition)
 {
 	
 	switch (p_type)
@@ -40,7 +40,7 @@ void BOPowerUpManager::AddPowerUp(PowerUpTypes p_type, float2 p_startPosition, i
 		case PUBiggerPad:
 		{
 			BOPowerUp* biggerPad = new BOPowerUp();
-			biggerPad->Initialize(PUBiggerPad, p_startPosition, int2(30, 30), "Sprites/PlaceHolderPNG/Powerups/placeholderPowerup3.png", 500.0f, p_windowSize, p_paddle, p_blackholePosition);
+			biggerPad->Initialize(PUBiggerPad, p_startPosition, int2(30, 30), "Sprites/PlaceHolderPNG/Powerups/placeholderPowerup3.png", 500.0f, p_paddle, p_blackholePosition);
 			m_powerUps.push_back(biggerPad);
 			break;
 		}
@@ -52,14 +52,14 @@ void BOPowerUpManager::AddPowerUp(PowerUpTypes p_type, float2 p_startPosition, i
 		case PUShield:
 		{
 			BOPowerUp* shield = new BOPowerUp();
-			shield->Initialize(PUShield, p_startPosition, int2(30, 30), "Sprites/PlaceHolderPNG/Powerups/placeholderPowerup2.png", 500.0f, p_windowSize, p_paddle, p_blackholePosition);
+			shield->Initialize(PUShield, p_startPosition, int2(30, 30), "Sprites/PlaceHolderPNG/Powerups/placeholderPowerup2.png", 500.0f, p_paddle, p_blackholePosition);
 			m_powerUps.push_back(shield);
 			break;
 		}	
 		case PUExtraBall:
 		{
 			BOPowerUp* extraBall = new BOPowerUp();
-			extraBall->Initialize(PUExtraBall, p_startPosition, int2(40, 40), "Sprites/PlaceHolderPNG/Powerups/placeholderPowerupMultBall.png", 500.0f, p_windowSize, p_paddle, p_blackholePosition);
+			extraBall->Initialize(PUExtraBall, p_startPosition, int2(40, 40), "Sprites/PlaceHolderPNG/Powerups/placeholderPowerupMultBall.png", 500.0f, p_paddle, p_blackholePosition);
 			m_powerUps.push_back(extraBall);
 			break;
 		}

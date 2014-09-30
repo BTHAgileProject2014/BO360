@@ -15,7 +15,7 @@ public:
 	BOPowerUp();
 	~BOPowerUp();
 
-	bool Initialize(PowerUpTypes p_type, float2 p_position, int2 p_size, std::string p_fileName, float p_speed, int2 p_windowSize, BOPaddle* p_paddle, float2 p_blackholePosition);
+	bool Initialize(PowerUpTypes p_type, float2 p_position, int2 p_size, std::string p_fileName, float p_speed, BOPaddle* p_paddle, float2 p_blackholePosition);
 	void Shutdown();
 
 	virtual void Update(double p_deltaTime);

@@ -25,7 +25,7 @@ public:
 	static void Notify(PowerUpTypes p_type, bool p_acivated);
 	static void AddSubscriber(BOPUSubscriber* p_subscriber);
 	static void Unsubscribe(BOPUSubscriber* p_subscriber);
-	static void AddPowerUp(PowerUpTypes p_type, float2 p_startPosition, int2 p_windowSize, BOPaddle* p_paddle, float2 p_blackholePosition);
+	static void AddPowerUp(PowerUpTypes p_type, float2 p_startPosition, BOPaddle* p_paddle, float2 p_blackholePosition);
 	static void RemovePowerUp(BOPowerUp* p_powerUp);
 
 private:

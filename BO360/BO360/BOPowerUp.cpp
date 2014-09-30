@@ -10,7 +10,7 @@ BOPowerUp::~BOPowerUp()
 {
 }
 
-bool BOPowerUp::Initialize(PowerUpTypes p_type, float2 p_position, int2 p_size, std::string p_fileName, float p_speed, int2 p_windowSize, BOPaddle* p_paddle, float2 p_blackholePosition)
+bool BOPowerUp::Initialize(PowerUpTypes p_type, float2 p_position, int2 p_size, std::string p_fileName, float p_speed, BOPaddle* p_paddle, float2 p_blackholePosition)
 {
 	if (!BOObject::Initialize(p_position, p_size, p_fileName))
 	{
@@ -19,7 +19,6 @@ bool BOPowerUp::Initialize(PowerUpTypes p_type, float2 p_position, int2 p_size, 
 
 	m_type = p_type;
 	m_speed = p_speed;
-	m_windowSize = p_windowSize;
 	m_hasActivated = false;
 	m_paddle = p_paddle;
 	m_blackholePosition = p_blackholePosition;
