@@ -7,6 +7,7 @@ class BOBlockMultiTexture :
 public:
 	BOBlockMultiTexture();
 	~BOBlockMultiTexture();
+	void Shutdown();
 	bool AddTextureForHPAbove(std::string p_filename, int p_hp);
 	void Draw();
 	bool Hit(int p_damage);

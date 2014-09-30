@@ -87,7 +87,7 @@ bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight)
 
 		int score = m_loadedBlocks[i].m_worth;
 
-		switch (m_loadedBlocks[i].m_type)
+		switch (m_loadedBlocks[i].m_type) 
 		{
 			case(REGULAR) :
 			{
@@ -188,11 +188,20 @@ void BOObjectManager::Shutdown()
 		m_ballList[i]->Shutdown();
 		delete m_ballList[i];
 	}
-	m_ballList.clear();
+	std::vector<BOBall*>().swap(m_ballList);
+
 
 	// Clear the blocks
-	m_loadedBlocks.clear();
-	m_blockList.clear();
+	
+	std::vector<Block>().swap(m_loadedBlocks);
+
+
+	for (int i = 0; i < m_blockList.size(); i++)
+	{
+		delete m_blockList[i];
+	}
+
+	std::vector<BOBlock*>().swap(m_blockList);
 
 	// Call all the shutdowns
 	m_mapLoader.Shutdown();

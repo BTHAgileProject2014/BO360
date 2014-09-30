@@ -1,6 +1,10 @@
 #include "BOSystem.h"
 #define DEBUG
 
+#define CRTDBG_MAP_ALLOC
+#include <stdlib.h>
+#include <crtdbg.h>
+
 int main(int argc, char* args[])
 {
 	BOSystem system;
@@ -9,5 +13,6 @@ int main(int argc, char* args[])
 		while (system.Run());
 	}
 	system.Shutdown();
+	//_CrtDumpMemoryLeaks();
 	return 0;
 }
