@@ -14,7 +14,6 @@
 #include "BOPUSubscriber.h"
 #include "BOPowerUpManager.h"
 #include "BOSoundManager.h"
-#include "BOPowerUp.h"
 #include "BOShield.h"
 #include "BOParticleSystem.h"
 #include "BOHUDManager.h"

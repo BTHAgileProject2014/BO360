@@ -10,7 +10,7 @@ BOPowerUp::~BOPowerUp()
 {
 }
 
-bool BOPowerUp::Initialize(PowerUpTypes p_type, float2 p_position, int2 p_size, std::string p_fileName, float p_speed, int2 p_windowSize)
+bool BOPowerUp::Initialize(PowerUpTypes p_type, float2 p_position, int2 p_size, std::string p_fileName, float p_speed, int2 p_windowSize, BOPaddle* p_paddle, float2 p_blackholePosition)
 {
 	if (!BOObject::Initialize(p_position, p_size, p_fileName))
 	{
@@ -18,14 +18,15 @@ bool BOPowerUp::Initialize(PowerUpTypes p_type, float2 p_position, int2 p_size, 
 	}
 
 	m_type = p_type;
-	m_hasSpawned = true;
 	m_speed = p_speed;
 	m_windowSize = p_windowSize;
 	m_hasActivated = false;
+	m_paddle = p_paddle;
+	m_blackholePosition = p_blackholePosition;
 
-	// Set direction to center of screen
-	m_direction.x = (m_windowSize.x / 2.0f) - m_position.x;
-	m_direction.y = (m_windowSize.y / 2.0f) - m_position.y;
+	// Set direction towards blackhole
+	m_direction.x = m_blackholePosition.x - m_position.x;
+	m_direction.y = m_blackholePosition.y - m_position.y;
 	m_direction.normalize();
 
 	return true;
@@ -43,10 +44,24 @@ void BOPowerUp::Draw()
 
 void BOPowerUp::Update(double p_deltaTime)
 {
-	if (m_hasSpawned)
+	// Move the powerup towards the blackhole
+	m_position.x = (m_speed * p_deltaTime) * m_direction.x + m_position.x;
+	m_position.y = (m_speed * p_deltaTime) * m_direction.y + m_position.y;
+
+	// Checks powerup "ball" against the pad, if colliding with pad do powerup effect and remove the powerup"ball"
+	float2 result = BOPhysics::BallPadCollision(GetBoundingSphere(), m_direction, m_paddle->GetBoundingSphere(), m_paddle->GetRotation() - 10.6, m_paddle->GetDegrees());
+	if (!(result.x == 0 && result.y == 0))
 	{
-		m_position.x = (m_speed * p_deltaTime) * m_direction.x + m_position.x;
-		m_position.y = (m_speed * p_deltaTime) * m_direction.y + m_position.y;
+		// Play  sound for PowerUp catched
+		BOSoundManager::PlaySound(SOUND_POWERUP);
+		
+		Activate();
+		BOPowerUpManager::RemovePowerUp(this);
+	}
+	// Check if the powerup "ball" is inside the black hole
+	else if (BOPhysics::CheckCollisionSpheres(GetBoundingSphere(), sphere(m_blackholePosition, 1)))
+	{
+		BOPowerUpManager::RemovePowerUp(this);
 	}
 }
 

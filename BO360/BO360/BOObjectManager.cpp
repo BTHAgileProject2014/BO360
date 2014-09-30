@@ -259,25 +259,7 @@ void BOObjectManager::Update(double p_deltaTime)
 							m_particleSystem.RegularBlockExplosion(m_blockList[i]->GetPosition());
 
 							// Spawn powerup if there is one
-							if (m_blockList[i]->GetPowerUp() == PUExtraBall)
-							{
-								BOPowerUp* extraBall = new BOPowerUp();
-								extraBall->Initialize(PUExtraBall, m_blockList[i]->GetPosition(), int2(40, 40), "Bilder/placeholderPowerupMultBall.png", 500.0f, m_windowsSize);
-								BOPowerUpManager::AddPowerUp(extraBall);
-							}
-
-							else if (m_blockList[i]->GetPowerUp() == PUShield)
-							{
-								BOPowerUp* shield = new BOPowerUp();
-								shield->Initialize(PUShield, m_blockList[i]->GetPosition(), int2(30, 30), "Bilder/placeholderPowerup2.png", 500.0f, m_windowsSize);
-								BOPowerUpManager::AddPowerUp(shield);
-							}
-							else if (m_blockList[i]->GetPowerUp() == PUBiggerPad)
-							{
-								BOPowerUp* biggerPad = new BOPowerUp();
-								biggerPad->Initialize(PUBiggerPad, m_blockList[i]->GetPosition(), int2(30, 30), "Bilder/placeholderPowerup3.png", 500.0f, m_windowsSize);
-								BOPowerUpManager::AddPowerUp(biggerPad);
-							}
+							BOPowerUpManager::AddPowerUp(m_blockList[i]->GetPowerUp(), m_blockList[i]->GetPosition(), m_windowsSize, &m_paddle, m_blackHole.GetPosition());
 
 							// Collision therfore play popsound
 
@@ -293,26 +275,7 @@ void BOObjectManager::Update(double p_deltaTime)
 			}
 		}
 	}		
-	// Tillfällig powerup kollision kod för att testa 
-	// Checks powerup "ball" against the pad, if colliding with pad do powerup effect and remove powerup"ball"
-	for (int i = 0; i < BOPowerUpManager::GetPowerUpSize(); i++)
-	{
-		float2 result = BOPhysics::BallPadCollision(BOPowerUpManager::GetPowerUp(i)->GetBoundingSphere(), BOPowerUpManager::GetPowerUp(i)->GetDirection(), m_paddle.GetBoundingSphere(), m_paddle.GetRotation() - 10.6, m_paddle.GetDegrees());
-		if (!(result.x == 0 && result.y == 0))
-		{
-			// Play sound for PowerUp catched
-			BOSoundManager::PlaySound(SOUND_POWERUP);
 
-			BOPowerUp* pu = BOPowerUpManager::GetPowerUp(i);
-			pu->Activate();
-			BOPowerUpManager::RemovePowerUp(i);
-		}		
-
-		else if (BOPhysics::CheckCollisionSpheres(BOPowerUpManager::GetPowerUp(i)->GetBoundingSphere(), sphere(m_blackHole.GetPosition(), 1)))
-		{
-			BOPowerUpManager::RemovePowerUp(i);
-		}
-	}
 	if (m_releaseBall)
 	{
 		for (int i = 0; i < m_ballList.size(); i++)

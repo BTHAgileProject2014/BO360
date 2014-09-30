@@ -79,7 +79,7 @@ bool BOSystem::InitializeMap()
 	bool result;
 
 	// Initlialize the power up manager.
-	result = m_powerUpManager.Initialize(m_windowWidth, m_windowHeight);
+	result = m_powerUpManager.Initialize();
 	if (!result)
 	{
 		std::cout << "Initialize power up manager failed!" << std::endl;
