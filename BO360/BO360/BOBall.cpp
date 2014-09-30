@@ -22,7 +22,7 @@ bool BOBall::Initialize(float2 p_position, int2 p_size, std::string p_fileName, 
 
 	// Load texture.
 	m_sprite = BOGraphicInterface::LoadTexture(p_fileName);
-	m_sprite2 = BOGraphicInterface::LoadTexture("Bilder/placeholderBoll2.png");
+	m_sprite2 = BOGraphicInterface::LoadTexture("Sprites/PlaceHolderPNG/placeholderBoll2.png");
 	m_sprite3 = m_sprite;
 
 	m_mouseCheat = false;

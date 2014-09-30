@@ -158,7 +158,7 @@ BOGraphicInterface& BOGraphicInterface::GetInstance()
 SDL_Texture* BOGraphicInterface::DrawTextToTexture(std::string p_text, int3 p_textColor, int2* p_size, int p_fontSize, int p_maxWidth)
 {
 	// Load the font
-	TTF_Font* font = TTF_OpenFont("Font/Neon_Nanoborg.otf", p_fontSize);
+	TTF_Font* font = TTF_OpenFont("Fonts/Neon_Nanoborg.otf", p_fontSize);
 	if (font == NULL)
 	{
 		std::cout << "Failed to load font! SDL_ttf Error: " << TTF_GetError() << "\n";

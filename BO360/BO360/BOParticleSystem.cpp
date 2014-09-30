@@ -30,42 +30,42 @@ bool BOParticleSystem::Initialize(int p_maxParticles)
 	m_currentParticles = 0;
 
 	// Initialize all the textures. PREFERABLY IN THE ENUM ORDER!
-	m_ballTrailTexture = BOGraphicInterface::LoadTexture("Bilder/Particles/BallTrail.png");
+	m_ballTrailTexture = BOGraphicInterface::LoadTexture("Sprites/Particles/BallTrail.png");
 	if (m_ballTrailTexture == NULL)
 	{
 		std::cout << "Failed to load 'Ball Trail' particle texture!" << std::endl;
 		l_result = false;
 	}
 
-	m_ballDebrisTexture = BOGraphicInterface::LoadTexture("Bilder/Particles/BallDebris.png");
+	m_ballDebrisTexture = BOGraphicInterface::LoadTexture("Sprites/Particles/BallDebris.png");
 	if (m_ballDebrisTexture == NULL)
 	{
 		std::cout << "Failed to load 'Ball Debris' particle texture!" << std::endl;
 		l_result = false;
 	}
 
-	m_blockDebrisTexture = BOGraphicInterface::LoadTexture("Bilder/Particles/BlockDebris.png");
+	m_blockDebrisTexture = BOGraphicInterface::LoadTexture("Sprites/Particles/BlockDebris.png");
 	if (m_blockDebrisTexture == NULL)
 	{
 		std::cout << "Failed to load 'Block Debris' particle texture!" << std::endl;
 		l_result = false;
 	}
 
-	m_explosionTexture = BOGraphicInterface::LoadTexture("Bilder/Particles/Explosion.png");
+	m_explosionTexture = BOGraphicInterface::LoadTexture("Sprites/Particles/Explosion.png");
 	if (m_explosionTexture == NULL)
 	{
 		std::cout << "Failed to load 'Explosion' particle texture!" << std::endl;
 		l_result = false;
 	}
 
-	m_powerUpDebrisTexture = BOGraphicInterface::LoadTexture("Bilder/Particles/PowerUpDebris.png");
+	m_powerUpDebrisTexture = BOGraphicInterface::LoadTexture("Sprites/Particles/PowerUpDebris.png");
 	if (m_powerUpDebrisTexture == NULL)
 	{
 		std::cout << "Failed to load 'Power Up Debris' particle texture!" << std::endl;
 		l_result = false;
 	}
 
-	m_debugTrailTexture = BOGraphicInterface::LoadTexture("Bilder/Particles/DebugTrail.png");
+	m_debugTrailTexture = BOGraphicInterface::LoadTexture("Sprites/Particles/DebugTrail.png");
 	if (m_debugTrailTexture == NULL)
 	{
 		std::cout << "Failed to load 'Debug Trail' particle texture!" << std::endl;

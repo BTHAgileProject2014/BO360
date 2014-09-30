@@ -26,21 +26,21 @@ bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight)
 	}
 
 	// Initialize the background.
-	result = m_background.Initialize(float2(p_windowWidth / 2, p_windowHeight / 2), int2(p_windowWidth, p_windowHeight), "Bilder/Background.png");
+	result = m_background.Initialize(float2(p_windowWidth / 2, p_windowHeight / 2), int2(p_windowWidth, p_windowHeight), "Sprites/PlaceHolderPNG/Background.png");
 	if (!result)
 	{
 		return false;
 	}
 
 	// Initialize the black hole.
-	result = m_blackHole.Initialize(float2((p_windowWidth / 2.0f), (p_windowHeight / 2.0f)), int2(200, 200), "Bilder/placeholderBlackhole110x110.png");
+	result = m_blackHole.Initialize(float2((p_windowWidth / 2.0f), (p_windowHeight / 2.0f)), int2(200, 200), "Sprites/PlaceHolderPNG/placeholderBlackhole110x110.png");
 	if (!result)
 	{
 		return false;
 	}
 
 	// Initialize the pad.
-	result = m_paddle.Initialize(float2((p_windowWidth / 2.0f), (p_windowHeight / 2.0f)), int2(220, 220), "Bilder/placeholderPadSegment3.png");
+	result = m_paddle.Initialize(float2((p_windowWidth / 2.0f), (p_windowHeight / 2.0f)), int2(220, 220), "Sprites/PlaceHolderPNG/placeholderPadSegment3.png");
 	if (!result)
 	{
 		return false;
@@ -95,19 +95,19 @@ bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight)
 		// Create block.
 		if (i%100 == 1)
 		{
-					result = l_block->Initialize(float2(x, y), int2(40, 40), "Bilder/placeholderHexagonPU2.png", PUShield, score);
+					result = l_block->Initialize(float2(x, y), int2(40, 40), "Sprites/PlaceHolderPNG/Hexagons/placeholderHexagonPU2.png", PUShield, score);
 		}
 		else if (i%100 == 33)
 		{
-					result = l_block->Initialize(float2(x, y), int2(40, 40), "Bilder/placeholderHexagonPU1.png", PUExtraBall, score);
+					result = l_block->Initialize(float2(x, y), int2(40, 40), "Sprites/PlaceHolderPNG/Hexagons/placeholderHexagonPU1.png", PUExtraBall, score);
 		}
 		else if (i%100 == 66)
 		{
-					result = l_block->Initialize(float2(x, y), int2(40, 40), "Bilder/placeholderHexagonPU3.png", PUBiggerPad, score);
+					result = l_block->Initialize(float2(x, y), int2(40, 40), "Sprites/PlaceHolderPNG/Hexagons/placeholderHexagonPU3.png", PUBiggerPad, score);
 				}
 				else
 				{
-					result = l_block->Initialize(float2(x, y), int2(40, 40), "Bilder/placeholderHexagon40x40.png", PUNone, score);
+					result = l_block->Initialize(float2(x, y), int2(40, 40), "Sprites/PlaceHolderPNG/Hexagons/placeholderHexagon40x40.png", PUNone, score);
 				}
 				if (!result)
 				{
@@ -123,20 +123,20 @@ bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight)
 				/*
 				if (i % 100 == 1)
 				{
-					result = l_block->Initialize(float2(x, y), int2(40, 40), "Bilder/placeholderHexagonPU2.png", PUShield);
+					result = l_block->Initialize(float2(x, y), int2(40, 40), "Sprites/placeholderHexagonPU2.png", PUShield);
 				}
 				else if (i % 100 == 33)
 				{
-					result = l_block->Initialize(float2(x, y), int2(40, 40), "Bilder/placeholderHexagonPU1.png", PUExtraBall);
+					result = l_block->Initialize(float2(x, y), int2(40, 40), "Sprites/placeholderHexagonPU1.png", PUExtraBall);
 				}
 				else if (i % 100 == 66)
 				{
-					result = l_block->Initialize(float2(x, y), int2(40, 40), "Bilder/placeholderHexagonPU3.png", PUBiggerPad);
+					result = l_block->Initialize(float2(x, y), int2(40, 40), "Sprites/placeholderHexagonPU3.png", PUBiggerPad);
 				}
 				else
 				*/
 				{
-					result = l_block->Initialize(float2(x, y), int2(40, 40), "Bilder/placeholderHexagon40x40red1.png", 3, PUNone, score);
+					result = l_block->Initialize(float2(x, y), int2(40, 40), "Sprites/PlaceHolderPNG/Hexagons/placeholderHexagon40x40red1.png", 3, PUNone, score);
 				}
 
 				if (!result)
@@ -144,8 +144,8 @@ bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight)
 					return false;
 				}
 
-				((BOBlockMultiTexture*)l_block)->AddTextureForHPAbove("Bilder/placeholderHexagon40x40red2.png", 1);
-				((BOBlockMultiTexture*)l_block)->AddTextureForHPAbove("Bilder/placeholderHexagon40x40red3.png", 2);
+				((BOBlockMultiTexture*)l_block)->AddTextureForHPAbove("Sprites/PlaceHolderPNG/Hexagons/placeholderHexagon40x40red2.png", 1);
+				((BOBlockMultiTexture*)l_block)->AddTextureForHPAbove("Sprites/PlaceHolderPNG/Hexagons/placeholderHexagon40x40red3.png", 2);
 
 				break;
 			}
@@ -153,7 +153,7 @@ bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight)
 			case(INDESTRUCTIBLE) :
 			{
 				l_block = new BOBlockIron();
-				result = l_block->Initialize(float2(x, y), int2(40, 40), "Bilder/placeholderHexagon40x40gray.png", PUNone, score);
+				result = l_block->Initialize(float2(x, y), int2(40, 40), "Sprites/PlaceHolderPNG/Hexagons/placeholderHexagon40x40gray.png", PUNone, score);
 				break;
 			}
 
@@ -171,7 +171,7 @@ bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight)
 
 	BOPublisher::AddSubscriber(this);
 
-	m_Shield.Initialize(int2(200, 200), "Bilder/placeholderSheild.png", m_windowsSize);
+	m_Shield.Initialize(int2(200, 200), "Sprites/PlaceHolderPNG/Powerups/placeholderSheild.png", m_windowsSize);
 
 	return true;
 }
@@ -263,7 +263,7 @@ void BOObjectManager::Update(double p_deltaTime)
 							if (m_blockList[i]->GetPowerUp() == PUExtraBall)
 							{
 								BOMultiballs* extraBall = new BOMultiballs();
-								extraBall->Initialize(m_blockList[i]->GetPosition(), int2(40, 40), "Bilder/placeholderPowerupMultBall.png", 500.0f, m_windowsSize);
+								extraBall->Initialize(m_blockList[i]->GetPosition(), int2(40, 40), "Sprites/PlaceHolderPNG/Powerups/placeholderPowerupMultBall.png", 500.0f, m_windowsSize);
 								extraBall->SetActive(true);
 								BOPowerUpManager::AddPowerUp(extraBall);
 							}
@@ -271,13 +271,13 @@ void BOObjectManager::Update(double p_deltaTime)
 							else if (m_blockList[i]->GetPowerUp() == PUShield)
 							{
 								BOShieldPU* shield = new BOShieldPU();
-								shield->Initialize(m_blockList[i]->GetPosition(), int2(30, 30), "Bilder/placeholderPowerup2.png", 500.0f, m_windowsSize);
+								shield->Initialize(m_blockList[i]->GetPosition(), int2(30, 30), "Sprites/PlaceHolderPNG/Powerups/placeholderPowerup2.png", 500.0f, m_windowsSize);
 								BOPowerUpManager::AddPowerUp(shield);
 							}
 							else if (m_blockList[i]->GetPowerUp() == PUBiggerPad)
 							{
 								BOPUPadSize* biggerPad = new BOPUPadSize();
-								biggerPad->Initialize(m_blockList[i]->GetPosition(), int2(30, 30), "Bilder/placeholderPowerup3.png", 500.0f, m_windowsSize);
+								biggerPad->Initialize(m_blockList[i]->GetPosition(), int2(30, 30), "Sprites/PlaceHolderPNG/Powerups/placeholderPowerup3.png", 500.0f, m_windowsSize);
 								BOPowerUpManager::AddPowerUp(biggerPad);
 							}
 
@@ -469,7 +469,7 @@ void BOObjectManager::Handle(PowerUpTypes p_type, bool p_activated)
 		if (p_activated)
 		{
 			BOBall* ball2 = new BOBall();
-			ball2->Initialize(m_ballList[0]->GetPosition(), int2(15, 15), "Bilder/placeholderBoll10x10.png", m_ballList[0]->GetSpeed(), float2(m_ballList[0]->GetDirection().x * -1, m_ballList[0]->GetDirection().y * -1), int2(1300, 900));
+			ball2->Initialize(m_ballList[0]->GetPosition(), int2(15, 15), "Sprites/PlaceHolderPNG/placeholderBoll10x10.png", m_ballList[0]->GetSpeed(), float2(m_ballList[0]->GetDirection().x * -1, m_ballList[0]->GetDirection().y * -1), int2(1300, 900));
 			m_ballList.push_back(ball2);
 		}
 		break;
@@ -488,7 +488,7 @@ bool BOObjectManager::AddNewBall()
 
 	m_ballStartPosition = ChangeBallPosAtStart();
 	m_ballDirection = float2((m_windowsSize.x * 0.5f), (m_windowsSize.y *0.5f)).normalized();
-	if (!ball->Initialize(m_ballStartPosition, m_ballSize, "Bilder/placeholderBoll10x10.png", m_ballSpeed, m_ballDirection, m_windowsSize))
+	if (!ball->Initialize(m_ballStartPosition, m_ballSize, "Sprites/PlaceHolderPNG/placeholderBoll10x10.png", m_ballSpeed, m_ballDirection, m_windowsSize))
 	{
 		return false;
 	}

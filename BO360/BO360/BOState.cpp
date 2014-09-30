@@ -28,7 +28,7 @@ bool BOState::Initialize(float2 p_position, int2 p_size, float2 p_menuPosition, 
 
 	// Load the menu bars first edge.
 	BOObject l_firstEdge;
-	if (!l_firstEdge.Initialize(float2(p_menuPosition.x + 2.5f, p_menuPosition.y + 35), int2(5, 70), "Bilder/Menu/MenuEdge.png"))
+	if (!l_firstEdge.Initialize(float2(p_menuPosition.x + 2.5f, p_menuPosition.y + 35), int2(5, 70), "Sprites/Menu/MenuEdge.png"))
 	{
 		std::cout << "Failed to load first edge of menu" << m_name << "!" << std::endl;
 		return false;
@@ -38,7 +38,7 @@ bool BOState::Initialize(float2 p_position, int2 p_size, float2 p_menuPosition, 
 
 	// Load the menu bar.
 	BOObject l_menuBar;
-	if (!l_menuBar.Initialize(float2(p_menuPosition.x + 125, p_menuPosition.y + 35), int2(240, 70), "Bilder/Menu/MenuBar.png"))
+	if (!l_menuBar.Initialize(float2(p_menuPosition.x + 125, p_menuPosition.y + 35), int2(240, 70), "Sprites/Menu/MenuBar.png"))
 	{
 		std::cout << "Failed to load last edge of menu" << m_name << "!" << std::endl;
 		return false;
@@ -48,7 +48,7 @@ bool BOState::Initialize(float2 p_position, int2 p_size, float2 p_menuPosition, 
 
 	// Load the last edge of the menu bars.
 	BOObject l_lastEdge;
-	if (!l_lastEdge.Initialize(float2(p_menuPosition.x + 247.5f, p_menuPosition.y + 35), int2(5, 70), "Bilder/Menu/MenuEdge.png"))
+	if (!l_lastEdge.Initialize(float2(p_menuPosition.x + 247.5f, p_menuPosition.y + 35), int2(5, 70), "Sprites/Menu/MenuEdge.png"))
 	{
 		std::cout << "Failed to load last edge of menu" << m_name << "!" << std::endl;
 		return false;

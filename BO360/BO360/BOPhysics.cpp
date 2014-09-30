@@ -244,7 +244,7 @@ float2 BOPhysics::BallPadCollision(sphere p_sphere, float2 p_sphereDir, sphere p
 	double normalized = startAngleMA;
 	NormalizeAngle(normalized);
 
-   	double padCenterAngle = startAngleMA - (padSpread / 2);
+	double padCenterAngle = startAngleMA - (padSpread / 2);
 	NormalizeAngle(padCenterAngle);
 
 	// Calculate a vector pointing towards the pad's center in SDL-Draw-Space
@@ -346,7 +346,7 @@ float2 BOPhysics::BlackHoleGravity(sphere p_ball, float2 p_ballDirection, float 
 	double force = ((G * p_ballSpeed) / (distanceAdjustment*distanceAdjustment)); // F = G*M/R^2  -> Gravitations formel		//5000000000000
 
 	center = center.normalized();//Normaliserar vektorn mot hålet 
- 	center = center * force;//Multiplicerar vektorn mot hålet med kraften
+	center = center * force;//Multiplicerar vektorn mot hålet med kraften
 	
 	newDirection = float2(newDirection.x * (p_ballSpeed * p_deltaTime) + center.x, newDirection.y * (p_ballSpeed * p_deltaTime) + center.y);//Beräknar längden av bollens riktningsvektor
 
