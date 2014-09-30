@@ -48,7 +48,7 @@ bool BOMapLoader::LoadMap(std::string p_fileName)
 		{
 			l_file >> l_type;
 
-			DetermineAction(l_type, x, y);
+			DetermineAction(l_type, (float)x, (float)y);
 		}
 	}
 
@@ -58,7 +58,7 @@ bool BOMapLoader::LoadMap(std::string p_fileName)
 		{
 			l_file >> l_type;
 
-			DetermineAction(l_type, x, (m_mapSize.y - 1));
+			DetermineAction(l_type, (float)x, (float)(m_mapSize.y - 1));
 		}
 	}
 

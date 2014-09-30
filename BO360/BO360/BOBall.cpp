@@ -38,14 +38,14 @@ void BOBall::Update(double p_deltaTime)
 	}
 	if (m_Fuel > 0)
 	{
-		m_position.x = (m_speed * p_deltaTime) * m_direction.x + m_position.x;
-		m_position.y = (m_speed * p_deltaTime) * m_direction.y + m_position.y;
+		m_position.x = (float)(m_speed * p_deltaTime) * m_direction.x + m_position.x;
+		m_position.y = (float)(m_speed * p_deltaTime) * m_direction.y + m_position.y;
 		m_sprite = m_sprite2;
 	}
 	else
 	{
-		m_position.x = (0.75*m_speed * p_deltaTime) * m_direction.x + m_position.x;
-		m_position.y = (0.75*m_speed * p_deltaTime) * m_direction.y + m_position.y;
+		m_position.x = (float)(0.75*m_speed * p_deltaTime) * m_direction.x + m_position.x;
+		m_position.y = (float)(0.75*m_speed * p_deltaTime) * m_direction.y + m_position.y;
 		m_sprite = m_sprite3;
 	}
 
@@ -119,8 +119,8 @@ void BOBall::Handle(InputMessages p_inputMessages)
 	}
 	if (m_mouseCheat)
 	{
-		m_position.x = p_inputMessages.mouseX;
-		m_position.y = p_inputMessages.mouseY;
+		m_position.x = (float)p_inputMessages.mouseX;
+		m_position.y = (float)p_inputMessages.mouseY;
 	}
 }
 
