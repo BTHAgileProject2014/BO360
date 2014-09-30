@@ -13,22 +13,27 @@ bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight)
 {
 	m_releaseBall = false;
 	m_windowsSize = int2(p_windowWidth, p_windowHeight);
-	bool result;
 	m_hasColided = false;
 	m_life = 4;
 	BOHUDManager::SetLives(m_life);
 
 	// Initialize the map loader.
+	bool result;
 	result = m_mapLoader.Initialize();
 	if (!result)
 	{
+		ThrowInitError("BOMapLoader");
 		return false;
 	}
+	// Load a map.
+	m_mapLoader.LoadMap("Demo.bom");
+	m_loadedBlocks = m_mapLoader.GetLoadedBlocks();
 
 	// Initialize the background.
 	result = m_background.Initialize(float2(p_windowWidth / 2, p_windowHeight / 2), int2(p_windowWidth, p_windowHeight), "Bilder/Background.png");
 	if (!result)
 	{
+		ThrowInitError("BOBackground");
 		return false;
 	}
 
@@ -36,6 +41,7 @@ bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight)
 	result = m_blackHole.Initialize(float2((p_windowWidth / 2.0f), (p_windowHeight / 2.0f)), int2(200, 200), "Bilder/placeholderBlackhole110x110.png");
 	if (!result)
 	{
+		ThrowInitError("BOBlackHole");
 		return false;
 	}
 
@@ -43,6 +49,7 @@ bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight)
 	result = m_paddle.Initialize(float2((p_windowWidth / 2.0f), (p_windowHeight / 2.0f)), int2(208, 208), "Bilder/placeholderPadSegment5.png");
 	if (!result)
 	{
+		ThrowInitError("BOPaddle");
 		return false;
 	}
 
@@ -51,6 +58,7 @@ bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight)
 	result = m_particleSystem.Initialize(MAXPARTICLES);
 	if (!result)
 	{
+		ThrowInitError("BOParticleSystem");
 		return false;
 	}
 
@@ -59,11 +67,9 @@ bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight)
 	m_ballSpeed = 400.0f;
 	AddNewBall();
 
-	BOPublisher::AddSubscriber(m_ballList[0]);
+	// The first ball is a subscriber for debug purposes (space to control ball)
+	BOPublisher::AddSubscriber(m_ballList[0]); 
 
-	// Load a map.
-	m_mapLoader.LoadMap("Demo.bom");
-	m_loadedBlocks = m_mapLoader.GetLoadedBlocks();
 
 	float x = 0;
 	float y = 0;
@@ -202,7 +208,7 @@ void BOObjectManager::Update(double p_deltaTime)
 	}
 	else
 	{
-		float2 pos = ChangeBallPosAtStart();
+		float2 pos = m_paddle.GetBallSpawnPosition();
 
 		float2 ballDir = pos - float2((m_windowsSize.x * 0.5f), (m_windowsSize.y *0.5f));
 		ballDir.normalize();
@@ -476,7 +482,7 @@ bool BOObjectManager::AddNewBall()
 {
 	BOBall* ball = new BOBall();
 
-	m_ballStartPosition = ChangeBallPosAtStart();
+	m_ballStartPosition = m_paddle.GetBallSpawnPosition();
 	m_ballDirection = m_ballStartPosition - float2((m_windowsSize.x * 0.5f), (m_windowsSize.y *0.5f));
 	m_ballDirection.normalize();
 	m_ballStartPosition.x += m_ballDirection.x * 10;
@@ -520,13 +526,4 @@ void BOObjectManager::CheckBallOutOfBounds(int p_index)
 	}
 
 	m_ballList[p_index]->SetPosition(ballPos);
-}
-float2 BOObjectManager::ChangeBallPosAtStart()
-{
-	float2 startPos;
-	float tempx = m_paddle.GetPosition().x + (m_paddle.GetSize().x * 0.5f) * cos(((-m_paddle.GetRotation() - (21 * (m_paddle.GetSegments() - 1))) * m_PIDiv180) + 2);
-	float tempy = m_paddle.GetPosition().y - (m_paddle.GetSize().y * 0.5f) * sin(((-m_paddle.GetRotation() - (21 * (m_paddle.GetSegments() - 1))) * m_PIDiv180) + 2);
-	startPos = float2(tempx, tempy);
-	
-	return startPos;
 }

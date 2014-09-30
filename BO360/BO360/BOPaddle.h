@@ -25,6 +25,7 @@ public:
 	void RemoveSegments(int p_segments);
 	double GetDegrees();
 	void Draw();
+	float2 GetBallSpawnPosition();
 
 private:
 	double m_rotation;
