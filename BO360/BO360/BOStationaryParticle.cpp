@@ -33,7 +33,7 @@ void BOStationaryParticle::Update(double p_deltaTime)
 	// Rotate if ment to be rotated.
 	if (m_rotate)
 	{
-		m_rotation += (p_deltaTime * m_angleIncrement);
+		m_rotation += (float)(p_deltaTime * m_angleIncrement);
 
 		if (m_rotation > 360)
 		{
@@ -51,7 +51,7 @@ void BOStationaryParticle::Update(double p_deltaTime)
 
 void BOStationaryParticle::Draw(SDL_Texture* p_texture)
 {
-	int4 l_target = int4(m_position.x, m_position.y, m_size.x, m_size.y);
+	int4 l_target = int4((int)m_position.x, (int)m_position.y, m_size.x, m_size.y);
 	int4 l_source = int4(0, 0, m_size.x, m_size.y);
 
 	BOGraphicInterface::DrawEx(p_texture, l_source, l_target, m_rotation, int2(l_source.z / 2, l_source.w / 2));

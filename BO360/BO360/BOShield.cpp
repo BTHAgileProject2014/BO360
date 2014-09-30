@@ -28,7 +28,7 @@ void BOShield::Shutdown()
 	SDL_DestroyTexture(m_ShieldSprite);
 	m_ShieldSprite = NULL;
 }
-float2 BOShield::Update(Uint32 p_deltaTime, sphere p_Ball, float2 p_BallDirection)
+float2 BOShield::Update(double p_deltaTime, sphere p_Ball, float2 p_BallDirection)
 {
 	float2 ballDir = p_BallDirection;
 	if (m_IsActive)

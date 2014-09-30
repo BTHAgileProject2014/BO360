@@ -26,7 +26,7 @@ bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight)
 	}
 
 	// Initialize the background.
-	result = m_background.Initialize(float2(p_windowWidth / 2, p_windowHeight / 2), int2(p_windowWidth, p_windowHeight), "Sprites/PlaceHolderPNG/Background.png");
+	result = m_background.Initialize(float2(p_windowWidth / 2.0f, p_windowHeight / 2.0f), int2(p_windowWidth, p_windowHeight), "Sprites/PlaceHolderPNG/Background.png");
 	if (!result)
 	{
 		return false;
@@ -70,7 +70,7 @@ bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight)
 	float l_blockHeightDifference = 19;
 
 	// Load blocks.
-	for (int i = 0; i < m_loadedBlocks.size(); i++)
+	for (unsigned int i = 0; i < m_loadedBlocks.size(); i++)
 	{
 		BOBlock* l_block;
 
@@ -205,7 +205,6 @@ void BOObjectManager::Shutdown()
 
 void BOObjectManager::Update(double p_deltaTime)
 {
-	bool result;
 	float2 normal;
 	
 	m_blackHole.Update();
@@ -214,7 +213,7 @@ void BOObjectManager::Update(double p_deltaTime)
 
 	if (m_releaseBall)
 	{
-		for (int i = 0; i < m_ballList.size(); i++)
+		for (unsigned int i = 0; i < m_ballList.size(); i++)
 		{
 			m_ballList[i]->Update(p_deltaTime);
 		}
@@ -224,14 +223,14 @@ void BOObjectManager::Update(double p_deltaTime)
 		m_ballList[0]->SetPosition(ChangeBallPosAtStart());
 	}
 
-	for (int i = 0; i < m_blockList.size(); i++)
+	for (unsigned int i = 0; i < m_blockList.size(); i++)
 	{
 		m_blockList[i]->Update();
 	}
 
-	for (int j = 0; j < m_ballList.size(); j++)
+	for (unsigned int j = 0; j < m_ballList.size(); j++)
 	{
-		for (int i = 0; i < m_blockList.size(); i++)
+		for (unsigned int i = 0; i < m_blockList.size(); i++)
 		{
 			box testBox = m_blockList[i]->GetBoundingBox();
 			testBox.left -= 10; testBox.top -= 10; testBox.bottom += 10; testBox.right += 10;
@@ -337,7 +336,7 @@ void BOObjectManager::Update(double p_deltaTime)
 	}
 	if (m_releaseBall)
 	{
-		for (int i = 0; i < m_ballList.size(); i++)
+		for (unsigned int i = 0; i < m_ballList.size(); i++)
 		{
 			CheckBallOutOfBounds(i);
 			bool ballDied = false;
@@ -404,7 +403,7 @@ void BOObjectManager::Update(double p_deltaTime)
 
 	if (BALLDEBUGTRAIL == 1 && m_SecondsPerParticle < 0.0f)
 	{
-		for (int i = 0; i < m_ballList.size(); i++)
+		for (unsigned int i = 0; i < m_ballList.size(); i++)
 		{
 			m_particleSystem.BallDebugTrail(m_ballList[i]->GetPosition());
 		}
@@ -414,7 +413,7 @@ void BOObjectManager::Update(double p_deltaTime)
 	
 	else if (m_releaseBall && m_SecondsPerParticle < 0.0f)
 	{
-		for (int i = 0; i < m_ballList.size(); i++)
+		for (unsigned int i = 0; i < m_ballList.size(); i++)
 		{
 			if (m_ballList[i]->GetFuel() > 0)
 			{
@@ -434,7 +433,7 @@ void BOObjectManager::Draw()
 
 	m_blackHole.Draw();
 
-	for (int i = 0; i < m_blockList.size(); i++)
+	for (unsigned int i = 0; i < m_blockList.size(); i++)
 	{
 		if (!m_blockList[i]->GetDead())
 		{
@@ -445,7 +444,7 @@ void BOObjectManager::Draw()
 		
 	m_particleSystem.DrawParticles();
 
-	for (int i = 0; i < m_ballList.size(); i++)
+	for (unsigned int i = 0; i < m_ballList.size(); i++)
 	{
 		m_ballList[i]->Draw();
 	}
@@ -530,8 +529,8 @@ void BOObjectManager::CheckBallOutOfBounds(int p_index)
 float2 BOObjectManager::ChangeBallPosAtStart()
 {
 	float2 startPos;
-	float tempx = m_paddle.GetPosition().x + (m_paddle.GetSize().x * 0.5f) * cos(((-m_paddle.GetRotation() - (21 * (m_paddle.GetSegments() - 1))) * m_PIDiv180) + 2);
-	float tempy = m_paddle.GetPosition().y - (m_paddle.GetSize().y * 0.5f) * sin(((-m_paddle.GetRotation() - (21 * (m_paddle.GetSegments() - 1))) * m_PIDiv180) + 2);
+	float tempx = m_paddle.GetPosition().x + (m_paddle.GetSize().x * 0.5f) * (float)cos(((-m_paddle.GetRotation() - (21 * (m_paddle.GetSegments() - 1))) * (float)m_PIDiv180) + 2);
+	float tempy = m_paddle.GetPosition().y - (m_paddle.GetSize().y * 0.5f) * (float)sin(((-m_paddle.GetRotation() - (21 * (m_paddle.GetSegments() - 1))) * (float)m_PIDiv180) + 2);
 	startPos = float2(tempx, tempy);
 	
 	return startPos;

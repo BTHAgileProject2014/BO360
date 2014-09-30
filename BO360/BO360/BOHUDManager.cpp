@@ -31,8 +31,8 @@ bool BOHUDManager::Initialize()
 	// Setting anchors
 	int2 bounds = BOGraphicInterface::GetWindowSize();
 	m_levelAnchor = float2(10, 0);
-	m_livesAnchor = float2(bounds.x / 2, 0);
-	m_scoreAnchor = float2(bounds.x, 0);
+	m_livesAnchor = float2(bounds.x / 2.0f, 0);
+	m_scoreAnchor = float2((float)bounds.x, 0);
 
 	m_level.Initialize(m_levelAnchor, "Level: ", int3(255, 255, 255), 30, 0);
 	int2 tempSize = m_level.GetSize();
