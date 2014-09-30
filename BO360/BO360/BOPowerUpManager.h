@@ -7,6 +7,7 @@
 #include "BOComponent.h"
 #include <vector>
 
+class BOPowerUp;
 class BOPowerUpManager : BOComponent
 {
 public:

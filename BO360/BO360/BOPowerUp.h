@@ -2,14 +2,16 @@
 #define BOPOWERUP_H_
 
 #include "BOObject.h"
+#include "BOPowerUpManager.h"
 
+class BOPoweUpManager;
 class BOPowerUp : public BOObject
 {
 public:
 	BOPowerUp();
 	~BOPowerUp();
 
-	bool Initialize(float2 p_position, int2 p_size, std::string p_fileName, float p_speed, int2 p_windowSize);
+	bool Initialize(PowerUpTypes p_type, float2 p_position, int2 p_size, std::string p_fileName, float p_speed, int2 p_windowSize);
 	void Shutdown();
 
 	virtual void Update(double p_deltaTime);

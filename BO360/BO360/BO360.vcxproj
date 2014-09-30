@@ -98,11 +98,9 @@
     <ClInclude Include="BOPowerUp.h" />
     <ClInclude Include="BOPowerUpManager.h" />
     <ClInclude Include="BOPublisher.h" />
-    <ClInclude Include="BOPUPadSize.h" />
     <ClInclude Include="BOPUSubscriber.h" />
     <ClInclude Include="BOScore.h" />
     <ClInclude Include="BOShield.h" />
-    <ClInclude Include="BOShieldPU.h" />
     <ClInclude Include="BOSoundManager.h" />
     <ClInclude Include="BOState.h" />
     <ClInclude Include="BOStateManager.h" />
@@ -114,7 +112,6 @@
     <ClInclude Include="BOUtility.h" />
     <ClInclude Include="BOWindow.h" />
     <ClInclude Include="BOButton.h" />
-    <ClInclude Include="BOMultiballs.h" />
     <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>
@@ -140,11 +137,9 @@
     <ClCompile Include="BOPowerUp.cpp" />
     <ClCompile Include="BOPowerUpManager.cpp" />
     <ClCompile Include="BOPublisher.cpp" />
-    <ClCompile Include="BOPUPadSize.cpp" />
     <ClCompile Include="BOPUSubscriber.cpp" />
     <ClCompile Include="BOScore.cpp" />
     <ClCompile Include="BOShield.cpp" />
-    <ClCompile Include="BOShieldPU.cpp" />
     <ClCompile Include="BOSoundManager.cpp" />
     <ClCompile Include="BOState.cpp" />
     <ClCompile Include="BOStateManager.cpp" />
@@ -155,7 +150,6 @@
     <ClCompile Include="BOTimer.cpp" />
     <ClCompile Include="BOWindow.cpp" />
     <ClCompile Include="BOButton.cpp" />
-    <ClCompile Include="BOMultiballs.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Maps\Default.bom" />

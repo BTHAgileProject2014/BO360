@@ -11,7 +11,6 @@
 #include "BOPowerUpManager.h"
 #include "BOSoundManager.h"
 #include "BOTextManager.h"
-#include "BOMultiballs.h"
 #include "BOHUDManager.h"
 #include "BOStateManager.h"
 #include "BOSubscriber.h"
@@ -38,7 +37,6 @@ private:
 	BOInput m_input;
 	BOObjectManager m_objectManager;
 	BOPowerUpManager m_powerUpManager;
-	BOMultiballs m_extraBall;
 	BOStateManager m_stateManager;
 	GameState m_gameState;
 	bool m_quit;
