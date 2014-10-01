@@ -29,7 +29,9 @@ public:
 	static int2 GetWindowSize();
 
 private:
-	BOGraphicInterface() {}
+	BOGraphicInterface() {};
+	BOGraphicInterface(BOGraphicInterface& const);
+	void operator=(BOGraphicInterface& const);
 	static BOGraphicInterface& GetInstance();
 
 	BOWindow m_window;

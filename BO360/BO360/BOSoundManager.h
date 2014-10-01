@@ -17,7 +17,9 @@ public:
 	static void PlayPopSound();
 	static void PlaySound(Sound p_sound);
 private:
-	BOSoundManager() {}
+	BOSoundManager() {};
+	BOSoundManager(BOSoundManager const &);
+	void operator=(BOSoundManager const&);
 	static BOSoundManager& GetInstance();
 
 	Mix_Music *m_music;

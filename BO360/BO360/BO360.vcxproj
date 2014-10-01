@@ -117,6 +117,7 @@
     <ClInclude Include="BOSubscriber.h" />
     <ClInclude Include="BOSystem.h" />
     <ClInclude Include="BOTextManager.h" />
+    <ClInclude Include="BOTextureManager.h" />
     <ClInclude Include="BOTimer.h" />
     <ClInclude Include="BOUtility.h" />
     <ClInclude Include="BOWindow.h" />
@@ -156,6 +157,7 @@
     <ClCompile Include="BOSubscriber.cpp" />
     <ClCompile Include="BOSystem.cpp" />
     <ClCompile Include="BOTextManager.cpp" />
+    <ClCompile Include="BOTextureManager.cpp" />
     <ClCompile Include="BOTimer.cpp" />
     <ClCompile Include="BOWindow.cpp" />
     <ClCompile Include="BOButton.cpp" />
