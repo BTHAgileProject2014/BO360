@@ -105,7 +105,7 @@ bool BOSystem::InitializeMap()
 	}
 
 	// Initialize the key manager
-	result = m_keyManager.Initialize();
+	result = m_keyManager.Initialize("Demo.bom");
 	if (!result)
 	{
 		std::cout << "Initialize key manager failed!" << std::endl;

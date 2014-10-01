@@ -2,8 +2,8 @@
 #define BOKEYMANAGER_H_
 
 #include "BOComponent.h"
-#include "BOKey.h"
 #include "BOHUDManager.h"
+#include "BOMapLoader.h"
 
 class BOKeyManager : public BOComponent
 {
@@ -11,18 +11,19 @@ public:
 	BOKeyManager();
 	~BOKeyManager();
 
-	bool Initialize();
+	bool Initialize(std::string p_mapFileName);
 	void Shutdown();
 	void Update(double p_deltaTime);
 	void Draw();
 
-	int GetKeysLeft();
 	void KeyCatched();
 	bool AllKeysCatched();
 
 private:
-	std::vector<BOKey> m_keys;
+	std::vector<BOObject> m_keys;
 	int m_keysLeft;
+
+	bool LoadKeysFromMap(std::string p_filename);
 };
 
 #endif

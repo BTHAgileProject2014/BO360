@@ -10,9 +10,9 @@ BOKeyManager::~BOKeyManager()
 {
 }
 
-bool BOKeyManager::Initialize()
+bool BOKeyManager::Initialize(std::string p_mapFileName)
 {
-	m_keys = std::vector<BOKey>();
+	m_keys = std::vector<BOObject>();
 	m_keysLeft = 1;
 	// BOHudManager::SetKeys(m_keysLeft);
 
@@ -26,11 +26,6 @@ void BOKeyManager::Shutdown()
 
 void BOKeyManager::Update(double p_deltaTime)
 {
-	// Update the keys
-	for (unsigned int i = 0; i < m_keys.size(); i++)
-	{
-		m_keys[i].Update(p_deltaTime);
-	}
 }
 
 void BOKeyManager::Draw()
@@ -42,20 +37,40 @@ void BOKeyManager::Draw()
 	}
 }
 
-int BOKeyManager::GetKeysLeft()
-{
-	return m_keysLeft;
-}
-
 void BOKeyManager::KeyCatched()
 {
 	if (m_keysLeft > 0)
 	{
 		m_keysLeft--;
 	}
+	// BOHudManager::SetKeys(m_keysLeft);
 }
 
 bool BOKeyManager::AllKeysCatched()
 {
 	return m_keysLeft == 0;
+}
+
+bool BOKeyManager::LoadKeysFromMap(std::string p_filename)
+{
+	bool result = false;
+	BOMapLoader mapLoader = BOMapLoader();
+	result = mapLoader.Initialize();
+	if (!result)
+	{
+		return false;
+	}
+	mapLoader.LoadMap(p_filename);
+	std::vector<Block> blockDescriptions = mapLoader.GetLoadedBlocks();
+
+	for (unsigned int i = 0; i < blockDescriptions.size(); i++)
+	{
+		switch (blockDescriptions[i].m_type)
+		{
+			// case KEY:
+			// add a new key to the vector
+		}
+	}
+
+	return true;
 }
