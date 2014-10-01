@@ -86,10 +86,18 @@ void BOObjectManager::Shutdown()
 		m_ballList[i]->Shutdown();
 		delete m_ballList[i];
 	}
-	m_ballList.clear();
+	std::vector<BOBall*>().swap(m_ballList);
+
 
 	// Clear the blocks
+	for (int i = 0; i < m_blockList.size(); i++)
+	{
+		m_blockList[i]->Shutdown();
+		delete m_blockList[i];
+	}
+
 	m_blockList.clear();
+	//std::vector<BOBlock*>().swap(m_blockList);
 
 	// Call all the shutdowns
 	m_mapLoader.Shutdown();
@@ -115,20 +123,20 @@ void BOObjectManager::Update(double p_deltaTime)
 
 	// Update balls
 	for (unsigned int i = 0; i < m_ballList.size(); i++)
-	{
+			{
 		m_ballList[i]->Update(p_deltaTime, m_blackHole.GetBoundingSphere());
 
 		if (m_ballList[i]->IsStuckToPad())
-		{
+				{
 			m_ballList[i]->SetPosition(m_paddle.GetBallSpawnPosition());
 		}
 		else
-		{
+					{
 			BallBlockCollision(m_ballList[i]);
 
 			BallPadCollision(m_ballList[i]);
 
-			CheckBallOutOfBounds(i);
+		CheckBallOutOfBounds(i);
 
 			if (BallDied(m_ballList[i]))
 			{
@@ -137,16 +145,16 @@ void BOObjectManager::Update(double p_deltaTime)
 				m_ballList.erase(m_ballList.begin() + i);
 				i--;
 				continue;
-			}
-
+		}
+		
 			// Bounce on shield
 			// This should change once a new ball-ball collision has been added to the phusics class
-			float2 newdir = m_Shield.Update(p_deltaTime, m_ballList[i]->GetBoundingSphere(), m_ballList[i]->GetDirection());
-			m_ballList[i]->SetDirection(newdir);
-		}
+		float2 newdir = m_Shield.Update(p_deltaTime, m_ballList[i]->GetBoundingSphere(), m_ballList[i]->GetDirection());
+		m_ballList[i]->SetDirection(newdir);
+	}
 	}
 	UpdateParticles(p_deltaTime);
-}
+			}
 
 void BOObjectManager::Draw()
 {
@@ -200,8 +208,8 @@ void BOObjectManager::Handle(InputMessages p_inputMessage)
 		for (int i = 0; i < m_ballList.size(); i++)
 		{
 			m_ballList[i]->SetStuckToPad(false);
-		}
 	}
+}
 }
 bool BOObjectManager::AddNewBall()
 {
@@ -354,6 +362,7 @@ bool BOObjectManager::LoadBlocksFromMap(std::string p_filename)
 		}
 		m_blockList.push_back(block);
 	}
+
 	return true;
 }
 

@@ -11,6 +11,28 @@ BOBlockMultiTexture::~BOBlockMultiTexture()
 {
 }
 
+void BOBlockMultiTexture::Shutdown()
+{
+	// delete objects in array
+	for (int i = 0; i < m_textures.size(); i++)
+	{
+		BOGraphicInterface::DestroyTexture(m_textures[i]);
+	}
+
+	m_textures.clear();
+	m_textures.shrink_to_fit();
+	// clear m_textures reallocating
+	//std::vector<SDL_Texture*>().swap(m_textures);
+
+	// clear m_hpLimits reallocating
+	m_hpLimits.clear();
+	m_hpLimits.shrink_to_fit();
+	//std::vector<int>().swap(m_hpLimits);
+
+	// clear array
+	BOObject::Shutdown();
+}
+
 bool BOBlockMultiTexture::AddTextureForHPAbove(std::string p_filename, int p_hp)
 {
 	SDL_Texture* newTexture = BOGraphicInterface::LoadTexture(p_filename);

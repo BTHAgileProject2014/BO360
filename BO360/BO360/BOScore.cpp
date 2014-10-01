@@ -14,6 +14,7 @@ BOScore::~BOScore()
 bool BOScore::Initialize()
 {
 	m_score = 0;
+	BOHUDManager::SetScore(m_score);
 	return true;
 }
 

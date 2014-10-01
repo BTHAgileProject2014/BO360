@@ -135,6 +135,9 @@
     <ClCompile Include="BOBlockMultiTexture.cpp">
       <Filter>Source Files\Blocks</Filter>
     </ClCompile>
+    <ClCompile Include="BOKeyManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BOSystem.h">
@@ -248,6 +251,9 @@
     <ClInclude Include="resource.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="BOKeyManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Maps\Empty.bom">
@@ -256,7 +262,7 @@
     <None Include="Maps\Filled.bom">
       <Filter>Resource Files\Maps</Filter>
     </None>
-    <None Include="Maps\Default.bom">
+    <None Include="Maps\Demo.bom">
       <Filter>Resource Files\Maps</Filter>
     </None>
   </ItemGroup>
