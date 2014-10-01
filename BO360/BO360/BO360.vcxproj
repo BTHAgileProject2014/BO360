@@ -161,7 +161,7 @@
     <ClCompile Include="BOButton.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Maps\Default.bom" />
+    <None Include="Maps\Demo.bom" />
     <None Include="Maps\Empty.bom" />
     <None Include="Maps\Filled.bom" />
   </ItemGroup>

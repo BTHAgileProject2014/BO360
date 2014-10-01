@@ -256,7 +256,7 @@
     <None Include="Maps\Filled.bom">
       <Filter>Resource Files\Maps</Filter>
     </None>
-    <None Include="Maps\Default.bom">
+    <None Include="Maps\Demo.bom">
       <Filter>Resource Files\Maps</Filter>
     </None>
   </ItemGroup>

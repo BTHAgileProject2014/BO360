@@ -93,10 +93,12 @@ void BOObjectManager::Shutdown()
 	// Clear the blocks	
 	for (int i = 0; i < m_blockList.size(); i++)
 	{
+		m_blockList[i]->Shutdown();
 		delete m_blockList[i];
 	}
 
-	std::vector<BOBlock*>().swap(m_blockList);
+	m_blockList.clear();
+	//std::vector<BOBlock*>().swap(m_blockList);
 
 	// Call all the shutdowns
 	m_mapLoader.Shutdown();
@@ -491,5 +493,6 @@ bool BOObjectManager::LoadBlocksFromMap(std::string p_filename)
 		}
 		m_blockList.push_back(block);
 	}
+
 	return true;
 }
