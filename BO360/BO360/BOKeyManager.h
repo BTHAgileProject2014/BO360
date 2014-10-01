@@ -2,6 +2,7 @@
 #define BOKEYMANAGER_H_
 
 #include "BOComponent.h"
+#include "BOKey.h"
 #include "BOHUDManager.h"
 
 class BOKeyManager : public BOComponent
@@ -16,9 +17,11 @@ public:
 	void Draw();
 
 	int GetKeysLeft();
-	bool Won();
+	void KeyCatched();
+	bool AllKeysCatched();
 
 private:
+	std::vector<BOKey> m_keys;
 	int m_keysLeft;
 };
 
