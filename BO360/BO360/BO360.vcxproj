@@ -42,6 +42,10 @@
     <IncludePath>$(ProjectDir)\DevLibs\SDL2_mixer-2.0.0\include;$(ProjectDir)\DevLibs\SDL2_image-2.0.0\include;$(ProjectDir)DevLibs\SDL2-2.0.3\include;$(ProjectDir)DevLibs\SDL2_ttf-2.0.12\include;$(IncludePath)</IncludePath>
     <LibraryPath>$(ProjectDir)DevLibs\SDL2_mixer-2.0.0\lib\x86;$(ProjectDir)DevLibs\SDL2-2.0.3\lib\x86;$(ProjectDir)\DevLibs\SDL2_image-2.0.0\lib\x86;$(ProjectDir)DevLibs\SDL2_ttf-2.0.12\lib\x86;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <IncludePath>$(ProjectDir)\DevLibs\SDL2_mixer-2.0.0\include;$(ProjectDir)\DevLibs\SDL2_image-2.0.0\include;$(ProjectDir)DevLibs\SDL2-2.0.3\include;$(ProjectDir)DevLibs\SDL2_ttf-2.0.12\include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(ProjectDir)DevLibs\SDL2_mixer-2.0.0\lib\x86;$(ProjectDir)DevLibs\SDL2-2.0.3\lib\x86;$(ProjectDir)\DevLibs\SDL2_image-2.0.0\lib\x86;$(ProjectDir)DevLibs\SDL2_ttf-2.0.12\lib\x86;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
@@ -71,6 +75,11 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalOptions>$(IntDir)$(TargetName).res %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;SDL2_mixer.lib;SDL2_ttf.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <SubSystem>Windows</SubSystem>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;SDL2_mixer.lib;SDL2_ttf.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <SubSystem>Windows</SubSystem>
+      <AdditionalOptions>$(IntDir)$(TargetName).res %(AdditionalOptions)</AdditionalOptions>
     </Link>
     <PreLinkEvent>
       <Command>rc /nologo /fo"$(IntDir)%(Filename).res" $(InitDir)%(Filename).rs </Command>
@@ -98,11 +107,9 @@
     <ClInclude Include="BOPowerUp.h" />
     <ClInclude Include="BOPowerUpManager.h" />
     <ClInclude Include="BOPublisher.h" />
-    <ClInclude Include="BOPUPadSize.h" />
     <ClInclude Include="BOPUSubscriber.h" />
     <ClInclude Include="BOScore.h" />
     <ClInclude Include="BOShield.h" />
-    <ClInclude Include="BOShieldPU.h" />
     <ClInclude Include="BOSoundManager.h" />
     <ClInclude Include="BOState.h" />
     <ClInclude Include="BOStateManager.h" />
@@ -114,7 +121,6 @@
     <ClInclude Include="BOUtility.h" />
     <ClInclude Include="BOWindow.h" />
     <ClInclude Include="BOButton.h" />
-    <ClInclude Include="BOMultiballs.h" />
     <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>
@@ -140,11 +146,9 @@
     <ClCompile Include="BOPowerUp.cpp" />
     <ClCompile Include="BOPowerUpManager.cpp" />
     <ClCompile Include="BOPublisher.cpp" />
-    <ClCompile Include="BOPUPadSize.cpp" />
     <ClCompile Include="BOPUSubscriber.cpp" />
     <ClCompile Include="BOScore.cpp" />
     <ClCompile Include="BOShield.cpp" />
-    <ClCompile Include="BOShieldPU.cpp" />
     <ClCompile Include="BOSoundManager.cpp" />
     <ClCompile Include="BOState.cpp" />
     <ClCompile Include="BOStateManager.cpp" />
@@ -155,7 +159,6 @@
     <ClCompile Include="BOTimer.cpp" />
     <ClCompile Include="BOWindow.cpp" />
     <ClCompile Include="BOButton.cpp" />
-    <ClCompile Include="BOMultiballs.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Maps\Default.bom" />

@@ -12,14 +12,10 @@ BOPowerUpManager::~BOPowerUpManager()
 {
 }
 
-bool BOPowerUpManager::Initialize(int p_windowsWidth, int p_windowHeight)
+bool BOPowerUpManager::Initialize()
 {
 	m_powerUps = std::vector<BOPowerUp*>();
-	m_subscribers = std::vector<BOPUSubscriber*>();
-	m_windowSize.x = p_windowsWidth;
-	m_windowSize.y = p_windowHeight;
-	
-	
+	m_subscribers = std::vector<BOPUSubscriber*>();	
 
 	return true;
 }
@@ -36,15 +32,50 @@ void BOPowerUpManager::Notify(PowerUpTypes p_type, bool p_activated)
 	}
 }
 
-void BOPowerUpManager::AddPowerUp(BOPowerUp* p_powerUp)
+void BOPowerUpManager::AddPowerUp(PowerUpTypes p_type, float2 p_startPosition, BOPaddle* p_paddle, float2 p_blackholePosition)
 {
-	m_powerUps.push_back(p_powerUp);
+	
+	switch (p_type)
+	{
+		case PUBiggerPad:
+		{
+			BOPowerUp* biggerPad = new BOPowerUp();
+			biggerPad->Initialize(PUBiggerPad, p_startPosition, int2(30, 30), "Sprites/PlaceHolderPNG/Powerups/placeholderPowerup3.png", 500.0f, p_paddle, p_blackholePosition);
+			m_powerUps.push_back(biggerPad);
+			break;
+		}
+
+		case PUSmallerPad:
+		{
+			break;
+		}
+		case PUShield:
+		{
+			BOPowerUp* shield = new BOPowerUp();
+			shield->Initialize(PUShield, p_startPosition, int2(30, 30), "Sprites/PlaceHolderPNG/Powerups/placeholderPowerup2.png", 500.0f, p_paddle, p_blackholePosition);
+			m_powerUps.push_back(shield);
+			break;
+		}	
+		case PUExtraBall:
+		{
+			BOPowerUp* extraBall = new BOPowerUp();
+			extraBall->Initialize(PUExtraBall, p_startPosition, int2(40, 40), "Sprites/PlaceHolderPNG/Powerups/placeholderPowerupMultBall.png", 500.0f, p_paddle, p_blackholePosition);
+			m_powerUps.push_back(extraBall);
+			break;
+		}
+	}
 }
 
-void BOPowerUpManager::RemovePowerUp(int p_remove)
+void BOPowerUpManager::RemovePowerUp(BOPowerUp* p_powerUp)
 {
-	delete m_powerUps[p_remove];
-	m_powerUps.erase(m_powerUps.begin() + p_remove);
+	for (unsigned int i = 0; i < m_powerUps.size(); i++)
+	{
+		if (p_powerUp == m_powerUps[i])
+		{
+			m_powerUps.erase(m_powerUps.begin() + i);
+			break;
+		}
+	}
 }
 
 void BOPowerUpManager::Update(double p_deltaTime)
@@ -78,14 +109,4 @@ void BOPowerUpManager::Unsubscribe(BOPUSubscriber* p_subscriber)
 			break;
 		}
 	}
-}
-
-int BOPowerUpManager::GetPowerUpSize()
-{
-	return m_powerUps.size();
-}
-
-BOPowerUp* BOPowerUpManager::GetPowerUp(int p_nr)
-{
-	return m_powerUps[p_nr];
 }

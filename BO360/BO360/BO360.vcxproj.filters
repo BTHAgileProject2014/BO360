@@ -123,15 +123,6 @@
     <ClCompile Include="BOStationaryParticle.cpp">
       <Filter>Source Files\ParticleSystem</Filter>
     </ClCompile>
-    <ClCompile Include="BOMultiballs.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="BOShieldPU.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="BOPUPadSize.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="BOScore.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -241,15 +232,6 @@
     </ClInclude>
     <ClInclude Include="BOMovingParticle.h">
       <Filter>Header Files\ParticleSystem</Filter>
-    </ClInclude>
-    <ClInclude Include="BOMultiballs.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="BOShieldPU.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="BOPUPadSize.h">
-      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="BOScore.h">
       <Filter>Header Files</Filter>
