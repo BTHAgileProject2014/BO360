@@ -10,7 +10,7 @@ class BOObject : BOComponent
 {
 public:
 	BOObject();
-	~BOObject();
+	virtual ~BOObject();
 
 	virtual bool Initialize(float2 p_position, int2 p_size, std::string p_fileName);
 	virtual void Shutdown();

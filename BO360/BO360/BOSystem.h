@@ -16,6 +16,7 @@
 #include "BOSubscriber.h"
 #include "BOScore.h"
 #include <iostream>
+#include <vld.h>
 
 class BOSystem : BOComponent, public BOSubscriber
 {

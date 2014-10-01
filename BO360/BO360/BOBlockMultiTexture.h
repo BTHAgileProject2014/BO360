@@ -1,6 +1,8 @@
 #pragma once
 #include "BOBlock.h"
 #include <vector>
+#include <memory>
+
 class BOBlockMultiTexture :
 	public BOBlock
 {

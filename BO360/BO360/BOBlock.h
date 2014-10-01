@@ -8,7 +8,7 @@ class BOBlock :
 {
 public:
 	BOBlock();
-	~BOBlock();
+	virtual ~BOBlock();
 	bool Initialize(float2 p_position, int2 p_size, std::string p_fileName, PowerUpTypes p_powerup, int p_scoreValue);
 	bool Initialize(float2 p_position, int2 p_size, std::string p_fileName, int p_hp, PowerUpTypes p_powerup, int p_scoreValue);
 	void Update();

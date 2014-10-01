@@ -459,7 +459,7 @@ bool BOObjectManager::LoadBlocksFromMap(std::string p_filename)
 			}
 
 			case(DUBBLEHP) :
-{
+			{
 				block = new BOBlockMultiTexture();
 				result = block->Initialize(float2(x, y), int2(40, 40), "Sprites/PlaceholderPNG/Hexagons/placeholderHexagon40x40red1.png", 3, PUNone, score);
 				if (!result)
