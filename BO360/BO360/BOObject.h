@@ -17,7 +17,7 @@ public:
 	virtual void Draw();
 
 	float2 GetPosition();
-	void SetPosition(float2 p_position);
+	virtual void SetPosition(float2 p_position);
 
 	int2 GetSize();
 	void SetSize(int2 p_size);
@@ -31,5 +31,6 @@ protected:
 	float2 m_position;
 	int2 m_size;
 	SDL_Texture* m_sprite;
+	float m_radius;
 };
 #endif

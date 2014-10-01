@@ -12,14 +12,15 @@ BOBall::~BOBall()
 bool BOBall::Initialize(float2 p_position, int2 p_size, std::string p_fileName, float p_speed, float2 p_direction, int2 p_windowSize)
 {
 	m_damage = 1;
-	m_Fuel = 5.0f;
+	m_Fuel = 0.0f;
 	m_canColide = true;
 	m_position = p_position;
-	m_size = p_size;
+	SetSize(p_size);
 	m_speed = p_speed;
 	m_direction = p_direction.normalized();
 	m_windowSize = p_windowSize;
-
+	m_stuckToPad = true;
+	
 	// Load texture.
 	m_sprite = BOGraphicInterface::LoadTexture(p_fileName);
 	m_sprite2 = BOGraphicInterface::LoadTexture("Sprites/PlaceHolderPNG/placeholderBoll2.png");
@@ -30,36 +31,11 @@ bool BOBall::Initialize(float2 p_position, int2 p_size, std::string p_fileName, 
 	return true;
 }
 
-void BOBall::Update(double p_deltaTime)
+void BOBall::Update(double p_deltaTime, sphere p_blackHoleBounds)
 {
-	if (m_mouseCheat)
+	if (!m_stuckToPad && !m_mouseCheat)
 	{
-		return;
-	}
-	if (m_Fuel > 0)
-	{
-		m_position.x = (float)(m_speed * p_deltaTime) * m_direction.x + m_position.x;
-		m_position.y = (float)(m_speed * p_deltaTime) * m_direction.y + m_position.y;
-		m_sprite = m_sprite2;
-	}
-	else
-	{
-		m_position.x = (float)(0.75*m_speed * p_deltaTime) * m_direction.x + m_position.x;
-		m_position.y = (float)(0.75*m_speed * p_deltaTime) * m_direction.y + m_position.y;
-		m_sprite = m_sprite3;
-	}
-
-	if (m_position.x < (m_size.x / 2) || m_position.x >(m_windowSize.x - (m_size.x / 2)))
-	{
-		m_Fuel = 0;
-		m_canColide = true;
-		m_direction.x *= -1;
-	}
-	if (m_position.y < (m_size.y / 2) || m_position.y >(m_windowSize.y - (m_size.y / 2)))
-	{
-		m_Fuel = 0;
-		m_canColide = true;
-		m_direction.y *= -1;
+		Move(p_deltaTime, p_blackHoleBounds);
 	}
 }
 
@@ -103,8 +79,7 @@ box BOBall::GetBoundingBox()
 
 void BOBall::Handle(InputMessages p_inputMessages)
 {
-	/*
-	if (p_inputMessages.spacebarKey)
+	if (p_inputMessages.upArrow)
 	{
 		if (m_mouseCheat)
 		{
@@ -120,7 +95,6 @@ void BOBall::Handle(InputMessages p_inputMessages)
 		m_position.x = (float)p_inputMessages.mouseX;
 		m_position.y = (float)p_inputMessages.mouseY;
 	}
-	*/
 }
 
 void BOBall::BouncedOnHexagon()
@@ -140,4 +114,58 @@ void BOBall::SetFuel(float p_fuel)
 int BOBall::GetDamage()
 {
 	return m_damage;
+}
+
+bool BOBall::IsStuckToPad()
+{
+	return m_stuckToPad;
+}
+
+void BOBall::SetStuckToPad(bool p_stuck)
+{
+	m_stuckToPad = p_stuck;
+}
+
+void BOBall::Move(double p_deltaTime, sphere p_blackHoleBounds)
+{
+	if (m_Fuel > 0)
+	{
+		m_position.x = (float)(m_speed * p_deltaTime) * m_direction.x + m_position.x;
+		m_position.y = (float)(m_speed * p_deltaTime) * m_direction.y + m_position.y;
+		m_sprite = m_sprite2;
+		m_Fuel -= p_deltaTime;
+	}
+	else
+	{
+		m_position.x = (float)(0.75*m_speed * p_deltaTime) * m_direction.x + m_position.x;
+		m_position.y = (float)(0.75*m_speed * p_deltaTime) * m_direction.y + m_position.y;
+		m_sprite = m_sprite3;
+		SetDirection(BOPhysics::BlackHoleGravity(GetBoundingSphere(), GetDirection(), GetSpeed(), p_blackHoleBounds, p_deltaTime));
+	}
+
+	if (m_position.x < (m_size.x / 2) || m_position.x >(m_windowSize.x - (m_size.x / 2)))
+	{
+		m_Fuel = 0;
+		m_canColide = true;
+		m_direction.x *= -1;
+	}
+	if (m_position.y < (m_size.y / 2) || m_position.y >(m_windowSize.y - (m_size.y / 2)))
+	{
+		m_Fuel = 0;
+		m_canColide = true;
+		m_direction.y *= -1;
+	}
+}
+
+void BOBall::SetPosition(float2 p_position)
+{
+	if (m_stuckToPad)
+	{
+		int2 windowSize = BOGraphicInterface::GetWindowSize();
+		m_direction = p_position - float2((windowSize.x * 0.5f), (windowSize.y *0.5f));
+		m_direction.normalize();
+		p_position.x += m_direction.x * 6;
+		p_position.y += m_direction.y * 6;
+	}
+	BOObject::SetPosition(p_position);
 }
