@@ -17,10 +17,9 @@ bool BOStateManager::Initialize(int2 p_screenSize)
 	// Setup main menu.
 	float2 l_menuPosition = float2(50, 50);
 	result = m_menu.Initialize(float2(p_screenSize.x / 2.0f, p_screenSize.y / 2.0f), p_screenSize, l_menuPosition, "MAIN MENU", "Sprites/Menu/MainMenuBackground.png");
-	m_menu.AddButton(float2(l_menuPosition.x, l_menuPosition.y + 70), int2(250, 75), l_menuPosition, "Sprites/Menu/Button", "STORY MODE", STORY, "         Play arcade");
-	//m_menu.AddButton(float2(l_menuPosition.x, l_menuPosition.y + 70), int2(250, 75), l_menuPosition, "Sprites/Menu/Button", "STORY MODE", ENDLESS, "         Coming soon");
-	m_menu.AddButton(float2(l_menuPosition.x, l_menuPosition.y + 70), int2(250, 75), l_menuPosition, "Sprites/Menu/Button", "HIGHSCORE", HARDCORE, "         Coming soon");
-	m_menu.AddButton(float2(l_menuPosition.x, l_menuPosition.y + 70), int2(250, 75), l_menuPosition, "Sprites/Menu/Button", "EXIT TO DESKTOP", EXIT, "         Exit the game and return to the OS desktop.\n\nWill you really abandon your ship and its crew in their hour of need?");
+	m_menu.AddButton(float2(l_menuPosition.x, l_menuPosition.y + 70), int2(250, 75), l_menuPosition, "Sprites/Menu/Button", "STORY MODE", STORY, "         Play arcade.");
+	m_menu.AddButton(float2(l_menuPosition.x, l_menuPosition.y + 70), int2(250, 75), l_menuPosition, "Sprites/Menu/Button", "HIGHSCORE", HIGHSCORE, "         View highscore.");
+	m_menu.AddButton(float2(l_menuPosition.x, l_menuPosition.y + 70), int2(250, 75), l_menuPosition, "Sprites/Menu/Button", "EXIT", EXIT, "         Exit the game and return to desktop.\n\nWill you really abandon your ship and its crew in their hour of need?");
 
 	// Setup pause menu.
 	l_menuPosition = float2(50, 50);
