@@ -107,6 +107,18 @@ void BOMapLoader::DetermineAction(int p_type, float x, float y)
 		}
 
 		// Add indistructible blocks at 9 tiles. 
+		if (p_type == 8)
+		{
+			Block block;
+
+			block.m_position = float2(x, y);
+			block.m_type = KEY;
+			block.m_worth = 10;
+
+			m_blocks.push_back(block);
+		}
+
+		// Add indistructible blocks at 9 tiles. 
 		if (p_type == 9)
 		{
 			Block block;

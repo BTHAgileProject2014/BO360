@@ -295,7 +295,8 @@ bool BOObjectManager::LoadBlocksFromMap(std::string p_filename)
 		x = (hexagonWidth * blockDescriptions[i].m_position.x) + marginX;
 		y = (hexagonHeight * blockDescriptions[i].m_position.y) + marginY;
 
-		if ((int)blockDescriptions[i].m_position.x % 2 == 0) // Every other row
+		// Every other row shall be offset to tile the hexagons correctly.
+		if ((int)blockDescriptions[i].m_position.x % 2 == 0) 
 		{
 			y += blockHeightDifference;
 		}
@@ -330,6 +331,9 @@ bool BOObjectManager::LoadBlocksFromMap(std::string p_filename)
 					ThrowInitError("BOBlock");
 					return false;
 				}
+
+				m_blockList.push_back(block);
+
 				break;
 			}
 
@@ -345,6 +349,9 @@ bool BOObjectManager::LoadBlocksFromMap(std::string p_filename)
 				
 				dynamic_cast<BOBlockMultiTexture*>(block)->AddTextureForHPAbove("Sprites/PlaceholderPNG/Hexagons/placeholderHexagon40x40red2.png", 1);
 				dynamic_cast<BOBlockMultiTexture*>(block)->AddTextureForHPAbove("Sprites/PlaceholderPNG/Hexagons/placeholderHexagon40x40red3.png", 2);
+
+				m_blockList.push_back(block);
+
 				break;
 			}
 	
@@ -357,8 +364,18 @@ bool BOObjectManager::LoadBlocksFromMap(std::string p_filename)
 					ThrowInitError("BOBlockIron");
 					return false;
 				}
+
+				m_blockList.push_back(block);
+
 				break;
 			}
+
+			case(KEY) :
+			{
+				// JOHAN, KEYS HÄR!
+				break;
+			}
+
 			default:
 			{
 				std::cout << "Unknown block type in BOObjectManager::LoadBlocksFromMap" << std::endl;
@@ -366,8 +383,6 @@ bool BOObjectManager::LoadBlocksFromMap(std::string p_filename)
 				break;
 			}
 		}
-
-		m_blockList.push_back(block);
 	}
 
 	return true;

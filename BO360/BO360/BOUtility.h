@@ -396,6 +396,7 @@ enum BlockType
 {
 	REGULAR,
 	DUBBLEHP,
+	KEY,
 	INDESTRUCTIBLE
 };
 
