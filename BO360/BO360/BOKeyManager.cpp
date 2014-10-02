@@ -1,13 +1,13 @@
 #include "BOKeyManager.h"
 
-
 BOKeyManager::BOKeyManager()
 {
-}
 
+}
 
 BOKeyManager::~BOKeyManager()
 {
+
 }
 
 bool BOKeyManager::Initialize(std::string p_mapFileName)
@@ -26,6 +26,7 @@ void BOKeyManager::Shutdown()
 
 void BOKeyManager::Update(double p_deltaTime)
 {
+
 }
 
 void BOKeyManager::Draw()

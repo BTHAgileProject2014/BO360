@@ -1,6 +1,5 @@
 #include "BOObject.h"
 
-// Constructor / Destructor.
 BOObject::BOObject()
 {
 	m_sprite = NULL;

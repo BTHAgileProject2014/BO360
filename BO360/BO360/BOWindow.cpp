@@ -1,15 +1,14 @@
 #include "BOWindow.h"
 
-
 BOWindow::BOWindow()
 {
-}
 
+}
 
 BOWindow::~BOWindow()
 {
-}
 
+}
 
 bool BOWindow::Initialize()
 {

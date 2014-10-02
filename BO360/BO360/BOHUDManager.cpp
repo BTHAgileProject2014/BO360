@@ -14,11 +14,12 @@ float2 BOHUDManager::m_levelAnchor;
 
 BOHUDManager::BOHUDManager()
 {
-}
 
+}
 
 BOHUDManager::~BOHUDManager()
 {
+
 }
 
 bool BOHUDManager::Initialize()
@@ -40,9 +41,12 @@ bool BOHUDManager::Initialize()
 
 	m_lives.Initialize(m_livesAnchor, "Lives: ", int3(255, 255, 255), 30, 0);
 	m_life.Initialize(float2(0, 0), int2(20, 20), "Sprites/PlaceHolderPNG/placeholderLife.png"); // Always relative to m_lives position
+
 	int2 tempSizeText = m_lives.GetSize();
 	int2 tempSizeSprite = m_life.GetSize();
+
 	int compundSizeX = tempSizeText.x + (tempSizeSprite.x + 2)*m_noLives; // Total size of the life component (text + (sprite+padding)*nosprites)
+
 	m_lives.SetPosition(float2(m_livesAnchor.x - compundSizeX / 2, m_livesAnchor.y + (tempSizeText.y / 2)));
 	m_life.SetPosition(float2(m_livesAnchor.x - (compundSizeX / 2 - tempSizeText.x) - tempSizeSprite.x, m_livesAnchor.y + (tempSizeSprite.y / 2)));
 
@@ -113,6 +117,7 @@ void BOHUDManager::SetScore(int p_score)
 	std::string temp = "Score: ";
 	temp.append(std::to_string(p_score));
 	m_score.SetText(temp, int3(255, 255, 255),0);
+
 	int2 tempSize = m_score.GetSize();
 	m_score.SetPosition(float2(m_scoreAnchor.x + (tempSize.x / 2) - tempSize.x - 10, m_scoreAnchor.y + (tempSize.y / 2)));
 }

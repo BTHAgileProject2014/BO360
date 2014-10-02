@@ -4,11 +4,12 @@ int BOScore::m_score;
 
 BOScore::BOScore()
 {
-}
 
+}
 
 BOScore::~BOScore()
 {
+
 }
 
 bool BOScore::Initialize()
