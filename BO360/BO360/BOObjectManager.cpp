@@ -58,7 +58,7 @@ bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight)
 	}
 
 	// Initialize the key manager
-	result = m_keyManager.Initialize("Demo.bom");
+	result = m_keyManager.Initialize();
 	if (!result)
 	{
 		std::cout << "Initialize key manager failed!" << std::endl;
@@ -391,7 +391,7 @@ bool BOObjectManager::LoadBlocksFromMap(std::string p_filename)
 
 			case(KEY) :
 			{
-				// JOHAN, KEYS HÄR!
+                m_keyManager.AddKey(float2(x, y), int2(80, 80), 0.5f, "Sprites/PlaceholderPNG/placeholderHyperdrive.png");
 				break;
 			}
 

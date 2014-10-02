@@ -12,12 +12,13 @@ public:
 	BOKeyManager();
 	~BOKeyManager();
 
-	bool Initialize(std::string p_mapFileName);
+	bool Initialize();
 	void Shutdown();
 	void Update(double p_deltaTime);
 	void Update(BOBall p_ball);
 	void Draw();
 
+    void AddKey(float2 p_position, int2 p_size, float p_scale, std::string p_fileName);
 	bool AllKeysCatched();
 
 private:
@@ -26,6 +27,5 @@ private:
 	int m_keysNeeded;
 
 	void KeyCatched();
-	bool LoadKeysFromMap(std::string p_filename);
 };
 #endif
