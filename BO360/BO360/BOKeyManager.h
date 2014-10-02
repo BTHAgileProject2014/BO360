@@ -22,7 +22,8 @@ public:
 
 private:
 	std::vector<BOObject> m_keys;
-	int m_keysLeft;
+	int m_keysCatched;
+	int m_keysNeeded;
 
 	void KeyCatched();
 	bool LoadKeysFromMap(std::string p_filename);

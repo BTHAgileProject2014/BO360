@@ -166,8 +166,17 @@ bool BOSystem::Run()
 			// Update the sound Engine.
 			BOSoundManager::Update(); // Empty so far.
 
+			// Check if the player won the current game
+			if (m_objectManager.WonGame())
+			{
+				// Shutdown map
+				ShutdownMap();
+
+				// Go to victory screen
+				m_gameState = VICTORY;
+			}
 			// Check if the player lost the current game
-			if (m_objectManager.LostGame())
+			else if (m_objectManager.LostGame())
 			{
 				// Shutdown map
 				ShutdownMap();

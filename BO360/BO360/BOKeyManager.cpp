@@ -13,13 +13,14 @@ BOKeyManager::~BOKeyManager()
 bool BOKeyManager::Initialize(std::string p_mapFileName)
 {
 	m_keys = std::vector<BOObject>();
-	m_keysLeft = 1;
+	m_keysNeeded = 1;
+	m_keysCatched = 0;
 	// BOHudManager::SetKeys(m_keysLeft);
 
 	// Temp add key
 	BOObject key = BOObject();
 	key.Initialize(float2(600, 150), int2(80, 80), 0.5f, "Sprites/PlaceHolderPNG/placeholderHyperdrive.png");
-	m_keys.push_back(key);
+	//m_keys.push_back(key);
 
 	return true;
 }
@@ -58,16 +59,16 @@ void BOKeyManager::Draw()
 
 void BOKeyManager::KeyCatched()
 {
-	if (m_keysLeft > 0)
+	if (m_keysNeeded - m_keysCatched > 0)
 	{
-		m_keysLeft--;
+		m_keysCatched++;
 	}
 	// BOHudManager::SetKeys(m_keysLeft);
 }
 
 bool BOKeyManager::AllKeysCatched()
 {
-	return m_keysLeft == 0;
+	return (m_keysNeeded - m_keysCatched) == 0;
 }
 
 bool BOKeyManager::LoadKeysFromMap(std::string p_filename)
