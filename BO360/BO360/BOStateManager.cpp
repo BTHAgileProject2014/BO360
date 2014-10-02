@@ -31,7 +31,7 @@ bool BOStateManager::Initialize(int2 p_screenSize)
 	// Setup end screen menus.
 	l_menuPosition = float2(50, 50);
 	result = m_victory.Initialize(float2(p_screenSize.x / 2.0f, p_screenSize.y / 2.0f), p_screenSize, l_menuPosition, "VICTORY", "Sprites/Menu/MainMenuBackground.png");
-	m_victory.AddButton(float2(l_menuPosition.x, l_menuPosition.y + 70), int2(250, 75), l_menuPosition, "Sprites/Menu/Button", "NEXT", NEXT, "         Play the next level.");
+	m_victory.AddButton(float2(l_menuPosition.x, l_menuPosition.y + 70), int2(250, 75), l_menuPosition, "Sprites/Menu/Button", "NEXT LEVEL", NEXT, "         Play the next level.");
 	m_victory.AddButton(float2(l_menuPosition.x, l_menuPosition.y + 70), int2(250, 75), l_menuPosition, "Sprites/Menu/Button", "MENU", QUIT, "         Quit your current game and return to the main menu.");
 	m_victory.AddButton(float2(l_menuPosition.x, l_menuPosition.y + 70), int2(250, 75), l_menuPosition, "Sprites/Menu/Button", "EXIT", EXIT, "         Exit the game and return to desktop.");
 
