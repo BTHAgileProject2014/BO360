@@ -4,6 +4,7 @@
 #include "BOComponent.h"
 #include "BOHUDManager.h"
 #include "BOMapLoader.h"
+#include "BOBall.h"
 
 class BOKeyManager : public BOComponent
 {
@@ -14,15 +15,16 @@ public:
 	bool Initialize(std::string p_mapFileName);
 	void Shutdown();
 	void Update(double p_deltaTime);
+	void Update(BOBall p_ball);
 	void Draw();
 
-	void KeyCatched();
 	bool AllKeysCatched();
 
 private:
 	std::vector<BOObject> m_keys;
 	int m_keysLeft;
 
+	void KeyCatched();
 	bool LoadKeysFromMap(std::string p_filename);
 };
 

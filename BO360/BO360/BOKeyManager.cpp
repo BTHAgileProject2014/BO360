@@ -33,6 +33,20 @@ void BOKeyManager::Update(double p_deltaTime)
 {
 }
 
+void BOKeyManager::Update(BOBall p_ball)
+{
+	for (unsigned int i = 0; i < m_keys.size(); i++)
+	{
+		if (BOPhysics::CollisionRadiusRadius(m_keys[i].GetPosition(), m_keys[i].GetBoundingSphere().radius, p_ball.GetPosition(), p_ball.GetBoundingSphere().radius))
+		{
+			m_keys[i].Shutdown();
+			m_keys.erase(m_keys.begin() + i);
+			i--;
+			KeyCatched();
+		}
+	}
+}
+
 void BOKeyManager::Draw()
 {
 	// Draw the keys

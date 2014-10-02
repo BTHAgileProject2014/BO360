@@ -162,6 +162,9 @@ void BOObjectManager::Update(double p_deltaTime)
 			// This should change once a new ball-ball collision has been added to the phusics class
 		float2 newdir = m_Shield.Update(p_deltaTime, m_ballList[i]->GetBoundingSphere(), m_ballList[i]->GetDirection());
 		m_ballList[i]->SetDirection(newdir);
+
+		// Check collision betwen ball and keys
+		m_keyManager.Update(*m_ballList[i]);
 	}
 	}
 	UpdateParticles(p_deltaTime);
@@ -248,6 +251,12 @@ bool BOObjectManager::LostGame()
 {
 	return m_life == 0;
 }
+
+bool BOObjectManager::WonGame()
+{
+	return m_keyManager.AllKeysCatched();
+}
+
 void BOObjectManager::CheckBallOutOfBounds(int p_index)
 {
 	float changePosToo = 10.0f;

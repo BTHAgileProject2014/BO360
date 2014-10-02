@@ -36,6 +36,7 @@ public:
 	void Handle(InputMessages p_inputMessage);
 	bool AddNewBall();
 	bool LostGame();
+	bool WonGame();
 
 private:
 	bool LoadBlocksFromMap(std::string p_filename);
