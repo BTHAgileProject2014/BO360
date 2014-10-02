@@ -106,7 +106,7 @@ void BOTextureManager::FreeTexture(int p_textureIndex)
 
 void BOTextureManager::FreeAll()
 {
-	for (int i = 0; i < GetInstance().textureList.size(); i++)
+	for (unsigned int i = 0; i < GetInstance().textureList.size(); i++)
 	{
 		BOGraphicInterface::DestroyTexture(GetInstance().textureList[i]);
 	}

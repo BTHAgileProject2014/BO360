@@ -33,8 +33,6 @@ public:
 
 private:
 	BOGraphicInterface() {};
-	BOGraphicInterface(BOGraphicInterface& const);
-	void operator=(BOGraphicInterface& const);
 	static BOGraphicInterface& GetInstance();
 
 	BOWindow m_window;
