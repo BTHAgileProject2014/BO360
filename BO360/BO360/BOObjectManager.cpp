@@ -90,7 +90,7 @@ void BOObjectManager::Shutdown()
 
 
 	// Clear the blocks
-	for (int i = 0; i < m_blockList.size(); i++)
+	for (unsigned int i = 0; i < m_blockList.size(); i++)
 	{
 		m_blockList[i]->Shutdown();
 		delete m_blockList[i];
@@ -110,8 +110,6 @@ void BOObjectManager::Shutdown()
 
 void BOObjectManager::Update(double p_deltaTime)
 {
-	bool result;
-	
 	m_blackHole.Update();
 	m_paddle.Update(p_deltaTime);
 
@@ -205,7 +203,7 @@ void BOObjectManager::Handle(InputMessages p_inputMessage)
 {
 	if (p_inputMessage.spacebarKey)
 	{
-		for (int i = 0; i < m_ballList.size(); i++)
+		for (unsigned int i = 0; i < m_ballList.size(); i++)
 		{
 			m_ballList[i]->SetStuckToPad(false);
 	}
@@ -282,7 +280,7 @@ bool BOObjectManager::LoadBlocksFromMap(std::string p_filename)
 	static const int marginX = 60;
 	static const int marginY = 50;
 
-	for (int i = 0; i < blockDescriptions.size(); i++)
+	for (unsigned int i = 0; i < blockDescriptions.size(); i++)
 	{
 		BOBlock* block;
 		

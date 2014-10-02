@@ -133,7 +133,7 @@ void BOBall::Move(double p_deltaTime, sphere p_blackHoleBounds)
 		m_position.x = (float)(m_speed * p_deltaTime) * m_direction.x + m_position.x;
 		m_position.y = (float)(m_speed * p_deltaTime) * m_direction.y + m_position.y;
 		m_sprite = m_sprite2;
-		m_Fuel -= p_deltaTime;
+		m_Fuel -= (float)p_deltaTime;
 	}
 	else
 	{

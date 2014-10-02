@@ -7,12 +7,12 @@
 #include <string>
 
 inline void NormalizeAngle(float& angle) {
-	while (angle < 0) { angle += 6.2831852; }
-	while (angle > 6.2831852) { angle -= 6.2831852; }
+	while (angle < 0.0f) { angle += 6.2831852f; }
+	while (angle > 6.2831852f) { angle -= 6.2831852f; }
 }
 inline void NormalizeAngle(double& angle) {
-	while (angle < 0) { angle += 6.283185307179586; }
-	while (angle > 6.283185307179586) { angle -= 6.283185307179586; }
+	while (angle < 0.0f) { angle += 6.283185307179586f; }
+	while (angle > 6.283185307179586f) { angle -= 6.283185307179586f; }
 }
 
 class BOPhysics

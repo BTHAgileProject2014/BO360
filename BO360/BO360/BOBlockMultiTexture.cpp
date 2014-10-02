@@ -14,7 +14,7 @@ BOBlockMultiTexture::~BOBlockMultiTexture()
 void BOBlockMultiTexture::Shutdown()
 {
 	// delete objects in array
-	for (int i = 0; i < m_textures.size(); i++)
+	for (unsigned int i = 0; i < m_textures.size(); i++)
 	{
 		BOGraphicInterface::DestroyTexture(m_textures[i]);
 	}

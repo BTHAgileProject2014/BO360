@@ -225,8 +225,8 @@ float2 BOPhysics::BallPadCollision(sphere p_sphere, float2 p_sphereDir, sphere p
 	NormalizeAngle(padCenterAngle);
 
 	// Calculate a vector pointing towards the pad's center in SDL-Draw-Space
-	float dirX = cos(padCenterAngle);
-	float dirY = -sin(padCenterAngle);
+	float dirX = (float)cos(padCenterAngle);
+	float dirY = (float)-sin(padCenterAngle);
 	float2 padCenterVector = float2(dirX, dirY).normalized();
 
 	// Calculate a vector from the center to the sphere
@@ -250,7 +250,7 @@ float2 BOPhysics::BallPadCollision(sphere p_sphere, float2 p_sphereDir, sphere p
 	// Check if the ball angle is within the borders of the pad
 	if ((ctpAngle < startAngleMA) && (ctpAngle > (startAngleMA - padSpread)))
 	{
-		return CalculateNewDir(p_sphereDir, padCenterAngle, padSpread / 2, ctpAngle);
+		return CalculateNewDir(p_sphereDir, (float)padCenterAngle, (float)padSpread / 2.0f, ctpAngle);
 	}
 
 	// Special case when the pad is around the 0 area
@@ -260,7 +260,7 @@ float2 BOPhysics::BallPadCollision(sphere p_sphere, float2 p_sphereDir, sphere p
 
 		if ((ctpAngle > 0) && (ctpAngle < startAngleMA) || ((ctpAngle > padAngle) && (ctpAngle < (2 * PI))))
 		{
-			return CalculateNewDir(p_sphereDir, padCenterAngle, padSpread / 2, ctpAngle);
+			return CalculateNewDir(p_sphereDir, (float)padCenterAngle, (float)padSpread / 2.0f, ctpAngle);
 		}
 
 	}
@@ -274,11 +274,11 @@ float2 BOPhysics::CalculateNewDir(float2 p_currentDir, float p_padAngle, float p
 {
 	// Bounce normals will be biased depending on the position of the pad that we bounce on.
 	// biasAngle is the maximum bias, only reached at the edges of the pad
-	static const float biasAngle = 1.57;
+	static const float biasAngle = 1.57f;
 
 	// Amplify the ball and pad rotations by 2*PI to avoid 0-rotation problems
-	float padAngleAmp = p_padAngle + 2 * PI;
-	float ballAngleAmp = p_ballAngle + 2 * PI;
+	float padAngleAmp = p_padAngle + 2.0f * (float)PI;
+	float ballAngleAmp = p_ballAngle + 2.0f * (float)PI;
 
 	// Calculate the percentage of our position from the pad center to edge
 	float diffVal = (padAngleAmp - ballAngleAmp);
@@ -330,9 +330,9 @@ float2 BOPhysics::BlackHoleGravity(sphere p_ball, float2 p_ballDirection, float 
 	double force = ((G * p_ballSpeed) / (distanceAdjustment*distanceAdjustment)); // F = G*M/R^2  -> Gravitations formel		//5000000000000
 
 	center = center.normalized();//Normaliserar vektorn mot hålet 
- 	center = center * force;//Multiplicerar vektorn mot hålet med kraften
+	center = center * (float)force;//Multiplicerar vektorn mot hålet med kraften
 	
-	newDirection = float2(newDirection.x * (p_ballSpeed * p_deltaTime) + center.x, newDirection.y * (p_ballSpeed * p_deltaTime) + center.y);//Beräknar längden av bollens riktningsvektor
+	newDirection = float2(newDirection.x * (p_ballSpeed * (float)p_deltaTime) + center.x, newDirection.y * (p_ballSpeed * (float)p_deltaTime) + center.y);//Beräknar längden av bollens riktningsvektor
 
 	return newDirection = newDirection.normalized();//Returnerar den normaliserade riktningsvektorn.
 }
@@ -343,7 +343,7 @@ float BOPhysics::CalculateDistance(float2 p_ball, float2 p_blackHole)
 // Fuel Calculation
 float BOPhysics::CalculateBallFuel(float p_fuel, double p_deltaTime)
 {
-	return p_fuel - (1.0f* p_deltaTime);
+	return p_fuel - (float)(1.0f * p_deltaTime);
 }
 // Shield Collision Calculation
 int BOPhysics::CheckCollisionBallShield(sphere p_sphere, sphere p_padSphere)
