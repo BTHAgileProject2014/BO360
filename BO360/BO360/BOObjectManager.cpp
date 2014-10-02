@@ -391,7 +391,7 @@ bool BOObjectManager::LoadBlocksFromMap(std::string p_filename)
 
 			case(KEY) :
 			{
-                m_keyManager.AddKey(float2(x, y), int2(80, 80), 0.5f, "Sprites/PlaceholderPNG/placeholderHyperdrive.png");
+                m_keyManager.AddKey(float2(x, y), int2(80, 80), 0.4f, "Sprites/PlaceholderPNG/placeholderHyperdrive.png");
 				break;
 			}
 
