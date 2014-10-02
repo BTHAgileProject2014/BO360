@@ -2,11 +2,12 @@
 
 BOObjectManager::BOObjectManager()
 {
-}
 
+}
 
 BOObjectManager::~BOObjectManager()
 {
+
 }
 
 bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight)
@@ -99,7 +100,7 @@ void BOObjectManager::Shutdown()
 
 
 	// Clear the blocks
-	for (int i = 0; i < m_blockList.size(); i++)
+	for (unsigned int i = 0; i < m_blockList.size(); i++)
 	{
 		m_blockList[i]->Shutdown();
 		delete m_blockList[i];
@@ -120,8 +121,6 @@ void BOObjectManager::Shutdown()
 
 void BOObjectManager::Update(double p_deltaTime)
 {
-	bool result;
-	
 	m_blackHole.Update();
 	m_paddle.Update(p_deltaTime);
 	m_keyManager.Update(p_deltaTime);
@@ -141,6 +140,7 @@ void BOObjectManager::Update(double p_deltaTime)
 				{
 			m_ballList[i]->SetPosition(m_paddle.GetBallSpawnPosition());
 		}
+
 		else
 					{
 			BallBlockCollision(m_ballList[i]);
@@ -158,8 +158,7 @@ void BOObjectManager::Update(double p_deltaTime)
 				continue;
 		}
 		
-			// Bounce on shield
-			// This should change once a new ball-ball collision has been added to the phusics class
+			// Bounce on shield, this should change once a new ball-ball collision has been added to the physics class.
 		float2 newdir = m_Shield.Update(p_deltaTime, m_ballList[i]->GetBoundingSphere(), m_ballList[i]->GetDirection());
 		m_ballList[i]->SetDirection(newdir);
 
@@ -167,6 +166,7 @@ void BOObjectManager::Update(double p_deltaTime)
 		m_keyManager.Update(*m_ballList[i]);
 	}
 	}
+
 	UpdateParticles(p_deltaTime);
 			}
 
@@ -215,16 +215,18 @@ void BOObjectManager::Handle(PowerUpTypes p_type, bool p_activated)
 		break;
 	}
 }
+
 void BOObjectManager::Handle(InputMessages p_inputMessage)
 {
 	if (p_inputMessage.spacebarKey)
 	{
-		for (int i = 0; i < m_ballList.size(); i++)
+		for (unsigned int i = 0; i < m_ballList.size(); i++)
 		{
 			m_ballList[i]->SetStuckToPad(false);
 	}
 }
 }
+
 bool BOObjectManager::AddNewBall()
 {
 	BOBall* ball = new BOBall();
@@ -243,6 +245,7 @@ bool BOObjectManager::AddNewBall()
 		ThrowInitError("BOBall");
 		return false;
 	}
+
 	m_ballList.push_back(ball);
 	return true;
 }
@@ -268,6 +271,7 @@ void BOObjectManager::CheckBallOutOfBounds(int p_index)
 	{
 		ballPos.x = windowSize.x - changePosToo;
 	}
+
 	if (ballPos.x <= checkPixelsInwards)//If out of bounds to the left
 	{
 		ballPos.x = changePosToo;
@@ -277,6 +281,7 @@ void BOObjectManager::CheckBallOutOfBounds(int p_index)
 	{
 		ballPos.y = windowSize.y - changePosToo;
 	}
+
 	if (ballPos.y <= checkPixelsInwards)//If out of bounds up
 	{
 		ballPos.y = changePosToo;
@@ -302,14 +307,15 @@ bool BOObjectManager::LoadBlocksFromMap(std::string p_filename)
 	static const int marginX = 60;
 	static const int marginY = 50;
 
-	for (int i = 0; i < blockDescriptions.size(); i++)
+	for (unsigned int i = 0; i < blockDescriptions.size(); i++)
 	{
 		BOBlock* block;
 		
 		x = (hexagonWidth * blockDescriptions[i].m_position.x) + marginX;
 		y = (hexagonHeight * blockDescriptions[i].m_position.y) + marginY;
 
-		if ((int)blockDescriptions[i].m_position.x % 2 == 0) // Every other row
+		// Every other row shall be offset to tile the hexagons correctly.
+		if ((int)blockDescriptions[i].m_position.x % 2 == 0) 
 		{
 			y += blockHeightDifference;
 		}
@@ -344,6 +350,9 @@ bool BOObjectManager::LoadBlocksFromMap(std::string p_filename)
 					ThrowInitError("BOBlock");
 					return false;
 				}
+
+				m_blockList.push_back(block);
+
 				break;
 			}
 
@@ -359,6 +368,9 @@ bool BOObjectManager::LoadBlocksFromMap(std::string p_filename)
 				
 				dynamic_cast<BOBlockMultiTexture*>(block)->AddTextureForHPAbove("Sprites/PlaceholderPNG/Hexagons/placeholderHexagon40x40red2.png", 1);
 				dynamic_cast<BOBlockMultiTexture*>(block)->AddTextureForHPAbove("Sprites/PlaceholderPNG/Hexagons/placeholderHexagon40x40red3.png", 2);
+
+				m_blockList.push_back(block);
+
 				break;
 			}
 	
@@ -371,8 +383,18 @@ bool BOObjectManager::LoadBlocksFromMap(std::string p_filename)
 					ThrowInitError("BOBlockIron");
 					return false;
 				}
+
+				m_blockList.push_back(block);
+
 				break;
 			}
+
+			case(KEY) :
+			{
+				// JOHAN, KEYS HÄR!
+				break;
+			}
+
 			default:
 			{
 				std::cout << "Unknown block type in BOObjectManager::LoadBlocksFromMap" << std::endl;
@@ -380,7 +402,6 @@ bool BOObjectManager::LoadBlocksFromMap(std::string p_filename)
 				break;
 			}
 		}
-		m_blockList.push_back(block);
 	}
 
 	return true;
@@ -488,6 +509,7 @@ void BOObjectManager::UpdateParticles(double p_deltaTime)
 
 		m_SecondsPerParticle = 0.002f;
 	}
+
 	else if (m_SecondsPerParticle < 0.0f)
 	{
 		for (unsigned int i = 0; i < m_ballList.size(); i++)
@@ -497,6 +519,7 @@ void BOObjectManager::UpdateParticles(double p_deltaTime)
 				m_particleSystem.BallTrail(m_ballList[i]->GetPosition());
 			}
 		}
+
 		m_SecondsPerParticle = 0.025f;
 	}
 

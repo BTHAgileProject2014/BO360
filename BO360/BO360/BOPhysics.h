@@ -6,13 +6,16 @@
 #include <iostream>
 #include <string>
 
-inline void NormalizeAngle(float& angle) {
-	while (angle < 0) { angle += 6.2831852; }
-	while (angle > 6.2831852) { angle -= 6.2831852; }
+inline void NormalizeAngle(float& angle) 
+{
+	while (angle < 0.0f) { angle += 6.2831852f; }
+	while (angle > 6.2831852f) { angle -= 6.2831852f; }
 }
-inline void NormalizeAngle(double& angle) {
-	while (angle < 0) { angle += 6.283185307179586; }
-	while (angle > 6.283185307179586) { angle -= 6.283185307179586; }
+
+inline void NormalizeAngle(double& angle) 
+{
+	while (angle < 0.0f) { angle += 6.283185307179586f; }
+	while (angle > 6.283185307179586f) { angle -= 6.283185307179586f; }
 }
 
 class BOPhysics
@@ -27,17 +30,13 @@ public:
 	static float2 BlackHoleGravity(sphere p_ball, float2 p_ballDirection, float p_ballSpeed, sphere p_blackHole, double p_deltaTime);//
 	static float2 BallPadCollision(sphere p_sphere, float2 p_sphereDir, sphere p_padSphere, double p_startAngle, double p_endAngle);//
 	static float CalculateBallFuel(float p_fuel, double p_deltaTime);//
-
 	static int CheckCollisionBallShield(sphere p_sphere, sphere p_padSphere);//
 
 private:
 	static float2 CalculateNewDir(float2 currentDir, float p_padAngle, float p_maxWidthAngle, float p_ballAngle);//
 	static float CalculateDistance(float2 p_Ball, float2 p_BlackHole);//
 
-
 	static const double PI;
 	static const double HALF_PI;
-
-
 };
 #endif

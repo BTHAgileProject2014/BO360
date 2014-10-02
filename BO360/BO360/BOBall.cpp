@@ -2,11 +2,12 @@
 
 BOBall::BOBall()
 {
-}
 
+}
 
 BOBall::~BOBall()
 {
+
 }
 
 bool BOBall::Initialize(float2 p_position, int2 p_size, std::string p_fileName, float p_speed, float2 p_direction, int2 p_windowSize)
@@ -135,7 +136,7 @@ void BOBall::Move(double p_deltaTime, sphere p_blackHoleBounds)
 		m_position.x = (float)(m_speed * p_deltaTime) * m_direction.x + m_position.x;
 		m_position.y = (float)(m_speed * p_deltaTime) * m_direction.y + m_position.y;
 		m_sprite = m_sprite2;
-		m_Fuel -= p_deltaTime;
+		m_Fuel -= (float)p_deltaTime;
 	}
 	else
 	{

@@ -3,11 +3,12 @@ std::vector<BODrawableText*> BOTextManager::m_texts;
 
 BOTextManager::BOTextManager()
 {
-}
 
+}
 
 BOTextManager::~BOTextManager()
 {
+
 }
 
 bool BOTextManager::Initialize()

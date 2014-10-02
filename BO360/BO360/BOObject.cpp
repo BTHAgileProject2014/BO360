@@ -1,6 +1,5 @@
 #include "BOObject.h"
 
-// Constructor / Destructor.
 BOObject::BOObject()
 {
 	m_sprite = NULL;
@@ -18,7 +17,7 @@ bool BOObject::Initialize(float2 p_position, int2 p_size, float p_scale, std::st
 	m_position = p_position;
 	m_scale = p_scale;
 	SetSize(p_size);
-
+	
 	// Load texture.
 	m_sprite = BOGraphicInterface::LoadTexture(p_fileName);
 
@@ -46,7 +45,6 @@ void BOObject::Draw()
 	int4 source = int4(0, 0, m_size.x, m_size.y);
 	int4 dest = int4((int)(m_position.x - m_scale * (m_size.x / 2)), (int)(m_position.y - m_scale * (m_size.y / 2)), (int)(m_scale * m_size.x), (int)(m_scale * m_size.y));
 	BOGraphicInterface::DrawEx(m_sprite, source, dest, 0, int2(0, 0));
-	//BOGraphicInterface::Draw(m_sprite, m_position, m_size);
 }
 
 // Position Get / Set functions.
@@ -69,7 +67,7 @@ int2 BOObject::GetSize()
 void BOObject::SetSize(int2 p_size)
 {
 	m_size = p_size;
-	m_radius = (p_size.x > p_size.y) ? m_scale * (p_size.x / 2) : m_scale * (p_size.y / 2);
+	m_radius = (p_size.x > p_size.y) ? m_scale * (p_size.x / 2.0f) : m_scale * (p_size.y / 2.0f);
 }
 
 // Sprite Get / Set functions.

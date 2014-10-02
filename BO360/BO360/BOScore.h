@@ -8,10 +8,13 @@ class BOScore
 public:
 	BOScore();
 	~BOScore();
+
 	static bool Initialize();
 	static void Shutdown();
+
 	static void AddScore(int p_amount);
 	static void SetScore(int p_score);
+
 	static void ResetScore();
 	static int GetScore();
 

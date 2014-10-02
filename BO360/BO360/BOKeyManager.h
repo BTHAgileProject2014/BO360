@@ -28,5 +28,4 @@ private:
 	void KeyCatched();
 	bool LoadKeysFromMap(std::string p_filename);
 };
-
 #endif

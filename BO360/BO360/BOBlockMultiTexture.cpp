@@ -1,33 +1,30 @@
 #include "BOBlockMultiTexture.h"
 
-
 BOBlockMultiTexture::BOBlockMultiTexture()
 {
 	m_currentTextureIndex = -1;
 }
 
-
 BOBlockMultiTexture::~BOBlockMultiTexture()
 {
+
 }
 
 void BOBlockMultiTexture::Shutdown()
 {
 	// delete objects in array
-	for (int i = 0; i < m_textures.size(); i++)
+	for (unsigned int i = 0; i < m_textures.size(); i++)
 	{
 		BOGraphicInterface::DestroyTexture(m_textures[i]);
 	}
 
+	// clear m_textures.
 	m_textures.clear();
 	m_textures.shrink_to_fit();
-	// clear m_textures reallocating
-	//std::vector<SDL_Texture*>().swap(m_textures);
-
-	// clear m_hpLimits reallocating
+	
+	// clear m_hpLimits.
 	m_hpLimits.clear();
 	m_hpLimits.shrink_to_fit();
-	//std::vector<int>().swap(m_hpLimits);
 
 	// clear array
 	BOObject::Shutdown();
