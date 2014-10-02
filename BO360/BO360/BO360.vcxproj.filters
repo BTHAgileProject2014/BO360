@@ -28,6 +28,12 @@
     <Filter Include="Resource Files\Icon">
       <UniqueIdentifier>{6b7733ae-2041-4383-8fc2-72f1ffd9a19a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\ObjectTypes">
+      <UniqueIdentifier>{4c2eec49-cbe5-4a51-a46c-d64b04bdc8e0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ObjectTypes">
+      <UniqueIdentifier>{d402d120-0906-423d-bc83-3d3f3b87ee42}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BOSystem.cpp">
@@ -43,9 +49,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="BOGraphicInterface.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="BOObject.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="BOInput.cpp">
@@ -138,6 +141,12 @@
     <ClCompile Include="BOKeyManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="BOAnimatedObject.cpp">
+      <Filter>Source Files\ObjectTypes</Filter>
+    </ClCompile>
+    <ClCompile Include="BOObject.cpp">
+      <Filter>Source Files\ObjectTypes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BOSystem.h">
@@ -147,9 +156,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="BOGraphicInterface.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="BOObject.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="BOUtility.h">
@@ -253,6 +259,12 @@
     </ClInclude>
     <ClInclude Include="BOKeyManager.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BOAnimatedObject.h">
+      <Filter>Header Files\ObjectTypes</Filter>
+    </ClInclude>
+    <ClInclude Include="BOObject.h">
+      <Filter>Header Files\ObjectTypes</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

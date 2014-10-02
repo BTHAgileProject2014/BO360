@@ -1,9 +1,9 @@
 #ifndef BOBLOCK_H_
 #define BOBLOCK_H_
 
-#include "BOObject.h"
+#include "BOAnimatedObject.h"
 
-class BOBlock : public BOObject
+class BOBlock : public BOAnimatedObject
 {
 public:
 	BOBlock();
@@ -11,7 +11,8 @@ public:
 
 	bool Initialize(float2 p_position, int2 p_size, std::string p_fileName, PowerUpTypes p_powerup, int p_scoreValue);
 	bool Initialize(float2 p_position, int2 p_size, std::string p_fileName, int p_hp, PowerUpTypes p_powerup, int p_scoreValue);
-	void Update();
+    bool InitializeAnimated(float2 p_position, int2 p_size, int2 p_sourceSize, int p_frame, int p_maxFrames, double p_timePerFrame, bool p_hardReset, std::string p_fileName, int p_hp, PowerUpTypes p_powerup, int p_scoreValue);
+    void Update();
 
 	box GetBoundingBox();
 	hexagon GetBoundingHexagon();
@@ -24,6 +25,7 @@ public:
 	PowerUpTypes GetPowerUp();
 
 	int GetScore();
+    bool m_animated;
 
 protected:
 	int m_scoreValue;

@@ -87,6 +87,7 @@
     </PreLinkEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="BOAnimatedObject.h" />
     <ClInclude Include="BOBackground.h" />
     <ClInclude Include="BOBall.h" />
     <ClInclude Include="BOBlackHole.h" />
@@ -126,6 +127,7 @@
     <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="BOAnimatedObject.cpp" />
     <ClCompile Include="BOBackground.cpp" />
     <ClCompile Include="BOBall.cpp" />
     <ClCompile Include="BOBlackHole.cpp" />

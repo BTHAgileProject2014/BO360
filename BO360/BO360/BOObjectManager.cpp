@@ -166,7 +166,16 @@ void BOObjectManager::Draw()
 	{
 		if (!m_blockList[i]->GetDead())
 		{
-			m_blockList[i]->Draw();
+            if (m_blockList[i]->m_animated)
+            {
+                m_blockList[i]->DrawAnimated();
+            }
+
+            else
+            {
+                m_blockList[i]->Draw();
+            }
+
 		}
 		
 	}
@@ -324,7 +333,7 @@ bool BOObjectManager::LoadBlocksFromMap(std::string p_filename)
 				}
 				else
 				{
-					result = block->Initialize(float2(x, y), int2(40, 40), "Sprites/PlaceholderPNG/Hexagons/placeholderHexagon40x40.png", PUNone, score);
+					result = block->Initialize(float2(x, y), int2(46, 42), "Sprites/Blocks/BlockRegular.png", PUNone, score);
 				}
 				if (!result)
 				{
@@ -340,15 +349,12 @@ bool BOObjectManager::LoadBlocksFromMap(std::string p_filename)
 			case(DUBBLEHP) :
 			{
 				block = new BOBlockMultiTexture();
-				result = block->Initialize(float2(x, y), int2(40, 40), "Sprites/PlaceholderPNG/Hexagons/placeholderHexagon40x40red1.png", 3, PUNone, score);
+                result = block->InitializeAnimated(float2(x, y), int2(46, 42), int2(46, 42), 0, 5, 0, true, "Sprites/Blocks/BlockArmored.png", 5, PUNone, score);
 				if (!result)
 				{
 					ThrowInitError("BOBlockMultiTexture");
 					return false;
 				}
-				
-				dynamic_cast<BOBlockMultiTexture*>(block)->AddTextureForHPAbove("Sprites/PlaceholderPNG/Hexagons/placeholderHexagon40x40red2.png", 1);
-				dynamic_cast<BOBlockMultiTexture*>(block)->AddTextureForHPAbove("Sprites/PlaceholderPNG/Hexagons/placeholderHexagon40x40red3.png", 2);
 
 				m_blockList.push_back(block);
 
@@ -358,7 +364,7 @@ bool BOObjectManager::LoadBlocksFromMap(std::string p_filename)
 			case(INDESTRUCTIBLE) :
 			{
 				block = new BOBlockIron();
-				result = block->Initialize(float2(x, y), int2(40, 40), "Sprites/PlaceholderPNG/Hexagons/placeholderHexagon40x40gray.png", PUNone, score);
+                result = block->Initialize(float2(x, y), int2(46, 42), "Sprites/Blocks/BlockIndestructible.png", 5, PUNone, score);
 				if (!result)
 				{
 					ThrowInitError("BOBlockIron");
