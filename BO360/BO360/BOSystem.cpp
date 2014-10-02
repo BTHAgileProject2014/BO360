@@ -282,17 +282,10 @@ void BOSystem::HandleAction(ButtonAction p_action)
 				break;
 			}
 
-			// PLAY ENDLESS MODE.
-			case(ENDLESS) :
+			// VIEW HIGHSCORE
+			case(HIGHSCORE) :
 			{
 				break;
-			}
-
-			// PLAY HARDCORE MODE.
-			case(HARDCORE) :
-			{
-				break;
-
 			}
 
 			// RESUME, return to running.

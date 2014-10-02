@@ -364,7 +364,8 @@ enum GameState
 	RUNNING,
 	PAUSED,
 	VICTORY,
-	DEFEAT
+	DEFEAT,
+    HIGHSCORESTATE
 };
 
 enum ButtonAction
@@ -373,8 +374,7 @@ enum ButtonAction
 	QUIT,
 	EXIT,
 	STORY,
-	ENDLESS,
-	HARDCORE,
+    HIGHSCORE,
 	RESUME,
 	NEXT,
 	RETRY
