@@ -14,7 +14,7 @@ public:
 	static void Shutdown();
 
 	static void LoadTexture();
-	static void FreeTexture(int i);
+	static void FreeTexture(int p_textureIndex);
 	static void FreeAll();
 private:
 	BOTextureManager(){};
@@ -22,7 +22,7 @@ private:
 	void operator=(BOTextureManager const&);
 
 private:
-	static std::vector<SDL_Texture*> textureList;
+	std::vector<SDL_Texture*> textureList;
 
 };
 
