@@ -24,11 +24,6 @@ void BOKeyManager::Shutdown()
 	m_keys.clear();
 }
 
-void BOKeyManager::Update(double p_deltaTime)
-{
-
-}
-
 void BOKeyManager::Update(BOBall p_ball)
 {
 	for (unsigned int i = 0; i < m_keys.size(); i++)
@@ -72,5 +67,11 @@ void BOKeyManager::KeyCatched()
 
 bool BOKeyManager::AllKeysCatched()
 {
+    // If no key is added it returns false so you don't win directly
+    if (m_keysNeeded == 0)
+    {
+        return false;
+    }
+
 	return (m_keysNeeded - m_keysCatched) == 0;
 }

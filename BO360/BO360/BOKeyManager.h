@@ -14,7 +14,6 @@ public:
 
 	bool Initialize();
 	void Shutdown();
-	void Update(double p_deltaTime);
 	void Update(BOBall p_ball);
 	void Draw();
 
