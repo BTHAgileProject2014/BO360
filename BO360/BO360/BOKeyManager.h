@@ -25,5 +25,4 @@ private:
 
 	bool LoadKeysFromMap(std::string p_filename);
 };
-
 #endif

@@ -11,9 +11,11 @@ class BOHUDManager
 public:
 	BOHUDManager();
 	~BOHUDManager();
+
 	static bool Initialize();
 	static void Shutdown();
 	static void Draw();
+
 	static void SetLives(int p_lives);
 	static void SetScore(int p_score);
 	static void SetLevel(int p_level);

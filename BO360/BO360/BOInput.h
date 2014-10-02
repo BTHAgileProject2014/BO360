@@ -22,6 +22,4 @@ private:
 	BOPublisher m_publisher;
 	bool m_buttonsPressed[7];
 };
-
 #endif
-

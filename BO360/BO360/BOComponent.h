@@ -11,5 +11,4 @@ public:
 	virtual bool Initialize();
 	virtual void Shutdown();
 };
-
 #endif

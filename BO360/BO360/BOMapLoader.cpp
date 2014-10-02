@@ -20,25 +20,25 @@ bool BOMapLoader::Initialize()
 
 bool BOMapLoader::LoadMap(std::string p_fileName)
 {
-	int l_type;
-	std::string l_fileName = "Maps/";
-	l_fileName.append(p_fileName);
+	int type;
+	std::string fileName = "Maps/";
+	fileName.append(p_fileName);
 
 	// Open and read map file.
-	std::ifstream l_file;
-	l_file.open(l_fileName);
+	std::ifstream file;
+	file.open(fileName);
 	
 	// Check to see if we found the file.
-	if (!l_file.is_open())
+	if (!file.is_open())
 	{
 		std::cout << "Failed to load map file. Check if missing or corrupted" << std::endl;
 		return false;
 	}
 
 	// Read map size data.
-	if (l_file.good())
+	if (file.good())
 	{
-		l_file >> m_mapSize.x >> m_mapSize.y;
+		file >> m_mapSize.x >> m_mapSize.y;
 	}
 
 	// Read grid until last line.
@@ -46,9 +46,9 @@ bool BOMapLoader::LoadMap(std::string p_fileName)
 	{
 		for (int x = 0; x < m_mapSize.x; x++)
 		{
-			l_file >> l_type;
+			file >> type;
 
-			DetermineAction(l_type, (float)x, (float)y);
+			DetermineAction(type, (float)x, (float)y);
 		}
 	}
 
@@ -56,13 +56,13 @@ bool BOMapLoader::LoadMap(std::string p_fileName)
 	{
 		if (x%2 != 0)
 		{
-			l_file >> l_type;
+			file >> type;
 
-			DetermineAction(l_type, (float)x, (float)(m_mapSize.y - 1));
+			DetermineAction(type, (float)x, (float)(m_mapSize.y - 1));
 		}
 	}
 
-	l_file.close();
+	file.close();
 
 	return true;
 }
@@ -85,37 +85,37 @@ void BOMapLoader::DetermineAction(int p_type, float x, float y)
 		// Add blocks at 1 tiles. 
 		if (p_type == 1)
 		{
-			Block l_block;
+			Block block;
 
-			l_block.m_position = float2(x, y);
-			l_block.m_type = REGULAR;
-			l_block.m_worth = 10;
+			block.m_position = float2(x, y);
+			block.m_type = REGULAR;
+			block.m_worth = 10;
 
-			m_blocks.push_back(l_block);
+			m_blocks.push_back(block);
 		}
 
 		// Add dubble HP blocks at 2 tiles. 
 		if (p_type == 2)
 		{
-			Block l_block;
+			Block block;
 
-			l_block.m_position = float2(x, y);
-			l_block.m_type = DUBBLEHP;
-			l_block.m_worth = 30;
+			block.m_position = float2(x, y);
+			block.m_type = DUBBLEHP;
+			block.m_worth = 30;
 
-			m_blocks.push_back(l_block);
+			m_blocks.push_back(block);
 		}
 
 		// Add indistructible blocks at 9 tiles. 
 		if (p_type == 9)
 		{
-			Block l_block;
+			Block block;
 
-			l_block.m_position = float2(x, y);
-			l_block.m_type = INDESTRUCTIBLE;
-			l_block.m_worth = 30;
+			block.m_position = float2(x, y);
+			block.m_type = INDESTRUCTIBLE;
+			block.m_worth = 30;
 
-			m_blocks.push_back(l_block);
+			m_blocks.push_back(block);
 		}
 	}
 }

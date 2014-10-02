@@ -18,31 +18,31 @@ bool BOButton::Initialize(float2 p_position, int2 p_size, std::string p_fileName
 	m_name = p_name;
 
 	// Load non highlighted texture.
-	std::string l_nonLitName = p_fileName;
-	l_nonLitName.append(".png");
-	m_nonHighlighted = BOGraphicInterface::LoadTexture(l_nonLitName);
+	std::string nonLitName = p_fileName;
+	nonLitName.append(".png");
+	m_nonHighlighted = BOGraphicInterface::LoadTexture(nonLitName);
 	if (!m_nonHighlighted)
 	{
-		std::cout << "Failed to load texture " << l_nonLitName << "!" << std::endl;
+		std::cout << "Failed to load texture " << nonLitName << "!" << std::endl;
 		return false;
 	}
 
 	// Load highlighted texture.
-	std::string l_LitName = p_fileName;
-	l_LitName.append("Highlighted.png");
-	m_highlighted = BOGraphicInterface::LoadTexture(l_LitName);
+	std::string LitName = p_fileName;
+	LitName.append("Highlighted.png");
+	m_highlighted = BOGraphicInterface::LoadTexture(LitName);
 	if (!m_highlighted)
 	{
-		std::cout << "Failed to load texture " << l_LitName << "!" << std::endl;
+		std::cout << "Failed to load texture " << LitName << "!" << std::endl;
 		return false;
 	}
 
 	// Load tool tip.
-	std::string l_ToolName = p_fileName;
-	l_ToolName.append("ToolTip.png");
-	if (!m_toolTip.Initialize(float2(m_position.x + 125, m_position.y + 222.5f), int2(250, 295), l_ToolName))
+	std::string ToolName = p_fileName;
+	ToolName.append("ToolTip.png");
+	if (!m_toolTip.Initialize(float2(m_position.x + 125, m_position.y + 222.5f), int2(250, 295), ToolName))
 	{
-		std::cout << "Failed to load tool tip " << l_ToolName << "!" << std::endl;
+		std::cout << "Failed to load tool tip " << ToolName << "!" << std::endl;
 		return false;
 	}
 

@@ -188,6 +188,7 @@ bool BOSystem::Run()
 				m_gameState = DEFEAT;
 			}
 		}
+
 		else
 		{
 			// Update approperiate menu and handle the actions.
@@ -221,6 +222,7 @@ bool BOSystem::Run()
 			//RenderHUD
 			BOHUDManager::Draw();
 		}
+
 		else
 		{
 			// Draw approperiate menu.
@@ -231,7 +233,7 @@ bool BOSystem::Run()
 		// ============================
 
 		m_deltaTime = 0;
-		}
+	}
 	
 	return result;
 }

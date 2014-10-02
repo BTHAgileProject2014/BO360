@@ -16,7 +16,6 @@ public:
 	void Draw(GameState p_state);
 
 private:
-
 	BOState m_menu;
 	BOState m_paused;
 	BOState m_victory;

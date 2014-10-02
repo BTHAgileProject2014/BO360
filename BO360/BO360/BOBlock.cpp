@@ -1,14 +1,13 @@
 #include "BOBlock.h"
 
-
 BOBlock::BOBlock()
 {
 	dead = false;
 }
 
-
 BOBlock::~BOBlock()
 {
+
 }
 
 bool BOBlock::Initialize(float2 p_position, int2 p_size, std::string p_fileName, PowerUpTypes p_powerup, int p_scoreValue)

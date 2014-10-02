@@ -2,11 +2,12 @@
 
 BOObjectManager::BOObjectManager()
 {
-}
 
+}
 
 BOObjectManager::~BOObjectManager()
 {
+
 }
 
 bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight)
@@ -90,7 +91,7 @@ void BOObjectManager::Shutdown()
 
 
 	// Clear the blocks
-	for (int i = 0; i < m_blockList.size(); i++)
+	for (unsigned int i = 0; i < m_blockList.size(); i++)
 	{
 		m_blockList[i]->Shutdown();
 		delete m_blockList[i];
@@ -110,8 +111,6 @@ void BOObjectManager::Shutdown()
 
 void BOObjectManager::Update(double p_deltaTime)
 {
-	bool result;
-	
 	m_blackHole.Update();
 	m_paddle.Update(p_deltaTime);
 
@@ -123,20 +122,21 @@ void BOObjectManager::Update(double p_deltaTime)
 
 	// Update balls
 	for (unsigned int i = 0; i < m_ballList.size(); i++)
-			{
+	{
 		m_ballList[i]->Update(p_deltaTime, m_blackHole.GetBoundingSphere());
 
 		if (m_ballList[i]->IsStuckToPad())
-				{
+		{
 			m_ballList[i]->SetPosition(m_paddle.GetBallSpawnPosition());
 		}
+
 		else
-					{
+		{
 			BallBlockCollision(m_ballList[i]);
 
 			BallPadCollision(m_ballList[i]);
 
-		CheckBallOutOfBounds(i);
+			CheckBallOutOfBounds(i);
 
 			if (BallDied(m_ballList[i]))
 			{
@@ -145,16 +145,16 @@ void BOObjectManager::Update(double p_deltaTime)
 				m_ballList.erase(m_ballList.begin() + i);
 				i--;
 				continue;
-		}
-		
-			// Bounce on shield
-			// This should change once a new ball-ball collision has been added to the phusics class
-		float2 newdir = m_Shield.Update(p_deltaTime, m_ballList[i]->GetBoundingSphere(), m_ballList[i]->GetDirection());
-		m_ballList[i]->SetDirection(newdir);
-	}
-	}
-	UpdateParticles(p_deltaTime);
 			}
+		
+			// Bounce on shield, this should change once a new ball-ball collision has been added to the physics class.
+			float2 newdir = m_Shield.Update(p_deltaTime, m_ballList[i]->GetBoundingSphere(), m_ballList[i]->GetDirection());
+			m_ballList[i]->SetDirection(newdir);
+		}
+	}
+
+	UpdateParticles(p_deltaTime);
+}
 
 void BOObjectManager::Draw()
 {
@@ -201,16 +201,18 @@ void BOObjectManager::Handle(PowerUpTypes p_type, bool p_activated)
 		break;
 	}
 }
+
 void BOObjectManager::Handle(InputMessages p_inputMessage)
 {
 	if (p_inputMessage.spacebarKey)
 	{
-		for (int i = 0; i < m_ballList.size(); i++)
+		for (unsigned int i = 0; i < m_ballList.size(); i++)
 		{
 			m_ballList[i]->SetStuckToPad(false);
+		}
 	}
 }
-}
+
 bool BOObjectManager::AddNewBall()
 {
 	BOBall* ball = new BOBall();
@@ -229,6 +231,7 @@ bool BOObjectManager::AddNewBall()
 		ThrowInitError("BOBall");
 		return false;
 	}
+
 	m_ballList.push_back(ball);
 	return true;
 }
@@ -237,6 +240,7 @@ bool BOObjectManager::LostGame()
 {
 	return m_life == 0;
 }
+
 void BOObjectManager::CheckBallOutOfBounds(int p_index)
 {
 	float changePosToo = 10.0f;
@@ -248,6 +252,7 @@ void BOObjectManager::CheckBallOutOfBounds(int p_index)
 	{
 		ballPos.x = windowSize.x - changePosToo;
 	}
+
 	if (ballPos.x <= checkPixelsInwards)//If out of bounds to the left
 	{
 		ballPos.x = changePosToo;
@@ -257,6 +262,7 @@ void BOObjectManager::CheckBallOutOfBounds(int p_index)
 	{
 		ballPos.y = windowSize.y - changePosToo;
 	}
+
 	if (ballPos.y <= checkPixelsInwards)//If out of bounds up
 	{
 		ballPos.y = changePosToo;
@@ -282,7 +288,7 @@ bool BOObjectManager::LoadBlocksFromMap(std::string p_filename)
 	static const int marginX = 60;
 	static const int marginY = 50;
 
-	for (int i = 0; i < blockDescriptions.size(); i++)
+	for (unsigned int i = 0; i < blockDescriptions.size(); i++)
 	{
 		BOBlock* block;
 		
@@ -360,6 +366,7 @@ bool BOObjectManager::LoadBlocksFromMap(std::string p_filename)
 				break;
 			}
 		}
+
 		m_blockList.push_back(block);
 	}
 
@@ -468,6 +475,7 @@ void BOObjectManager::UpdateParticles(double p_deltaTime)
 
 		m_SecondsPerParticle = 0.002f;
 	}
+
 	else if (m_SecondsPerParticle < 0.0f)
 	{
 		for (unsigned int i = 0; i < m_ballList.size(); i++)
@@ -477,6 +485,7 @@ void BOObjectManager::UpdateParticles(double p_deltaTime)
 				m_particleSystem.BallTrail(m_ballList[i]->GetPosition());
 			}
 		}
+
 		m_SecondsPerParticle = 0.025f;
 	}
 

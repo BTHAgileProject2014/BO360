@@ -31,8 +31,10 @@ public:
 	void Shutdown();
 	void Update(double p_deltaTime);
 	void Draw();
+
 	void Handle(PowerUpTypes p_type, bool p_activated);
 	void Handle(InputMessages p_inputMessage);
+
 	bool AddNewBall();
 	bool LostGame();
 

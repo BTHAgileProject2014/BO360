@@ -1,15 +1,16 @@
 #include "BOPowerUpManager.h"
+
 std::vector<BOPUSubscriber*> BOPowerUpManager::m_subscribers;
 std::vector<BOPowerUp*> BOPowerUpManager::m_powerUps;
 
-
 BOPowerUpManager::BOPowerUpManager()
 {
-}
 
+}
 
 BOPowerUpManager::~BOPowerUpManager()
 {
+
 }
 
 bool BOPowerUpManager::Initialize()
@@ -22,6 +23,7 @@ bool BOPowerUpManager::Initialize()
 
 void BOPowerUpManager::Shutdown()
 {
+
 }
 
 void BOPowerUpManager::Notify(PowerUpTypes p_type, bool p_activated)
