@@ -20,6 +20,7 @@
 #include "BOScore.h"
 #include "BOBlockIron.h"
 #include "BOBlockMultiTexture.h"
+#include "BOKeyManager.h"
 
 class BOObjectManager : public BOComponent, public BOPUSubscriber ,public BOSubscriber
 {
@@ -54,6 +55,7 @@ private:
 	BOParticleSystem m_particleSystem;
 	std::vector<BOBall*> m_ballList;
 	std::vector<BOBlock*> m_blockList;
+	BOKeyManager m_keyManager;
 
 	double m_SecondsPerParticle; // Should be moved into objects that use it
 };

@@ -56,6 +56,15 @@ bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight)
 		return false;
 	}
 
+	// Initialize the key manager
+	result = m_keyManager.Initialize("Demo.bom");
+	if (!result)
+	{
+		std::cout << "Initialize key manager failed!" << std::endl;
+
+		return false;
+	}
+
 	// Add an initial ball
 	AddNewBall();
 
@@ -106,6 +115,7 @@ void BOObjectManager::Shutdown()
 	BOPublisher::Unsubscribe(&m_paddle);
 	BOPublisher::Unsubscribe(this);
 	m_paddle.Shutdown();
+	m_keyManager.Shutdown();
 }
 
 void BOObjectManager::Update(double p_deltaTime)
@@ -114,6 +124,7 @@ void BOObjectManager::Update(double p_deltaTime)
 	
 	m_blackHole.Update();
 	m_paddle.Update(p_deltaTime);
+	m_keyManager.Update(p_deltaTime);
 
 	// Update blocks
 	for (unsigned int i = 0; i < m_blockList.size(); i++)
@@ -159,8 +170,8 @@ void BOObjectManager::Update(double p_deltaTime)
 void BOObjectManager::Draw()
 {
 	m_background.Draw();
-
 	m_blackHole.Draw();
+	m_keyManager.Draw();
 
 	for (unsigned int i = 0; i < m_blockList.size(); i++)
 	{
