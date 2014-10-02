@@ -17,13 +17,15 @@ public:
 
 	bool Initialize(PowerUpTypes p_type, float2 p_position, int2 p_size, SDL_Texture* p_sprite, float p_speed, BOPaddle* p_paddle, float2 p_blackholePosition);
 	void Shutdown();
-
 	virtual void Update(double p_deltaTime);
 	void Draw();
+
 	virtual void Activate();
 	virtual void Deactivate();
+
 	virtual bool GetActive();
 	virtual void SetActive(bool p_isActive);
+
 	virtual float2 GetDirection();
 	PowerUpTypes GetType();
 
@@ -37,5 +39,4 @@ private:
 	PowerUpTypes m_type;
 	BOPaddle* m_paddle;
 };
-
 #endif

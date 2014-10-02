@@ -58,10 +58,10 @@ void BOMovingParticle::Update(double p_deltaTime)
 
 void BOMovingParticle::Draw(SDL_Texture* p_texture)
 {
-	int4 l_target = int4((int)m_position.x, (int)m_position.y, m_size.x / 2, m_size.y / 2);
-	int4 l_source = int4(0, 0, m_size.x, m_size.y);
+	int4 target = int4((int)m_position.x, (int)m_position.y, m_size.x / 2, m_size.y / 2);
+	int4 source = int4(0, 0, m_size.x, m_size.y);
 
-	BOGraphicInterface::DrawEx(p_texture, l_source, l_target, m_rotation, int2(l_source.z / 2, l_source.w / 2));
+	BOGraphicInterface::DrawEx(p_texture, source, target, m_rotation, int2(source.z / 2, source.w / 2));
 }
 
 bool BOMovingParticle::IsDead()

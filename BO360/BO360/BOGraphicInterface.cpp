@@ -4,6 +4,7 @@ SDL_Renderer* BOGraphicInterface::m_renderer;
 
 BOGraphicInterface::~BOGraphicInterface()
 {
+
 }
 
 bool BOGraphicInterface::Initialize()
@@ -31,6 +32,7 @@ bool BOGraphicInterface::Initialize(int p_windowWidth, int p_windowHeight)
 		// Failed to create renderer
 		return false;
 	}
+
 	SDL_SetRenderDrawColor(GetInstance().m_renderer, 0, 0, 0, SDL_ALPHA_OPAQUE);
 
 	int imgFlags = IMG_INIT_PNG;
@@ -56,8 +58,6 @@ void BOGraphicInterface::Shutdown()
 	// Free up the TTF library
 	TTF_Quit();
 }
-
-
 
 void BOGraphicInterface::DrawEx(SDL_Texture* p_texture, int4 p_source, int4 p_destination, double p_rotation, int2 p_rotationSource)
 {
@@ -94,6 +94,7 @@ void BOGraphicInterface::Draw(SDL_Texture* p_texture, float2 p_position, int2 p_
 
 	SDL_RenderCopy(GetInstance().m_renderer, p_texture, &source, &target);
 }
+
 void BOGraphicInterface::Draw(SDL_Texture* p_texture, float2 p_position, int2 p_size)
 {
 	int4 source;
@@ -104,7 +105,6 @@ void BOGraphicInterface::Draw(SDL_Texture* p_texture, float2 p_position, int2 p_
 
 	Draw(p_texture, p_position, p_size, source);
 }
-
 
 void BOGraphicInterface::Clear()
 {
@@ -140,7 +140,6 @@ SDL_Texture* BOGraphicInterface::LoadTexture(std::string p_path)
 		BOGraphicInterface* test = &GetInstance();
 		SDL_Renderer* r = GetInstance().m_renderer;
 		newTexture = SDL_CreateTextureFromSurface(GetInstance().m_renderer, surface);
-
 
 		// Free the surface we loaded
 		SDL_FreeSurface(surface);

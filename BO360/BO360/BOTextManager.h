@@ -1,5 +1,6 @@
 #ifndef BOTEXTMANAGER_H_
 #define BOTEXTMANAGER_H_
+
 #include "BOObject.h"
 #include "BODrawableText.h"
 #include <vector>
@@ -21,4 +22,3 @@ private:
 	static std::vector<BODrawableText*> m_texts;
 };
 #endif
-

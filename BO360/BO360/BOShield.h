@@ -1,5 +1,6 @@
 #ifndef BOSHIELD_H_
 #define BOSHIELD_H_
+
 #include "BOPowerUp.h"
 #include "BOPhysics.h"
 #include "BOPowerUpManager.h"
@@ -20,18 +21,13 @@ public:
 	void SwitchActive();
 	bool GetActive();
 
-
-
 private:
 	void ChangeBallDirection(int p_BounceCorner);
-
 
 	SDL_Texture* m_ShieldSprite;
 	int2 m_ShieldSize;
 	sphere m_ShieldSphere;
 	int2 m_WindowSize;
 	bool m_IsActive;
-
 };
-
 #endif

@@ -1,12 +1,14 @@
 #include "BOShield.h"
 
-
 BOShield::BOShield()
 {
+
 }
 
+BOShield::~BOShield()
+{
 
-BOShield::~BOShield(){}
+}
 
 bool BOShield::Initialize(int2 p_ShieldSize, SDL_Texture* p_sprite, int2 p_WindowSize)
 {
@@ -23,10 +25,12 @@ bool BOShield::Initialize(int2 p_ShieldSize, SDL_Texture* p_sprite, int2 p_Windo
 
 	return true;
 }
+
 void BOShield::Shutdown()
 {
 	m_ShieldSprite = NULL;
 }
+
 float2 BOShield::Update(double p_deltaTime, sphere p_Ball, float2 p_BallDirection)
 {
 	float2 ballDir = p_BallDirection;
@@ -41,6 +45,7 @@ float2 BOShield::Update(double p_deltaTime, sphere p_Ball, float2 p_BallDirectio
 	}
 	return ballDir;
 }
+
 void BOShield::Draw()
 {
 	if (m_IsActive)
@@ -48,23 +53,26 @@ void BOShield::Draw()
 		BOGraphicInterface::Draw(m_ShieldSprite, m_ShieldSphere.pos, m_ShieldSize);
 	}
 }
+
 void BOShield::SetActive(bool p_IsActive)
 {
 	m_IsActive = p_IsActive;
 }
+
 void BOShield::SwitchActive()
 {
 	if (m_IsActive)
 	{
 		m_IsActive = false;
 	}
+
 	else
 	{
 		m_IsActive = true;
 	}
 }
+
 bool BOShield::GetActive()
 {
 	return m_IsActive;
 }
-

@@ -364,7 +364,8 @@ enum GameState
 	RUNNING,
 	PAUSED,
 	VICTORY,
-	DEFEAT
+	DEFEAT,
+    HIGHSCORESTATE
 };
 
 enum ButtonAction
@@ -373,8 +374,7 @@ enum ButtonAction
 	QUIT,
 	EXIT,
 	STORY,
-	ENDLESS,
-	HARDCORE,
+    HIGHSCORE,
 	RESUME,
 	NEXT,
 	RETRY
@@ -396,6 +396,7 @@ enum BlockType
 {
 	REGULAR,
 	DUBBLEHP,
+	KEY,
 	INDESTRUCTIBLE
 };
 
@@ -484,22 +485,22 @@ struct hexagon
 		pos = p_pos;
 		size = p_size;
 		
-		pointUpLeft.x = p_pos.x - 10;//(p_size.x / 4.0f);
-		pointUpLeft.y = p_pos.y - 17;//(p_size.y / 2.28f);
+		pointUpLeft.x = p_pos.x - 10; //(p_size.x / 4.0f);
+		pointUpLeft.y = p_pos.y - 17; //(p_size.y / 2.28f);
 
-		pointUpRight.x = p_pos.x + 9;// (p_size.x / 4.0f);
-		pointUpRight.y = p_pos.y - 17;// (p_size.y / 2.28f);
+		pointUpRight.x = p_pos.x + 9; // (p_size.x / 4.0f);
+		pointUpRight.y = p_pos.y - 17; // (p_size.y / 2.28f);
 
-		pointRight.x = p_pos.x + 19;// (p_size.x / 2.0f);
+		pointRight.x = p_pos.x + 19; // (p_size.x / 2.0f);
 		pointRight.y = p_pos.y;
 
-		pointDownRight.x = p_pos.x + 9;// (p_size.x / 4.0f);
-		pointDownRight.y = p_pos.y + 16;// (p_size.y / 2.28f);
+		pointDownRight.x = p_pos.x + 9; // (p_size.x / 4.0f);
+		pointDownRight.y = p_pos.y + 16; // (p_size.y / 2.28f);
 
-		pointDownLeft.x = p_pos.x - 10;// (p_size.x / 4.0f);
-		pointDownLeft.y = p_pos.y + 16;// (p_size.y / 2.28f);
+		pointDownLeft.x = p_pos.x - 10; // (p_size.x / 4.0f);
+		pointDownLeft.y = p_pos.y + 16; // (p_size.y / 2.28f);
 
-		pointLeft.x = p_pos.x - 20;// (p_size.x / 2.0f);
+		pointLeft.x = p_pos.x - 20; // (p_size.x / 2.0f);
 		pointLeft.y = p_pos.y;
 	}
 };

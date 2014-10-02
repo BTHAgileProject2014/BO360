@@ -47,34 +47,34 @@ bool BOStateManager::Initialize(int2 p_screenSize)
 
 ButtonAction BOStateManager::Update(GameState p_state)
 {
-	ButtonAction l_action = NOACTION;
+	ButtonAction action = NOACTION;
 
 	switch (p_state)
 	{
 		case(MENU) :
 		{
-			l_action = m_menu.Update();
+			action = m_menu.Update();
 
 			break;
 		}
 
 		case(PAUSED) :
 		{
-			l_action = m_paused.Update();
+			action = m_paused.Update();
 
 			break;
 		}
 
 		case(VICTORY) :
 		{
-			l_action = m_victory.Update();
+			action = m_victory.Update();
 
 			break;
 		}
 
 		case(DEFEAT) :
 		{
-			l_action = m_defeat.Update();
+			action = m_defeat.Update();
 
 			break;
 		}
@@ -85,7 +85,7 @@ ButtonAction BOStateManager::Update(GameState p_state)
 		}
 	}
 
-	return l_action;
+	return action;
 }
 
 void BOStateManager::Draw(GameState p_state)

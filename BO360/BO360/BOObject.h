@@ -14,6 +14,7 @@ public:
 	virtual ~BOObject();
 
 	virtual bool Initialize(float2 p_position, int2 p_size, SDL_Texture* p_sprite);
+    virtual bool Initialize(float2 p_position, int2 p_size, float scale, SDL_Texture* p_sprite);
 	virtual void Shutdown();
 	virtual void Draw();
 
@@ -33,5 +34,6 @@ protected:
 	int2 m_size;
 	SDL_Texture* m_sprite;
 	float m_radius;
+	float m_scale;
 };
 #endif

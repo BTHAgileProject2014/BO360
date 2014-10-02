@@ -1,13 +1,13 @@
 #include "BOPaddle.h"
 
-
 BOPaddle::BOPaddle()
 {
-}
 
+}
 
 BOPaddle::~BOPaddle()
 {
+
 }
 
 bool BOPaddle::Initialize(float2 p_position, int2 p_size, SDL_Texture* p_sprite)
@@ -58,31 +58,39 @@ void BOPaddle::Handle(PowerUpTypes p_type, bool p_activated)
 {
 	switch (p_type)
 	{
-	case PUBiggerPad:
-		if (p_activated)
+		case PUBiggerPad:
 		{
-			// Make the paddle bigger
-			if (m_segments < 5)
+			if (p_activated)
 			{
-				AddSegments(1);
+				// Make the paddle bigger
+				if (m_segments < 5)
+				{
+					AddSegments(1);
+				}
 			}
+
+			else
+			{
+				// Revert to normal paddle
+			}
+
+			break;
 		}
-		else
+		
+		case PUSmallerPad:
 		{
-			// Revert to normal paddle
+			if (p_activated)
+			{
+				// Make the paddle smaller
+				RemoveSegments(1);
+			}
+			else
+			{
+				// Revert to normal paddle
+			}
+
+			break;
 		}
-		break;
-	case PUSmallerPad:
-		if (p_activated)
-		{
-			// Make the paddle smaller
-			RemoveSegments(1);
-		}
-		else
-		{
-			// Revert to normal paddle
-}
-		break;
 	}
 }
 
@@ -91,14 +99,17 @@ void BOPaddle::Update(double p_deltaTime)
 	if (m_movingLeft)
 	{
 		m_rotation -= m_deltaRotation * p_deltaTime;
+
 		if (m_rotation < 0)
 		{
 			m_rotation += 360;
 		}
 	}
+
 	else if (m_movingRight)
 	{
 		m_rotation += m_deltaRotation * p_deltaTime;
+
 		if (m_rotation > 360)
 		{
 			m_rotation -= 360;
@@ -115,7 +126,6 @@ void BOPaddle::Draw()
 	{
 		BOGraphicInterface::DrawEx(m_sprite, mySource, myDest, m_rotation + ((double)m_segementDegree * i), int2(m_size.x / 2, m_size.y / 2));
 	}
-	
 }
 
 double BOPaddle::GetRotation()
@@ -153,8 +163,8 @@ double BOPaddle::GetDegrees()
 
 float2 BOPaddle::GetBallSpawnPosition()
 {
-	float tempx = m_position.x + (m_size.x * 0.5f) * cos(((-m_rotation - (21 * (m_segments - 1))) * DEGREES_TO_RADIANS) + 2);
-	float tempy = m_position.y - (m_size.y * 0.5f) * sin(((-m_rotation - (21 * (m_segments - 1))) * DEGREES_TO_RADIANS) + 2);
+	float tempx = m_position.x + (m_size.x * 0.5f) * (float)cos(((-m_rotation - (21 * (m_segments - 1))) * DEGREES_TO_RADIANS) + 2);
+	float tempy = m_position.y - (m_size.y * 0.5f) * (float)sin(((-m_rotation - (21 * (m_segments - 1))) * DEGREES_TO_RADIANS) + 2);
 	
 	return float2(tempx, tempy);
 }

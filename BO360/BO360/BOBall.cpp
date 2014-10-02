@@ -2,20 +2,23 @@
 
 BOBall::BOBall()
 {
-}
 
+}
 
 BOBall::~BOBall()
 {
+
 }
 
 bool BOBall::Initialize(float2 p_position, int2 p_size, SDL_Texture* p_sprite, float p_speed, float2 p_direction, int2 p_windowSize)
 {
+	if (!BOObject::Initialize(p_position, p_size, p_fileName))
+	{
+		return false;
+	}
 	m_damage = 1;
 	m_Fuel = 0.0f;
 	m_canColide = true;
-	m_position = p_position;
-	SetSize(p_size);
 	m_speed = p_speed;
 	m_direction = p_direction.normalized();
 	m_windowSize = p_windowSize;
@@ -133,7 +136,7 @@ void BOBall::Move(double p_deltaTime, sphere p_blackHoleBounds)
 		m_position.x = (float)(m_speed * p_deltaTime) * m_direction.x + m_position.x;
 		m_position.y = (float)(m_speed * p_deltaTime) * m_direction.y + m_position.y;
 		m_sprite = m_sprite2;
-		m_Fuel -= p_deltaTime;
+		m_Fuel -= (float)p_deltaTime;
 	}
 	else
 	{

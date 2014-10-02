@@ -6,7 +6,6 @@
 #include "BOUtility.h"
 #include <iostream>
 
-
 class BOSoundManager
 {
 public:
@@ -16,6 +15,7 @@ public:
 	static void Update();
 	static void PlayPopSound();
 	static void PlaySound(Sound p_sound);
+
 private:
 	BOSoundManager() {};
 	BOSoundManager(BOSoundManager const &);
@@ -30,4 +30,4 @@ private:
 	Mix_Chunk* m_bounceOnPad;
 };
 
-#endif // !BOSOUNDMANAGER_H_
+#endif 

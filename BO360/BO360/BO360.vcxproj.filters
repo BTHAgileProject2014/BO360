@@ -13,9 +13,6 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Resource Files\Maps">
-      <UniqueIdentifier>{6b7733ae-2041-4383-8fc2-72f1ffd9a19a}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\ParticleSystem">
       <UniqueIdentifier>{7be6141a-9428-4955-9c80-54d2d45bc407}</UniqueIdentifier>
     </Filter>
@@ -27,6 +24,15 @@
     </Filter>
     <Filter Include="Source Files\Blocks">
       <UniqueIdentifier>{74ba8f60-311b-4f63-97d7-3af07db16226}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\Icon">
+      <UniqueIdentifier>{6b7733ae-2041-4383-8fc2-72f1ffd9a19a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\ObjectTypes">
+      <UniqueIdentifier>{4c2eec49-cbe5-4a51-a46c-d64b04bdc8e0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ObjectTypes">
+      <UniqueIdentifier>{d402d120-0906-423d-bc83-3d3f3b87ee42}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -43,9 +49,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="BOGraphicInterface.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="BOObject.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="BOInput.cpp">
@@ -141,6 +144,12 @@
     <ClCompile Include="BOKeyManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="BOAnimatedObject.cpp">
+      <Filter>Source Files\ObjectTypes</Filter>
+    </ClCompile>
+    <ClCompile Include="BOObject.cpp">
+      <Filter>Source Files\ObjectTypes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BOSystem.h">
@@ -150,9 +159,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="BOGraphicInterface.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="BOObject.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="BOUtility.h">
@@ -260,16 +266,22 @@
     <ClInclude Include="BOKeyManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="BOAnimatedObject.h">
+      <Filter>Header Files\ObjectTypes</Filter>
+    </ClInclude>
+    <ClInclude Include="BOObject.h">
+      <Filter>Header Files\ObjectTypes</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Maps\Empty.bom">
-      <Filter>Resource Files\Maps</Filter>
+      <Filter>Resource Files\Icon</Filter>
     </None>
     <None Include="Maps\Filled.bom">
-      <Filter>Resource Files\Maps</Filter>
+      <Filter>Resource Files\Icon</Filter>
     </None>
     <None Include="Maps\Demo.bom">
-      <Filter>Resource Files\Maps</Filter>
+      <Filter>Resource Files\Icon</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>

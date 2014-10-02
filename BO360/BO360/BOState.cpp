@@ -34,7 +34,7 @@ bool BOState::Initialize(float2 p_position, int2 p_size, float2 p_menuPosition, 
 		return false;
 	}
 
-	m_menuBar.push_back(l_firstEdge);
+	m_menuBar.push_back(firstEdge);
 
 	// Load the menu bar.
 	BOObject l_menuBar;
@@ -44,7 +44,7 @@ bool BOState::Initialize(float2 p_position, int2 p_size, float2 p_menuPosition, 
 		return false;
 	}
 
-	m_menuBar.push_back(l_menuBar);
+	m_menuBar.push_back(menuBar);
 
 	// Load the last edge of the menu bars.
 	BOObject l_lastEdge;
@@ -54,7 +54,7 @@ bool BOState::Initialize(float2 p_position, int2 p_size, float2 p_menuPosition, 
 		return false;
 	}
 
-	m_menuBar.push_back(l_lastEdge);
+	m_menuBar.push_back(lastEdge);
 
 	// Load menu text
 	if (!m_menuText.Initialize(float2(0,0), m_name, int3(255, 255, 255), 72, 0))
@@ -78,7 +78,7 @@ void BOState::AddButton(float2 p_position, int2 p_size, float2 p_menuPosition, S
 	{
 		std::cout << "Failed to load button for texture " << p_sprite << "!" << std::endl;
 	}
-	m_buttonList.push_back(l_button);
+	m_buttonList.push_back(button);
 
 	// Change position and size of the menu bar
 	m_menuBar[1].SetSize(int2(240 * m_buttonList.size() + 10 * (m_buttonList.size() - 1), 70));
