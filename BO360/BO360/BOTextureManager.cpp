@@ -79,14 +79,26 @@ void BOTextureManager::LoadTexture()
 	texture = BOGraphicInterface::LoadTexture("Sprites/PlaceHolderPNG/placeholderLife.png");
 	GetInstance().textureList.push_back(texture);
 	// Menu
-	texture = BOGraphicInterface::LoadTexture("Sprites/PlaceHolderPNG/Menu/MenuEdge.png");
+	texture = BOGraphicInterface::LoadTexture("Sprites/Menu/MenuEdge.png");
 	GetInstance().textureList.push_back(texture);
-	texture = BOGraphicInterface::LoadTexture("Sprites/PlaceHolderPNG/Menu/MenuBar.png");
+	texture = BOGraphicInterface::LoadTexture("Sprites/Menu/MenuBar.png");
 	GetInstance().textureList.push_back(texture);
-	texture = BOGraphicInterface::LoadTexture("Sprites/PlaceHolderPNG/Menu/MainMenuBackground.png");
+	texture = BOGraphicInterface::LoadTexture("Sprites/Menu/MainMenuBackground.png");
 	GetInstance().textureList.push_back(texture);
-	texture = BOGraphicInterface::LoadTexture("Sprites/PlaceHolderPNG/Menu/Button.png");
+	texture = BOGraphicInterface::LoadTexture("Sprites/Menu/Button.png");
 	GetInstance().textureList.push_back(texture);
+	texture = BOGraphicInterface::LoadTexture("Sprites/Menu/ButtonHighlighted.png");
+	GetInstance().textureList.push_back(texture);
+	// The rest
+	texture = BOGraphicInterface::LoadTexture("Sprites/PlaceHolderPNG/Background.png");
+	GetInstance().textureList.push_back(texture);
+	texture = BOGraphicInterface::LoadTexture("Sprites/PlaceHolderPNG/placeholderBlackhole110x110.png");
+	GetInstance().textureList.push_back(texture);
+	texture = BOGraphicInterface::LoadTexture("Sprites/PlaceHolderPNG/placeholderPadSegment5.png");
+	GetInstance().textureList.push_back(texture);
+	texture = BOGraphicInterface::LoadTexture("Sprites/Menu/ButtonToolTip.png");
+	GetInstance().textureList.push_back(texture);
+
 }
 
 void BOTextureManager::FreeTexture(int p_textureIndex)
@@ -101,4 +113,9 @@ void BOTextureManager::FreeAll()
 		BOGraphicInterface::DestroyTexture(GetInstance().textureList[i]);
 	}
 	
+}
+
+SDL_Texture* BOTextureManager::GetTexture(Textures p_textureEnum)
+{
+	return GetInstance().textureList[p_textureEnum];
 }

@@ -20,6 +20,7 @@
 #include "BOScore.h"
 #include "BOBlockIron.h"
 #include "BOBlockMultiTexture.h"
+#include "BOTextureManager.h"
 
 class BOObjectManager : public BOComponent, public BOPUSubscriber ,public BOSubscriber
 {
@@ -47,7 +48,7 @@ private:
 	int m_life;
 
 	BOMapLoader m_mapLoader;
-	BOBackground m_background;
+	BOObject m_background;
 	BOBlackHole m_blackHole;
 	BOPaddle m_paddle;
 	BOShield m_Shield;

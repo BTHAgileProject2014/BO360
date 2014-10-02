@@ -10,7 +10,7 @@ public:
 	BOBlockMultiTexture();
 	~BOBlockMultiTexture();
 	void Shutdown();
-	bool AddTextureForHPAbove(std::string p_filename, int p_hp);
+	bool AddTextureForHPAbove(SDL_Texture* p_sprite, int p_hp);
 	void Draw();
 	bool Hit(int p_damage);
 private:

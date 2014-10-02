@@ -24,7 +24,7 @@ bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight)
 	}
 
 	// Initialize the background.
-	result = m_background.Initialize(float2(p_windowWidth / 2.0f, p_windowHeight / 2.0f), int2(p_windowWidth, p_windowHeight), "Sprites/PlaceHolderPNG/Background.png");
+	result = m_background.Initialize(float2(p_windowWidth / 2.0f, p_windowHeight / 2.0f), int2(p_windowWidth, p_windowHeight), BOTextureManager::GetTexture(TEXBACKGROUND));
 	if (!result)
 	{
 		ThrowInitError("BOBackground");
@@ -32,7 +32,7 @@ bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight)
 	}
 
 	// Initialize the black hole.
-	result = m_blackHole.Initialize(float2((p_windowWidth / 2.0f), (p_windowHeight / 2.0f)), int2(200, 200), "Sprites/PlaceHolderPNG/placeholderBlackhole110x110.png");
+	result = m_blackHole.Initialize(float2((p_windowWidth / 2.0f), (p_windowHeight / 2.0f)), int2(200, 200), BOTextureManager::GetTexture(TEXBLACKHOLE));
 	if (!result)
 	{
 		ThrowInitError("BOBlackHole");
@@ -40,7 +40,7 @@ bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight)
 	}
 
 	// Initialize the pad.
-	result = m_paddle.Initialize(float2((p_windowWidth / 2.0f), (p_windowHeight / 2.0f)), int2(208, 208), "Sprites/PlaceHolderPNG/placeholderPadSegment5.png");
+	result = m_paddle.Initialize(float2((p_windowWidth / 2.0f), (p_windowHeight / 2.0f)), int2(208, 208), BOTextureManager::GetTexture(TEXPADSEG));
 	if (!result)
 	{
 		ThrowInitError("BOPaddle");
@@ -69,7 +69,7 @@ bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight)
 	BOPowerUpManager::AddSubscriber(this);
 	BOPublisher::AddSubscriber(this);
 
-	m_Shield.Initialize(int2(200, 200), "Sprites/PlaceHolderPNG/Powerups/placeholderSheild.png", BOGraphicInterface::GetWindowSize());
+	m_Shield.Initialize(int2(200, 200), BOTextureManager::GetTexture(TEXSHIELD), BOGraphicInterface::GetWindowSize());
 
 	return true;
 }
@@ -111,7 +111,7 @@ void BOObjectManager::Shutdown()
 void BOObjectManager::Update(double p_deltaTime)
 {
 	bool result;
-	
+
 	m_blackHole.Update();
 	m_paddle.Update(p_deltaTime);
 
@@ -123,38 +123,38 @@ void BOObjectManager::Update(double p_deltaTime)
 
 	// Update balls
 	for (unsigned int i = 0; i < m_ballList.size(); i++)
-			{
+	{
 		m_ballList[i]->Update(p_deltaTime, m_blackHole.GetBoundingSphere());
 
 		if (m_ballList[i]->IsStuckToPad())
-				{
+		{
 			m_ballList[i]->SetPosition(m_paddle.GetBallSpawnPosition());
 		}
 		else
-					{
+		{
 			BallBlockCollision(m_ballList[i]);
 
 			BallPadCollision(m_ballList[i]);
 
-		CheckBallOutOfBounds(i);
+			CheckBallOutOfBounds(i);
 
 			if (BallDied(m_ballList[i]))
 			{
-				m_ballList[i]->Shutdown();
+				//m_ballList[i]->Shutdown();
 				delete m_ballList[i];
 				m_ballList.erase(m_ballList.begin() + i);
 				i--;
 				continue;
-		}
-		
+			}
+
 			// Bounce on shield
 			// This should change once a new ball-ball collision has been added to the phusics class
-		float2 newdir = m_Shield.Update(p_deltaTime, m_ballList[i]->GetBoundingSphere(), m_ballList[i]->GetDirection());
-		m_ballList[i]->SetDirection(newdir);
-	}
+			float2 newdir = m_Shield.Update(p_deltaTime, m_ballList[i]->GetBoundingSphere(), m_ballList[i]->GetDirection());
+			m_ballList[i]->SetDirection(newdir);
+		}
 	}
 	UpdateParticles(p_deltaTime);
-			}
+}
 
 void BOObjectManager::Draw()
 {
@@ -224,7 +224,7 @@ bool BOObjectManager::AddNewBall()
 	ballPos.x += ballDir.x * 6;
 	ballPos.y += ballDir.y * 6;
 
-	if (!ball->Initialize(ballPos, int2(15,15), "Sprites/PlaceHolderPNG/placeholderBoll10x10.png", 400.0f, ballDir, windowSize))
+	if (!ball->Initialize(ballPos, int2(15,15), BOTextureManager::GetTexture(TEXBALL), 400.0f, ballDir, windowSize))
 	{
 		ThrowInitError("BOBall");
 		return false;
@@ -305,19 +305,19 @@ bool BOObjectManager::LoadBlocksFromMap(std::string p_filename)
 				// This fat chunk of code is to be removed when the map loader loads power ups
 				if (i % 100 == 1)
 				{
-					result = block->Initialize(float2(x, y), int2(40, 40), "Sprites/PlaceholderPNG/Hexagons/placeholderHexagonPU2.png", PUShield, score);
+					result = block->Initialize(float2(x, y), int2(40, 40), BOTextureManager::GetTexture(TEXHEXPU2), PUShield, score);
 				}
 				else if (i % 100 == 33)
 				{
-					result = block->Initialize(float2(x, y), int2(40, 40), "Sprites/PlaceholderPNG/Hexagons/placeholderHexagonPU1.png", PUExtraBall, score);
+					result = block->Initialize(float2(x, y), int2(40, 40), BOTextureManager::GetTexture(TEXHEXPU1), PUExtraBall, score);
 				}
 				else if (i % 100 == 66)
 				{
-					result = block->Initialize(float2(x, y), int2(40, 40), "Sprites/PlaceholderPNG/Hexagons/placeholderHexagonPU3.png", PUBiggerPad, score);
+					result = block->Initialize(float2(x, y), int2(40, 40), BOTextureManager::GetTexture(TEXHEXPU3), PUBiggerPad, score);
 				}
 				else
 				{
-					result = block->Initialize(float2(x, y), int2(40, 40), "Sprites/PlaceholderPNG/Hexagons/placeholderHexagon40x40.png", PUNone, score);
+					result = block->Initialize(float2(x, y), int2(40, 40), BOTextureManager::GetTexture(TEXHEXSTANDARD), PUNone, score);
 				}
 				if (!result)
 				{
@@ -330,22 +330,22 @@ bool BOObjectManager::LoadBlocksFromMap(std::string p_filename)
 			case(DUBBLEHP) :
 			{
 				block = new BOBlockMultiTexture();
-				result = block->Initialize(float2(x, y), int2(40, 40), "Sprites/PlaceholderPNG/Hexagons/placeholderHexagon40x40red1.png", 3, PUNone, score);
+				result = block->Initialize(float2(x, y), int2(40, 40), BOTextureManager::GetTexture(TEXHEX1HP), 3, PUNone, score);
 				if (!result)
 				{
 					ThrowInitError("BOBlockMultiTexture");
 					return false;
 				}
 				
-				dynamic_cast<BOBlockMultiTexture*>(block)->AddTextureForHPAbove("Sprites/PlaceholderPNG/Hexagons/placeholderHexagon40x40red2.png", 1);
-				dynamic_cast<BOBlockMultiTexture*>(block)->AddTextureForHPAbove("Sprites/PlaceholderPNG/Hexagons/placeholderHexagon40x40red3.png", 2);
+				dynamic_cast<BOBlockMultiTexture*>(block)->AddTextureForHPAbove(BOTextureManager::GetTexture(TEXHEX2HP), 1);
+				dynamic_cast<BOBlockMultiTexture*>(block)->AddTextureForHPAbove(BOTextureManager::GetTexture(TEXHEX3HP), 2);
 				break;
 			}
 	
 			case(INDESTRUCTIBLE) :
 			{
 				block = new BOBlockIron();
-				result = block->Initialize(float2(x, y), int2(40, 40), "Sprites/PlaceholderPNG/Hexagons/placeholderHexagon40x40gray.png", PUNone, score);
+				result = block->Initialize(float2(x, y), int2(40, 40), BOTextureManager::GetTexture(TEXHEXGRAY), PUNone, score);
 				if (!result)
 				{
 					ThrowInitError("BOBlockIron");

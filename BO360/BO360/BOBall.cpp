@@ -9,7 +9,7 @@ BOBall::~BOBall()
 {
 }
 
-bool BOBall::Initialize(float2 p_position, int2 p_size, std::string p_fileName, float p_speed, float2 p_direction, int2 p_windowSize)
+bool BOBall::Initialize(float2 p_position, int2 p_size, SDL_Texture* p_sprite, float p_speed, float2 p_direction, int2 p_windowSize)
 {
 	m_damage = 1;
 	m_Fuel = 0.0f;
@@ -22,8 +22,8 @@ bool BOBall::Initialize(float2 p_position, int2 p_size, std::string p_fileName, 
 	m_stuckToPad = true;
 	
 	// Load texture.
-	m_sprite = BOGraphicInterface::LoadTexture(p_fileName);
-	m_sprite2 = BOGraphicInterface::LoadTexture("Sprites/PlaceHolderPNG/placeholderBoll2.png");
+	m_sprite = p_sprite;
+	m_sprite2 = BOTextureManager::GetTexture(TEXDEBUGBALL);
 	m_sprite3 = m_sprite;
 
 	m_mouseCheat = false;

@@ -3,6 +3,7 @@
 
 #include "BOUtility.h"
 #include "BOGraphicInterface.h"
+#include "BOTextureManager.h"
 #include <SDL.h>
 #include <string>
 
@@ -12,7 +13,7 @@ public:
 	BOObject();
 	virtual ~BOObject();
 
-	virtual bool Initialize(float2 p_position, int2 p_size, std::string p_fileName);
+	virtual bool Initialize(float2 p_position, int2 p_size, SDL_Texture* p_sprite);
 	virtual void Shutdown();
 	virtual void Draw();
 
@@ -23,7 +24,7 @@ public:
 	void SetSize(int2 p_size);
 
 	SDL_Texture* GetSprite();
-	void SetSprite(std::string p_fileName);
+	void SetSprite(Textures p_spriteIndex);
 
 	sphere GetBoundingSphere();
 

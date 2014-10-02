@@ -16,6 +16,7 @@ public:
 	static void LoadTexture();
 	static void FreeTexture(int p_textureIndex);
 	static void FreeAll();
+	static SDL_Texture* GetTexture(Textures texturename);
 private:
 	BOTextureManager(){};
 	BOTextureManager(BOTextureManager const &);

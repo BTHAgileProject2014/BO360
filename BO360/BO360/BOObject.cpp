@@ -12,14 +12,14 @@ BOObject::~BOObject()
 }
 
 // Variable initilaize.
-bool BOObject::Initialize(float2 p_position, int2 p_size, std::string p_fileName)
+bool BOObject::Initialize(float2 p_position, int2 p_size, SDL_Texture* p_sprite)
 {
 	// Set variables.
 	m_position = p_position;
 	SetSize(p_size);
-	
+
 	// Load texture.
-	m_sprite = BOGraphicInterface::LoadTexture(p_fileName);
+	m_sprite = p_sprite;
 
 	return true;
 }
@@ -27,10 +27,7 @@ bool BOObject::Initialize(float2 p_position, int2 p_size, std::string p_fileName
 // Shutdown and memory release.
 void BOObject::Shutdown()
 {
-	if (m_sprite)
-	{
-		BOGraphicInterface::DestroyTexture(m_sprite);
-	}
+
 }
 
 // Sprite Draw call.
@@ -39,7 +36,6 @@ void BOObject::Draw()
 	int4 source = int4(0, 0, m_size.x, m_size.y);
 	int4 dest = int4(m_position.x - m_size.x/2, m_position.y - m_size.y / 2, m_size.x, m_size.y);
 	BOGraphicInterface::DrawEx(m_sprite, source, dest, 0, int2(0, 0));
-	//BOGraphicInterface::Draw(m_sprite, m_position, m_size);
 }
 
 // Position Get / Set functions.
@@ -71,10 +67,10 @@ SDL_Texture* BOObject::GetSprite()
 	return m_sprite;
 }
 
-void BOObject::SetSprite(std::string p_fileName)
+void BOObject::SetSprite(Textures p_spriteIndex)
 {
 	// Load new texture.
-	m_sprite = BOGraphicInterface::LoadTexture(p_fileName);
+	m_sprite = BOTextureManager::GetTexture(p_spriteIndex);
 }
 
 sphere BOObject::GetBoundingSphere()

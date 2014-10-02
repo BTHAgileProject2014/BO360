@@ -10,9 +10,9 @@ BOPowerUp::~BOPowerUp()
 {
 }
 
-bool BOPowerUp::Initialize(PowerUpTypes p_type, float2 p_position, int2 p_size, std::string p_fileName, float p_speed, BOPaddle* p_paddle, float2 p_blackholePosition)
+bool BOPowerUp::Initialize(PowerUpTypes p_type, float2 p_position, int2 p_size, SDL_Texture* p_sprite, float p_speed, BOPaddle* p_paddle, float2 p_blackholePosition)
 {
-	if (!BOObject::Initialize(p_position, p_size, p_fileName))
+	if (!BOObject::Initialize(p_position, p_size, p_sprite))
 	{
 		return false;
 	}

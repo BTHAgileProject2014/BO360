@@ -39,7 +39,7 @@ bool BOHUDManager::Initialize()
 	m_level.SetPosition(float2(m_levelAnchor.x + (tempSize.x / 2), m_levelAnchor.y + (tempSize.y / 2)));
 
 	m_lives.Initialize(m_livesAnchor, "Lives: ", int3(255, 255, 255), 30, 0);
-	m_life.Initialize(float2(0, 0), int2(20, 20), "Sprites/PlaceHolderPNG/placeholderLife.png"); // Always relative to m_lives position
+	m_life.Initialize(float2(0, 0), int2(20, 20), BOTextureManager::GetTexture(TEXLIFE)); // Always relative to m_lives position
 	int2 tempSizeText = m_lives.GetSize();
 	int2 tempSizeSprite = m_life.GetSize();
 	int compundSizeX = tempSizeText.x + (tempSizeSprite.x + 2)*m_noLives; // Total size of the life component (text + (sprite+padding)*nosprites)

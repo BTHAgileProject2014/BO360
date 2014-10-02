@@ -8,7 +8,7 @@ BOShield::BOShield()
 
 BOShield::~BOShield(){}
 
-bool BOShield::Initialize(int2 p_ShieldSize, std::string p_ShieldFN, int2 p_WindowSize)
+bool BOShield::Initialize(int2 p_ShieldSize, SDL_Texture* p_sprite, int2 p_WindowSize)
 {
 	m_WindowSize = p_WindowSize;
 	m_IsActive = false;
@@ -19,13 +19,12 @@ bool BOShield::Initialize(int2 p_ShieldSize, std::string p_ShieldFN, int2 p_Wind
 	m_ShieldSphere.radius = p_ShieldSize.x / 2.0f;
 	m_ShieldSize = p_ShieldSize;
 
-	m_ShieldSprite = BOGraphicInterface::LoadTexture(p_ShieldFN);
+	m_ShieldSprite = p_sprite;
 
 	return true;
 }
 void BOShield::Shutdown()
 {
-	SDL_DestroyTexture(m_ShieldSprite);
 	m_ShieldSprite = NULL;
 }
 float2 BOShield::Update(double p_deltaTime, sphere p_Ball, float2 p_BallDirection)

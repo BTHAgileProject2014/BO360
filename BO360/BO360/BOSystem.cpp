@@ -36,7 +36,6 @@ bool BOSystem::Initialize()
 
 		return false;
 	}
-	
 
 	// Set screen size.
 	m_windowWidth = 1300;
@@ -46,6 +45,14 @@ bool BOSystem::Initialize()
 	if (!BOGraphicInterface::Initialize(m_windowWidth, m_windowHeight))
 	{
 		std::cout << "Initialize graphics engine failed!" << std::endl;
+
+		return false;
+	}
+
+	// Initlialize the texturemanager
+	if (!BOTextureManager::Initialize())
+	{
+		std::cout << "Initialize texturemanager failed!" << std::endl;
 
 		return false;
 	}
@@ -247,6 +254,7 @@ void BOSystem::Shutdown()
 	BOSoundManager::Shutdown();
 	BOTextManager::Shutdown();
 	BOHUDManager::Shutdown();
+	BOTextureManager::Shutdown();
 }
 
 void BOSystem::HandleAction(ButtonAction p_action)

@@ -14,10 +14,6 @@ BOBlockMultiTexture::~BOBlockMultiTexture()
 void BOBlockMultiTexture::Shutdown()
 {
 	// delete objects in array
-	for (int i = 0; i < m_textures.size(); i++)
-	{
-		BOGraphicInterface::DestroyTexture(m_textures[i]);
-	}
 
 	m_textures.clear();
 	m_textures.shrink_to_fit();
@@ -33,12 +29,12 @@ void BOBlockMultiTexture::Shutdown()
 	BOObject::Shutdown();
 }
 
-bool BOBlockMultiTexture::AddTextureForHPAbove(std::string p_filename, int p_hp)
+bool BOBlockMultiTexture::AddTextureForHPAbove(SDL_Texture* p_sprite, int p_hp)
 {
-	SDL_Texture* newTexture = BOGraphicInterface::LoadTexture(p_filename);
+	SDL_Texture* newTexture = p_sprite;
 	if (newTexture == NULL)
 	{
-		std::cout << "Unable to load " << p_filename << std::endl;
+		std::cout << "Unable to load " << p_sprite << std::endl;
 		return false;
 	}
 

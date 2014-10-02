@@ -30,42 +30,42 @@ bool BOParticleSystem::Initialize(int p_maxParticles)
 	m_currentParticles = 0;
 
 	// Initialize all the textures. PREFERABLY IN THE ENUM ORDER!
-	m_ballTrailTexture = BOGraphicInterface::LoadTexture("Sprites/Particles/BallTrail.png");
+	m_ballTrailTexture = BOTextureManager::GetTexture(TEXBALLTRAIL);
 	if (m_ballTrailTexture == NULL)
 	{
 		std::cout << "Failed to load 'Ball Trail' particle texture!" << std::endl;
 		l_result = false;
 	}
 
-	m_ballDebrisTexture = BOGraphicInterface::LoadTexture("Sprites/Particles/BallDebris.png");
+	m_ballDebrisTexture = BOTextureManager::GetTexture(TEXBALLDEBRIS);
 	if (m_ballDebrisTexture == NULL)
 	{
 		std::cout << "Failed to load 'Ball Debris' particle texture!" << std::endl;
 		l_result = false;
 	}
 
-	m_blockDebrisTexture = BOGraphicInterface::LoadTexture("Sprites/Particles/BlockDebris.png");
+	m_blockDebrisTexture = BOTextureManager::GetTexture(TEXBLOCKDEBRIS);
 	if (m_blockDebrisTexture == NULL)
 	{
 		std::cout << "Failed to load 'Block Debris' particle texture!" << std::endl;
 		l_result = false;
 	}
 
-	m_explosionTexture = BOGraphicInterface::LoadTexture("Sprites/Particles/Explosion.png");
+	m_explosionTexture = BOTextureManager::GetTexture(TEXEXPLOSION);
 	if (m_explosionTexture == NULL)
 	{
 		std::cout << "Failed to load 'Explosion' particle texture!" << std::endl;
 		l_result = false;
 	}
 
-	m_powerUpDebrisTexture = BOGraphicInterface::LoadTexture("Sprites/Particles/PowerUpDebris.png");
+	m_powerUpDebrisTexture = BOTextureManager::GetTexture(TEXPUDEBRIS);
 	if (m_powerUpDebrisTexture == NULL)
 	{
 		std::cout << "Failed to load 'Power Up Debris' particle texture!" << std::endl;
 		l_result = false;
 	}
 
-	m_debugTrailTexture = BOGraphicInterface::LoadTexture("Sprites/Particles/DebugTrail.png");
+	m_debugTrailTexture = BOTextureManager::GetTexture(TEXDEBUGTRAIL);
 	if (m_debugTrailTexture == NULL)
 	{
 		std::cout << "Failed to load 'Debug Trail' particle texture!" << std::endl;
@@ -77,12 +77,6 @@ bool BOParticleSystem::Initialize(int p_maxParticles)
 
 void BOParticleSystem::Shutdown()
 {
-	BOGraphicInterface::DestroyTexture(m_ballTrailTexture);
-	BOGraphicInterface::DestroyTexture(m_ballDebrisTexture);
-	BOGraphicInterface::DestroyTexture(m_blockDebrisTexture);
-	BOGraphicInterface::DestroyTexture(m_explosionTexture);
-	BOGraphicInterface::DestroyTexture(m_powerUpDebrisTexture);
-	BOGraphicInterface::DestroyTexture(m_debugTrailTexture);
 
 	m_movingParticleList.clear();
 	m_movingParticleList.shrink_to_fit();

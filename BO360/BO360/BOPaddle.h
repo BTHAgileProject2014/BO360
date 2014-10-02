@@ -16,7 +16,7 @@ public:
 	double GetRotation();
 
 	// Overloaded functions
-	bool Initialize(float2 p_position, int2 p_size, std::string p_fileName);
+	bool Initialize(float2 p_position, int2 p_size, SDL_Texture* p_sprite);
 	void Handle(InputMessages p_inputMessages);
 	void Handle(PowerUpTypes p_type, bool p_activated);
 	int GetSegments();
