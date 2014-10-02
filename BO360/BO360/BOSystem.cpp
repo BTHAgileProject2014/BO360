@@ -306,6 +306,14 @@ void BOSystem::HandleAction(ButtonAction p_action)
 			// NEXT, load next map.
 			case(NEXT) :
 			{
+                m_gameState = RUNNING;
+                if (!InitializeMap())
+                {
+                    std::cout << "Press ENTER to quit." << std::endl;
+                    std::cin.get();
+
+                    m_quit = true;
+                }
 				break;
 			}
 
