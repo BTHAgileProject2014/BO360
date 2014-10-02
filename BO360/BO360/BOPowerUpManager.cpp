@@ -74,6 +74,7 @@ void BOPowerUpManager::RemovePowerUp(BOPowerUp* p_powerUp)
 	{
 		if (p_powerUp == m_powerUps[i])
 		{
+            delete m_powerUps[i];
 			m_powerUps.erase(m_powerUps.begin() + i);
 			break;
 		}
