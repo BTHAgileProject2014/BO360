@@ -453,8 +453,10 @@ void BOObjectManager::BallBlockCollision(BOBall* p_ball)
 
 				// Add score
 				BOScore::AddScore(m_blockList[i]->GetScore());
-
+                
+                delete m_blockList[i];
 				m_blockList.erase(m_blockList.begin() + i);
+
 			}
 		}
 	}
