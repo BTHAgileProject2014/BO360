@@ -16,6 +16,12 @@ bool BOKeyManager::Initialize(std::string p_mapFileName)
 	m_keysLeft = 1;
 	// BOHudManager::SetKeys(m_keysLeft);
 
+	// Temp add key
+	// Sprites/PlaceHolderPNG/placeholderHyperdrive.png
+	BOObject key = BOObject();
+	key.Initialize(float2(600, 150), int2(80, 80), 0.5f, "Sprites/PlaceHolderPNG/placeholderHyperdrive.png");
+	m_keys.push_back(key);
+
 	return true;
 }
 
