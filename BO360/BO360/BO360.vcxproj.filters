@@ -136,6 +136,9 @@
       <Filter>Source Files\Blocks</Filter>
     </ClCompile>
     <ClCompile Include="BOTextureManager.cpp">
+	  <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="BOKeyManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -252,6 +255,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="BOTextureManager.h">
+	  <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BOKeyManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

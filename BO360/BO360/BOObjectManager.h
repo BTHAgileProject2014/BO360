@@ -39,8 +39,12 @@ public:
 private:
 	bool LoadBlocksFromMap(std::string p_filename);
 	void CheckBallOutOfBounds(int p_index);
+	void BallBlockCollision(BOBall* p_ball);
+	void BallPadCollision(BOBall* p_ball);
+	bool BallDied(BOBall* p_ball);
+	void UpdateParticles(double p_deltaTime);
+
 	int m_life;
-	bool m_releaseBall;
 
 	BOMapLoader m_mapLoader;
 	BOBackground m_background;
