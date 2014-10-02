@@ -11,7 +11,7 @@ BOObject::~BOObject()
 }
 
 // Variable initilaize.
-bool BOObject::Initialize(float2 p_position, int2 p_size, float p_scale, std::string p_fileName)
+bool BOObject::Initialize(float2 p_position, int2 p_size, float p_scale, SDL_Texture* p_sprite)
 {
 	// Set variables.
 	m_position = p_position;
@@ -25,9 +25,9 @@ bool BOObject::Initialize(float2 p_position, int2 p_size, float p_scale, std::st
 }
 
 // Variable initilaize.
-bool BOObject::Initialize(float2 p_position, int2 p_size, std::string p_fileName)
+bool BOObject::Initialize(float2 p_position, int2 p_size, SDL_Texture* p_sprite)
 {
-	return Initialize(p_position, p_size, 1, p_fileName);
+    return Initialize(p_position, p_size, 1, p_sprite);
 }
 
 // Shutdown and memory release.

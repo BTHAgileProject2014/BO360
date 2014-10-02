@@ -368,7 +368,7 @@ bool BOObjectManager::LoadBlocksFromMap(std::string p_filename)
 			case(DUBBLEHP) :
 			{
 				block = new BOBlockMultiTexture();
-                result = block->InitializeAnimated(float2(x, y), int2(46, 42), int2(46, 42), 0, 5, 0, true, "Sprites/Blocks/BlockArmored.png", 5, PUNone, score);
+                result = block->InitializeAnimated(float2(x, y), int2(46, 42), int2(46, 42), 0, 5, 0, true, BOTextureManager::GetTexture(TEXHEXARMORED), 5, PUNone, score);
 				if (!result)
 				{
 					ThrowInitError("BOBlockMultiTexture");
@@ -383,7 +383,7 @@ bool BOObjectManager::LoadBlocksFromMap(std::string p_filename)
 			case(INDESTRUCTIBLE) :
 			{
 				block = new BOBlockIron();
-				result = block->Initialize(float2(x, y), int2(40, 40), BOTextureManager::GetTexture(TEXHEXGRAY), PUNone, score);
+                result = block->Initialize(float2(x, y), int2(40, 40), BOTextureManager::GetTexture(TEXHEXINDES), PUNone, score);
 				if (!result)
 				{
 					ThrowInitError("BOBlockIron");
@@ -397,7 +397,7 @@ bool BOObjectManager::LoadBlocksFromMap(std::string p_filename)
 
 			case(KEY) :
 			{
-                m_keyManager.AddKey(float2(x, y), int2(80, 80), 0.4f, "Sprites/PlaceholderPNG/placeholderHyperdrive.png");
+                m_keyManager.AddKey(float2(x, y), int2(80, 80), 0.4f, BOTextureManager::GetTexture(TEXKEY));
 				break;
 			}
 

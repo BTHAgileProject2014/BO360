@@ -12,11 +12,11 @@ BOBall::~BOBall()
 
 bool BOBall::Initialize(float2 p_position, int2 p_size, SDL_Texture* p_sprite, float p_speed, float2 p_direction, int2 p_windowSize)
 {
-	if (!BOObject::Initialize(p_position, p_size, p_fileName))
+    if (!BOObject::Initialize(p_position, p_size, p_sprite))
 	{
 		return false;
 	}
-	m_damage = 1;
+	m_damage = 10000;
 	m_Fuel = 0.0f;
 	m_canColide = true;
 	m_speed = p_speed;

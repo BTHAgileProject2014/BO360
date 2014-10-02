@@ -27,8 +27,8 @@ bool BOState::Initialize(float2 p_position, int2 p_size, float2 p_menuPosition, 
 	}
 
 	// Load the menu bars first edge.
-	BOObject l_firstEdge;
-	if (!l_firstEdge.Initialize(float2(p_menuPosition.x + 2.5f, p_menuPosition.y + 35), int2(5, 70), BOTextureManager::GetTexture(TEXMENUEDGE)))
+	BOObject firstEdge;
+	if (!firstEdge.Initialize(float2(p_menuPosition.x + 2.5f, p_menuPosition.y + 35), int2(5, 70), BOTextureManager::GetTexture(TEXMENUEDGE)))
 	{
 		std::cout << "Failed to load first edge of menu" << m_name << "!" << std::endl;
 		return false;
@@ -37,8 +37,8 @@ bool BOState::Initialize(float2 p_position, int2 p_size, float2 p_menuPosition, 
 	m_menuBar.push_back(firstEdge);
 
 	// Load the menu bar.
-	BOObject l_menuBar;
-	if (!l_menuBar.Initialize(float2(p_menuPosition.x + 125, p_menuPosition.y + 35), int2(240, 70), BOTextureManager::GetTexture(TEXMENUBAR)))
+	BOObject menuBar;
+	if (!menuBar.Initialize(float2(p_menuPosition.x + 125, p_menuPosition.y + 35), int2(240, 70), BOTextureManager::GetTexture(TEXMENUBAR)))
 	{
 		std::cout << "Failed to load last edge of menu" << m_name << "!" << std::endl;
 		return false;
@@ -47,8 +47,8 @@ bool BOState::Initialize(float2 p_position, int2 p_size, float2 p_menuPosition, 
 	m_menuBar.push_back(menuBar);
 
 	// Load the last edge of the menu bars.
-	BOObject l_lastEdge;
-	if (!l_lastEdge.Initialize(float2(p_menuPosition.x + 247.5f, p_menuPosition.y + 35), int2(5, 70), BOTextureManager::GetTexture(TEXMENUEDGE)))
+	BOObject lastEdge;
+	if (!lastEdge.Initialize(float2(p_menuPosition.x + 247.5f, p_menuPosition.y + 35), int2(5, 70), BOTextureManager::GetTexture(TEXMENUEDGE)))
 	{
 		std::cout << "Failed to load last edge of menu" << m_name << "!" << std::endl;
 		return false;
@@ -73,8 +73,8 @@ bool BOState::Initialize(float2 p_position, int2 p_size, float2 p_menuPosition, 
 
 void BOState::AddButton(float2 p_position, int2 p_size, float2 p_menuPosition, SDL_Texture* p_sprite, std::string p_name, ButtonAction p_action, std::string p_tooltip)
 {
-	BOButton l_button;
-	if (!l_button.Initialize(float2(p_position.x + (250 * m_buttonList.size()), p_position.y), p_size, p_sprite, p_name, p_action, p_tooltip))
+	BOButton button;
+	if (!button.Initialize(float2(p_position.x + (250 * m_buttonList.size()), p_position.y), p_size, p_sprite, p_name, p_action, p_tooltip))
 	{
 		std::cout << "Failed to load button for texture " << p_sprite << "!" << std::endl;
 	}

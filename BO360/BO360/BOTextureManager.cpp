@@ -34,23 +34,19 @@ void BOTextureManager::LoadTexture()
 	texture = BOGraphicInterface::LoadTexture("Sprites/PlaceHolderPNG/placeholderBoll2.png");
 	GetInstance().textureList.push_back(texture);
 	// Hexagons
-	texture = BOGraphicInterface::LoadTexture("Sprites/PlaceHolderPNG/Hexagons/placeholderHexagon40x40.png");
+	texture = BOGraphicInterface::LoadTexture("Sprites/Blocks/BlockRegular.png");
 	GetInstance().textureList.push_back(texture);
-	texture = BOGraphicInterface::LoadTexture("Sprites/PlaceHolderPNG/Hexagons/placeholderHexagon40x40red1.png");
-	GetInstance().GetInstance().textureList.push_back(texture);
-	texture = BOGraphicInterface::LoadTexture("Sprites/PlaceHolderPNG/Hexagons/placeholderHexagon40x40red2.png");
-	GetInstance().GetInstance().textureList.push_back(texture);
-	texture = BOGraphicInterface::LoadTexture("Sprites/PlaceHolderPNG/Hexagons/placeholderHexagon40x40red3.png");
-	GetInstance().GetInstance().textureList.push_back(texture);
-	texture = BOGraphicInterface::LoadTexture("Sprites/PlaceHolderPNG/Hexagons/placeholderHexagon40x40gray.png");
+	texture = BOGraphicInterface::LoadTexture("Sprites/Blocks/BlockArmored.png");
+	GetInstance().textureList.push_back(texture);
+	texture = BOGraphicInterface::LoadTexture("Sprites/Blocks/BlockIndestructible.png");
 	GetInstance().textureList.push_back(texture);
 	// Hexagon with powerups
 	texture = BOGraphicInterface::LoadTexture("Sprites/PlaceHolderPNG/Hexagons/placeholderHexagonPU1.png");
 	GetInstance().textureList.push_back(texture);
 	texture = BOGraphicInterface::LoadTexture("Sprites/PlaceHolderPNG/Hexagons/placeholderHexagonPU2.png");
-	GetInstance().GetInstance().textureList.push_back(texture);
+	GetInstance().textureList.push_back(texture);
 	texture = BOGraphicInterface::LoadTexture("Sprites/PlaceHolderPNG/Hexagons/placeholderHexagonPU3.png");
-	GetInstance().GetInstance().textureList.push_back(texture);
+	GetInstance().textureList.push_back(texture);
 	texture = BOGraphicInterface::LoadTexture("Sprites/PlaceHolderPNG/Hexagons/placeholderHexagonPU.png");
 	GetInstance().textureList.push_back(texture);
 	// Powerups
@@ -98,6 +94,8 @@ void BOTextureManager::LoadTexture()
 	GetInstance().textureList.push_back(texture);
 	texture = BOGraphicInterface::LoadTexture("Sprites/Menu/ButtonToolTip.png");
 	GetInstance().textureList.push_back(texture);
+    texture = BOGraphicInterface::LoadTexture("Sprites/PlaceHolderPNG/placeholderkey.png");
+    GetInstance().textureList.push_back(texture);
 
 }
 
