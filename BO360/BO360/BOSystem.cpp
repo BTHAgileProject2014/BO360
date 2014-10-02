@@ -104,15 +104,6 @@ bool BOSystem::InitializeMap()
 		return false;
 	}
 
-	// Initialize the key manager
-	result = m_keyManager.Initialize("Demo.bom");
-	if (!result)
-	{
-		std::cout << "Initialize key manager failed!" << std::endl;
-
-		return false;
-	}
-
 	// Initialize the sound engine.
 	if(!BOSoundManager::Initialize())
 	{
@@ -172,14 +163,20 @@ bool BOSystem::Run()
 			// Update the power ups.
 			m_powerUpManager.Update(m_deltaTime);
 
-			// Update the keys.
-			m_keyManager.Update(m_deltaTime);
-
 			// Update the sound Engine.
 			BOSoundManager::Update(); // Empty so far.
 
+			// Check if the player won the current game
+			if (m_objectManager.WonGame())
+			{
+				// Shutdown map
+				ShutdownMap();
+
+				// Go to victory screen
+				m_gameState = VICTORY;
+			}
 			// Check if the player lost the current game
-			if (m_objectManager.LostGame())
+			else if (m_objectManager.LostGame())
 			{
 				// Shutdown map
 				ShutdownMap();
@@ -213,9 +210,6 @@ bool BOSystem::Run()
 			// Render the power-ups
 			m_powerUpManager.Draw();
 
-			// Render the keys
-			m_keyManager.Draw();
-
 			// Render text
 			BOTextManager::DrawTexts();
 
@@ -244,7 +238,6 @@ void BOSystem::Shutdown()
 	m_input.Shutdown();
 	m_objectManager.Shutdown();
 	m_powerUpManager.Shutdown();
-	m_keyManager.Shutdown();
 	m_stateManager.Shutdown();
 	BOSoundManager::Shutdown();
 	BOTextManager::Shutdown();

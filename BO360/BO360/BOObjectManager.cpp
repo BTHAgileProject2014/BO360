@@ -57,6 +57,15 @@ bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight)
 		return false;
 	}
 
+	// Initialize the key manager
+	result = m_keyManager.Initialize();
+	if (!result)
+	{
+		std::cout << "Initialize key manager failed!" << std::endl;
+
+		return false;
+	}
+
 	// Add an initial ball
 	AddNewBall();
 
@@ -107,12 +116,14 @@ void BOObjectManager::Shutdown()
 	BOPublisher::Unsubscribe(&m_paddle);
 	BOPublisher::Unsubscribe(this);
 	m_paddle.Shutdown();
+	m_keyManager.Shutdown();
 }
 
 void BOObjectManager::Update(double p_deltaTime)
 {
 	m_blackHole.Update();
 	m_paddle.Update(p_deltaTime);
+	m_keyManager.Update(p_deltaTime);
 
 	// Update blocks
 	for (unsigned int i = 0; i < m_blockList.size(); i++)
@@ -122,21 +133,21 @@ void BOObjectManager::Update(double p_deltaTime)
 
 	// Update balls
 	for (unsigned int i = 0; i < m_ballList.size(); i++)
-	{
+			{
 		m_ballList[i]->Update(p_deltaTime, m_blackHole.GetBoundingSphere());
 
 		if (m_ballList[i]->IsStuckToPad())
-		{
+				{
 			m_ballList[i]->SetPosition(m_paddle.GetBallSpawnPosition());
 		}
 
 		else
-		{
+					{
 			BallBlockCollision(m_ballList[i]);
 
 			BallPadCollision(m_ballList[i]);
 
-			CheckBallOutOfBounds(i);
+		CheckBallOutOfBounds(i);
 
 			if (BallDied(m_ballList[i]))
 			{
@@ -145,22 +156,25 @@ void BOObjectManager::Update(double p_deltaTime)
 				m_ballList.erase(m_ballList.begin() + i);
 				i--;
 				continue;
-			}
+		}
 		
 			// Bounce on shield, this should change once a new ball-ball collision has been added to the physics class.
-			float2 newdir = m_Shield.Update(p_deltaTime, m_ballList[i]->GetBoundingSphere(), m_ballList[i]->GetDirection());
-			m_ballList[i]->SetDirection(newdir);
-		}
+		float2 newdir = m_Shield.Update(p_deltaTime, m_ballList[i]->GetBoundingSphere(), m_ballList[i]->GetDirection());
+		m_ballList[i]->SetDirection(newdir);
+
+		// Check collision betwen ball and keys
+		m_keyManager.Update(*m_ballList[i]);
+	}
 	}
 
 	UpdateParticles(p_deltaTime);
-}
+			}
 
 void BOObjectManager::Draw()
 {
 	m_background.Draw();
-
 	m_blackHole.Draw();
+	m_keyManager.Draw();
 
 	for (unsigned int i = 0; i < m_blockList.size(); i++)
 	{
@@ -218,8 +232,8 @@ void BOObjectManager::Handle(InputMessages p_inputMessage)
 		for (unsigned int i = 0; i < m_ballList.size(); i++)
 		{
 			m_ballList[i]->SetStuckToPad(false);
-		}
 	}
+}
 }
 
 bool BOObjectManager::AddNewBall()
@@ -248,6 +262,11 @@ bool BOObjectManager::AddNewBall()
 bool BOObjectManager::LostGame()
 {
 	return m_life == 0;
+}
+
+bool BOObjectManager::WonGame()
+{
+	return m_keyManager.AllKeysCatched();
 }
 
 void BOObjectManager::CheckBallOutOfBounds(int p_index)
@@ -378,7 +397,7 @@ bool BOObjectManager::LoadBlocksFromMap(std::string p_filename)
 
 			case(KEY) :
 			{
-				// JOHAN, KEYS HÄR!
+                m_keyManager.AddKey(float2(x, y), int2(80, 80), 0.4f, "Sprites/PlaceholderPNG/placeholderHyperdrive.png");
 				break;
 			}
 

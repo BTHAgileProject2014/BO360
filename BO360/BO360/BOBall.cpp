@@ -12,11 +12,13 @@ BOBall::~BOBall()
 
 bool BOBall::Initialize(float2 p_position, int2 p_size, std::string p_fileName, float p_speed, float2 p_direction, int2 p_windowSize)
 {
-	m_damage = 2;
+	if (!BOObject::Initialize(p_position, p_size, p_fileName))
+	{
+		return false;
+	}
+	m_damage = 1;
 	m_Fuel = 0.0f;
 	m_canColide = true;
-	m_position = p_position;
-	SetSize(p_size);
 	m_speed = p_speed;
 	m_direction = p_direction.normalized();
 	m_windowSize = p_windowSize;
