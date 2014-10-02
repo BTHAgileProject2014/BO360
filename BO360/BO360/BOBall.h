@@ -15,7 +15,7 @@ public:
 	void SetSpeed(float p_speed);
 	float GetSpeed();
 	void SetDirection(float2 p_direction);
-	float2 GetDirection();
+	float2 GetDirection() const;
 	bool CanColide();
 	void BouncedOnPad();
 	box GetBoundingBox();

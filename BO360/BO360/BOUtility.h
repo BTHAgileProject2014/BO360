@@ -25,12 +25,12 @@ struct float2
 		y = p_y;
 	}
 
-	float length()
+	float length()const
 	{
 		return (float)sqrt(x*x + y*y);
 	}
 
-	float2 normalized()
+	float2 normalized()const
 	{
 		float2 normalizedFloat;
 		float lengthFloat;

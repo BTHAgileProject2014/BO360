@@ -2,7 +2,12 @@
 
 const double BOPhysics::PI = 3.14159265359;
 const double BOPhysics::HALF_PI = PI / 2;
-// Balls
+
+bool BOPhysics::CheckCollisionSphereToSphere(const sphere &a, const sphere &b)
+{
+	return CollisionRadiusRadius(a.pos, a.radius, b.pos, b.radius);
+}
+
 bool BOPhysics::CollisionRadiusRadius(float2 p_centerA, float p_radiusA, float2 p_centerB, float p_radiusB)
 {
 	// Calculate x and y distance.
@@ -15,6 +20,7 @@ bool BOPhysics::CollisionRadiusRadius(float2 p_centerA, float p_radiusA, float2 
 	// If the distance are equal or less than the sum of the two radii, the circles collide.
 	return (distance <= (p_radiusA + p_radiusB));
 }
+
 bool BOPhysics::CheckCollisionBoxToBox(box p_box1, box p_box2)
 {
 	if (p_box1.bottom < p_box2.top || p_box1.top > p_box2.bottom || p_box1.left > p_box2.right || p_box1.right < p_box2.left)
@@ -301,7 +307,6 @@ float2 BOPhysics::CalculateNewDir(float2 p_currentDir, float p_padAngle, float p
 float2 BOPhysics::ReflectBallAroundNormal(float2 p_ballDir, float2 p_normal)
 {
 
-
 	float2 newBallDir, normal;
 	float vDotN;
 	newBallDir = p_ballDir;
@@ -323,7 +328,7 @@ float2 BOPhysics::BlackHoleGravity(sphere p_ball, float2 p_ballDirection, float 
 {
 	float2 newDirection = p_ballDirection;
 	float2 center = float2(p_blackHole.pos - p_ball.pos); //En vektor mot hålet från bollen
-	const double G = 0.67;		//Gravitations konstant 6,7 * 10^-11	//Tar bort nollor från G och massa för att lättare se	//0.000000000067
+	const double G = 0.067;		//Gravitations konstant 6,7 * 10^-11	//Tar bort nollor från G och massa för att lättare se	//0.000000000067
 
 	float distanceAdjustment = CalculateDistance(p_ball.pos, p_blackHole.pos);// Beräkna radien mellan bollen och hålet
 		
@@ -379,4 +384,158 @@ int BOPhysics::CheckCollisionBallShield(sphere p_sphere, sphere p_padSphere)
 		}
 	}
 	return 0;
+}
+
+bool BOPhysics::BallBouncedOnPad(const BOBall &p_ball, const BOPaddle &p_paddle, float2& p_newDirection)
+{
+	float2 ballPosition = p_ball.GetPosition();
+	float2 ballDirection = p_ball.GetDirection();
+	float2 paddleRotationCenter = p_paddle.GetPosition();
+	float2 centerToBall = ballPosition - paddleRotationCenter;
+	
+	// Check if the ball is in range with the paddle
+	// Return at once if the ball is outside the pad's outer radius
+	if (!CheckCollisionSphereToSphere(p_ball.GetBoundingSphere(), p_paddle.GetBoundingSphere()))
+	{
+		return false;
+	}
+	// Or if it is within the inner radius
+	sphere innerSphere = p_paddle.GetBoundingSphere();
+	innerSphere.radius -= 20;
+	if (CheckCollisionSphereToSphere(p_ball.GetBoundingSphere(), innerSphere))
+	{
+		return false;
+	}
+
+	// Check if the ball hit the paddle portion
+    double padStartRad = p_paddle.GetStartRotation() * DEGREES_TO_RADIANS;
+    NormalizeAngle(padStartRad);
+    double angleRad = p_paddle.GetDegrees() * DEGREES_TO_RADIANS;
+    double padEndRad = padStartRad + angleRad;
+    NormalizeAngle(padEndRad);
+
+	double ballAngleRad = acos(centerToBall.normalized().x);
+
+    // Move to the same coordinate system as SDL rotations
+    if (centerToBall.y < 0)
+    {
+        ballAngleRad *= -1;
+    }
+    ballAngleRad += HALF_PI; 
+    NormalizeAngle(ballAngleRad);
+
+    if (!IsWithinRad(padStartRad, padEndRad, ballAngleRad))
+    {
+        return false;
+    }
+
+    /*
+	// TMP
+	// Constants
+	static const double degreesToRadians = (2 * PI) / 360;
+	static const double rToDegrees = 360 / (2 * PI);
+
+	float2 toSphereNormal = p_sphere.pos - p_padSphere.pos;
+	double startAngle = p_startAngle * degreesToRadians;
+	double padSpread = p_padSpread * degreesToRadians;
+
+	// Convert to mathematical coordinate system
+	double startAngleMA = (startAngle - HALF_PI) * -1;
+	double normalized = startAngleMA;
+	NormalizeAngle(normalized);
+
+	double padCenterAngle = startAngleMA - (padSpread / 2);
+	NormalizeAngle(padCenterAngle);
+
+	// Calculate a vector pointing towards the pad's center in SDL-Draw-Space
+	float dirX = cos(padCenterAngle);
+	float dirY = -sin(padCenterAngle);
+	float2 padCenterVector = float2(dirX, dirY).normalized();
+
+	// Calculate a vector from the center to the sphere
+	float2 centerToSphere = (p_sphere.pos - p_padSphere.pos).normalized();
+	centerToSphere.y *= -1;
+
+	// Calculate the angle for the centerToSphere vector
+	// Since acos has a period of PI, so some angles will need to be flipped
+	float ctpAngle = acos(centerToSphere.x);
+	if (centerToSphere.x < 0 && centerToSphere.y < 0)
+	{
+		ctpAngle *= -1;
+	}
+	if (centerToSphere.x > 0 && centerToSphere.y < 0)
+	{
+		ctpAngle *= -1;
+	}
+	NormalizeAngle(ctpAngle);
+	NormalizeAngle(startAngleMA);
+
+	// Check if the ball angle is within the borders of the pad
+	if ((ctpAngle < startAngleMA) && (ctpAngle >(startAngleMA - padSpread)))
+	{
+		return CalculateNewDir(p_sphereDir, padCenterAngle, padSpread / 2, ctpAngle);
+	}
+
+	// Special case when the pad is around the 0 area
+	if ((startAngleMA - padSpread) < 0)
+	{
+		double padAngle = startAngleMA - padSpread + (2 * PI);
+
+		if ((ctpAngle > 0) && (ctpAngle < startAngleMA) || ((ctpAngle > padAngle) && (ctpAngle < (2 * PI))))
+		{
+			return CalculateNewDir(p_sphereDir, padCenterAngle, padSpread / 2, ctpAngle);
+		}
+
+	}
+	return float2(0, 0);
+	// END TMP
+    */
+	// Reflect around the normal
+	p_newDirection = Reflect(ballDirection, centerToBall);
+
+	// Apply bias (?)
+
+	return true;
+}
+
+float2 BOPhysics::Reflect(const float2 p_target, const float2 p_normal)
+{
+	float2 normal = p_normal.normalized();
+	float2 direction = p_target.normalized();
+	float vDotN = direction.dot(normal);
+	//std::cout << "dot product: " << vDotN << std::endl;
+	if (vDotN < 0) // Check that we hit from the right side
+	{
+		direction = p_target.normalized();
+		vDotN = direction.dot(normal);
+		float2 reflected = direction - (normal * vDotN * 2.0);
+		return reflected.normalized();
+	}
+	return p_target;
+}
+
+bool BOPhysics::IsWithinRad(const double p_start, const double p_end, const double p_toTest)
+{
+    double start = p_start;
+    double end = p_end;
+    double toTest = p_toTest;
+    if (start > end) // Around origo
+    {
+        end += PI * 2.0; // Forward a full rotation
+
+        // If toTest was between 0 and p_end, we need to forward it too
+        if (toTest < p_end)
+        {
+            toTest += PI * 2.0;
+        }
+    }
+
+    
+    
+    std::cout << std::fixed << std::setprecision(4);
+    std::cout << "Ball: " << toTest << " Pad: " << start << " Rot: " << end << std::endl;
+    // toTest should now always be within start and end's numbers if it is actually within their angles
+
+    return (start < toTest
+        && toTest < end);
 }

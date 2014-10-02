@@ -43,7 +43,7 @@ void BOObject::Draw()
 }
 
 // Position Get / Set functions.
-float2 BOObject::GetPosition()
+float2 BOObject::GetPosition()const
 {
 	return m_position;
 }
@@ -77,7 +77,7 @@ void BOObject::SetSprite(std::string p_fileName)
 	m_sprite = BOGraphicInterface::LoadTexture(p_fileName);
 }
 
-sphere BOObject::GetBoundingSphere()
+sphere BOObject::GetBoundingSphere()const
 {
 	return sphere(m_position, m_radius);
 }

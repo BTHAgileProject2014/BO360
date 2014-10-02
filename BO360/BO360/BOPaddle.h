@@ -13,16 +13,17 @@ public:
 	~BOPaddle();
 
 	void Update(double p_deltaTime);
-	double GetRotation();
+	double GetRotation()const; // This returns the center of the first segment
+    double GetStartRotation()const; // This returns the actual start of the paddle
 
 	// Overloaded functions
 	bool Initialize(float2 p_position, int2 p_size, std::string p_fileName);
 	void Handle(InputMessages p_inputMessages);
 	void Handle(PowerUpTypes p_type, bool p_activated);
-	int GetSegments();
+	int GetSegments()const;
 	void AddSegments(int p_segments);
 	void RemoveSegments(int p_segments);
-	double GetDegrees();
+	double GetDegrees()const;
 	void Draw();
 	float2 GetBallSpawnPosition();
 

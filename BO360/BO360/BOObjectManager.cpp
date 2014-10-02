@@ -123,20 +123,20 @@ void BOObjectManager::Update(double p_deltaTime)
 
 	// Update balls
 	for (unsigned int i = 0; i < m_ballList.size(); i++)
-			{
+	{
 		m_ballList[i]->Update(p_deltaTime, m_blackHole.GetBoundingSphere());
 
 		if (m_ballList[i]->IsStuckToPad())
-				{
+		{
 			m_ballList[i]->SetPosition(m_paddle.GetBallSpawnPosition());
 		}
 		else
-					{
+		{
 			BallBlockCollision(m_ballList[i]);
 
 			BallPadCollision(m_ballList[i]);
 
-		CheckBallOutOfBounds(i);
+			CheckBallOutOfBounds(i);
 
 			if (BallDied(m_ballList[i]))
 			{
@@ -145,16 +145,16 @@ void BOObjectManager::Update(double p_deltaTime)
 				m_ballList.erase(m_ballList.begin() + i);
 				i--;
 				continue;
-		}
+			}
 		
 			// Bounce on shield
 			// This should change once a new ball-ball collision has been added to the phusics class
-		float2 newdir = m_Shield.Update(p_deltaTime, m_ballList[i]->GetBoundingSphere(), m_ballList[i]->GetDirection());
-		m_ballList[i]->SetDirection(newdir);
-	}
+			float2 newdir = m_Shield.Update(p_deltaTime, m_ballList[i]->GetBoundingSphere(), m_ballList[i]->GetDirection());
+			m_ballList[i]->SetDirection(newdir);
+		}
 	}
 	UpdateParticles(p_deltaTime);
-			}
+}
 
 void BOObjectManager::Draw()
 {
@@ -416,15 +416,23 @@ void BOObjectManager::BallBlockCollision(BOBall* p_ball)
 
 void BOObjectManager::BallPadCollision(BOBall* p_ball)
 {
+    float2 newDir;
+
+    if (BOPhysics::BallBouncedOnPad(*p_ball, m_paddle, newDir))
+    {
+        p_ball->SetDirection(newDir);
+        p_ball->BouncedOnPad();
+
+        // Play sound for bounce on pad
+        BOSoundManager::PlaySound(SOUND_BOUNCEONPAD);
+    }
+    /*
 	float2 result = BOPhysics::BallPadCollision(p_ball->GetBoundingSphere(), p_ball->GetDirection(), m_paddle.GetBoundingSphere(), m_paddle.GetRotation() - 10.5, m_paddle.GetDegrees());
 	if (!(result.x == 0 && result.y == 0))
 	{
-		p_ball->SetDirection(result);
-		p_ball->BouncedOnPad();
 
-		// Play sound for bounce on pad
-		BOSoundManager::PlaySound(SOUND_BOUNCEONPAD);
 	}
+    */
 }
 
 bool BOObjectManager::BallDied(BOBall* p_ball)

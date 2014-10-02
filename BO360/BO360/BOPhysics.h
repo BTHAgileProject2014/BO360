@@ -4,7 +4,10 @@
 #include "BOUtility.h"
 #include <math.h>
 #include <iostream>
+#include <iomanip>
 #include <string>
+#include "BOBall.h"
+#include "BOPaddle.h"
 
 inline void NormalizeAngle(float& angle) {
 	while (angle < 0) { angle += 6.2831852; }
@@ -15,9 +18,16 @@ inline void NormalizeAngle(double& angle) {
 	while (angle > 6.283185307179586) { angle -= 6.283185307179586; }
 }
 
+class BOBall;
+class BOPaddle;
+
 class BOPhysics
 {
 public:
+
+	static bool BallBouncedOnPad(const BOBall &p_ball, const BOPaddle &p_paddle, float2& p_newDirection);
+
+	static bool CheckCollisionSphereToSphere(const sphere &a, const sphere &b);
 	static bool CollisionRadiusRadius(float2 p_centerA, float p_radiusA, float2 p_centerB, float p_radiusB);
 	static bool CheckCollisionBoxToBox(box p_box1, box p_box2);//
 	static bool CheckCollisionPointToBox(int2 p_point, box p_box);//
@@ -30,10 +40,13 @@ public:
 
 	static int CheckCollisionBallShield(sphere p_sphere, sphere p_padSphere);//
 
+
+
 private:
 	static float2 CalculateNewDir(float2 currentDir, float p_padAngle, float p_maxWidthAngle, float p_ballAngle);//
 	static float CalculateDistance(float2 p_Ball, float2 p_BlackHole);//
-
+	static float2 Reflect(const float2 p_target, const float2 p_normal);
+    static bool IsWithinRad(const double p_start, const double p_end, const double p_toTest);
 
 	static const double PI;
 	static const double HALF_PI;

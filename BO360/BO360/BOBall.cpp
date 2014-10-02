@@ -57,7 +57,7 @@ void BOBall::SetDirection(float2 p_direction)
 	}
 }
 
-float2 BOBall::GetDirection()
+float2 BOBall::GetDirection()const
 {
 	return m_direction;
 }
