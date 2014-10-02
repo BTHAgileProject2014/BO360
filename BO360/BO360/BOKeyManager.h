@@ -17,7 +17,7 @@ public:
 	void Update(BOBall p_ball);
 	void Draw();
 
-    void AddKey(float2 p_position, int2 p_size, float p_scale, std::string p_fileName);
+    void AddKey(float2 p_position, int2 p_size, float p_scale, SDL_Texture* p_sprite);
 	bool AllKeysCatched();
 
 private:

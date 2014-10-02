@@ -10,7 +10,7 @@ BOPaddle::~BOPaddle()
 
 }
 
-bool BOPaddle::Initialize(float2 p_position, int2 p_size, std::string p_fileName)
+bool BOPaddle::Initialize(float2 p_position, int2 p_size, SDL_Texture* p_sprite)
 {
 	m_rotation = 0.0f;
 	m_totalDegrees = 21.2;
@@ -20,7 +20,7 @@ bool BOPaddle::Initialize(float2 p_position, int2 p_size, std::string p_fileName
 	m_deltaRotation = 200;
 	BOPublisher::AddSubscriber(this);
 	BOPowerUpManager::AddSubscriber(this);
-	return BOObject::Initialize(p_position, p_size, p_fileName);
+	return BOObject::Initialize(p_position, p_size, p_sprite);
 	
 }
 

@@ -11,7 +11,7 @@ BOAnimatedObject::~BOAnimatedObject()
 }
 
 // Variable initilaize.
-bool BOAnimatedObject::Initialize(float2 p_position, int2 p_size, int2 p_sourceSize, int p_frame, int p_numberOfFrames, double p_timePerFrame, bool p_hardReset, std::string p_fileName)
+bool BOAnimatedObject::Initialize(float2 p_position, int2 p_size, int2 p_sourceSize, int p_frame, int p_numberOfFrames, double p_timePerFrame, bool p_hardReset, SDL_Texture* p_sprite)
 {
 	m_sourceSize = p_sourceSize;
 	m_frame = p_frame;
@@ -23,7 +23,7 @@ bool BOAnimatedObject::Initialize(float2 p_position, int2 p_size, int2 p_sourceS
 
 	m_position = p_position;
 	m_size = p_size;
-	m_sprite = BOGraphicInterface::LoadTexture(p_fileName);
+    m_sprite = p_sprite;
 
 	return true;
 }

@@ -21,6 +21,7 @@
 #include "BOBlockIron.h"
 #include "BOBlockMultiTexture.h"
 #include "BOKeyManager.h"
+#include "BOTextureManager.h"
 
 class BOObjectManager : public BOComponent, public BOPUSubscriber ,public BOSubscriber
 {

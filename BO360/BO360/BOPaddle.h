@@ -15,8 +15,8 @@ public:
 	void Update(double p_deltaTime);
 	double GetRotation();
 
-	bool Initialize(float2 p_position, int2 p_size, std::string p_fileName);
-
+	// Overloaded functions
+	bool Initialize(float2 p_position, int2 p_size, SDL_Texture* p_sprite);
 	void Handle(InputMessages p_inputMessages);
 	void Handle(PowerUpTypes p_type, bool p_activated);
 

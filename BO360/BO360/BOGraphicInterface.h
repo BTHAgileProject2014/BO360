@@ -32,7 +32,9 @@ public:
 	static void DestroyTexture(SDL_Texture* p_texture);
 
 private:
-	BOGraphicInterface() {}
+	BOGraphicInterface() {};
+	BOGraphicInterface(BOGraphicInterface& const);
+	void operator=(BOGraphicInterface& const);
 	static BOGraphicInterface& GetInstance();
 
 	BOWindow m_window;

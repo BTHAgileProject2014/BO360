@@ -11,7 +11,7 @@ BOObject::~BOObject()
 }
 
 // Variable initilaize.
-bool BOObject::Initialize(float2 p_position, int2 p_size, float p_scale, std::string p_fileName)
+bool BOObject::Initialize(float2 p_position, int2 p_size, float p_scale, SDL_Texture* p_sprite)
 {
 	// Set variables.
 	m_position = p_position;
@@ -19,24 +19,21 @@ bool BOObject::Initialize(float2 p_position, int2 p_size, float p_scale, std::st
 	SetSize(p_size);
 	
 	// Load texture.
-	m_sprite = BOGraphicInterface::LoadTexture(p_fileName);
+	m_sprite = p_sprite;
 
 	return true;
 }
 
 // Variable initilaize.
-bool BOObject::Initialize(float2 p_position, int2 p_size, std::string p_fileName)
+bool BOObject::Initialize(float2 p_position, int2 p_size, SDL_Texture* p_sprite)
 {
-	return Initialize(p_position, p_size, 1, p_fileName);
+    return Initialize(p_position, p_size, 1, p_sprite);
 }
 
 // Shutdown and memory release.
 void BOObject::Shutdown()
 {
-	if (m_sprite)
-	{
-		BOGraphicInterface::DestroyTexture(m_sprite);
-	}
+
 }
 
 // Sprite Draw call.
@@ -76,10 +73,10 @@ SDL_Texture* BOObject::GetSprite()
 	return m_sprite;
 }
 
-void BOObject::SetSprite(std::string p_fileName)
+void BOObject::SetSprite(Textures p_spriteIndex)
 {
 	// Load new texture.
-	m_sprite = BOGraphicInterface::LoadTexture(p_fileName);
+	m_sprite = BOTextureManager::GetTexture(p_spriteIndex);
 }
 
 sphere BOObject::GetBoundingSphere()

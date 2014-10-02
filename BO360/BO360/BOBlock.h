@@ -7,12 +7,12 @@ class BOBlock : public BOAnimatedObject
 {
 public:
 	BOBlock();
-	~BOBlock();
+	virtual ~BOBlock();
+	bool Initialize(float2 p_position, int2 p_size, SDL_Texture* p_sprite, PowerUpTypes p_powerup, int p_scoreValue);
+	bool Initialize(float2 p_position, int2 p_size, SDL_Texture* p_sprite, int p_hp, PowerUpTypes p_powerup, int p_scoreValue);
 
-	bool Initialize(float2 p_position, int2 p_size, std::string p_fileName, PowerUpTypes p_powerup, int p_scoreValue);
-	bool Initialize(float2 p_position, int2 p_size, std::string p_fileName, int p_hp, PowerUpTypes p_powerup, int p_scoreValue);
-    bool InitializeAnimated(float2 p_position, int2 p_size, int2 p_sourceSize, int p_frame, int p_maxFrames, double p_timePerFrame, bool p_hardReset, std::string p_fileName, int p_hp, PowerUpTypes p_powerup, int p_scoreValue);
-    void Update();
+    bool InitializeAnimated(float2 p_position, int2 p_size, int2 p_sourceSize, int p_frame, int p_maxFrames, double p_timePerFrame, bool p_hardReset, SDL_Texture* p_sprite, int p_hp, PowerUpTypes p_powerup, int p_scoreValue);
+	void Update();
 
 	box GetBoundingBox();
 	hexagon GetBoundingHexagon();
