@@ -16,7 +16,7 @@ bool BOBall::Initialize(float2 p_position, int2 p_size, SDL_Texture* p_sprite, f
 	{
 		return false;
 	}
-	m_damage = 10000;
+	m_damage = 1;
 	m_Fuel = 0.0f;
 	m_canColide = true;
 	m_speed = p_speed;
@@ -60,7 +60,7 @@ void BOBall::SetDirection(float2 p_direction)
 	}
 }
 
-float2 BOBall::GetDirection()
+float2 BOBall::GetDirection()const
 {
 	return m_direction;
 }

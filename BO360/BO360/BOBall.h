@@ -20,7 +20,7 @@ public:
 	float GetSpeed();
 
 	void SetDirection(float2 p_direction);
-	float2 GetDirection();
+	float2 GetDirection()const;
 
 	float GetFuel();
 	void SetFuel(float p_Fuel);

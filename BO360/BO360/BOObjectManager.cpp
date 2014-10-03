@@ -453,7 +453,7 @@ void BOObjectManager::BallBlockCollision(BOBall* p_ball)
 
 				// Add score
 				BOScore::AddScore(m_blockList[i]->GetScore());
-                
+
                 delete m_blockList[i];
 				m_blockList.erase(m_blockList.begin() + i);
 
@@ -464,15 +464,23 @@ void BOObjectManager::BallBlockCollision(BOBall* p_ball)
 
 void BOObjectManager::BallPadCollision(BOBall* p_ball)
 {
-	float2 result = BOPhysics::BallPadCollision(p_ball->GetBoundingSphere(), p_ball->GetDirection(), m_paddle.GetBoundingSphere(), m_paddle.GetRotation() - 10.5, m_paddle.GetDegrees());
-	if (!(result.x == 0 && result.y == 0))
+    float2 newDir;
+
+    if (BOPhysics::BallBouncedOnPad(*p_ball, m_paddle, newDir))
 	{
-		p_ball->SetDirection(result);
+        p_ball->SetDirection(newDir);
 		p_ball->BouncedOnPad();
 
 		// Play sound for bounce on pad
 		BOSoundManager::PlaySound(SOUND_BOUNCEONPAD);
 	}
+    /*
+	float2 result = BOPhysics::BallPadCollision(p_ball->GetBoundingSphere(), p_ball->GetDirection(), m_paddle.GetBoundingSphere(), m_paddle.GetRotation() - 10.5, m_paddle.GetDegrees());
+	if (!(result.x == 0 && result.y == 0))
+	{
+
+	}
+    */
 }
 
 bool BOObjectManager::BallDied(BOBall* p_ball)

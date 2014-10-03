@@ -128,12 +128,17 @@ void BOPaddle::Draw()
 	}
 }
 
-double BOPaddle::GetRotation()
+double BOPaddle::GetRotation()const
 {
 	return m_rotation;
 }
 
-int BOPaddle::GetSegments()
+double BOPaddle::GetStartRotation()const
+{
+    return m_rotation - (m_segementDegree / 2) - 4;
+}
+
+int BOPaddle::GetSegments()const
 {
 	return m_segments;
 }
@@ -156,9 +161,9 @@ void BOPaddle::RemoveSegments(int p_segments)
 	}
 }
 
-double BOPaddle::GetDegrees()
+double BOPaddle::GetDegrees()const
 {
-	return m_totalDegrees;
+	return m_totalDegrees + 8;
 }
 
 float2 BOPaddle::GetBallSpawnPosition()
