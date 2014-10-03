@@ -447,24 +447,11 @@ bool BOPhysics::BallBouncedOnPad(const BOBall &p_ball, const BOPaddle &p_paddle,
 	// Apply bias (?)
     float biasValue; // Should range from -1 to 1
     double paddleCenter;
+    float2 bias = ApplyBias(padStartRad, padEndRad, ballAngleRad);
+    p_newDirection = p_newDirection + bias;
+    p_newDirection.normalize();
 
 	return true;
-}
-
-float2 BOPhysics::Reflect(const float2 p_target, const float2 p_normal)
-{
-	float2 normal = p_normal.normalized();
-	float2 direction = p_target.normalized();
-	float vDotN = direction.dot(normal);
-	//std::cout << "dot product: " << vDotN << std::endl;
-	if (vDotN < 0) // Check that we hit from the right side
-	{
-		direction = p_target.normalized();
-		vDotN = direction.dot(normal);
-		float2 reflected = direction - (normal * vDotN * 2.0);
-		return reflected.normalized();
-	}
-	return p_target;
 }
 
 // Calculates the angle in degrees from p_v1 to p_v2 in SDL rotation coordinate system
@@ -506,6 +493,22 @@ double BOPhysics::AngleBetweenRad(const float2& p_v1, const float2& p_v2)
     return resultAngle;
 }
 
+float2 BOPhysics::Reflect(const float2 p_target, const float2 p_normal)
+{
+	float2 normal = p_normal.normalized();
+	float2 direction = p_target.normalized();
+	float vDotN = direction.dot(normal);
+	//std::cout << "dot product: " << vDotN << std::endl;
+	if (vDotN < 0) // Check that we hit from the right side
+	{
+		direction = p_target.normalized();
+		vDotN = direction.dot(normal);
+		float2 reflected = direction - (normal * vDotN * 2.0);
+		return reflected.normalized();
+	}
+	return p_target;
+}
+
 bool BOPhysics::IsWithinRad(double p_start, double p_end, double p_toTest)
 {
     double originalEnd = p_end;
@@ -529,20 +532,47 @@ bool BOPhysics::IsWithinRad(double p_start, double p_end, double p_toTest)
         && p_toTest < p_end);
 }
 
-float2 BOPhysics::ApplyBias(double p_start, double p_end, double p_toTest)
+float2 BOPhysics::ApplyBias(double p_start, double p_end, double p_ball)
 {
     double start = p_start;
     double end = p_end;
-    double toTest = p_toTest;
+    double ball = p_ball;
+
     if (start > end) // Around origo
     {
         end += PI * 2.0; // Forward a full rotation
 
         // If toTest was between 0 and p_end, we need to forward it too
-        if (toTest < p_end)
+        if (ball < p_end)
         {
-            toTest += PI * 2.0;
+            ball += PI * 2.0;
         }
     }
-    return float2(0, 0);
+
+    // calculate the ball bias (-1 to 1)
+    double center = (end + start) / 2;
+    double maxDistance = end - center;
+    double ballRelativeToPadCenter = ball - center;
+    double ballBias = ballRelativeToPadCenter / (maxDistance * 0.8);
+    if (abs(ballBias) > 1)
+    {
+        ballBias /= abs(ballBias);
+    }
+
+    // Scale worst case bias with paddle size
+    // The constant can be scaled for more extreme angles
+    float worstCaseBias = maxDistance * 3;
+
+    // Calculate the bias angle for this bounce
+    double biasAngle = center + ballBias * worstCaseBias;
+
+    // Turn into vector
+    float2 biasVector;
+    biasVector.x = sin(biasAngle);
+    biasVector.y = -cos(biasAngle);
+    biasVector.normalize();
+
+    // Scale with an influence factor
+    float influenceFactor = 1.0f;
+    return biasVector * influenceFactor;
 }
