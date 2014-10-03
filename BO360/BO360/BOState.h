@@ -34,8 +34,11 @@ private:
 	std::string m_name;
 
 	int2 m_mousePosition;
+	int2 m_mousePositionPrev;
 	bool m_mouseDown;
 	bool m_mousePrev;
+	bool m_clicked;
+	bool m_clickedPrev;
 
 	BOObject m_background;
 	std::vector<BOObject> m_menuBar;
