@@ -81,6 +81,9 @@ bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight)
 
 	m_Shield.Initialize(int2(200, 200), BOTextureManager::GetTexture(TEXSHIELD), BOGraphicInterface::GetWindowSize());
 
+    // Initialize SlowTime powerup functionality
+    m_SlowTime.Initialize();
+
 	return true;
 }
 
@@ -117,10 +120,14 @@ void BOObjectManager::Shutdown()
 	BOPublisher::Unsubscribe(this);
 	m_paddle.Shutdown();
 	m_keyManager.Shutdown();
+    m_SlowTime.Shutdown();
 }
 
 void BOObjectManager::Update(double p_deltaTime)
 {
+    // Update SlowTime before the objects
+    m_SlowTime.Update(p_deltaTime);
+
 	m_blackHole.Update();
 	m_paddle.Update(p_deltaTime);
 
@@ -221,6 +228,13 @@ void BOObjectManager::Handle(PowerUpTypes p_type, bool p_activated)
 			AddNewBall();
 		}
 		break;
+    case PUSlowTime:
+        if (p_activated)
+        {
+            m_SlowTime.AddCharges(1);
+            m_SlowTime.Activate();
+        }
+        break;
 	}
 }
 
@@ -349,6 +363,10 @@ bool BOObjectManager::LoadBlocksFromMap(std::string p_filename)
 				{
 					result = block->Initialize(float2(x, y), int2(40, 40), BOTextureManager::GetTexture(TEXHEXPU3), PUBiggerPad, score);
 				}
+                else if (i % 100 == 99)
+                {
+                    result = block->Initialize(float2(x, y), int2(40, 40), BOTextureManager::GetTexture(TEXHEXPU0), PUSlowTime, score);
+                }
 				else
 				{
 					result = block->Initialize(float2(x, y), int2(40, 40), BOTextureManager::GetTexture(TEXHEXSTANDARD), PUNone, score);

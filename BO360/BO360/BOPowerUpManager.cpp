@@ -65,6 +65,13 @@ void BOPowerUpManager::AddPowerUp(PowerUpTypes p_type, float2 p_startPosition, B
 			m_powerUps.push_back(extraBall);
 			break;
 		}
+        case PUSlowTime:
+        {
+            BOPowerUp* slowTime = new BOPowerUp();
+            slowTime->Initialize(PUSlowTime, p_startPosition, int2(40, 40), BOTextureManager::GetTexture(TEXPUSLOWTIME), 500.0f, p_paddle, p_blackholePosition);
+            m_powerUps.push_back(slowTime);
+            break;
+        }
 	}
 }
 

@@ -131,17 +131,19 @@ void BOBall::SetStuckToPad(bool p_stuck)
 
 void BOBall::Move(double p_deltaTime, sphere p_blackHoleBounds)
 {
+    float timescale = BOPhysics::GetTimeScale();
+
 	if (m_Fuel > 0)
 	{
-		m_position.x = (float)(m_speed * p_deltaTime) * m_direction.x + m_position.x;
-		m_position.y = (float)(m_speed * p_deltaTime) * m_direction.y + m_position.y;
+		m_position.x = (float)(m_speed * p_deltaTime * timescale) * m_direction.x + m_position.x;
+        m_position.y = (float)(m_speed * p_deltaTime * timescale) * m_direction.y + m_position.y;
 		m_sprite = m_sprite2;
-		m_Fuel -= (float)p_deltaTime;
+		m_Fuel -= (float)p_deltaTime*timescale;
 	}
 	else
 	{
-		m_position.x = (float)(0.75*m_speed * p_deltaTime) * m_direction.x + m_position.x;
-		m_position.y = (float)(0.75*m_speed * p_deltaTime) * m_direction.y + m_position.y;
+        m_position.x = (float)(0.75*m_speed * p_deltaTime * timescale) * m_direction.x + m_position.x;
+        m_position.y = (float)(0.75*m_speed * p_deltaTime * timescale) * m_direction.y + m_position.y;
 		m_sprite = m_sprite3;
 		SetDirection(BOPhysics::BlackHoleGravity(GetBoundingSphere(), GetDirection(), GetSpeed(), p_blackHoleBounds, p_deltaTime));
 	}

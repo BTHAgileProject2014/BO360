@@ -139,7 +139,7 @@
       <Filter>Source Files\Blocks</Filter>
     </ClCompile>
     <ClCompile Include="BOTextureManager.cpp">
-	  <Filter>Source Files</Filter>
+      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="BOKeyManager.cpp">
       <Filter>Source Files</Filter>
@@ -149,6 +149,9 @@
     </ClCompile>
     <ClCompile Include="BOObject.cpp">
       <Filter>Source Files\ObjectTypes</Filter>
+    </ClCompile>
+    <ClCompile Include="BOSlowTime.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -261,7 +264,7 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="BOTextureManager.h">
-	  <Filter>Header Files</Filter>
+      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="BOKeyManager.h">
       <Filter>Header Files</Filter>
@@ -271,6 +274,9 @@
     </ClInclude>
     <ClInclude Include="BOObject.h">
       <Filter>Header Files\ObjectTypes</Filter>
+    </ClInclude>
+    <ClInclude Include="BOSlowTime.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

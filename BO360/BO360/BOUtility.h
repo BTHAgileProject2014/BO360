@@ -512,7 +512,8 @@ enum PowerUpTypes
 	PUBiggerPad,
 	PUSmallerPad,
 	PUShield,
-	PUExtraBall
+	PUExtraBall,
+    PUSlowTime
 };
 
 inline void ThrowInitError(std::string p_className)
@@ -533,6 +534,7 @@ enum Textures
 	TEXHEXPU0,
 	TEXSHIELD,
 	TEXPUMULTIBALL,
+    TEXPUSLOWTIME,
 	TEXPU2,
 	TEXPU3,
 	TEXBALLTRAIL,

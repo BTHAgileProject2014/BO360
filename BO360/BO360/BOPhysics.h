@@ -31,6 +31,8 @@ public:
 	static float2 BallPadCollision(sphere p_sphere, float2 p_sphereDir, sphere p_padSphere, double p_startAngle, double p_endAngle);//
 	static float CalculateBallFuel(float p_fuel, double p_deltaTime);//
 	static int CheckCollisionBallShield(sphere p_sphere, sphere p_padSphere);//
+    static float GetTimeScale();
+    static void SetTimeScale(float p_timeScale);
 
 private:
 	static float2 CalculateNewDir(float2 currentDir, float p_padAngle, float p_maxWidthAngle, float p_ballAngle);//
@@ -38,5 +40,7 @@ private:
 
 	static const double PI;
 	static const double HALF_PI;
+
+    static float m_timeScale;
 };
 #endif

@@ -54,6 +54,8 @@ void BOTextureManager::LoadTexture()
 	GetInstance().textureList.push_back(texture);
 	texture = BOGraphicInterface::LoadTexture("Sprites/PlaceHolderPNG/Powerups/placeholderPowerupMultBall.png");
 	GetInstance().textureList.push_back(texture);
+    texture = BOGraphicInterface::LoadTexture("Sprites/PlaceHolderPNG/Powerups/placeholderSlowTime.png");
+    GetInstance().textureList.push_back(texture);
 	texture = BOGraphicInterface::LoadTexture("Sprites/PlaceHolderPNG/Powerups/placeholderPowerup2.png");
 	GetInstance().textureList.push_back(texture);
 	texture = BOGraphicInterface::LoadTexture("Sprites/PlaceHolderPNG/Powerups/placeholderPowerup3.png");

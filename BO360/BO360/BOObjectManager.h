@@ -22,6 +22,7 @@
 #include "BOBlockMultiTexture.h"
 #include "BOKeyManager.h"
 #include "BOTextureManager.h"
+#include "BOSlowTime.h"
 
 class BOObjectManager : public BOComponent, public BOPUSubscriber ,public BOSubscriber
 {
@@ -60,6 +61,8 @@ private:
 	std::vector<BOBall*> m_ballList;
 	std::vector<BOBlock*> m_blockList;
 	BOKeyManager m_keyManager;
+    BOSlowTime m_SlowTime;
+
 
 	double m_SecondsPerParticle; // Should be moved into objects that use it
 };

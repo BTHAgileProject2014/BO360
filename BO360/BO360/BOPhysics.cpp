@@ -3,6 +3,8 @@
 const double BOPhysics::PI = 3.14159265359;
 const double BOPhysics::HALF_PI = PI / 2;
 
+float BOPhysics::m_timeScale;
+
 // Balls
 bool BOPhysics::CollisionRadiusRadius(float2 p_centerA, float p_radiusA, float2 p_centerB, float p_radiusB)
 {
@@ -391,4 +393,14 @@ int BOPhysics::CheckCollisionBallShield(sphere p_sphere, sphere p_padSphere)
 		}
 	}
 	return 0;
+}
+
+float BOPhysics::GetTimeScale()
+{
+    return m_timeScale;
+}
+
+void BOPhysics::SetTimeScale(float p_timeScale)
+{
+    m_timeScale = p_timeScale;
 }
