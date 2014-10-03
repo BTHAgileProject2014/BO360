@@ -14,7 +14,6 @@ bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight)
 {
 	m_life = 4;
 	BOHUDManager::SetLives(m_life);
-    m_hasShockwave = false;
 
 	// Initialize the map loader.
 	bool result;
@@ -82,6 +81,16 @@ bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight)
 
 	m_Shield.Initialize(int2(200, 200), BOTextureManager::GetTexture(TEXSHIELD), BOGraphicInterface::GetWindowSize());
 
+    // Add the shockwave
+    m_shockwave = BOShockwave();
+    result = m_shockwave.Initialize();
+    if (!result)
+    {
+        std::cout << "Initialize shockwave failed" << std::endl;
+
+        return false;
+    }
+
 	return true;
 }
 
@@ -118,12 +127,14 @@ void BOObjectManager::Shutdown()
 	BOPublisher::Unsubscribe(this);
 	m_paddle.Shutdown();
 	m_keyManager.Shutdown();
+    m_shockwave.Shutdown();
 }
 
 void BOObjectManager::Update(double p_deltaTime)
 {
 	m_blackHole.Update();
 	m_paddle.Update(p_deltaTime);
+    m_shockwave.Update(p_deltaTime);
 
 	// Update blocks
 	for (unsigned int i = 0; i < m_blockList.size(); i++)
@@ -222,12 +233,6 @@ void BOObjectManager::Handle(PowerUpTypes p_type, bool p_activated)
 			AddNewBall();
 		}
 		break;
-    case PUShockwave:
-        if (p_activated)
-        {
-            m_hasShockwave = true;
-        }
-        break;
 	}
 }
 
@@ -240,7 +245,7 @@ void BOObjectManager::Handle(InputMessages p_inputMessage)
 			m_ballList[i]->SetStuckToPad(false);
 	    }   
     }
-    if (m_hasShockwave && p_inputMessage.xKey)
+    if (p_inputMessage.xKey && m_shockwave.Activate())
     {
         ActivateShockwave();
     }
@@ -562,5 +567,4 @@ void BOObjectManager::ActivateShockwave()
     {
         m_ballList[i]->ActivateShockwave();
     }
-    m_hasShockwave = false;
 }
