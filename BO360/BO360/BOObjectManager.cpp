@@ -360,6 +360,10 @@ bool BOObjectManager::LoadBlocksFromMap(std::string p_filename)
 				{
 					result = block->Initialize(float2(x, y), int2(40, 40), BOTextureManager::GetTexture(TEXHEXPU3), PUBiggerPad, score);
 				}
+                else if (i % 100 == 77)
+                {
+                    result = block->Initialize(float2(x, y), int2(40, 40), BOTextureManager::GetTexture(TEXHEXPUSHOCKWAVE), PUShockwave, score);
+                }
 				else
 				{
 					result = block->Initialize(float2(x, y), int2(40, 40), BOTextureManager::GetTexture(TEXHEXSTANDARD), PUNone, score);

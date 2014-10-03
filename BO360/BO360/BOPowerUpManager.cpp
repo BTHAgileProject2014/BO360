@@ -68,8 +68,7 @@ void BOPowerUpManager::AddPowerUp(PowerUpTypes p_type, float2 p_startPosition, B
         case PUShockwave:
         {
             BOPowerUp* shockwave = new BOPowerUp();
-            // Todo change the texture for the powerup
-            shockwave->Initialize(PUShockwave, p_startPosition, int2(30, 30), BOTextureManager::GetTexture(TEXPUMULTIBALL), 500.0f, p_paddle, p_blackholePosition);
+            shockwave->Initialize(PUShockwave, p_startPosition, int2(30, 30), BOTextureManager::GetTexture(TEXPUSHOCKWAVE), 500.0f, p_paddle, p_blackholePosition);
             m_powerUps.push_back(shockwave);
             break;
         }
