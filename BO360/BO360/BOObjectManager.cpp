@@ -2,11 +2,12 @@
 
 BOObjectManager::BOObjectManager()
 {
-}
 
+}
 
 BOObjectManager::~BOObjectManager()
 {
+
 }
 
 bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight)
@@ -24,7 +25,7 @@ bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight)
 	}
 
 	// Initialize the background.
-	result = m_background.Initialize(float2(p_windowWidth / 2.0f, p_windowHeight / 2.0f), int2(p_windowWidth, p_windowHeight), "Sprites/PlaceHolderPNG/Background.png");
+	result = m_background.Initialize(float2(p_windowWidth / 2.0f, p_windowHeight / 2.0f), int2(p_windowWidth, p_windowHeight), BOTextureManager::GetTexture(TEXBACKGROUND));
 	if (!result)
 	{
 		ThrowInitError("BOBackground");
@@ -32,7 +33,7 @@ bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight)
 	}
 
 	// Initialize the black hole.
-	result = m_blackHole.Initialize(float2((p_windowWidth / 2.0f), (p_windowHeight / 2.0f)), int2(200, 200), "Sprites/PlaceHolderPNG/placeholderBlackhole110x110.png");
+	result = m_blackHole.Initialize(float2((p_windowWidth / 2.0f), (p_windowHeight / 2.0f)), int2(200, 200), BOTextureManager::GetTexture(TEXBLACKHOLE));
 	if (!result)
 	{
 		ThrowInitError("BOBlackHole");
@@ -40,7 +41,7 @@ bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight)
 	}
 
 	// Initialize the pad.
-	result = m_paddle.Initialize(float2((p_windowWidth / 2.0f), (p_windowHeight / 2.0f)), int2(208, 208), "Sprites/PlaceHolderPNG/placeholderPadSegment5.png");
+	result = m_paddle.Initialize(float2((p_windowWidth / 2.0f), (p_windowHeight / 2.0f)), int2(208, 208), BOTextureManager::GetTexture(TEXPADSEG));
 	if (!result)
 	{
 		ThrowInitError("BOPaddle");
@@ -53,6 +54,15 @@ bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight)
 	if (!result)
 	{
 		ThrowInitError("BOParticleSystem");
+		return false;
+	}
+
+	// Initialize the key manager
+	result = m_keyManager.Initialize();
+	if (!result)
+	{
+		std::cout << "Initialize key manager failed!" << std::endl;
+
 		return false;
 	}
 
@@ -69,7 +79,7 @@ bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight)
 	BOPowerUpManager::AddSubscriber(this);
 	BOPublisher::AddSubscriber(this);
 
-	m_Shield.Initialize(int2(200, 200), "Sprites/PlaceHolderPNG/Powerups/placeholderSheild.png", BOGraphicInterface::GetWindowSize());
+	m_Shield.Initialize(int2(200, 200), BOTextureManager::GetTexture(TEXSHIELD), BOGraphicInterface::GetWindowSize());
 
 	return true;
 }
@@ -90,7 +100,7 @@ void BOObjectManager::Shutdown()
 
 
 	// Clear the blocks
-	for (int i = 0; i < m_blockList.size(); i++)
+	for (unsigned int i = 0; i < m_blockList.size(); i++)
 	{
 		m_blockList[i]->Shutdown();
 		delete m_blockList[i];
@@ -106,12 +116,11 @@ void BOObjectManager::Shutdown()
 	BOPublisher::Unsubscribe(&m_paddle);
 	BOPublisher::Unsubscribe(this);
 	m_paddle.Shutdown();
+	m_keyManager.Shutdown();
 }
 
 void BOObjectManager::Update(double p_deltaTime)
 {
-	bool result;
-	
 	m_blackHole.Update();
 	m_paddle.Update(p_deltaTime);
 
@@ -123,51 +132,64 @@ void BOObjectManager::Update(double p_deltaTime)
 
 	// Update balls
 	for (unsigned int i = 0; i < m_ballList.size(); i++)
-	{
+			{
 		m_ballList[i]->Update(p_deltaTime, m_blackHole.GetBoundingSphere());
 
 		if (m_ballList[i]->IsStuckToPad())
-		{
+				{
 			m_ballList[i]->SetPosition(m_paddle.GetBallSpawnPosition());
 		}
+
 		else
-		{
+					{
 			BallBlockCollision(m_ballList[i]);
 
 			BallPadCollision(m_ballList[i]);
 
-			CheckBallOutOfBounds(i);
+		CheckBallOutOfBounds(i);
 
 			if (BallDied(m_ballList[i]))
 			{
-				m_ballList[i]->Shutdown();
+				//m_ballList[i]->Shutdown();
 				delete m_ballList[i];
 				m_ballList.erase(m_ballList.begin() + i);
 				i--;
 				continue;
-			}
-		
-			// Bounce on shield
-			// This should change once a new ball-ball collision has been added to the phusics class
-			float2 newdir = m_Shield.Update(p_deltaTime, m_ballList[i]->GetBoundingSphere(), m_ballList[i]->GetDirection());
-			m_ballList[i]->SetDirection(newdir);
 		}
+		
+			// Bounce on shield, this should change once a new ball-ball collision has been added to the physics class.
+		float2 newdir = m_Shield.Update(p_deltaTime, m_ballList[i]->GetBoundingSphere(), m_ballList[i]->GetDirection());
+		m_ballList[i]->SetDirection(newdir);
+
+		// Check collision betwen ball and keys
+		m_keyManager.Update(*m_ballList[i]);
 	}
+	}
+
 	UpdateParticles(p_deltaTime);
-}
+			}
 
 void BOObjectManager::Draw()
 {
 	m_background.Draw();
-
 	m_blackHole.Draw();
+	m_keyManager.Draw();
 
 	for (unsigned int i = 0; i < m_blockList.size(); i++)
 	{
 		if (!m_blockList[i]->GetDead())
 		{
+            if (m_blockList[i]->m_animated)
+            {
+                m_blockList[i]->DrawAnimated();
+            }
+
+            else
+            {
 			m_blockList[i]->Draw();
 		}
+		
+	}
 		
 	}
 		
@@ -201,16 +223,18 @@ void BOObjectManager::Handle(PowerUpTypes p_type, bool p_activated)
 		break;
 	}
 }
+
 void BOObjectManager::Handle(InputMessages p_inputMessage)
 {
 	if (p_inputMessage.spacebarKey)
 	{
-		for (int i = 0; i < m_ballList.size(); i++)
+		for (unsigned int i = 0; i < m_ballList.size(); i++)
 		{
 			m_ballList[i]->SetStuckToPad(false);
 	}
 }
 }
+
 bool BOObjectManager::AddNewBall()
 {
 	BOBall* ball = new BOBall();
@@ -224,11 +248,12 @@ bool BOObjectManager::AddNewBall()
 	ballPos.x += ballDir.x * 6;
 	ballPos.y += ballDir.y * 6;
 
-	if (!ball->Initialize(ballPos, int2(15,15), "Sprites/PlaceHolderPNG/placeholderBoll10x10.png", 400.0f, ballDir, windowSize))
+	if (!ball->Initialize(ballPos, int2(15,15), BOTextureManager::GetTexture(TEXBALL), 400.0f, ballDir, windowSize))
 	{
 		ThrowInitError("BOBall");
 		return false;
 	}
+
 	m_ballList.push_back(ball);
 	return true;
 }
@@ -237,6 +262,12 @@ bool BOObjectManager::LostGame()
 {
 	return m_life == 0;
 }
+
+bool BOObjectManager::WonGame()
+{
+	return m_keyManager.AllKeysCatched();
+}
+
 void BOObjectManager::CheckBallOutOfBounds(int p_index)
 {
 	float changePosToo = 10.0f;
@@ -248,6 +279,7 @@ void BOObjectManager::CheckBallOutOfBounds(int p_index)
 	{
 		ballPos.x = windowSize.x - changePosToo;
 	}
+
 	if (ballPos.x <= checkPixelsInwards)//If out of bounds to the left
 	{
 		ballPos.x = changePosToo;
@@ -257,6 +289,7 @@ void BOObjectManager::CheckBallOutOfBounds(int p_index)
 	{
 		ballPos.y = windowSize.y - changePosToo;
 	}
+
 	if (ballPos.y <= checkPixelsInwards)//If out of bounds up
 	{
 		ballPos.y = changePosToo;
@@ -282,14 +315,15 @@ bool BOObjectManager::LoadBlocksFromMap(std::string p_filename)
 	static const int marginX = 60;
 	static const int marginY = 50;
 
-	for (int i = 0; i < blockDescriptions.size(); i++)
+	for (unsigned int i = 0; i < blockDescriptions.size(); i++)
 	{
 		BOBlock* block;
 		
 		x = (hexagonWidth * blockDescriptions[i].m_position.x) + marginX;
 		y = (hexagonHeight * blockDescriptions[i].m_position.y) + marginY;
 
-		if ((int)blockDescriptions[i].m_position.x % 2 == 0) // Every other row
+		// Every other row shall be offset to tile the hexagons correctly.
+		if ((int)blockDescriptions[i].m_position.x % 2 == 0) 
 		{
 			y += blockHeightDifference;
 		}
@@ -305,54 +339,67 @@ bool BOObjectManager::LoadBlocksFromMap(std::string p_filename)
 				// This fat chunk of code is to be removed when the map loader loads power ups
 				if (i % 100 == 1)
 				{
-					result = block->Initialize(float2(x, y), int2(40, 40), "Sprites/PlaceholderPNG/Hexagons/placeholderHexagonPU2.png", PUShield, score);
+					result = block->Initialize(float2(x, y), int2(40, 40), BOTextureManager::GetTexture(TEXHEXPU2), PUShield, score);
 				}
 				else if (i % 100 == 33)
 				{
-					result = block->Initialize(float2(x, y), int2(40, 40), "Sprites/PlaceholderPNG/Hexagons/placeholderHexagonPU1.png", PUExtraBall, score);
+					result = block->Initialize(float2(x, y), int2(40, 40), BOTextureManager::GetTexture(TEXHEXPU1), PUExtraBall, score);
 				}
 				else if (i % 100 == 66)
 				{
-					result = block->Initialize(float2(x, y), int2(40, 40), "Sprites/PlaceholderPNG/Hexagons/placeholderHexagonPU3.png", PUBiggerPad, score);
+					result = block->Initialize(float2(x, y), int2(40, 40), BOTextureManager::GetTexture(TEXHEXPU3), PUBiggerPad, score);
 				}
 				else
 				{
-					result = block->Initialize(float2(x, y), int2(40, 40), "Sprites/PlaceholderPNG/Hexagons/placeholderHexagon40x40.png", PUNone, score);
+					result = block->Initialize(float2(x, y), int2(40, 40), BOTextureManager::GetTexture(TEXHEXSTANDARD), PUNone, score);
 				}
 				if (!result)
 				{
 					ThrowInitError("BOBlock");
 					return false;
 				}
+
+				m_blockList.push_back(block);
+
 				break;
 			}
 
 			case(DUBBLEHP) :
 			{
 				block = new BOBlockMultiTexture();
-				result = block->Initialize(float2(x, y), int2(40, 40), "Sprites/PlaceholderPNG/Hexagons/placeholderHexagon40x40red1.png", 3, PUNone, score);
+                result = block->InitializeAnimated(float2(x, y), int2(46, 42), int2(46, 42), 0, 5, 0, true, BOTextureManager::GetTexture(TEXHEXARMORED), 5, PUNone, score);
 				if (!result)
 				{
 					ThrowInitError("BOBlockMultiTexture");
 					return false;
 				}
 				
-				dynamic_cast<BOBlockMultiTexture*>(block)->AddTextureForHPAbove("Sprites/PlaceholderPNG/Hexagons/placeholderHexagon40x40red2.png", 1);
-				dynamic_cast<BOBlockMultiTexture*>(block)->AddTextureForHPAbove("Sprites/PlaceholderPNG/Hexagons/placeholderHexagon40x40red3.png", 2);
+				m_blockList.push_back(block);
+
 				break;
 			}
 	
 			case(INDESTRUCTIBLE) :
 			{
 				block = new BOBlockIron();
-				result = block->Initialize(float2(x, y), int2(40, 40), "Sprites/PlaceholderPNG/Hexagons/placeholderHexagon40x40gray.png", PUNone, score);
+                result = block->Initialize(float2(x, y), int2(40, 40), BOTextureManager::GetTexture(TEXHEXINDES), PUNone, score);
 				if (!result)
 				{
 					ThrowInitError("BOBlockIron");
 					return false;
 				}
+
+				m_blockList.push_back(block);
+
 				break;
 			}
+
+			case(KEY) :
+			{
+                m_keyManager.AddKey(float2(x, y), int2(80, 80), 0.4f, BOTextureManager::GetTexture(TEXKEY));
+				break;
+			}
+
 			default:
 			{
 				std::cout << "Unknown block type in BOObjectManager::LoadBlocksFromMap" << std::endl;
@@ -360,7 +407,6 @@ bool BOObjectManager::LoadBlocksFromMap(std::string p_filename)
 				break;
 			}
 		}
-		m_blockList.push_back(block);
 	}
 
 	return true;
@@ -408,7 +454,9 @@ void BOObjectManager::BallBlockCollision(BOBall* p_ball)
 				// Add score
 				BOScore::AddScore(m_blockList[i]->GetScore());
 
+                delete m_blockList[i];
 				m_blockList.erase(m_blockList.begin() + i);
+
 			}
 		}
 	}
@@ -419,13 +467,13 @@ void BOObjectManager::BallPadCollision(BOBall* p_ball)
     float2 newDir;
 
     if (BOPhysics::BallBouncedOnPad(*p_ball, m_paddle, newDir))
-    {
+	{
         p_ball->SetDirection(newDir);
-        p_ball->BouncedOnPad();
+		p_ball->BouncedOnPad();
 
-        // Play sound for bounce on pad
-        BOSoundManager::PlaySound(SOUND_BOUNCEONPAD);
-    }
+		// Play sound for bounce on pad
+		BOSoundManager::PlaySound(SOUND_BOUNCEONPAD);
+	}
     /*
 	float2 result = BOPhysics::BallPadCollision(p_ball->GetBoundingSphere(), p_ball->GetDirection(), m_paddle.GetBoundingSphere(), m_paddle.GetRotation() - 10.5, m_paddle.GetDegrees());
 	if (!(result.x == 0 && result.y == 0))
@@ -476,6 +524,7 @@ void BOObjectManager::UpdateParticles(double p_deltaTime)
 
 		m_SecondsPerParticle = 0.002f;
 	}
+
 	else if (m_SecondsPerParticle < 0.0f)
 	{
 		for (unsigned int i = 0; i < m_ballList.size(); i++)
@@ -485,6 +534,7 @@ void BOObjectManager::UpdateParticles(double p_deltaTime)
 				m_particleSystem.BallTrail(m_ballList[i]->GetPosition());
 			}
 		}
+
 		m_SecondsPerParticle = 0.025f;
 	}
 

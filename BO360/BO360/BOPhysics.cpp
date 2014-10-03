@@ -30,6 +30,7 @@ bool BOPhysics::CheckCollisionBoxToBox(box p_box1, box p_box2)
 
 	return true;
 }
+
 bool BOPhysics::CheckCollisionPointToBox(int2 p_point, box p_box)
 {
 	if (p_point.x > p_box.pos.x && p_point.x < (p_box.pos.x + p_box.size.x) && p_point.y > p_box.pos.y && p_point.y < (p_box.pos.y + p_box.size.y))
@@ -39,6 +40,7 @@ bool BOPhysics::CheckCollisionPointToBox(int2 p_point, box p_box)
 
 	return false;
 }
+
 bool BOPhysics::CheckCollisionSphereToHexagon(sphere p_sphere, hexagon p_hexagon, float2& p_normal)
 {
 	// Create 2 points for checking collision point on line
@@ -160,6 +162,7 @@ bool BOPhysics::CheckCollisionSphereToHexagon(sphere p_sphere, hexagon p_hexagon
 
 	return false;
 }
+
 void BOPhysics::CheckCollisionSphereToLine(sphere p_sphere, float2 p_point1, float2 p_point2, float2& p_returnValue1, float2& p_returnValue2)
 {
 	float2 localPoint1, localPoint2, point2MinusPoint1;
@@ -173,12 +176,14 @@ void BOPhysics::CheckCollisionSphereToLine(sphere p_sphere, float2 p_point1, flo
 	b = 2 * ((point2MinusPoint1.x * localPoint1.x) + (point2MinusPoint1.y * localPoint1.y));
 	c = (localPoint1.x * localPoint1.x) + (localPoint1.y * localPoint1.y) - (p_sphere.radius * p_sphere.radius);
 	delta = b * b - (4 * a * c);
+
 	if (delta < 0)	// No intersection
 	{
 		// Return "null" for no intersection
 		p_returnValue1 = float2(-1000, -1000);
 		p_returnValue2 = float2(-1000, -1000);
 	}
+
 	else if (delta == 0) // One intersection
 	{
 		// Code for returning intersecting point
@@ -186,6 +191,7 @@ void BOPhysics::CheckCollisionSphereToLine(sphere p_sphere, float2 p_point1, flo
 		p_returnValue1 = p_point1 + (point2MinusPoint1 * u1);
 		p_returnValue2 = float2(-1000, -1000);		// Return "null" for no intersect at second point
 	}
+
 	else if (delta > 0) // Two intersections
 	{
 		// Code for returning the two points intersecting
@@ -198,6 +204,7 @@ void BOPhysics::CheckCollisionSphereToLine(sphere p_sphere, float2 p_point1, flo
 		p_returnValue2 = p_point1 + (point2MinusPoint1 * u2);
 	}
 }
+
 /// <summary> 
 /// Generates a new direction for the ball if it hits the pad.
 /// Returns (0,0) if there is no collision.
@@ -231,8 +238,8 @@ float2 BOPhysics::BallPadCollision(sphere p_sphere, float2 p_sphereDir, sphere p
 	NormalizeAngle(padCenterAngle);
 
 	// Calculate a vector pointing towards the pad's center in SDL-Draw-Space
-	float dirX = cos(padCenterAngle);
-	float dirY = -sin(padCenterAngle);
+	float dirX = (float)cos(padCenterAngle);
+	float dirY = (float)-sin(padCenterAngle);
 	float2 padCenterVector = float2(dirX, dirY).normalized();
 
 	// Calculate a vector from the center to the sphere
@@ -242,21 +249,24 @@ float2 BOPhysics::BallPadCollision(sphere p_sphere, float2 p_sphereDir, sphere p
 	// Calculate the angle for the centerToSphere vector
 	// Since acos has a period of PI, so some angles will need to be flipped
 	float ctpAngle = acos(centerToSphere.x);
+
 	if (centerToSphere.x < 0 && centerToSphere.y < 0)
 	{
 		ctpAngle *= -1;
 	}
+
 	if (centerToSphere.x > 0 && centerToSphere.y < 0)
 	{
 		ctpAngle *= -1;
 	}
+
 	NormalizeAngle(ctpAngle);
 	NormalizeAngle(startAngleMA);
 
 	// Check if the ball angle is within the borders of the pad
 	if ((ctpAngle < startAngleMA) && (ctpAngle > (startAngleMA - padSpread)))
 	{
-		return CalculateNewDir(p_sphereDir, padCenterAngle, padSpread / 2, ctpAngle);
+		return CalculateNewDir(p_sphereDir, (float)padCenterAngle, (float)padSpread / 2.0f, ctpAngle);
 	}
 
 	// Special case when the pad is around the 0 area
@@ -266,12 +276,13 @@ float2 BOPhysics::BallPadCollision(sphere p_sphere, float2 p_sphereDir, sphere p
 
 		if ((ctpAngle > 0) && (ctpAngle < startAngleMA) || ((ctpAngle > padAngle) && (ctpAngle < (2 * PI))))
 		{
-			return CalculateNewDir(p_sphereDir, padCenterAngle, padSpread / 2, ctpAngle);
+			return CalculateNewDir(p_sphereDir, (float)padCenterAngle, (float)padSpread / 2.0f, ctpAngle);
 		}
 
 	}
 	return float2(0, 0);
 }
+
 /// <summary> 
 /// Calculates the bounce around a biased angle
 /// Returns (0,0) if there is no collision.
@@ -280,11 +291,11 @@ float2 BOPhysics::CalculateNewDir(float2 p_currentDir, float p_padAngle, float p
 {
 	// Bounce normals will be biased depending on the position of the pad that we bounce on.
 	// biasAngle is the maximum bias, only reached at the edges of the pad
-	static const float biasAngle = 1.57;
+	static const float biasAngle = 1.57f;
 
 	// Amplify the ball and pad rotations by 2*PI to avoid 0-rotation problems
-	float padAngleAmp = p_padAngle + 2 * PI;
-	float ballAngleAmp = p_ballAngle + 2 * PI;
+	float padAngleAmp = p_padAngle + 2.0f * (float)PI;
+	float ballAngleAmp = p_ballAngle + 2.0f * (float)PI;
 
 	// Calculate the percentage of our position from the pad center to edge
 	float diffVal = (padAngleAmp - ballAngleAmp);
@@ -304,6 +315,7 @@ float2 BOPhysics::CalculateNewDir(float2 p_currentDir, float p_padAngle, float p
 
 	return biasedNormal;
 }
+
 float2 BOPhysics::ReflectBallAroundNormal(float2 p_ballDir, float2 p_normal)
 {
 
@@ -323,6 +335,7 @@ float2 BOPhysics::ReflectBallAroundNormal(float2 p_ballDir, float2 p_normal)
 	}
 	return newBallDir;
 }
+
 // Gravity calculation
 float2 BOPhysics::BlackHoleGravity(sphere p_ball, float2 p_ballDirection, float p_ballSpeed, sphere p_blackHole, double p_deltaTime)
 {
@@ -335,29 +348,28 @@ float2 BOPhysics::BlackHoleGravity(sphere p_ball, float2 p_ballDirection, float 
 	double force = ((G * p_ballSpeed) / (distanceAdjustment*distanceAdjustment)); // F = G*M/R^2  -> Gravitations formel		//5000000000000
 
 	center = center.normalized();//Normaliserar vektorn mot hålet 
- 	center = center * force;//Multiplicerar vektorn mot hålet med kraften
+	center = center * (float)force;//Multiplicerar vektorn mot hålet med kraften
 	
-	newDirection = float2(newDirection.x * (p_ballSpeed * p_deltaTime) + center.x, newDirection.y * (p_ballSpeed * p_deltaTime) + center.y);//Beräknar längden av bollens riktningsvektor
+	newDirection = float2(newDirection.x * (p_ballSpeed * (float)p_deltaTime) + center.x, newDirection.y * (p_ballSpeed * (float)p_deltaTime) + center.y);//Beräknar längden av bollens riktningsvektor
 
 	return newDirection = newDirection.normalized();//Returnerar den normaliserade riktningsvektorn.
 }
+
 float BOPhysics::CalculateDistance(float2 p_ball, float2 p_blackHole)
 {
 	return sqrt(((p_ball.x - p_blackHole.x)*(p_ball.x - p_blackHole.x)) + ((p_ball.y - p_blackHole.y)*(p_ball.y - p_blackHole.y)));
 }
+
 // Fuel Calculation
 float BOPhysics::CalculateBallFuel(float p_fuel, double p_deltaTime)
 {
-	return p_fuel - (1.0f* p_deltaTime);
+	return p_fuel - (float)(1.0f * p_deltaTime);
 }
+
 // Shield Collision Calculation
 int BOPhysics::CheckCollisionBallShield(sphere p_sphere, sphere p_padSphere)
 {
-
 	//Change to new ball ball collision when it is done.
-
-
-
 	float2 centerPad, centerBall;
 	float padRadius, ballRadius;
 	centerPad = p_padSphere.pos;
