@@ -15,7 +15,7 @@ bool BOSystem::Initialize()
 	bool result;
 	m_quit = false;
 
-	// Intilialize timer.
+	// Initialize timer.
 	m_deltaTime = 0;
 	m_totalTime = 0;
 	m_FPS = 0;
@@ -28,7 +28,7 @@ bool BOSystem::Initialize()
 		return false;
 	}
 
-	// Initlialize input manager.
+	// Initialize input manager.
 	result = m_input.Initialize();
 	if (!result)
 	{
@@ -41,7 +41,7 @@ bool BOSystem::Initialize()
 	m_windowWidth = 1300;
 	m_windowHeight = 900;
 
-	// Initlialize the graphichs engine.
+	// Initialize the graphics engine.
 	if (!BOGraphicInterface::Initialize(m_windowWidth, m_windowHeight))
 	{
 		std::cout << "Initialize graphics engine failed!" << std::endl;
@@ -49,7 +49,7 @@ bool BOSystem::Initialize()
 		return false;
 	}
 
-	// Initlialize the texturemanager
+	// Initialize the texturemanager
 	if (!BOTextureManager::Initialize())
 	{
 		std::cout << "Initialize texturemanager failed!" << std::endl;
@@ -57,7 +57,7 @@ bool BOSystem::Initialize()
 		return false;
 	}
 
-	// Initlialize the text manager.
+	// Initialize the text manager.
 	result = BOTextManager::Initialize();
 	if (!result)
 	{
@@ -85,7 +85,7 @@ bool BOSystem::InitializeMap()
 {
 	bool result;
 
-	// Initlialize the power up manager.
+	// Initialize the power up manager.
 	result = m_powerUpManager.Initialize();
 	if (!result)
 	{

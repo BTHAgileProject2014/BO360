@@ -16,18 +16,21 @@ bool BOBall::Initialize(float2 p_position, int2 p_size, SDL_Texture* p_sprite, f
 	{
 		return false;
 	}
-	m_damage = 10000;
+	m_damage = 1;
 	m_Fuel = 0.0f;
 	m_canColide = true;
 	m_speed = p_speed;
 	m_direction = p_direction.normalized();
 	m_windowSize = p_windowSize;
 	m_stuckToPad = true;
-	
+	m_onFire = false;
+	m_fireTimeElapsed = 0; // Set duration for fireball powerup in header, const variable
+
 	// Load texture.
 	m_sprite = p_sprite;
 	m_sprite2 = BOTextureManager::GetTexture(TEXDEBUGBALL);
 	m_sprite3 = m_sprite;
+	m_sprite4 = BOTextureManager::GetTexture(TEXFIREBALL);
 
 	m_mouseCheat = false;
 
@@ -40,6 +43,19 @@ void BOBall::Update(double p_deltaTime, sphere p_blackHoleBounds)
 	{
 		Move(p_deltaTime, p_blackHoleBounds);
 	}
+	if (m_onFire)
+	{
+		m_fireTimeElapsed += p_deltaTime;
+		if (m_fireTimeElapsed >= m_fireTimeDuration)
+		{
+			SetBallOnFire(false);
+		}
+	}
+	else if (!m_onFire)
+	{
+		m_fireTimeElapsed = 0;
+	}
+
 }
 
 void BOBall::SetSpeed(float p_speed)
@@ -135,15 +151,21 @@ void BOBall::Move(double p_deltaTime, sphere p_blackHoleBounds)
 	{
 		m_position.x = (float)(m_speed * p_deltaTime) * m_direction.x + m_position.x;
 		m_position.y = (float)(m_speed * p_deltaTime) * m_direction.y + m_position.y;
-		m_sprite = m_sprite2;
 		m_Fuel -= (float)p_deltaTime;
+		if (!m_onFire)
+		{
+			m_sprite = m_sprite2;
+		}			
 	}
 	else
 	{
 		m_position.x = (float)(0.75*m_speed * p_deltaTime) * m_direction.x + m_position.x;
 		m_position.y = (float)(0.75*m_speed * p_deltaTime) * m_direction.y + m_position.y;
-		m_sprite = m_sprite3;
 		SetDirection(BOPhysics::BlackHoleGravity(GetBoundingSphere(), GetDirection(), GetSpeed(), p_blackHoleBounds, p_deltaTime));
+		if (!m_onFire)
+		{
+			m_sprite = m_sprite3;
+		}
 	}
 
 	if (m_position.x < (m_size.x / 2) || m_position.x >(m_windowSize.x - (m_size.x / 2)))
@@ -171,4 +193,23 @@ void BOBall::SetPosition(float2 p_position)
 		p_position.y += m_direction.y * 6;
 	}
 	BOObject::SetPosition(p_position);
+}
+
+// input false for fire off: true for fire on
+void BOBall::SetBallOnFire(bool p_setOnFire)
+{
+	if (p_setOnFire)
+	{
+		m_sprite = m_sprite4;
+		m_onFire = true;
+	}
+	else if (!p_setOnFire)
+	{
+		m_sprite = m_sprite2;
+		m_onFire = false;
+	}
+}
+bool BOBall::IsOnFire() const
+{
+	return m_onFire;
 }

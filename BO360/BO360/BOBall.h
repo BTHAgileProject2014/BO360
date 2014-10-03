@@ -36,6 +36,8 @@ public:
 
 	bool IsStuckToPad();
 	void SetStuckToPad(bool p_stuck);
+	void SetBallOnFire(bool p_setOnFire);
+	bool IsOnFire() const;
 
 private:
 	int m_damage;
@@ -46,8 +48,12 @@ private:
 	int2 m_windowSize;
 	float m_Fuel;
 	bool m_stuckToPad;
+	bool m_onFire;
+	double m_fireTimeElapsed;
+	const double m_fireTimeDuration = 5; // 5 seconds for fireball duration
 
 	SDL_Texture* m_sprite2;
 	SDL_Texture* m_sprite3;
+	SDL_Texture* m_sprite4;
 };
 #endif

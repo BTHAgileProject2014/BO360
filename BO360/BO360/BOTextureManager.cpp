@@ -13,7 +13,7 @@ BOTextureManager& BOTextureManager::GetInstance()
 
 bool BOTextureManager::Initialize()
 {
-	// Initialze all textures we use
+	// Initialize all textures we use
 	LoadTexture();
 
 	return true;
@@ -33,6 +33,8 @@ void BOTextureManager::LoadTexture()
 	GetInstance().textureList.push_back(texture);
 	texture = BOGraphicInterface::LoadTexture("Sprites/PlaceHolderPNG/placeholderBoll2.png");
 	GetInstance().textureList.push_back(texture);
+	texture = BOGraphicInterface::LoadTexture("Sprites/PlaceHolderPNG/placeholderBollFire.png");
+	GetInstance().textureList.push_back(texture);
 	// Hexagons
 	texture = BOGraphicInterface::LoadTexture("Sprites/Blocks/BlockRegular.png");
 	GetInstance().textureList.push_back(texture);
@@ -47,12 +49,16 @@ void BOTextureManager::LoadTexture()
 	GetInstance().textureList.push_back(texture);
 	texture = BOGraphicInterface::LoadTexture("Sprites/PlaceHolderPNG/Hexagons/placeholderHexagonPU3.png");
 	GetInstance().textureList.push_back(texture);
+	texture = BOGraphicInterface::LoadTexture("Sprites/PlaceHolderPNG/Hexagons/placeholderHexagonPU4.png");
+	GetInstance().textureList.push_back(texture); 
 	texture = BOGraphicInterface::LoadTexture("Sprites/PlaceHolderPNG/Hexagons/placeholderHexagonPU.png");
 	GetInstance().textureList.push_back(texture);
 	// Powerups
 	texture = BOGraphicInterface::LoadTexture("Sprites/PlaceHolderPNG/Powerups/placeholderSheild.png");
 	GetInstance().textureList.push_back(texture);
 	texture = BOGraphicInterface::LoadTexture("Sprites/PlaceHolderPNG/Powerups/placeholderPowerupMultBall.png");
+	GetInstance().textureList.push_back(texture);
+	texture = BOGraphicInterface::LoadTexture("Sprites/PlaceHolderPNG/Powerups/placeholderPowerup4.png");
 	GetInstance().textureList.push_back(texture);
 	texture = BOGraphicInterface::LoadTexture("Sprites/PlaceHolderPNG/Powerups/placeholderPowerup2.png");
 	GetInstance().textureList.push_back(texture);
