@@ -8,6 +8,7 @@
 static const double PI = 3.14159265359;
 static const double HALF_PI = PI * 0.5;
 static const double DEGREES_TO_RADIANS = PI / 180;
+static const double RADIANS_TO_DEGREES = 180 / PI;
 
 // Floating point value structs.
 struct float2
@@ -25,12 +26,12 @@ struct float2
 		y = p_y;
 	}
 
-	float length()
+	float length()const
 	{
 		return (float)sqrt(x*x + y*y);
 	}
 
-	float2 normalized()
+	float2 normalized()const
 	{
 		float2 normalizedFloat;
 		float lengthFloat;

@@ -14,11 +14,11 @@ public:
 
 	bool Initialize();
 	void Shutdown();
-	void Update(BOBall p_ball);
+	void Update(const BOBall& p_ball);
 	void Draw();
 
     void AddKey(float2 p_position, int2 p_size, float p_scale, SDL_Texture* p_sprite);
-	bool AllKeysCatched();
+	bool AllKeysCatched() const;
 
 private:
 	std::vector<BOObject> m_keys;
