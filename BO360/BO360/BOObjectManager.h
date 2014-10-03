@@ -48,8 +48,10 @@ private:
 	void BallPadCollision(BOBall* p_ball);
 	bool BallDied(BOBall* p_ball);
 	void UpdateParticles(double p_deltaTime);
+    void ActivateShockwave();
 
 	int m_life;
+    bool m_hasShockwave;
 
 	BOMapLoader m_mapLoader;
 	BOBackground m_background;

@@ -14,6 +14,7 @@ bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight)
 {
 	m_life = 4;
 	BOHUDManager::SetLives(m_life);
+    m_hasShockwave = false;
 
 	// Initialize the map loader.
 	bool result;
@@ -150,7 +151,7 @@ void BOObjectManager::Update(double p_deltaTime)
 
 			if (BallDied(m_ballList[i]))
 			{
-				//m_ballList[i]->Shutdown();
+				m_ballList[i]->Shutdown();
 				delete m_ballList[i];
 				m_ballList.erase(m_ballList.begin() + i);
 				i--;
@@ -221,6 +222,12 @@ void BOObjectManager::Handle(PowerUpTypes p_type, bool p_activated)
 			AddNewBall();
 		}
 		break;
+    case PUShockwave:
+        if (p_activated)
+        {
+            m_hasShockwave = true;
+        }
+        break;
 	}
 }
 
@@ -231,8 +238,12 @@ void BOObjectManager::Handle(InputMessages p_inputMessage)
 		for (unsigned int i = 0; i < m_ballList.size(); i++)
 		{
 			m_ballList[i]->SetStuckToPad(false);
-	}
-}
+	    }   
+    }
+    if (m_hasShockwave && p_inputMessage.xKey)
+    {
+        ActivateShockwave();
+    }
 }
 
 bool BOObjectManager::AddNewBall()
@@ -539,4 +550,13 @@ void BOObjectManager::UpdateParticles(double p_deltaTime)
 	}
 
 	m_particleSystem.Update(p_deltaTime);
+}
+
+void BOObjectManager::ActivateShockwave()
+{
+    for (unsigned int i = 0; i < m_ballList.size(); i++)
+    {
+        m_ballList[i]->ActivateShockwave();
+    }
+    m_hasShockwave = false;
 }

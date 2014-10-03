@@ -512,7 +512,8 @@ enum PowerUpTypes
 	PUBiggerPad,
 	PUSmallerPad,
 	PUShield,
-	PUExtraBall
+	PUExtraBall,
+    PUShockwave
 };
 
 inline void ThrowInitError(std::string p_className)

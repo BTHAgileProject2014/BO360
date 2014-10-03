@@ -172,3 +172,12 @@ void BOBall::SetPosition(float2 p_position)
 	}
 	BOObject::SetPosition(p_position);
 }
+
+void BOBall::ActivateShockwave()
+{
+    float2 direction = float2();
+    direction.x = GetPosition().x - m_windowSize.x * 0.5f;
+    direction.y = GetPosition().y - m_windowSize.y * 0.5f;
+    direction.normalize();
+    SetDirection(direction);
+}
