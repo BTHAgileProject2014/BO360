@@ -349,8 +349,6 @@ struct InputMessages
 	bool leftMouseKey;
 	bool rightMouseKey;
 	bool middleMouseKey;
-	bool leftMouseKeyClickedPressed;
-	bool leftMouseKeyClickedReleased;
 	bool spacebarKey;
 	bool rightArrow;
 	bool leftArrow;
@@ -419,8 +417,6 @@ enum KeyMessages
 	leftMouseKey,
 	rightMouseKey,
 	middleMouseKey,
-	leftMouseKeyClickedPressed,
-	leftMouseKeyClickedReleased,
 	spacebarKey,
 	zKey,
 	xKey,

@@ -132,20 +132,20 @@ void BOObjectManager::Update(double p_deltaTime)
 
 	// Update balls
 	for (unsigned int i = 0; i < m_ballList.size(); i++)
-			{
+	{
 		m_ballList[i]->Update(p_deltaTime, m_blackHole.GetBoundingSphere());
 
 		if (m_ballList[i]->IsStuckToPad())
-				{
+		{
 			m_ballList[i]->SetPosition(m_paddle.GetBallSpawnPosition());
 		}
 		else	// Ball is NOT stuck to pad
-					{
+		{
 			BallBlockCollision(m_ballList[i]);
 
 			BallPadCollision(m_ballList[i]);
 
-		CheckBallOutOfBounds(i);
+			CheckBallOutOfBounds(i);
 
 			if (BallDied(m_ballList[i]))
 			{
@@ -154,19 +154,18 @@ void BOObjectManager::Update(double p_deltaTime)
 				m_ballList.erase(m_ballList.begin() + i);
 				i--;
 				continue;
-		}
+			}
 		
 			// Bounce on shield, this should change once a new ball-ball collision has been added to the physics class.
-		float2 newdir = m_Shield.Update(p_deltaTime, m_ballList[i]->GetBoundingSphere(), m_ballList[i]->GetDirection());
-		m_ballList[i]->SetDirection(newdir);
+			float2 newdir = m_Shield.Update(p_deltaTime, m_ballList[i]->GetBoundingSphere(), m_ballList[i]->GetDirection());
+			m_ballList[i]->SetDirection(newdir);
 
 			// Check collision between ball and keys
-		m_keyManager.Update(*m_ballList[i]);
+			m_keyManager.Update(*m_ballList[i]);
+		}
 	}
-	}
-
 	UpdateParticles(p_deltaTime);
-			}
+}
 
 void BOObjectManager::Draw()
 {
