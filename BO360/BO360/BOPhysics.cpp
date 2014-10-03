@@ -524,8 +524,8 @@ bool BOPhysics::IsWithinRad(double p_start, double p_end, double p_toTest)
         }
     }
 
-    std::cout << std::fixed << std::setprecision(4);
-    std::cout << "Ball: " << p_toTest << " Pad: " << p_start << " Rot: " << p_end << std::endl;
+    //std::cout << std::fixed << std::setprecision(4);
+    //std::cout << "Ball: " << p_toTest << " Pad: " << p_start << " Rot: " << p_end << std::endl;
     // toTest should now always be within start and end's numbers if it is actually within their angles
 
     return (p_start < p_toTest
