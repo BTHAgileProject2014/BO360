@@ -98,13 +98,13 @@ ButtonAction BOState::Update()
 	{
 		if (m_buttonList[i].Intersects(m_mousePosition))
 		{
-			if (m_mouseDown)
+			if (m_mouseDown && !m_mousePrev)
 			{
 				return m_buttonList[i].GetAction();
 			}
 		}
 	}
-
+	m_mousePrev = m_mouseDown;
 	return NOACTION;
 }
 

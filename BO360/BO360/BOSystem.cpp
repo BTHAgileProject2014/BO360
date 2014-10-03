@@ -242,8 +242,8 @@ bool BOSystem::Run()
 void BOSystem::Shutdown()
 {
 	BOPublisher::Unsubscribe(this);
-	m_input.Shutdown();
 	m_objectManager.Shutdown();
+	m_input.Shutdown();
 	m_powerUpManager.Shutdown();
 	m_stateManager.Shutdown();
 	BOSoundManager::Shutdown();

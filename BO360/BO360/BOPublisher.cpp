@@ -63,6 +63,12 @@ void BOPublisher::Notify(KeyMessages p_keyMessage, bool p_value)
 	case middleMouseKey:
 		m_inputMessage.middleMouseKey = p_value;
 		break;
+	case leftMouseKeyClickedPressed:
+		m_inputMessage.leftMouseKeyClickedPressed = p_value;
+		break;
+	case leftMouseKeyClickedReleased:
+		m_inputMessage.leftMouseKeyClickedReleased = p_value;
+		break;
 	case upArrow:
 		m_inputMessage.upArrow = p_value;
 		break;

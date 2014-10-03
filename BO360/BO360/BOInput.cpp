@@ -285,6 +285,12 @@ bool BOInput::Update()
 						}
 						break;
 					}
+					default:
+					{
+						m_buttonsPressed[BOInput_M1] = false;
+						m_publisher.Notify(leftMouseKey, false);
+						break;
+					}
 				}
 				break;
 			}

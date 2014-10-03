@@ -35,6 +35,7 @@ private:
 
 	int2 m_mousePosition;
 	bool m_mouseDown;
+	bool m_mousePrev;
 
 	BOObject m_background;
 	std::vector<BOObject> m_menuBar;
