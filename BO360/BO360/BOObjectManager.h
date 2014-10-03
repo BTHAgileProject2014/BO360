@@ -20,6 +20,8 @@
 #include "BOScore.h"
 #include "BOBlockIron.h"
 #include "BOBlockMultiTexture.h"
+#include "BOKeyManager.h"
+#include "BOTextureManager.h"
 
 class BOObjectManager : public BOComponent, public BOPUSubscriber ,public BOSubscriber
 {
@@ -31,10 +33,13 @@ public:
 	void Shutdown();
 	void Update(double p_deltaTime);
 	void Draw();
+
 	void Handle(PowerUpTypes p_type, bool p_activated);
 	void Handle(InputMessages p_inputMessage);
+
 	bool AddNewBall();
 	bool LostGame();
+	bool WonGame();
 
 private:
 	bool LoadBlocksFromMap(std::string p_filename);
@@ -54,6 +59,7 @@ private:
 	BOParticleSystem m_particleSystem;
 	std::vector<BOBall*> m_ballList;
 	std::vector<BOBlock*> m_blockList;
+	BOKeyManager m_keyManager;
 
 	double m_SecondsPerParticle; // Should be moved into objects that use it
 };

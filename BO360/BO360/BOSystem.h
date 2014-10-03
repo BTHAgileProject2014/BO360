@@ -9,14 +9,15 @@
 #include "BOGraphicInterface.h"
 #include "BOTimer.h"
 #include "BOPowerUpManager.h"
-#include "BOKeyManager.h"
 #include "BOSoundManager.h"
 #include "BOTextManager.h"
 #include "BOHUDManager.h"
 #include "BOStateManager.h"
 #include "BOSubscriber.h"
 #include "BOScore.h"
+#include "BOTextureManager.h"
 #include <iostream>
+//#include <vld.h>
 
 class BOSystem : BOComponent, public BOSubscriber
 {
@@ -38,7 +39,6 @@ private:
 	BOInput m_input;
 	BOObjectManager m_objectManager;
 	BOPowerUpManager m_powerUpManager;
-	BOKeyManager m_keyManager;
 	BOStateManager m_stateManager;
 	GameState m_gameState;
 	bool m_quit;

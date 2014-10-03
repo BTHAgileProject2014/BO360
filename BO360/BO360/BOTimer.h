@@ -15,7 +15,6 @@ public:
 
 	double GetTotalTimeMS();
 	double GetTotalTimeS();
-
 	double GetDeltaTime();
 
 	int FPS();
@@ -23,9 +22,7 @@ public:
 private:
 	Uint64 m_totalTime;
 	double m_deltaTimeS;
-
 	double m_averageFps;
-
 
 	Uint64 m_startTimeStamp;
 	Uint64 m_currentTimeStamp;

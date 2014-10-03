@@ -18,7 +18,6 @@ public:
 
 	bool Initialize();
 	void Shutdown();
-
 	void Update(double p_deltaTime);
 	void Draw();
 
@@ -31,7 +30,5 @@ public:
 private:
 	static std::vector<BOPUSubscriber*> m_subscribers;
 	static std::vector<BOPowerUp*> m_powerUps;
-	
 };
-
 #endif

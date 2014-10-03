@@ -1,24 +1,24 @@
 #include "BOBlock.h"
 
-
 BOBlock::BOBlock()
 {
 	dead = false;
+    m_animated = false;
 }
-
 
 BOBlock::~BOBlock()
 {
+
 }
 
-bool BOBlock::Initialize(float2 p_position, int2 p_size, std::string p_fileName, PowerUpTypes p_powerup, int p_scoreValue)
+bool BOBlock::Initialize(float2 p_position, int2 p_size, SDL_Texture* p_sprite, PowerUpTypes p_powerup, int p_scoreValue)
 {
-	return Initialize(p_position, p_size, p_fileName, 1, p_powerup, p_scoreValue);
+	return Initialize(p_position, p_size, p_sprite, 1, p_powerup, p_scoreValue);
 }
 
-bool BOBlock::Initialize(float2 p_position, int2 p_size, std::string p_fileName, int p_hp, PowerUpTypes p_powerup, int p_scoreValue)
+bool BOBlock::Initialize(float2 p_position, int2 p_size, SDL_Texture* p_sprite, int p_hp, PowerUpTypes p_powerup, int p_scoreValue)
 {
-	if (!BOObject::Initialize(p_position, p_size, p_fileName))
+	if (!BOObject::Initialize(p_position, p_size, p_sprite))
 	{
 		return false;
 	}
@@ -26,6 +26,20 @@ bool BOBlock::Initialize(float2 p_position, int2 p_size, std::string p_fileName,
 	m_powerup = p_powerup;
 	m_scoreValue = p_scoreValue;
 	return true;
+}
+
+bool BOBlock::InitializeAnimated(float2 p_position, int2 p_size, int2 p_sourceSize, int p_frame, int p_maxFrames, double p_timePerFrame, bool p_hardReset, SDL_Texture* p_sprite, int p_hp, PowerUpTypes p_powerup, int p_scoreValue)
+{
+    if (!BOAnimatedObject::Initialize(p_position, p_size, p_sourceSize, p_frame, p_maxFrames, p_timePerFrame, p_hardReset, p_sprite))
+    {
+        return false;
+    }
+
+    m_hp = p_hp;
+    m_powerup = p_powerup;
+    m_scoreValue = p_scoreValue;
+    m_animated = true;
+    return true;
 }
 
 void BOBlock::Update()

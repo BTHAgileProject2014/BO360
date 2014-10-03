@@ -1,13 +1,13 @@
 #include "BODrawableText.h"
 
-
 BODrawableText::BODrawableText()
 {
-}
 
+}
 
 BODrawableText::~BODrawableText()
 {
+
 }
 
 bool BODrawableText::Initialize(float2 p_position, std::string p_text, int3 p_color, int p_fontSize, int p_maxWidth)

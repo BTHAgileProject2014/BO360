@@ -10,7 +10,7 @@ BOState::~BOState()
 
 }
 
-bool BOState::Initialize(float2 p_position, int2 p_size, float2 p_menuPosition, std::string p_name, std::string p_backgroundFile)
+bool BOState::Initialize(float2 p_position, int2 p_size, float2 p_menuPosition, std::string p_name, SDL_Texture* p_sprite)
 {
 	m_name = p_name;
 	m_position = p_position;
@@ -20,41 +20,41 @@ bool BOState::Initialize(float2 p_position, int2 p_size, float2 p_menuPosition, 
 	BOPublisher::AddSubscriber(this);
 
 	// Load background.
-	if (!m_background.Initialize(p_position, p_size, p_backgroundFile))
+	if (!m_background.Initialize(p_position, p_size, p_sprite))
 	{
 		std::cout << "Failed to load background for " << m_name << "!" << std::endl;
 		return false;
 	}
 
 	// Load the menu bars first edge.
-	BOObject l_firstEdge;
-	if (!l_firstEdge.Initialize(float2(p_menuPosition.x + 2.5f, p_menuPosition.y + 35), int2(5, 70), "Sprites/Menu/MenuEdge.png"))
+	BOObject firstEdge;
+	if (!firstEdge.Initialize(float2(p_menuPosition.x + 2.5f, p_menuPosition.y + 35), int2(5, 70), BOTextureManager::GetTexture(TEXMENUEDGE)))
 	{
 		std::cout << "Failed to load first edge of menu" << m_name << "!" << std::endl;
 		return false;
 	}
 
-	m_menuBar.push_back(l_firstEdge);
+	m_menuBar.push_back(firstEdge);
 
 	// Load the menu bar.
-	BOObject l_menuBar;
-	if (!l_menuBar.Initialize(float2(p_menuPosition.x + 125, p_menuPosition.y + 35), int2(240, 70), "Sprites/Menu/MenuBar.png"))
+	BOObject menuBar;
+	if (!menuBar.Initialize(float2(p_menuPosition.x + 125, p_menuPosition.y + 35), int2(240, 70), BOTextureManager::GetTexture(TEXMENUBAR)))
 	{
 		std::cout << "Failed to load last edge of menu" << m_name << "!" << std::endl;
 		return false;
 	}
 
-	m_menuBar.push_back(l_menuBar);
+	m_menuBar.push_back(menuBar);
 
 	// Load the last edge of the menu bars.
-	BOObject l_lastEdge;
-	if (!l_lastEdge.Initialize(float2(p_menuPosition.x + 247.5f, p_menuPosition.y + 35), int2(5, 70), "Sprites/Menu/MenuEdge.png"))
+	BOObject lastEdge;
+	if (!lastEdge.Initialize(float2(p_menuPosition.x + 247.5f, p_menuPosition.y + 35), int2(5, 70), BOTextureManager::GetTexture(TEXMENUEDGE)))
 	{
 		std::cout << "Failed to load last edge of menu" << m_name << "!" << std::endl;
 		return false;
 	}
 
-	m_menuBar.push_back(l_lastEdge);
+	m_menuBar.push_back(lastEdge);
 
 	// Load menu text
 	if (!m_menuText.Initialize(float2(0,0), m_name, int3(255, 255, 255), 72, 0))
@@ -71,14 +71,14 @@ bool BOState::Initialize(float2 p_position, int2 p_size, float2 p_menuPosition, 
 	return true;
 }
 
-void BOState::AddButton(float2 p_position, int2 p_size, float2 p_menuPosition, std::string p_fileName, std::string p_name, ButtonAction p_action, std::string p_tooltip)
+void BOState::AddButton(float2 p_position, int2 p_size, float2 p_menuPosition, SDL_Texture* p_sprite, std::string p_name, ButtonAction p_action, std::string p_tooltip)
 {
-	BOButton l_button;
-	if (!l_button.Initialize(float2(p_position.x + (250 * m_buttonList.size()), p_position.y), p_size, p_fileName, p_name, p_action, p_tooltip))
+	BOButton button;
+	if (!button.Initialize(float2(p_position.x + (250 * m_buttonList.size()), p_position.y), p_size, p_sprite, p_name, p_action, p_tooltip))
 	{
-		std::cout << "Failed to load button for texture " << p_fileName << "!" << std::endl;
+		std::cout << "Failed to load button for texture " << p_sprite << "!" << std::endl;
 	}
-	m_buttonList.push_back(l_button);
+	m_buttonList.push_back(button);
 
 	// Change position and size of the menu bar
 	m_menuBar[1].SetSize(int2(240 * m_buttonList.size() + 10 * (m_buttonList.size() - 1), 70));
@@ -133,9 +133,9 @@ void BOState::SetName(std::string p_name)
 	m_name = p_name;
 }
 
-void BOState::SetBackground(std::string p_fileName)
+void BOState::SetBackground(Textures p_spriteIndex)
 {
-	m_background.SetSprite(p_fileName);
+	m_background.SetSprite(p_spriteIndex);
 }
 
 void BOState::Shutdown()

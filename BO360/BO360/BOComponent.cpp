@@ -1,17 +1,14 @@
 #include "BOComponent.h"
 
-
 BOComponent::BOComponent()
 {
 
 }
 
-
 BOComponent::~BOComponent()
 {
 
 }
-
 
 bool BOComponent::Initialize()
 {

@@ -8,7 +8,7 @@ class BOPUSubscriber
 public:
 	BOPUSubscriber();
 	~BOPUSubscriber();
+
 	virtual void Handle(PowerUpTypes p_type, bool p_activated) = 0;
 };
-
 #endif

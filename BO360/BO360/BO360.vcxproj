@@ -56,6 +56,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;SDL2_mixer.lib;SDL2_ttf.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <SubSystem>Console</SubSystem>
+      <IgnoreSpecificDefaultLibraries>msvcrt.lib;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
     </Link>
     <PreLinkEvent>
       <Command>
@@ -86,6 +87,7 @@
     </PreLinkEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="BOAnimatedObject.h" />
     <ClInclude Include="BOBackground.h" />
     <ClInclude Include="BOBall.h" />
     <ClInclude Include="BOBlackHole.h" />
@@ -118,6 +120,7 @@
     <ClInclude Include="BOSubscriber.h" />
     <ClInclude Include="BOSystem.h" />
     <ClInclude Include="BOTextManager.h" />
+    <ClInclude Include="BOTextureManager.h" />
     <ClInclude Include="BOTimer.h" />
     <ClInclude Include="BOUtility.h" />
     <ClInclude Include="BOWindow.h" />
@@ -125,6 +128,7 @@
     <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="BOAnimatedObject.cpp" />
     <ClCompile Include="BOBackground.cpp" />
     <ClCompile Include="BOBall.cpp" />
     <ClCompile Include="BOBlackHole.cpp" />
@@ -158,6 +162,7 @@
     <ClCompile Include="BOSubscriber.cpp" />
     <ClCompile Include="BOSystem.cpp" />
     <ClCompile Include="BOTextManager.cpp" />
+    <ClCompile Include="BOTextureManager.cpp" />
     <ClCompile Include="BOTimer.cpp" />
     <ClCompile Include="BOWindow.cpp" />
     <ClCompile Include="BOButton.cpp" />

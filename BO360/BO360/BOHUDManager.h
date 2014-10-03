@@ -11,25 +11,36 @@ class BOHUDManager
 public:
 	BOHUDManager();
 	~BOHUDManager();
+
 	static bool Initialize();
 	static void Shutdown();
 	static void Draw();
+
 	static void SetLives(int p_lives);
 	static void SetScore(int p_score);
 	static void SetLevel(int p_level);
-	static void ModifyState(bool p_lives, bool p_score, bool p_level);
+	static void SetKeys(int p_keys, int p_maxKeys);
+	static void ModifyState(bool p_lives, bool p_score, bool p_level, bool p_keys);
 
 private:
-	static bool m_livesEnabled;
-	static bool m_scoreEnabled;
-	static bool m_levelEnabled;
+	static float2 m_livesAnchor;
 	static BODrawableText m_lives;
-	static BODrawableText m_score;
-	static BODrawableText m_level;
 	static BOObject m_life;
 	static int m_noLives;
-	static float2 m_livesAnchor;
+	static bool m_livesEnabled;
+
 	static float2 m_scoreAnchor;
+	static BODrawableText m_score;
+	static bool m_scoreEnabled;
+
 	static float2 m_levelAnchor;
+	static BODrawableText m_level;
+	static bool m_levelEnabled;
+
+	static float2 m_keyAnchor;
+	static BOObject m_keySprite;
+	static BODrawableText m_keyText;
+	static bool m_keyEnabled;
+
 };
 #endif

@@ -1,13 +1,15 @@
 #include "BOPublisher.h"
+
 std::vector<BOSubscriber*> BOPublisher::m_subscribers;
 
 BOPublisher::BOPublisher()
 {
-}
 
+}
 
 BOPublisher::~BOPublisher()
 {
+
 }
 
 bool BOPublisher::Initialize()

@@ -1,15 +1,16 @@
 #include "BOPowerUpManager.h"
+
 std::vector<BOPUSubscriber*> BOPowerUpManager::m_subscribers;
 std::vector<BOPowerUp*> BOPowerUpManager::m_powerUps;
 
-
 BOPowerUpManager::BOPowerUpManager()
 {
-}
 
+}
 
 BOPowerUpManager::~BOPowerUpManager()
 {
+
 }
 
 bool BOPowerUpManager::Initialize()
@@ -22,6 +23,7 @@ bool BOPowerUpManager::Initialize()
 
 void BOPowerUpManager::Shutdown()
 {
+
 }
 
 void BOPowerUpManager::Notify(PowerUpTypes p_type, bool p_activated)
@@ -40,7 +42,7 @@ void BOPowerUpManager::AddPowerUp(PowerUpTypes p_type, float2 p_startPosition, B
 		case PUBiggerPad:
 		{
 			BOPowerUp* biggerPad = new BOPowerUp();
-			biggerPad->Initialize(PUBiggerPad, p_startPosition, int2(30, 30), "Sprites/PlaceHolderPNG/Powerups/placeholderPowerup3.png", 500.0f, p_paddle, p_blackholePosition);
+			biggerPad->Initialize(PUBiggerPad, p_startPosition, int2(30, 30), BOTextureManager::GetTexture(TEXPU3), 500.0f, p_paddle, p_blackholePosition);
 			m_powerUps.push_back(biggerPad);
 			break;
 		}
@@ -52,14 +54,14 @@ void BOPowerUpManager::AddPowerUp(PowerUpTypes p_type, float2 p_startPosition, B
 		case PUShield:
 		{
 			BOPowerUp* shield = new BOPowerUp();
-			shield->Initialize(PUShield, p_startPosition, int2(30, 30), "Sprites/PlaceHolderPNG/Powerups/placeholderPowerup2.png", 500.0f, p_paddle, p_blackholePosition);
+			shield->Initialize(PUShield, p_startPosition, int2(30, 30), BOTextureManager::GetTexture(TEXPU2), 500.0f, p_paddle, p_blackholePosition);
 			m_powerUps.push_back(shield);
 			break;
 		}	
 		case PUExtraBall:
 		{
 			BOPowerUp* extraBall = new BOPowerUp();
-			extraBall->Initialize(PUExtraBall, p_startPosition, int2(40, 40), "Sprites/PlaceHolderPNG/Powerups/placeholderPowerupMultBall.png", 500.0f, p_paddle, p_blackholePosition);
+			extraBall->Initialize(PUExtraBall, p_startPosition, int2(40, 40), BOTextureManager::GetTexture(TEXPUMULTIBALL), 500.0f, p_paddle, p_blackholePosition);
 			m_powerUps.push_back(extraBall);
 			break;
 		}
@@ -72,6 +74,7 @@ void BOPowerUpManager::RemovePowerUp(BOPowerUp* p_powerUp)
 	{
 		if (p_powerUp == m_powerUps[i])
 		{
+            delete m_powerUps[i];
 			m_powerUps.erase(m_powerUps.begin() + i);
 			break;
 		}
