@@ -51,8 +51,7 @@ bool BOHUDManager::Initialize()
 
 	//Initialize lives
 	m_lives.Initialize(m_livesAnchor, "Lives: ", int3(255, 255, 255), 30, 0);
-	m_life.Initialize(float2(0, 0), int2(20, 20), "Sprites/PlaceHolderPNG/placeholderLife.png"); // Always relative to m_lives position
-
+	m_life.Initialize(float2(0, 0), int2(20, 20), BOTextureManager::GetTexture(TEXLIFE)); // Always relative to m_lives position
 	int2 tempSizeText = m_lives.GetSize();
 	int2 tempSizeSprite = m_life.GetSize();
 
@@ -66,7 +65,7 @@ bool BOHUDManager::Initialize()
 	m_score.SetPosition(float2(m_scoreAnchor.x + (tempSize.x / 2.0f) - tempSize.x - 10.0f, m_scoreAnchor.y + (tempSize.y / 2.0f)));
 
 	// Initialize keys
-	m_keySprite.Initialize(float2(0, 0), int2(20, 20), "Sprites/PlaceHolderPNG/placeholderkey.png");
+	m_keySprite.Initialize(float2(0, 0), int2(20, 20), BOTextureManager::GetTexture(TEXKEY));
 	m_keyText.Initialize(float2(0, 0), "x 0 / 0", int3(255, 255, 255), 30, 0);
 	tempSize = m_keySprite.GetSize();
 	tempSizeText = m_keyText.GetSize();

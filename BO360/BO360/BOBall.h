@@ -10,8 +10,7 @@ class BOBall: public BOObject, public BOSubscriber
 public:
 	BOBall();
 	~BOBall();
-
-	bool Initialize(float2 p_position, int2 p_size, std::string p_fileName, float p_speed, float2 p_direction, int2 p_windowSize);
+	bool Initialize(float2 p_position, int2 p_size, SDL_Texture* p_sprite, float p_speed, float2 p_direction, int2 p_windowSize);
 	void Update(double p_deltaTime, sphere p_blackHoleBounds);
 
 	void Move(double p_deltaTime, sphere p_blackHoleBounds);

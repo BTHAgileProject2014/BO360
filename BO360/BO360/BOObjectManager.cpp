@@ -25,7 +25,7 @@ bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight)
 	}
 
 	// Initialize the background.
-	result = m_background.Initialize(float2(p_windowWidth / 2.0f, p_windowHeight / 2.0f), int2(p_windowWidth, p_windowHeight), "Sprites/PlaceHolderPNG/Background.png");
+	result = m_background.Initialize(float2(p_windowWidth / 2.0f, p_windowHeight / 2.0f), int2(p_windowWidth, p_windowHeight), BOTextureManager::GetTexture(TEXBACKGROUND));
 	if (!result)
 	{
 		ThrowInitError("BOBackground");
@@ -33,7 +33,7 @@ bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight)
 	}
 
 	// Initialize the black hole.
-	result = m_blackHole.Initialize(float2((p_windowWidth / 2.0f), (p_windowHeight / 2.0f)), int2(200, 200), "Sprites/PlaceHolderPNG/placeholderBlackhole110x110.png");
+	result = m_blackHole.Initialize(float2((p_windowWidth / 2.0f), (p_windowHeight / 2.0f)), int2(200, 200), BOTextureManager::GetTexture(TEXBLACKHOLE));
 	if (!result)
 	{
 		ThrowInitError("BOBlackHole");
@@ -41,7 +41,7 @@ bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight)
 	}
 
 	// Initialize the pad.
-	result = m_paddle.Initialize(float2((p_windowWidth / 2.0f), (p_windowHeight / 2.0f)), int2(208, 208), "Sprites/PlaceHolderPNG/placeholderPadSegment5.png");
+	result = m_paddle.Initialize(float2((p_windowWidth / 2.0f), (p_windowHeight / 2.0f)), int2(208, 208), BOTextureManager::GetTexture(TEXPADSEG));
 	if (!result)
 	{
 		ThrowInitError("BOPaddle");
@@ -79,7 +79,7 @@ bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight)
 	BOPowerUpManager::AddSubscriber(this);
 	BOPublisher::AddSubscriber(this);
 
-	m_Shield.Initialize(int2(200, 200), "Sprites/PlaceHolderPNG/Powerups/placeholderSheild.png", BOGraphicInterface::GetWindowSize());
+	m_Shield.Initialize(int2(200, 200), BOTextureManager::GetTexture(TEXSHIELD), BOGraphicInterface::GetWindowSize());
 
 	return true;
 }
@@ -123,7 +123,6 @@ void BOObjectManager::Update(double p_deltaTime)
 {
 	m_blackHole.Update();
 	m_paddle.Update(p_deltaTime);
-	m_keyManager.Update(p_deltaTime);
 
 	// Update blocks
 	for (unsigned int i = 0; i < m_blockList.size(); i++)
@@ -151,7 +150,7 @@ void BOObjectManager::Update(double p_deltaTime)
 
 			if (BallDied(m_ballList[i]))
 			{
-				m_ballList[i]->Shutdown();
+				//m_ballList[i]->Shutdown();
 				delete m_ballList[i];
 				m_ballList.erase(m_ballList.begin() + i);
 				i--;
@@ -187,10 +186,10 @@ void BOObjectManager::Draw()
 
             else
             {
-                m_blockList[i]->Draw();
-            }
-
+			m_blockList[i]->Draw();
 		}
+		
+	}
 		
 	}
 		
@@ -249,7 +248,7 @@ bool BOObjectManager::AddNewBall()
 	ballPos.x += ballDir.x * 6;
 	ballPos.y += ballDir.y * 6;
 
-	if (!ball->Initialize(ballPos, int2(15,15), "Sprites/PlaceHolderPNG/placeholderBoll10x10.png", 400.0f, ballDir, windowSize))
+	if (!ball->Initialize(ballPos, int2(15,15), BOTextureManager::GetTexture(TEXBALL), 400.0f, ballDir, windowSize))
 	{
 		ThrowInitError("BOBall");
 		return false;
@@ -340,19 +339,19 @@ bool BOObjectManager::LoadBlocksFromMap(std::string p_filename)
 				// This fat chunk of code is to be removed when the map loader loads power ups
 				if (i % 100 == 1)
 				{
-					result = block->Initialize(float2(x, y), int2(40, 40), "Sprites/PlaceholderPNG/Hexagons/placeholderHexagonPU2.png", PUShield, score);
+					result = block->Initialize(float2(x, y), int2(40, 40), BOTextureManager::GetTexture(TEXHEXPU2), PUShield, score);
 				}
 				else if (i % 100 == 33)
 				{
-					result = block->Initialize(float2(x, y), int2(40, 40), "Sprites/PlaceholderPNG/Hexagons/placeholderHexagonPU1.png", PUExtraBall, score);
+					result = block->Initialize(float2(x, y), int2(40, 40), BOTextureManager::GetTexture(TEXHEXPU1), PUExtraBall, score);
 				}
 				else if (i % 100 == 66)
 				{
-					result = block->Initialize(float2(x, y), int2(40, 40), "Sprites/PlaceholderPNG/Hexagons/placeholderHexagonPU3.png", PUBiggerPad, score);
+					result = block->Initialize(float2(x, y), int2(40, 40), BOTextureManager::GetTexture(TEXHEXPU3), PUBiggerPad, score);
 				}
 				else
 				{
-					result = block->Initialize(float2(x, y), int2(46, 42), "Sprites/Blocks/BlockRegular.png", PUNone, score);
+					result = block->Initialize(float2(x, y), int2(40, 40), BOTextureManager::GetTexture(TEXHEXSTANDARD), PUNone, score);
 				}
 				if (!result)
 				{
@@ -368,13 +367,13 @@ bool BOObjectManager::LoadBlocksFromMap(std::string p_filename)
 			case(DUBBLEHP) :
 			{
 				block = new BOBlockMultiTexture();
-                result = block->InitializeAnimated(float2(x, y), int2(46, 42), int2(46, 42), 0, 5, 0, true, "Sprites/Blocks/BlockArmored.png", 5, PUNone, score);
+                result = block->InitializeAnimated(float2(x, y), int2(46, 42), int2(46, 42), 0, 5, 0, true, BOTextureManager::GetTexture(TEXHEXARMORED), 5, PUNone, score);
 				if (!result)
 				{
 					ThrowInitError("BOBlockMultiTexture");
 					return false;
 				}
-
+				
 				m_blockList.push_back(block);
 
 				break;
@@ -383,7 +382,7 @@ bool BOObjectManager::LoadBlocksFromMap(std::string p_filename)
 			case(INDESTRUCTIBLE) :
 			{
 				block = new BOBlockIron();
-                result = block->Initialize(float2(x, y), int2(46, 42), "Sprites/Blocks/BlockIndestructible.png", 5, PUNone, score);
+                result = block->Initialize(float2(x, y), int2(40, 40), BOTextureManager::GetTexture(TEXHEXINDES), PUNone, score);
 				if (!result)
 				{
 					ThrowInitError("BOBlockIron");
@@ -397,7 +396,7 @@ bool BOObjectManager::LoadBlocksFromMap(std::string p_filename)
 
 			case(KEY) :
 			{
-                m_keyManager.AddKey(float2(x, y), int2(80, 80), 0.4f, "Sprites/PlaceholderPNG/placeholderHyperdrive.png");
+                m_keyManager.AddKey(float2(x, y), int2(80, 80), 0.4f, BOTextureManager::GetTexture(TEXKEY));
 				break;
 			}
 
@@ -454,8 +453,10 @@ void BOObjectManager::BallBlockCollision(BOBall* p_ball)
 
 				// Add score
 				BOScore::AddScore(m_blockList[i]->GetScore());
-
+                
+                delete m_blockList[i];
 				m_blockList.erase(m_blockList.begin() + i);
+
 			}
 		}
 	}

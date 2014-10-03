@@ -11,7 +11,7 @@ public:
 	BOShield();
 	~BOShield();
 
-	bool Initialize(int2 p_ShieldSize, std::string p_ShieldFN, int2 p_WindowSize);
+	bool Initialize(int2 p_ShieldSize, SDL_Texture* p_sprite, int2 p_WindowSize);
 	bool InitializePU(float2 p_POPos, int2 p_POSize, std::string p_POFN, float p_POSpeed);
 	float2 Update(double p_deltaTime, sphere p_Ball, float2 p_BallDirection);
 	void Draw();

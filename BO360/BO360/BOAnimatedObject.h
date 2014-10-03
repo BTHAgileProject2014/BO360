@@ -7,9 +7,9 @@ class BOAnimatedObject : public BOObject
 {
 public:
 	BOAnimatedObject();
-	~BOAnimatedObject();
+	virtual ~BOAnimatedObject();
 
-	virtual bool Initialize(float2 p_position, int2 p_size, int2 p_sourceSize, int p_frame, int p_maxFrames, double p_timePerFrame, bool p_hardReset, std::string p_fileName);
+	virtual bool Initialize(float2 p_position, int2 p_size, int2 p_sourceSize, int p_frame, int p_maxFrames, double p_timePerFrame, bool p_hardReset, SDL_Texture* p_sprite);
 	virtual void Animate(double p_deltaTime);
 	virtual void MoveFrame(int p_frames);
 	virtual void DrawAnimated();

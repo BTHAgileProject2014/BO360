@@ -10,7 +10,7 @@ BOButton::~BOButton()
 
 }
 
-bool BOButton::Initialize(float2 p_position, int2 p_size, std::string p_fileName, std::string p_name, ButtonAction p_action, std::string p_tooltip)
+bool BOButton::Initialize(float2 p_position, int2 p_size, SDL_Texture* p_sprite, std::string p_name, ButtonAction p_action, std::string p_tooltip)
 {
 	m_action = p_action;
 	m_position = p_position;
@@ -18,31 +18,25 @@ bool BOButton::Initialize(float2 p_position, int2 p_size, std::string p_fileName
 	m_name = p_name;
 
 	// Load non highlighted texture.
-	std::string nonLitName = p_fileName;
-	nonLitName.append(".png");
-	m_nonHighlighted = BOGraphicInterface::LoadTexture(nonLitName);
+	m_nonHighlighted = BOTextureManager::GetTexture(TEXMENUBUTTON);
 	if (!m_nonHighlighted)
 	{
-		std::cout << "Failed to load texture " << nonLitName << "!" << std::endl;
+		std::cout << "Failed to load texture " << "TEXMENUBUTTON" << "!" << std::endl;
 		return false;
 	}
 
 	// Load highlighted texture.
-	std::string LitName = p_fileName;
-	LitName.append("Highlighted.png");
-	m_highlighted = BOGraphicInterface::LoadTexture(LitName);
+	m_highlighted = BOTextureManager::GetTexture(TEXMENUBUTTONHL);
 	if (!m_highlighted)
 	{
-		std::cout << "Failed to load texture " << LitName << "!" << std::endl;
+		std::cout << "Failed to load texture " << "TEXMENUBUTTONHL" << "!" << std::endl;
 		return false;
 	}
 
 	// Load tool tip.
-	std::string ToolName = p_fileName;
-	ToolName.append("ToolTip.png");
-	if (!m_toolTip.Initialize(float2(m_position.x + 125, m_position.y + 222.5f), int2(250, 295), ToolName))
+	if (!m_toolTip.Initialize(float2(m_position.x + 125, m_position.y + 222.5f), int2(250, 295), BOTextureManager::GetTexture(TEXTOOLTIP)))
 	{
-		std::cout << "Failed to load tool tip " << ToolName << "!" << std::endl;
+		std::cout << "Failed to load tool tip " << "TEXTOOLTIP" << "!" << std::endl;
 		return false;
 	}
 
@@ -122,10 +116,6 @@ ButtonAction BOButton::GetAction()
 
 void BOButton::Shutdown()
 {
-	if (m_sprite)
-	{
-		BOGraphicInterface::DestroyTexture(m_sprite);
-	}
 	m_buttonText.Shutdown();
 	m_buttonTextLit.Shutdown();
 	m_buttonTooltipText.Shutdown();

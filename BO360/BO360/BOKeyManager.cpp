@@ -24,11 +24,6 @@ void BOKeyManager::Shutdown()
 	m_keys.clear();
 }
 
-void BOKeyManager::Update(double p_deltaTime)
-{
-
-}
-
 void BOKeyManager::Update(BOBall p_ball)
 {
 	for (unsigned int i = 0; i < m_keys.size(); i++)
@@ -52,10 +47,10 @@ void BOKeyManager::Draw()
 	}
 }
 
-void BOKeyManager::AddKey(float2 p_position, int2 p_size, float p_scale, std::string p_fileName)
+void BOKeyManager::AddKey(float2 p_position, int2 p_size, float p_scale, SDL_Texture* p_sprite)
 {
     BOObject key = BOObject();
-    key.Initialize(p_position, p_size, p_scale, p_fileName);
+    key.Initialize(p_position, p_size, p_scale, p_sprite);
     m_keys.push_back(key);
     m_keysNeeded++;
     BOHUDManager::SetKeys(m_keysCatched, m_keysNeeded);
@@ -72,5 +67,11 @@ void BOKeyManager::KeyCatched()
 
 bool BOKeyManager::AllKeysCatched()
 {
+    // If no key is added it returns false so you don't win directly
+    if (m_keysNeeded == 0)
+    {
+        return false;
+    }
+
 	return (m_keysNeeded - m_keysCatched) == 0;
 }
