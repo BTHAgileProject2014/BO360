@@ -18,7 +18,7 @@ public:
 	virtual void Shutdown();
 	virtual void Draw();
 
-	float2 GetPosition();
+	float2 GetPosition() const;
 	virtual void SetPosition(float2 p_position);
 
 	int2 GetSize();
@@ -27,7 +27,7 @@ public:
 	SDL_Texture* GetSprite();
 	void SetSprite(Textures p_spriteIndex);
 
-	sphere GetBoundingSphere();
+	sphere GetBoundingSphere() const;
 
 protected:
 	float2 m_position;
