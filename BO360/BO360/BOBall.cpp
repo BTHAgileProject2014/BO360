@@ -34,6 +34,8 @@ bool BOBall::Initialize(float2 p_position, int2 p_size, SDL_Texture* p_sprite, f
 
 	m_mouseCheat = false;
 
+    m_stuckAngle = 42;
+
 	return true;
 }
 
@@ -225,6 +227,7 @@ bool BOBall::IsOnFire() const
 
 void BOBall::ActivateShockwave()
 {
+    m_Fuel += 0.5f;
     float2 direction = float2();
     direction.x = GetPosition().x - m_windowSize.x * 0.5f;
     direction.y = GetPosition().y - m_windowSize.y * 0.5f;
