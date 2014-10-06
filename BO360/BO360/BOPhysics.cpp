@@ -344,7 +344,7 @@ float2 BOPhysics::BlackHoleGravity(sphere p_ball, float2 p_ballDirection, float 
     //std::cout << p_deltaTime << std::endl;
 	float2 newDirection = p_ballDirection;
 	float2 center = float2(p_blackHole.pos - p_ball.pos); //En vektor mot hålet från bollen
-	const double G = 0.067;		//Gravitations konstant 6,7 * 10^-11	//Tar bort nollor från G och massa för att lättare se	//0.000000000067
+	const double G = 0.67;		//Gravitations konstant 6,7 * 10^-11	//Tar bort nollor från G och massa för att lättare se	//0.000000000067
 
 	float distanceAdjustment = CalculateDistance(p_ball.pos, p_blackHole.pos);// Beräkna radien mellan bollen och hålet
 		
