@@ -45,7 +45,7 @@ void BOBall::Update(double p_deltaTime, sphere p_blackHoleBounds)
 	}
 	if (m_onFire)
 	{
-		m_fireTimeElapsed += p_deltaTime;
+		m_fireTimeElapsed += p_deltaTime * BOPhysics::GetTimeScale();
 		if (m_fireTimeElapsed >= m_fireTimeDuration)
 		{
 			SetBallOnFire(false);
