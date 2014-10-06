@@ -43,6 +43,7 @@ public:
 	static int CheckCollisionBallShield(sphere p_sphere, sphere p_padSphere);
     static float GetTimeScale();
     static void SetTimeScale(float p_timeScale);
+	static void BallToBallCollision(BOBall& ball1, BOBall& ball2);
 
     static double AngleBetweenDeg(const float2& p_v1, const float2& p_v2);
     static double AngleBetweenRad(const float2& p_v1, const float2& p_v2);

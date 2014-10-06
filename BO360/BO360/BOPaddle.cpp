@@ -197,6 +197,7 @@ bool BOPaddle::GetStickyState()const
 {
     return m_isSticky;
 }
+
 void BOPaddle::SetStickyState(bool p_active)
 {
     m_isSticky = p_active;

@@ -173,12 +173,24 @@ void BOObjectManager::Update(double p_deltaTime)
 		    }
         }
 		else	// Ball is NOT stuck to pad
-	    {
+		{
 			BallBlockCollision(m_ballList[i]);
 
 			BallPadCollision(m_ballList[i]);
 
 		    CheckBallOutOfBounds(i);
+
+			for (unsigned int j = 0; j < m_ballList.size(); j++)
+			{
+				if (i != j && !m_ballList[j]->HasBallCollidedWithBall())
+				{
+					if (BOPhysics::CheckCollisionSphereToSphere(m_ballList[i]->GetBoundingSphere(), m_ballList[j]->GetBoundingSphere()))
+					{
+						BOPhysics::BallToBallCollision(*m_ballList[i], *m_ballList[j]);
+						m_ballList[j]->SetBallCollidedWithBall(true);
+					}
+				}
+			}
 
 			if (BallDied(m_ballList[i]))
 			{
@@ -189,14 +201,19 @@ void BOObjectManager::Update(double p_deltaTime)
 				continue;
 		    }
 		
-			// Bounce on shield, this should change once a new ball-ball collision has been added to the physics class.
+		    // Bounce on shield, this should change once a new ball-ball collision has been added to the physics class.
 		    float2 newdir = m_Shield.Update(p_deltaTime, m_ballList[i]->GetBoundingSphere(), m_ballList[i]->GetDirection());
 		    m_ballList[i]->SetDirection(newdir);
 
-			// Check collision between ball and keys
+		    // Check collision between ball and keys
 		    m_keyManager.Update(*m_ballList[i]);
 	    }
 	}
+	for (unsigned int i = 0; i < m_ballList.size(); i++)
+	{
+		m_ballList[i]->SetBallCollidedWithBall(false);
+	}
+
 
 	UpdateParticles(p_deltaTime);
 }
@@ -407,7 +424,7 @@ bool BOObjectManager::LoadBlocksFromMap(std::string p_filename)
 				{
 					result = block->Initialize(float2(x, y), int2(46, 42), BOTextureManager::GetTexture(TEXHEXPU2), PUShield, score);
 				}
-				else if (i % 100 == 33)
+				else if (i % 10 == 2)
 				{
 					result = block->Initialize(float2(x, y), int2(46, 42), BOTextureManager::GetTexture(TEXHEXPU1), PUExtraBall, score);
 				}
@@ -561,7 +578,7 @@ void BOObjectManager::BallPadCollision(BOBall* p_ball)
 	{
         p_ball->SetDirection(newDir);
         if (m_paddle.GetStickyState() && !(p_ball->GetFuel() > 0))
-	    {
+	{
             p_ball->SetStuckToPad(true);
             float2 temp = { p_ball->GetPosition().x - m_blackHole.GetPosition().x, p_ball->GetPosition().y - m_blackHole.GetPosition().y };
             float tempAngle = BOPhysics::AngleBetweenDeg(float2{ 0, -100 }, temp);

@@ -25,7 +25,7 @@ bool BOBall::Initialize(float2 p_position, int2 p_size, SDL_Texture* p_sprite, f
 	m_stuckToPad = true;
 	m_onFire = false;
 	m_fireTimeElapsed = 0; // Set duration for fireball powerup in header, const variable
-	
+
 	// Load texture.
 	m_sprite = p_sprite;
 	m_sprite2 = BOTextureManager::GetTexture(TEXDEBUGBALL);
@@ -51,12 +51,13 @@ void BOBall::Update(double p_deltaTime, sphere p_blackHoleBounds)
 		if (m_fireTimeElapsed >= m_fireTimeDuration)
 		{
 			SetBallOnFire(false);
-}
+		}
 	}
 	else if (!m_onFire)
 	{
 		m_fireTimeElapsed = 0;
 	}
+
 
 }
 
@@ -159,7 +160,7 @@ void BOBall::Move(double p_deltaTime, sphere p_blackHoleBounds)
 		if (!m_onFire)
 		{
 			m_sprite = m_sprite2;
-	    }
+		}			
 	}
 	else
 	{
@@ -168,8 +169,8 @@ void BOBall::Move(double p_deltaTime, sphere p_blackHoleBounds)
 		SetDirection(BOPhysics::BlackHoleGravity(GetBoundingSphere(), GetDirection(), GetSpeed(), p_blackHoleBounds, p_deltaTime));
 		if (!m_onFire)
 		{
-		    m_sprite = m_sprite3;
-	    }
+			m_sprite = m_sprite3;
+		}
 	}
 
 	if (m_position.x < (m_size.x / 2) || m_position.x >(m_windowSize.x - (m_size.x / 2)))
@@ -233,4 +234,14 @@ void BOBall::ActivateShockwave()
     direction.y = GetPosition().y - m_windowSize.y * 0.5f;
     direction.normalize();
     SetDirection(direction);
+}
+
+bool BOBall::HasBallCollidedWithBall() const
+{
+	return m_hasCollidedWithBall;
+}
+
+void BOBall::SetBallCollidedWithBall(bool p_collided)
+{
+	m_hasCollidedWithBall = p_collided;
 }
