@@ -441,73 +441,56 @@ bool BOPhysics::BallBouncedOnPad(const BOBall &p_ball, const BOPaddle &p_paddle,
         return false;
     }
 
-    /*
-	// TMP
-	// Constants
-	static const double degreesToRadians = (2 * PI) / 360;
-	static const double rToDegrees = 360 / (2 * PI);
-
-	float2 toSphereNormal = p_sphere.pos - p_padSphere.pos;
-	double startAngle = p_startAngle * degreesToRadians;
-	double padSpread = p_padSpread * degreesToRadians;
-
-	// Convert to mathematical coordinate system
-	double startAngleMA = (startAngle - HALF_PI) * -1;
-	double normalized = startAngleMA;
-	NormalizeAngle(normalized);
-
-	double padCenterAngle = startAngleMA - (padSpread / 2);
-	NormalizeAngle(padCenterAngle);
-
-	// Calculate a vector pointing towards the pad's center in SDL-Draw-Space
-	float dirX = cos(padCenterAngle);
-	float dirY = -sin(padCenterAngle);
-	float2 padCenterVector = float2(dirX, dirY).normalized();
-
-	// Calculate a vector from the center to the sphere
-	float2 centerToSphere = (p_sphere.pos - p_padSphere.pos).normalized();
-	centerToSphere.y *= -1;
-
-	// Calculate the angle for the centerToSphere vector
-	// Since acos has a period of PI, so some angles will need to be flipped
-	float ctpAngle = acos(centerToSphere.x);
-	if (centerToSphere.x < 0 && centerToSphere.y < 0)
-	{
-		ctpAngle *= -1;
-	}
-	if (centerToSphere.x > 0 && centerToSphere.y < 0)
-	{
-		ctpAngle *= -1;
-	}
-	NormalizeAngle(ctpAngle);
-	NormalizeAngle(startAngleMA);
-
-	// Check if the ball angle is within the borders of the pad
-	if ((ctpAngle < startAngleMA) && (ctpAngle >(startAngleMA - padSpread)))
-	{
-		return CalculateNewDir(p_sphereDir, padCenterAngle, padSpread / 2, ctpAngle);
-	}
-
-	// Special case when the pad is around the 0 area
-	if ((startAngleMA - padSpread) < 0)
-	{
-		double padAngle = startAngleMA - padSpread + (2 * PI);
-
-		if ((ctpAngle > 0) && (ctpAngle < startAngleMA) || ((ctpAngle > padAngle) && (ctpAngle < (2 * PI))))
-		{
-			return CalculateNewDir(p_sphereDir, padCenterAngle, padSpread / 2, ctpAngle);
-		}
-
-	}
-	return float2(0, 0);
-	// END TMP
-    */
 	// Reflect around the normal
 	p_newDirection = Reflect(ballDirection, centerToBall);
 
 	// Apply bias (?)
+    float biasValue; // Should range from -1 to 1
+    double paddleCenter;
+    float2 bias = ApplyBias(padStartRad, padEndRad, ballAngleRad);
+    p_newDirection = p_newDirection + bias;
+    p_newDirection.normalize();
 
 	return true;
+}
+
+// Calculates the angle in degrees from p_v1 to p_v2 in SDL rotation coordinate system
+double BOPhysics::AngleBetweenDeg(const float2& p_v1, const float2& p_v2)
+{
+    return RADIANS_TO_DEGREES * AngleBetweenRad(p_v1, p_v2);
+}
+
+// Calculates the angle in radians from p_v1 to p_v2 in SDL rotation coordinate system
+double BOPhysics::AngleBetweenRad(const float2& p_v1, const float2& p_v2)
+{
+    // 1. Convert from vectors to angles
+    double v1AngleRad = acos(p_v1.normalized().x);
+    double v2AngleRad = acos(p_v2.normalized().x);
+
+    // Move to the same coordinate system as SDL rotations
+    if (p_v1.y < 0)
+    {
+        v1AngleRad *= -1;
+    }
+    v1AngleRad += HALF_PI;
+    NormalizeAngle(v1AngleRad);
+
+    if (p_v2.y < 0)
+    {
+        v2AngleRad *= -1;
+    }
+    v2AngleRad += HALF_PI;
+    NormalizeAngle(v2AngleRad);
+
+    // 2. Account for near-origo issues
+    if (v1AngleRad > v2AngleRad) // Around origo
+    {
+        v2AngleRad += PI * 2.0; // Forward a full rotation
+    }
+
+    // 3. Calculate the actual angle
+    double resultAngle = 2 * PI - (v2AngleRad - v1AngleRad);
+    return resultAngle;
 }
 
 float2 BOPhysics::Reflect(const float2 p_target, const float2 p_normal)
@@ -526,28 +509,70 @@ float2 BOPhysics::Reflect(const float2 p_target, const float2 p_normal)
 	return p_target;
 }
 
-bool BOPhysics::IsWithinRad(const double p_start, const double p_end, const double p_toTest)
+bool BOPhysics::IsWithinRad(double p_start, double p_end, double p_toTest)
+{
+    double originalEnd = p_end;
+
+    if (p_start > p_end) // Around origo
+    {
+        p_end += PI * 2.0; // Forward a full rotation
+
+        // If toTest was between 0 and p_end, we need to forward it too
+        if (p_toTest < originalEnd)
+        {
+            p_toTest += PI * 2.0;
+        }
+    }
+
+    //std::cout << std::fixed << std::setprecision(4);
+    //std::cout << "Ball: " << p_toTest << " Pad: " << p_start << " Rot: " << p_end << std::endl;
+    // toTest should now always be within start and end's numbers if it is actually within their angles
+
+    return (p_start < p_toTest
+        && p_toTest < p_end);
+}
+
+float2 BOPhysics::ApplyBias(double p_start, double p_end, double p_ball)
 {
     double start = p_start;
     double end = p_end;
-    double toTest = p_toTest;
+    double ball = p_ball;
+
     if (start > end) // Around origo
     {
         end += PI * 2.0; // Forward a full rotation
 
         // If toTest was between 0 and p_end, we need to forward it too
-        if (toTest < p_end)
+        if (ball < p_end)
         {
-            toTest += PI * 2.0;
+            ball += PI * 2.0;
         }
     }
 
-    
-    
-    std::cout << std::fixed << std::setprecision(4);
-    std::cout << "Ball: " << toTest << " Pad: " << start << " Rot: " << end << std::endl;
-    // toTest should now always be within start and end's numbers if it is actually within their angles
+    // calculate the ball bias (-1 to 1)
+    double center = (end + start) / 2;
+    double maxDistance = end - center;
+    double ballRelativeToPadCenter = ball - center;
+    double ballBias = ballRelativeToPadCenter / (maxDistance * 0.8);
+    if (abs(ballBias) > 1)
+    {
+        ballBias /= abs(ballBias);
+    }
 
-    return (start < toTest
-        && toTest < end);
+    // Scale worst case bias with paddle size
+    // The constant can be scaled for more extreme angles
+    float worstCaseBias = maxDistance * 3;
+
+    // Calculate the bias angle for this bounce
+    double biasAngle = center + ballBias * worstCaseBias;
+
+    // Turn into vector
+    float2 biasVector;
+    biasVector.x = sin(biasAngle);
+    biasVector.y = -cos(biasAngle);
+    biasVector.normalize();
+
+    // Scale with an influence factor
+    float influenceFactor = 1.0f;
+    return biasVector * influenceFactor;
 }

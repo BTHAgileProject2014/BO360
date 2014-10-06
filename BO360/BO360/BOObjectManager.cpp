@@ -144,21 +144,20 @@ void BOObjectManager::Update(double p_deltaTime)
 
 	// Update balls
 	for (unsigned int i = 0; i < m_ballList.size(); i++)
-			{
+	{
 		m_ballList[i]->Update(p_deltaTime, m_blackHole.GetBoundingSphere());
 
 		if (m_ballList[i]->IsStuckToPad())
-				{
+		{
 			m_ballList[i]->SetPosition(m_paddle.GetBallSpawnPosition());
 		}
-
-		else
-					{
+		else	// Ball is NOT stuck to pad
+		{
 			BallBlockCollision(m_ballList[i]);
 
 			BallPadCollision(m_ballList[i]);
 
-		CheckBallOutOfBounds(i);
+			CheckBallOutOfBounds(i);
 
 			if (BallDied(m_ballList[i]))
 			{
@@ -167,19 +166,18 @@ void BOObjectManager::Update(double p_deltaTime)
 				m_ballList.erase(m_ballList.begin() + i);
 				i--;
 				continue;
-		}
+			}
 		
 			// Bounce on shield, this should change once a new ball-ball collision has been added to the physics class.
-		float2 newdir = m_Shield.Update(p_deltaTime, m_ballList[i]->GetBoundingSphere(), m_ballList[i]->GetDirection());
-		m_ballList[i]->SetDirection(newdir);
+			float2 newdir = m_Shield.Update(p_deltaTime, m_ballList[i]->GetBoundingSphere(), m_ballList[i]->GetDirection());
+			m_ballList[i]->SetDirection(newdir);
 
-		// Check collision betwen ball and keys
-		m_keyManager.Update(*m_ballList[i]);
+			// Check collision between ball and keys
+			m_keyManager.Update(*m_ballList[i]);
+		}
 	}
-	}
-
 	UpdateParticles(p_deltaTime);
-			}
+}
 
 void BOObjectManager::Draw()
 {
@@ -231,6 +229,15 @@ void BOObjectManager::Handle(PowerUpTypes p_type, bool p_activated)
 		if (p_activated)
 		{
 			AddNewBall();
+		}
+		break;
+	case PUFireBall:
+		if (p_activated)
+		{
+			for (unsigned int i = 0; i < m_ballList.size(); i++)
+			{
+				m_ballList[i]->SetBallOnFire(true);
+			}			
 		}
 		break;
 	}
@@ -355,15 +362,19 @@ bool BOObjectManager::LoadBlocksFromMap(std::string p_filename)
 				// This fat chunk of code is to be removed when the map loader loads power ups
 				if (i % 100 == 1)
 				{
-					result = block->Initialize(float2(x, y), int2(40, 40), BOTextureManager::GetTexture(TEXHEXPU2), PUShield, score);
+					result = block->Initialize(float2(x, y), int2(46, 42), BOTextureManager::GetTexture(TEXHEXPU2), PUShield, score);
 				}
 				else if (i % 100 == 33)
 				{
-					result = block->Initialize(float2(x, y), int2(40, 40), BOTextureManager::GetTexture(TEXHEXPU1), PUExtraBall, score);
+					result = block->Initialize(float2(x, y), int2(46, 42), BOTextureManager::GetTexture(TEXHEXPU1), PUExtraBall, score);
 				}
 				else if (i % 100 == 66)
 				{
-					result = block->Initialize(float2(x, y), int2(40, 40), BOTextureManager::GetTexture(TEXHEXPU3), PUBiggerPad, score);
+					result = block->Initialize(float2(x, y), int2(46, 42), BOTextureManager::GetTexture(TEXHEXPU3), PUBiggerPad, score);
+				}
+				else if (i % 100 == 99)
+				{
+					result = block->Initialize(float2(x, y), int2(46, 42), BOTextureManager::GetTexture(TEXHEXPU4), PUFireBall, score);
 				}
                 else if (i % 100 == 77)
                 {
@@ -371,7 +382,7 @@ bool BOObjectManager::LoadBlocksFromMap(std::string p_filename)
                 }
 				else
 				{
-					result = block->Initialize(float2(x, y), int2(40, 40), BOTextureManager::GetTexture(TEXHEXSTANDARD), PUNone, score);
+					result = block->Initialize(float2(x, y), int2(46, 42), BOTextureManager::GetTexture(TEXHEXSTANDARD), PUNone, score);
 				}
 				if (!result)
 				{
@@ -402,7 +413,7 @@ bool BOObjectManager::LoadBlocksFromMap(std::string p_filename)
 			case(INDESTRUCTIBLE) :
 			{
 				block = new BOBlockIron();
-                result = block->Initialize(float2(x, y), int2(40, 40), BOTextureManager::GetTexture(TEXHEXINDES), PUNone, score);
+				result = block->Initialize(float2(x, y), int2(46, 42), BOTextureManager::GetTexture(TEXHEXINDES), PUNone, score);
 				if (!result)
 				{
 					ThrowInitError("BOBlockIron");
@@ -457,9 +468,6 @@ void BOObjectManager::BallBlockCollision(BOBall* p_ball)
 		float2 newDir = BOPhysics::ReflectBallAroundNormal(p_ball->GetDirection(), normal);
 		if (newDir.x != ballDir.x || newDir.y != ballDir.y)
 		{
-			p_ball->SetDirection(newDir);
-			p_ball->BouncedOnHexagon();
-			p_ball->SetFuel(0.0f);
 			BOSoundManager::PlaySound(SOUND_POP);
 			//std::cout << "Ball bounced on [" << i << "]" << std::endl;
 
@@ -473,11 +481,20 @@ void BOObjectManager::BallBlockCollision(BOBall* p_ball)
 
 				// Add score
 				BOScore::AddScore(m_blockList[i]->GetScore());
-
+                
                 delete m_blockList[i];
 				m_blockList.erase(m_blockList.begin() + i);
 
+				if (p_ball->IsOnFire())
+				{
+					continue;
+				}
+
 			}
+
+			p_ball->SetDirection(newDir);
+			p_ball->BouncedOnHexagon();
+			p_ball->SetFuel(0.0f);
 		}
 	}
 }
