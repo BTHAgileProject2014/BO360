@@ -11,10 +11,10 @@ BOTextureManager& BOTextureManager::GetInstance()
 	return instance;
 }
 
-bool BOTextureManager::Initialize()
+bool BOTextureManager::Initialize(std::string p_theme)
 {
-	// Initialize all textures we use
-	LoadTexture();
+	// Initialize all textures we use.
+    LoadTexture(p_theme);
 
 	return true;
 }
@@ -25,24 +25,48 @@ void BOTextureManager::Shutdown()
 	std::vector<SDL_Texture*>().swap(GetInstance().textureList);
 }
 
-void BOTextureManager::LoadTexture()
+void BOTextureManager::LoadTexture(std::string p_theme)
 {
 	SDL_Texture* texture;
-	// balls
+
+	// Balls.
 	texture = BOGraphicInterface::LoadTexture("Sprites/PlaceHolderPNG/placeholderBoll10x10.png");
 	GetInstance().textureList.push_back(texture);
 	texture = BOGraphicInterface::LoadTexture("Sprites/PlaceHolderPNG/placeholderBoll2.png");
 	GetInstance().textureList.push_back(texture);
 	texture = BOGraphicInterface::LoadTexture("Sprites/PlaceHolderPNG/placeholderBollFire.png");
 	GetInstance().textureList.push_back(texture);
-	// Hexagons
-	texture = BOGraphicInterface::LoadTexture("Sprites/Blocks/BlockRegular.png");
+
+	// Hexagons, loaded using the theme.
+    const std::string theme = "Sprites/Themes/" + p_theme;
+    std::string filename;
+
+    filename = theme + "/Blocks/BlockRegular.png";
+    texture = BOGraphicInterface::LoadTexture(filename);
 	GetInstance().textureList.push_back(texture);
-	texture = BOGraphicInterface::LoadTexture("Sprites/Blocks/BlockArmored.png");
+
+    filename = theme + "/Blocks/BlockArmored.png";
+    texture = BOGraphicInterface::LoadTexture(filename);
 	GetInstance().textureList.push_back(texture);
-	texture = BOGraphicInterface::LoadTexture("Sprites/Blocks/BlockIndestructible.png");
+
+    filename = theme + "/Blocks/BlockIndestructible.png";
+    texture = BOGraphicInterface::LoadTexture(filename);
 	GetInstance().textureList.push_back(texture);
-	// Hexagon with powerups
+
+    // Glows, loaded using the theme.
+    filename = theme + "/Glows/GlowRegular.png";
+    texture = BOGraphicInterface::LoadTexture(filename);
+	GetInstance().textureList.push_back(texture);
+
+    filename = theme + "/Glows/GlowArmored.png";
+    texture = BOGraphicInterface::LoadTexture(filename);
+	GetInstance().textureList.push_back(texture);
+
+    filename = theme + "/Glows/GlowIndestructible.png";
+    texture = BOGraphicInterface::LoadTexture(filename);
+	GetInstance().textureList.push_back(texture);
+
+	// Hexagon with powerups.
 	texture = BOGraphicInterface::LoadTexture("Sprites/PlaceHolderPNG/Hexagons/placeholderHexagonPU1.png");
 	GetInstance().textureList.push_back(texture);
 	texture = BOGraphicInterface::LoadTexture("Sprites/PlaceHolderPNG/Hexagons/placeholderHexagonPU2.png");
@@ -51,9 +75,12 @@ void BOTextureManager::LoadTexture()
 	GetInstance().textureList.push_back(texture);
 	texture = BOGraphicInterface::LoadTexture("Sprites/PlaceHolderPNG/Hexagons/placeholderHexagonPU4.png");
 	GetInstance().textureList.push_back(texture); 
+    texture = BOGraphicInterface::LoadTexture("Sprites/PlaceHolderPNG/Hexagons/placeholderHexagonPUShockwave.png");
+    GetInstance().textureList.push_back(texture);
 	texture = BOGraphicInterface::LoadTexture("Sprites/PlaceHolderPNG/Hexagons/placeholderHexagonPU.png");
 	GetInstance().textureList.push_back(texture);
-	// Powerups
+
+	// Powerups.
 	texture = BOGraphicInterface::LoadTexture("Sprites/PlaceHolderPNG/Powerups/placeholderSheild.png");
 	GetInstance().textureList.push_back(texture);
 	texture = BOGraphicInterface::LoadTexture("Sprites/PlaceHolderPNG/Powerups/placeholderPowerupMultBall.png");
@@ -64,6 +91,10 @@ void BOTextureManager::LoadTexture()
 	GetInstance().textureList.push_back(texture);
 	texture = BOGraphicInterface::LoadTexture("Sprites/PlaceHolderPNG/Powerups/placeholderPowerup3.png");
 	GetInstance().textureList.push_back(texture);
+    texture = BOGraphicInterface::LoadTexture("Sprites/PlaceHolderPNG/Powerups/placeholderPowerupShockwave.png");
+    GetInstance().textureList.push_back(texture);
+    texture = BOGraphicInterface::LoadTexture("Sprites/PlaceHolderPNG/Powerups/placeholderSlowTime.png");
+    GetInstance().textureList.push_back(texture);
 	// Particles
 	texture = BOGraphicInterface::LoadTexture("Sprites/Particles/BallTrail.png");
 	GetInstance().textureList.push_back(texture);
@@ -77,10 +108,12 @@ void BOTextureManager::LoadTexture()
 	GetInstance().textureList.push_back(texture);
 	texture = BOGraphicInterface::LoadTexture("Sprites/Particles/DebugTrail.png");
 	GetInstance().textureList.push_back(texture);
-	// HUD
+
+	// HUD.
 	texture = BOGraphicInterface::LoadTexture("Sprites/PlaceHolderPNG/placeholderLife.png");
 	GetInstance().textureList.push_back(texture);
-	// Menu
+
+	// Menu.
 	texture = BOGraphicInterface::LoadTexture("Sprites/Menu/MenuEdge.png");
 	GetInstance().textureList.push_back(texture);
 	texture = BOGraphicInterface::LoadTexture("Sprites/Menu/MenuBar.png");
@@ -91,7 +124,8 @@ void BOTextureManager::LoadTexture()
 	GetInstance().textureList.push_back(texture);
 	texture = BOGraphicInterface::LoadTexture("Sprites/Menu/ButtonHighlighted.png");
 	GetInstance().textureList.push_back(texture);
-	// The rest
+
+	// Misc.
 	texture = BOGraphicInterface::LoadTexture("Sprites/PlaceHolderPNG/Background.png");
 	GetInstance().textureList.push_back(texture);
 	texture = BOGraphicInterface::LoadTexture("Sprites/PlaceHolderPNG/placeholderBlackhole110x110.png");
@@ -102,7 +136,6 @@ void BOTextureManager::LoadTexture()
 	GetInstance().textureList.push_back(texture);
     texture = BOGraphicInterface::LoadTexture("Sprites/PlaceHolderPNG/placeholderHyperdrive.png");
     GetInstance().textureList.push_back(texture);
-
 }
 
 void BOTextureManager::FreeTexture(int p_textureIndex)

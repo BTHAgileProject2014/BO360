@@ -12,7 +12,9 @@ public:
 	bool Initialize(float2 p_position, int2 p_size, SDL_Texture* p_sprite, int p_hp, PowerUpTypes p_powerup, int p_scoreValue);
 
     bool InitializeAnimated(float2 p_position, int2 p_size, int2 p_sourceSize, int p_frame, int p_maxFrames, double p_timePerFrame, bool p_hardReset, SDL_Texture* p_sprite, int p_hp, PowerUpTypes p_powerup, int p_scoreValue);
-	void Update();
+    void AddGlow(float2 p_position, int2 p_size, int2 p_sourceSize, int p_frame, int p_numberOfFrames, double p_timePerFrame, bool p_hardReset, SDL_Texture* p_sprite);
+    void Update(double p_deltaTime);
+    void DrawGlow();
 
 	box GetBoundingBox();
 	hexagon GetBoundingHexagon();
@@ -32,5 +34,6 @@ protected:
 	int m_hp;
 	bool dead;
 	PowerUpTypes m_powerup;
+    BOAnimatedObject m_glow;
 };
 #endif

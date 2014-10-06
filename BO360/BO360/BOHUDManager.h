@@ -20,7 +20,8 @@ public:
 	static void SetScore(int p_score);
 	static void SetLevel(int p_level);
 	static void SetKeys(int p_keys, int p_maxKeys);
-	static void ModifyState(bool p_lives, bool p_score, bool p_level, bool p_keys);
+    static void SetShockwave(bool p_active);
+	static void ModifyState(bool p_lives, bool p_score, bool p_level, bool p_keys, bool p_shockwave);
 
 private:
 	static float2 m_livesAnchor;
@@ -41,6 +42,10 @@ private:
 	static BOObject m_keySprite;
 	static BODrawableText m_keyText;
 	static bool m_keyEnabled;
+
+    static float2 m_shockwaveAnchor;
+    static BOObject m_shockwaveSprite;
+    static bool m_shockwaveEnabled;
 
 };
 #endif

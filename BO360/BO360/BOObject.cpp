@@ -58,7 +58,7 @@ void BOObject::SetPosition(float2 p_position)
 // Size Get / Set functions.
 int2 BOObject::GetSize()
 {
-	return m_size;
+    return int2((int)(m_size.x * m_scale), (int)(m_size.y * m_scale));
 }
 
 void BOObject::SetSize(int2 p_size)

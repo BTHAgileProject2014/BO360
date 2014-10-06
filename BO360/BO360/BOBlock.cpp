@@ -42,9 +42,9 @@ bool BOBlock::InitializeAnimated(float2 p_position, int2 p_size, int2 p_sourceSi
     return true;
 }
 
-void BOBlock::Update()
+void BOBlock::Update(double p_deltaTime)
 {
-
+    m_glow.Animate(p_deltaTime);
 }
 
 box BOBlock::GetBoundingBox()
@@ -81,4 +81,14 @@ bool BOBlock::Hit(int p_damage)
 {
 	m_hp -= p_damage;
 	return m_hp < 1 ? true : false;
+}
+
+void BOBlock::AddGlow(float2 p_position, int2 p_size, int2 p_sourceSize, int p_frame, int p_numberOfFrames, double p_timePerFrame, bool p_hardReset, SDL_Texture* p_sprite)
+{
+    m_glow.Initialize(p_position, p_size, p_sourceSize, p_frame, p_numberOfFrames, p_timePerFrame, p_hardReset, p_sprite);
+}
+
+void BOBlock::DrawGlow()
+{
+    m_glow.DrawAnimated();
 }
