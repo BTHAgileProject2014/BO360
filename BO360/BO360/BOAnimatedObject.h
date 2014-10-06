@@ -29,4 +29,4 @@ protected:
 	bool m_hardReset;
 	bool m_increment;
 };
-#endif;
+#endif
