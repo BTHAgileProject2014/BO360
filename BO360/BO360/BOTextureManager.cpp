@@ -56,15 +56,15 @@ void BOTextureManager::LoadTexture(std::string p_theme)
     // Glows, loaded using the theme.
     filename = theme + "/Glows/GlowRegular.png";
     texture = BOGraphicInterface::LoadTexture(filename);
-    GetInstance().textureList.push_back(texture);
+	GetInstance().textureList.push_back(texture);
 
     filename = theme + "/Glows/GlowArmored.png";
     texture = BOGraphicInterface::LoadTexture(filename);
-    GetInstance().textureList.push_back(texture);
+	GetInstance().textureList.push_back(texture);
 
     filename = theme + "/Glows/GlowIndestructible.png";
     texture = BOGraphicInterface::LoadTexture(filename);
-    GetInstance().textureList.push_back(texture);
+	GetInstance().textureList.push_back(texture);
 
 	// Hexagon with powerups.
 	texture = BOGraphicInterface::LoadTexture("Sprites/PlaceHolderPNG/Hexagons/placeholderHexagonPU1.png");
@@ -75,6 +75,8 @@ void BOTextureManager::LoadTexture(std::string p_theme)
 	GetInstance().textureList.push_back(texture);
 	texture = BOGraphicInterface::LoadTexture("Sprites/PlaceHolderPNG/Hexagons/placeholderHexagonPU4.png");
 	GetInstance().textureList.push_back(texture); 
+    texture = BOGraphicInterface::LoadTexture("Sprites/PlaceHolderPNG/Hexagons/placeholderHexagonPUShockwave.png");
+    GetInstance().textureList.push_back(texture);
 	texture = BOGraphicInterface::LoadTexture("Sprites/PlaceHolderPNG/Hexagons/placeholderHexagonPU.png");
 	GetInstance().textureList.push_back(texture);
 
@@ -89,8 +91,11 @@ void BOTextureManager::LoadTexture(std::string p_theme)
 	GetInstance().textureList.push_back(texture);
 	texture = BOGraphicInterface::LoadTexture("Sprites/PlaceHolderPNG/Powerups/placeholderPowerup3.png");
 	GetInstance().textureList.push_back(texture);
-
-	// Particles.
+    texture = BOGraphicInterface::LoadTexture("Sprites/PlaceHolderPNG/Powerups/placeholderPowerupShockwave.png");
+    GetInstance().textureList.push_back(texture);
+    texture = BOGraphicInterface::LoadTexture("Sprites/PlaceHolderPNG/Powerups/placeholderSlowTime.png");
+    GetInstance().textureList.push_back(texture);
+	// Particles
 	texture = BOGraphicInterface::LoadTexture("Sprites/Particles/BallTrail.png");
 	GetInstance().textureList.push_back(texture);
 	texture = BOGraphicInterface::LoadTexture("Sprites/Particles/BallDebris.png");

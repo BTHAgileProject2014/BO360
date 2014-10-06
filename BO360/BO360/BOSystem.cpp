@@ -129,6 +129,9 @@ bool BOSystem::InitializeMap()
 	// Example usage of HUD
 	BOHUDManager::SetLevel(1);
 
+    // Set the time scale to 1.0
+    BOPhysics::SetTimeScale(1.0f);
+
 	return true;
 }
 

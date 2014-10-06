@@ -41,6 +41,8 @@ public:
 	static float2 BallPadCollision(sphere p_sphere, float2 p_sphereDir, sphere p_padSphere, double p_startAngle, double p_endAngle);
 	static float CalculateBallFuel(float p_fuel, double p_deltaTime);
 	static int CheckCollisionBallShield(sphere p_sphere, sphere p_padSphere);
+    static float GetTimeScale();
+    static void SetTimeScale(float p_timeScale);
 
     static double AngleBetweenDeg(const float2& p_v1, const float2& p_v2);
     static double AngleBetweenRad(const float2& p_v1, const float2& p_v2);
@@ -55,5 +57,7 @@ private:
 
 	static const double PI;
 	static const double HALF_PI;
+
+    static float m_timeScale;
 };
 #endif

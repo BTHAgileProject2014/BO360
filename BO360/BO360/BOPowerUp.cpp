@@ -43,9 +43,11 @@ void BOPowerUp::Draw()
 
 void BOPowerUp::Update(double p_deltaTime)
 {
+    float timescale = BOPhysics::GetTimeScale();
+
 	// Move the powerup towards the blackhole
-	m_position.x = (float)(m_speed * p_deltaTime) * m_direction.x + m_position.x;
-	m_position.y = (float)(m_speed * p_deltaTime) * m_direction.y + m_position.y;
+	m_position.x = (float)(m_speed * p_deltaTime * timescale) * m_direction.x + m_position.x;
+	m_position.y = (float)(m_speed * p_deltaTime * timescale) * m_direction.y + m_position.y;
 
 	// Checks powerup "ball" against the pad, if colliding with pad do powerup effect and remove the powerup"ball"
 	float2 result = BOPhysics::BallPadCollision(GetBoundingSphere(), m_direction, m_paddle->GetBoundingSphere(), m_paddle->GetRotation() - 10.6, m_paddle->GetDegrees());

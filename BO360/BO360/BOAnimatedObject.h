@@ -33,4 +33,4 @@ protected:
 	bool m_increment;
     bool m_alive;
 };
-#endif;
+#endif

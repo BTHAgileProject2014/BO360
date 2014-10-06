@@ -25,7 +25,7 @@ bool BOBall::Initialize(float2 p_position, int2 p_size, SDL_Texture* p_sprite, f
 	m_stuckToPad = true;
 	m_onFire = false;
 	m_fireTimeElapsed = 0; // Set duration for fireball powerup in header, const variable
-
+	
 	// Load texture.
 	m_sprite = p_sprite;
 	m_sprite2 = BOTextureManager::GetTexture(TEXDEBUGBALL);
@@ -49,7 +49,7 @@ void BOBall::Update(double p_deltaTime, sphere p_blackHoleBounds)
 		if (m_fireTimeElapsed >= m_fireTimeDuration)
 		{
 			SetBallOnFire(false);
-		}
+}
 	}
 	else if (!m_onFire)
 	{
@@ -147,25 +147,27 @@ void BOBall::SetStuckToPad(bool p_stuck)
 
 void BOBall::Move(double p_deltaTime, sphere p_blackHoleBounds)
 {
+    float timescale = BOPhysics::GetTimeScale();
+
 	if (m_Fuel > 0)
 	{
-		m_position.x = (float)(m_speed * p_deltaTime) * m_direction.x + m_position.x;
-		m_position.y = (float)(m_speed * p_deltaTime) * m_direction.y + m_position.y;
-		m_Fuel -= (float)p_deltaTime;
+        m_position.x = (float)(m_speed * p_deltaTime * timescale) * m_direction.x + m_position.x;
+        m_position.y = (float)(m_speed * p_deltaTime * timescale) * m_direction.y + m_position.y;
+        m_Fuel -= (float)p_deltaTime * timescale;
 		if (!m_onFire)
 		{
 			m_sprite = m_sprite2;
-		}			
+	    }
 	}
 	else
 	{
-		m_position.x = (float)(0.75*m_speed * p_deltaTime) * m_direction.x + m_position.x;
-		m_position.y = (float)(0.75*m_speed * p_deltaTime) * m_direction.y + m_position.y;
+        m_position.x = (float)(0.75*m_speed * p_deltaTime * timescale) * m_direction.x + m_position.x;
+        m_position.y = (float)(0.75*m_speed * p_deltaTime * timescale) * m_direction.y + m_position.y;
 		SetDirection(BOPhysics::BlackHoleGravity(GetBoundingSphere(), GetDirection(), GetSpeed(), p_blackHoleBounds, p_deltaTime));
 		if (!m_onFire)
 		{
-			m_sprite = m_sprite3;
-		}
+		    m_sprite = m_sprite3;
+	    }
 	}
 
 	if (m_position.x < (m_size.x / 2) || m_position.x >(m_windowSize.x - (m_size.x / 2)))
@@ -194,7 +196,14 @@ void BOBall::SetPosition(float2 p_position)
 	}
 	BOObject::SetPosition(p_position);
 }
-
+float BOBall::GetStuckAngle() const
+{
+    return m_stuckAngle;
+}
+void BOBall::SetStuckAngle(float p_stuckAngle)
+{
+    m_stuckAngle = p_stuckAngle;
+}
 // input false for fire off: true for fire on
 void BOBall::SetBallOnFire(bool p_setOnFire)
 {
@@ -212,4 +221,14 @@ void BOBall::SetBallOnFire(bool p_setOnFire)
 bool BOBall::IsOnFire() const
 {
 	return m_onFire;
+}
+
+void BOBall::ActivateShockwave()
+{
+    m_Fuel += 0.5f;
+    float2 direction = float2();
+    direction.x = GetPosition().x - m_windowSize.x * 0.5f;
+    direction.y = GetPosition().y - m_windowSize.y * 0.5f;
+    direction.normalize();
+    SetDirection(direction);
 }
