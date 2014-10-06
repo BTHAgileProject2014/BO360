@@ -17,7 +17,6 @@
 #include "BOScore.h"
 #include "BOTextureManager.h"
 #include <iostream>
-//#include <vld.h>
 
 class BOSystem : BOComponent, public BOSubscriber
 {

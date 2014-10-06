@@ -16,4 +16,4 @@ private:
 	std::vector<SDL_Texture*> m_textures;
     int m_damage;
 };
-#endif;
+#endif
