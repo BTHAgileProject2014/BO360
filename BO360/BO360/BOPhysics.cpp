@@ -463,19 +463,25 @@ double BOPhysics::AngleBetweenDeg(const float2& p_v1, const float2& p_v2)
 // Calculates the angle in radians from p_v1 to p_v2 in SDL rotation coordinate system
 double BOPhysics::AngleBetweenRad(const float2& p_v1, const float2& p_v2)
 {
+
+    float2 v1 = p_v1.normalized();
+    float2 v2 = p_v2.normalized();
+    v1.y *= -1;
+    v2.y *= -1;
+
     // 1. Convert from vectors to angles
-    double v1AngleRad = acos(p_v1.normalized().x);
-    double v2AngleRad = acos(p_v2.normalized().x);
+    double v1AngleRad = acos(v1.normalized().x);
+    double v2AngleRad = acos(v2.normalized().x);
 
     // Move to the same coordinate system as SDL rotations
-    if (p_v1.y < 0)
+    if (v1.y < 0)
     {
         v1AngleRad *= -1;
     }
     v1AngleRad += HALF_PI;
     NormalizeAngle(v1AngleRad);
 
-    if (p_v2.y < 0)
+    if (v2.y < 0)
     {
         v2AngleRad *= -1;
     }
