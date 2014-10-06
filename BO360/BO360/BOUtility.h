@@ -355,6 +355,7 @@ struct InputMessages
 	bool downArrow;
 	bool zKey;
 	bool xKey;
+    bool fKey;
 	bool escKey;
 };
 
@@ -419,6 +420,7 @@ enum KeyMessages
 	spacebarKey,
 	zKey,
 	xKey,
+    fKey,
 	escKey
 };
 

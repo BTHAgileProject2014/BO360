@@ -245,7 +245,7 @@ void BOObjectManager::Handle(InputMessages p_inputMessage)
 			m_ballList[i]->SetStuckToPad(false);
 	    }   
     }
-    if (p_inputMessage.xKey && m_shockwave.Activate())
+    if (p_inputMessage.fKey && m_shockwave.Activate())
     {
         ActivateShockwave();
     }

@@ -3,6 +3,7 @@
 
 #include "BOComponent.h"
 #include "BOPUSubscriber.h"
+#include "BOPowerUpManager.h"
 
 class BOShockwave : public BOComponent, public BOPUSubscriber
 {

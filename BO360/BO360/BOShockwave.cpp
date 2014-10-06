@@ -16,12 +16,15 @@ bool BOShockwave::Initialize()
     m_isPowerUp = true;
     m_totalCooldownTime = 10;
     m_currentCooldownTime = 0;
+    BOPowerUpManager::AddSubscriber(this);
+    
 
     return true;
 }
 
 void BOShockwave::Shutdown()
 {
+    BOPowerUpManager::Unsubscribe(this);
 }
 
 void BOShockwave::Update(double p_deltaTime)
@@ -55,7 +58,14 @@ bool BOShockwave::Activate()
 void BOShockwave::AddShockwave(bool p_isPowerUp)
 {
     m_hasShockwave = true;
-    m_isPowerUp = p_isPowerUp;
+    if (m_isPowerUp)
+    {
+        m_isPowerUp = p_isPowerUp;
+    }
+    else
+    {
+        m_currentCooldownTime = m_totalCooldownTime;
+    }
 }
 
 void BOShockwave::Handle(PowerUpTypes p_type, bool p_activated)
