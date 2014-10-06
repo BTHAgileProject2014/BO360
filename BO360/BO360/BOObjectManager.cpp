@@ -92,7 +92,7 @@ bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight)
     }
 
     // Initialize SlowTime powerup functionality
-    result = m_SlowTime.Initialize();
+    result = m_slowTime.Initialize();
     if (!result)
     {
         std::cout << "Initialize slow time failed" << std::endl;
@@ -137,13 +137,13 @@ void BOObjectManager::Shutdown()
 	m_paddle.Shutdown();
 	m_keyManager.Shutdown();
     m_shockwave.Shutdown();
-    m_SlowTime.Shutdown();
+    m_slowTime.Shutdown();
 }
 
 void BOObjectManager::Update(double p_deltaTime)
 {
     // Update SlowTime before the objects
-    m_SlowTime.Update(p_deltaTime);
+    m_slowTime.Update(p_deltaTime);
 
 	m_blackHole.Update();
 	m_paddle.Update(p_deltaTime);
@@ -157,27 +157,28 @@ void BOObjectManager::Update(double p_deltaTime)
 
 	// Update balls
 	for (unsigned int i = 0; i < m_ballList.size(); i++)
-			{
+	{
 		m_ballList[i]->Update(p_deltaTime, m_blackHole.GetBoundingSphere());
 
 		if (m_ballList[i]->IsStuckToPad())
-				{
+		{
             if (m_paddle.GetStickyState())
-            {//Calculate position of ball based on position of ball             
+            {
+                //Calculate position of ball based on position of ball             
                 m_ballList[i]->SetPosition(m_paddle.GetBallStuckPosition(m_ballList[i]->GetStuckAngle()));
             }
             else
             {
-			m_ballList[i]->SetPosition(m_paddle.GetBallSpawnPosition());
-		}
+			    m_ballList[i]->SetPosition(m_paddle.GetBallSpawnPosition());
+		    }
         }
 		else	// Ball is NOT stuck to pad
-					{
+	    {
 			BallBlockCollision(m_ballList[i]);
 
 			BallPadCollision(m_ballList[i]);
 
-		CheckBallOutOfBounds(i);
+		    CheckBallOutOfBounds(i);
 
 			if (BallDied(m_ballList[i]))
 			{
@@ -186,19 +187,19 @@ void BOObjectManager::Update(double p_deltaTime)
 				m_ballList.erase(m_ballList.begin() + i);
 				i--;
 				continue;
-		}
+		    }
 		
 			// Bounce on shield, this should change once a new ball-ball collision has been added to the physics class.
-		float2 newdir = m_Shield.Update(p_deltaTime, m_ballList[i]->GetBoundingSphere(), m_ballList[i]->GetDirection());
-		m_ballList[i]->SetDirection(newdir);
+		    float2 newdir = m_Shield.Update(p_deltaTime, m_ballList[i]->GetBoundingSphere(), m_ballList[i]->GetDirection());
+		    m_ballList[i]->SetDirection(newdir);
 
 			// Check collision between ball and keys
-		m_keyManager.Update(*m_ballList[i]);
-	}
+		    m_keyManager.Update(*m_ballList[i]);
+	    }
 	}
 
 	UpdateParticles(p_deltaTime);
-			}
+}
 
 void BOObjectManager::Draw()
 {
@@ -267,7 +268,7 @@ void BOObjectManager::Handle(PowerUpTypes p_type, bool p_activated)
     case PUSlowTime:
         if (p_activated)
         {
-            m_SlowTime.AddCharges(1);
+            m_slowTime.AddCharges(1);
         }
         break;
     case PUStickyPad:
@@ -296,7 +297,7 @@ void BOObjectManager::Handle(InputMessages p_inputMessage)
     // Activate Slow time
     if (p_inputMessage.downArrow)
     {
-        m_SlowTime.Activate();
+        m_slowTime.Activate();
     }
 }
 
@@ -560,7 +561,7 @@ void BOObjectManager::BallPadCollision(BOBall* p_ball)
 	{
         p_ball->SetDirection(newDir);
         if (m_paddle.GetStickyState() && !(p_ball->GetFuel() > 0))
-	{
+	    {
             p_ball->SetStuckToPad(true);
             float2 temp = { p_ball->GetPosition().x - m_blackHole.GetPosition().x, p_ball->GetPosition().y - m_blackHole.GetPosition().y };
             float tempAngle = BOPhysics::AngleBetweenDeg(float2{ 0, -100 }, temp);
