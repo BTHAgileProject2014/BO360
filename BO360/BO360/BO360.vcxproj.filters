@@ -153,6 +153,9 @@
     <ClCompile Include="BOSlowTime.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="BOShockwave.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BOSystem.h">
@@ -276,6 +279,9 @@
       <Filter>Header Files\ObjectTypes</Filter>
     </ClInclude>
     <ClInclude Include="BOSlowTime.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BOShockwave.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

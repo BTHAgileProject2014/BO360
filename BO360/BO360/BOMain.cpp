@@ -7,8 +7,8 @@ int main(int argc, char* args[])
 	if (system.Initialize())
 	{
 		while (system.Run());
+		system.Shutdown();
 	}
 
-	system.Shutdown();
 	return 0;
 }

@@ -23,6 +23,7 @@
 #include "BOKeyManager.h"
 #include "BOTextureManager.h"
 #include "BOSlowTime.h"
+#include "BOShockwave.h"
 
 class BOObjectManager : public BOComponent, public BOPUSubscriber ,public BOSubscriber
 {
@@ -49,6 +50,7 @@ private:
 	void BallPadCollision(BOBall* p_ball);
 	bool BallDied(BOBall* p_ball);
 	void UpdateParticles(double p_deltaTime);
+    void ActivateShockwave();
 
 	int m_life;
 
@@ -62,7 +64,7 @@ private:
 	std::vector<BOBlock*> m_blockList;
 	BOKeyManager m_keyManager;
     BOSlowTime m_SlowTime;
-
+    BOShockwave m_shockwave;
 
 	double m_SecondsPerParticle; // Should be moved into objects that use it
 };

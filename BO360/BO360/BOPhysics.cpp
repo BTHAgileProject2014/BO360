@@ -5,7 +5,11 @@ const double BOPhysics::HALF_PI = PI / 2;
 
 float BOPhysics::m_timeScale;
 
-// Balls
+bool BOPhysics::CheckCollisionSphereToSphere(const sphere &a, const sphere &b)
+{
+	return CollisionRadiusRadius(a.pos, a.radius, b.pos, b.radius);
+}
+
 bool BOPhysics::CollisionRadiusRadius(float2 p_centerA, float p_radiusA, float2 p_centerB, float p_radiusB)
 {
 	// Calculate x and y distance.
@@ -316,6 +320,7 @@ float2 BOPhysics::CalculateNewDir(float2 p_currentDir, float p_padAngle, float p
 
 float2 BOPhysics::ReflectBallAroundNormal(float2 p_ballDir, float2 p_normal)
 {
+
 	float2 newBallDir, normal;
 	float vDotN;
 	newBallDir = p_ballDir;
@@ -338,7 +343,7 @@ float2 BOPhysics::BlackHoleGravity(sphere p_ball, float2 p_ballDirection, float 
 {
 	float2 newDirection = p_ballDirection;
 	float2 center = float2(p_blackHole.pos - p_ball.pos); //En vektor mot hålet från bollen
-	const double G = 0.67;		//Gravitations konstant 6,7 * 10^-11	//Tar bort nollor från G och massa för att lättare se	//0.000000000067
+	const double G = 0.067;		//Gravitations konstant 6,7 * 10^-11	//Tar bort nollor från G och massa för att lättare se	//0.000000000067
 
 	float distanceAdjustment = CalculateDistance(p_ball.pos, p_blackHole.pos);// Beräkna radien mellan bollen och hålet
 		
@@ -393,6 +398,191 @@ int BOPhysics::CheckCollisionBallShield(sphere p_sphere, sphere p_padSphere)
 		}
 	}
 	return 0;
+}
+
+bool BOPhysics::BallBouncedOnPad(const BOBall &p_ball, const BOPaddle &p_paddle, float2& p_newDirection)
+{
+	float2 ballPosition = p_ball.GetPosition();
+	float2 ballDirection = p_ball.GetDirection();
+	float2 paddleRotationCenter = p_paddle.GetPosition();
+	float2 centerToBall = ballPosition - paddleRotationCenter;
+	
+	// Check if the ball is in range with the paddle
+	// Return at once if the ball is outside the pad's outer radius
+	if (!CheckCollisionSphereToSphere(p_ball.GetBoundingSphere(), p_paddle.GetBoundingSphere()))
+	{
+		return false;
+	}
+	// Or if it is within the inner radius
+	sphere innerSphere = p_paddle.GetBoundingSphere();
+	innerSphere.radius -= 20;
+	if (CheckCollisionSphereToSphere(p_ball.GetBoundingSphere(), innerSphere))
+	{
+		return false;
+	}
+
+	// Check if the ball hit the paddle portion
+    double padStartRad = p_paddle.GetStartRotation() * DEGREES_TO_RADIANS;
+    NormalizeAngle(padStartRad);
+    double angleRad = p_paddle.GetDegrees() * DEGREES_TO_RADIANS;
+    double padEndRad = padStartRad + angleRad;
+    NormalizeAngle(padEndRad);
+
+	double ballAngleRad = acos(centerToBall.normalized().x);
+
+    // Move to the same coordinate system as SDL rotations
+    if (centerToBall.y < 0)
+    {
+        ballAngleRad *= -1;
+    }
+    ballAngleRad += HALF_PI; 
+    NormalizeAngle(ballAngleRad);
+
+    if (!IsWithinRad(padStartRad, padEndRad, ballAngleRad))
+    {
+        return false;
+    }
+
+	// Reflect around the normal
+	p_newDirection = Reflect(ballDirection, centerToBall);
+
+	// Apply bias (?)
+    float biasValue; // Should range from -1 to 1
+    double paddleCenter;
+    float2 bias = ApplyBias(padStartRad, padEndRad, ballAngleRad);
+    p_newDirection = p_newDirection + bias;
+    p_newDirection.normalize();
+
+	return true;
+}
+
+// Calculates the angle in degrees from p_v1 to p_v2 in SDL rotation coordinate system
+double BOPhysics::AngleBetweenDeg(const float2& p_v1, const float2& p_v2)
+{
+    return RADIANS_TO_DEGREES * AngleBetweenRad(p_v1, p_v2);
+}
+
+// Calculates the angle in radians from p_v1 to p_v2 in SDL rotation coordinate system
+double BOPhysics::AngleBetweenRad(const float2& p_v1, const float2& p_v2)
+{
+
+    float2 v1 = p_v1.normalized();
+    float2 v2 = p_v2.normalized();
+    v1.y *= -1;
+    v2.y *= -1;
+
+    // 1. Convert from vectors to angles
+    double v1AngleRad = acos(v1.normalized().x);
+    double v2AngleRad = acos(v2.normalized().x);
+
+    // Move to the same coordinate system as SDL rotations
+    if (v1.y < 0)
+    {
+        v1AngleRad *= -1;
+    }
+    v1AngleRad += HALF_PI;
+    NormalizeAngle(v1AngleRad);
+
+    if (v2.y < 0)
+    {
+        v2AngleRad *= -1;
+    }
+    v2AngleRad += HALF_PI;
+    NormalizeAngle(v2AngleRad);
+
+    // 2. Account for near-origo issues
+    if (v1AngleRad > v2AngleRad) // Around origo
+    {
+        v2AngleRad += PI * 2.0; // Forward a full rotation
+    }
+
+    // 3. Calculate the actual angle
+    double resultAngle = 2 * PI - (v2AngleRad - v1AngleRad);
+    return resultAngle;
+}
+
+float2 BOPhysics::Reflect(const float2 p_target, const float2 p_normal)
+{
+	float2 normal = p_normal.normalized();
+	float2 direction = p_target.normalized();
+	float vDotN = direction.dot(normal);
+	//std::cout << "dot product: " << vDotN << std::endl;
+	if (vDotN < 0) // Check that we hit from the right side
+	{
+		direction = p_target.normalized();
+		vDotN = direction.dot(normal);
+		float2 reflected = direction - (normal * vDotN * 2.0);
+		return reflected.normalized();
+	}
+	return p_target;
+}
+
+bool BOPhysics::IsWithinRad(double p_start, double p_end, double p_toTest)
+{
+    double originalEnd = p_end;
+
+    if (p_start > p_end) // Around origo
+    {
+        p_end += PI * 2.0; // Forward a full rotation
+
+        // If toTest was between 0 and p_end, we need to forward it too
+        if (p_toTest < originalEnd)
+        {
+            p_toTest += PI * 2.0;
+        }
+    }
+
+    //std::cout << std::fixed << std::setprecision(4);
+    //std::cout << "Ball: " << p_toTest << " Pad: " << p_start << " Rot: " << p_end << std::endl;
+    // toTest should now always be within start and end's numbers if it is actually within their angles
+
+    return (p_start < p_toTest
+        && p_toTest < p_end);
+}
+
+float2 BOPhysics::ApplyBias(double p_start, double p_end, double p_ball)
+{
+    double start = p_start;
+    double end = p_end;
+    double ball = p_ball;
+
+    if (start > end) // Around origo
+    {
+        end += PI * 2.0; // Forward a full rotation
+
+        // If toTest was between 0 and p_end, we need to forward it too
+        if (ball < p_end)
+        {
+            ball += PI * 2.0;
+        }
+    }
+
+    // calculate the ball bias (-1 to 1)
+    double center = (end + start) / 2;
+    double maxDistance = end - center;
+    double ballRelativeToPadCenter = ball - center;
+    double ballBias = ballRelativeToPadCenter / (maxDistance * 0.8);
+    if (abs(ballBias) > 1)
+    {
+        ballBias /= abs(ballBias);
+    }
+
+    // Scale worst case bias with paddle size
+    // The constant can be scaled for more extreme angles
+    float worstCaseBias = maxDistance * 3;
+
+    // Calculate the bias angle for this bounce
+    double biasAngle = center + ballBias * worstCaseBias;
+
+    // Turn into vector
+    float2 biasVector;
+    biasVector.x = sin(biasAngle);
+    biasVector.y = -cos(biasAngle);
+    biasVector.normalize();
+
+    // Scale with an influence factor
+    float influenceFactor = 1.0f;
+    return biasVector * influenceFactor;
 }
 
 float BOPhysics::GetTimeScale()

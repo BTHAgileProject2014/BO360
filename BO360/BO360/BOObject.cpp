@@ -45,7 +45,7 @@ void BOObject::Draw()
 }
 
 // Position Get / Set functions.
-float2 BOObject::GetPosition()
+float2 BOObject::GetPosition() const
 {
 	return m_position;
 }
@@ -79,7 +79,7 @@ void BOObject::SetSprite(Textures p_spriteIndex)
 	m_sprite = BOTextureManager::GetTexture(p_spriteIndex);
 }
 
-sphere BOObject::GetBoundingSphere()
+sphere BOObject::GetBoundingSphere() const
 {
 	return sphere(m_position, m_radius);
 }

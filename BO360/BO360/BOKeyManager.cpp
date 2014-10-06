@@ -24,7 +24,7 @@ void BOKeyManager::Shutdown()
 	m_keys.clear();
 }
 
-void BOKeyManager::Update(BOBall p_ball)
+void BOKeyManager::Update(const BOBall& p_ball)
 {
 	for (unsigned int i = 0; i < m_keys.size(); i++)
 	{
@@ -65,7 +65,7 @@ void BOKeyManager::KeyCatched()
     BOHUDManager::SetKeys(m_keysCatched, m_keysNeeded);
 }
 
-bool BOKeyManager::AllKeysCatched()
+bool BOKeyManager::AllKeysCatched() const
 {
     // If no key is added it returns false so you don't win directly
     if (m_keysNeeded == 0)

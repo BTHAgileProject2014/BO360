@@ -13,21 +13,24 @@ public:
 	~BOPaddle();
 
 	void Update(double p_deltaTime);
-	double GetRotation();
+	double GetRotation()const; // This returns the center of the first segment
+    double GetStartRotation()const; // This returns the actual start of the paddle
 
 	// Overloaded functions
 	bool Initialize(float2 p_position, int2 p_size, SDL_Texture* p_sprite);
 	void Handle(InputMessages p_inputMessages);
 	void Handle(PowerUpTypes p_type, bool p_activated);
-
-	int GetSegments();
+	int GetSegments()const;
 	void AddSegments(int p_segments);
 	void RemoveSegments(int p_segments);
-
-	double GetDegrees();
+	double GetDegrees()const;
 	void Draw();
 
+    bool GetStickyState()const;
+    void SetStickyState(bool p_active);
+
 	float2 GetBallSpawnPosition();
+    float2 GetBallStuckPosition(float angle);
 
 private:
 	double m_rotation;
@@ -37,5 +40,6 @@ private:
 	int m_segments;
 	double m_totalDegrees;
 	double m_segementDegree;
+    bool m_isSticky;
 };
 #endif

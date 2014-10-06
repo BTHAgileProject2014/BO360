@@ -65,6 +65,27 @@ void BOPowerUpManager::AddPowerUp(PowerUpTypes p_type, float2 p_startPosition, B
 			m_powerUps.push_back(extraBall);
 			break;
 		}
+        case PUStickyPad:
+        {
+            BOPowerUp* sticky = new BOPowerUp();
+            sticky->Initialize(PUStickyPad, p_startPosition, int2(30, 30), BOTextureManager::GetTexture(TEXPUMULTIBALL), 500.0f, p_paddle, p_blackholePosition);
+            m_powerUps.push_back(sticky);
+            break;
+        }
+		case PUFireBall:
+		{
+			BOPowerUp* fireBall = new BOPowerUp();
+			fireBall->Initialize(PUFireBall, p_startPosition, int2(40, 40), BOTextureManager::GetTexture(TEXPUFIREBALL), 500.0f, p_paddle, p_blackholePosition);
+			m_powerUps.push_back(fireBall);
+			break;
+		}
+        case PUShockwave:
+        {
+            BOPowerUp* shockwave = new BOPowerUp();
+            shockwave->Initialize(PUShockwave, p_startPosition, int2(30, 30), BOTextureManager::GetTexture(TEXPUSHOCKWAVE), 500.0f, p_paddle, p_blackholePosition);
+            m_powerUps.push_back(shockwave);
+            break;
+        }
         case PUSlowTime:
         {
             BOPowerUp* slowTime = new BOPowerUp();

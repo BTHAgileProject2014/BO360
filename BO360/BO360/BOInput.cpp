@@ -12,7 +12,8 @@ enum BOInputKey
 	BOInput_M1,
 	BOInput_M2,
 	BOInput_z,
-	BOInput_x
+	BOInput_x,
+    BOInput_f
 };
 
 BOInput::BOInput()
@@ -135,8 +136,8 @@ bool BOInput::Update()
 					{
 						if (!m_buttonsPressed[BOInput_z])
 						{
-							//m_buttonsPressed[BOInput_z] = true;
-							//m_publisher.Notify(zKey, true);
+							m_buttonsPressed[BOInput_z] = true;
+							m_publisher.Notify(zKey, true);
 #ifdef DEBUG
 							std::cout << "z is pressed\n";
 #endif
@@ -147,8 +148,8 @@ bool BOInput::Update()
 					{
 						if (!m_buttonsPressed[BOInput_x])
 						{
-							//m_buttonsPressed[BOInput_x] = true;
-							//m_publisher.Notify(xKey, true);
+							m_buttonsPressed[BOInput_x] = true;
+							m_publisher.Notify(xKey, true);
 #ifdef DEBUG
 							std::cout << "x is pressed\n";
 #endif
@@ -156,6 +157,18 @@ bool BOInput::Update()
 						
 						break;
 					}
+                    case SDLK_f:
+                    {
+                        if (!m_buttonsPressed[BOInput_f])
+                        {
+                            m_buttonsPressed[BOInput_f] = true;
+                            m_publisher.Notify(fKey, true);
+#ifdef DEBUG
+                            std::cout << "f is pressed\n";
+#endif
+                        }
+                        break;
+                    }
 				}
 				break;
 			}
@@ -240,6 +253,15 @@ bool BOInput::Update()
 #endif
 						break;
 					}
+                    case SDLK_f:
+                    {
+                        m_buttonsPressed[BOInput_f] = false;
+                        m_publisher.Notify(fKey, false);
+#ifdef DEBUG
+                        std::cout << "f is released\n";
+#endif
+                        break;
+                    }
 				}
 				break;
 			}
@@ -283,6 +305,12 @@ bool BOInput::Update()
 							std::cout << "RIGHT mousebutton pressed\n";
 #endif
 						}
+						break;
+					}
+					default:
+					{
+						m_buttonsPressed[BOInput_M1] = false;
+						m_publisher.Notify(leftMouseKey, false);
 						break;
 					}
 				}

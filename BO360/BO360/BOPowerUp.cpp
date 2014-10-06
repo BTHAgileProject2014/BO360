@@ -16,7 +16,7 @@ bool BOPowerUp::Initialize(PowerUpTypes p_type, float2 p_position, int2 p_size, 
 	{
 		return false;
 	}
-
+	
 	m_type = p_type;
 	m_speed = p_speed;
 	m_hasActivated = false;
@@ -53,7 +53,7 @@ void BOPowerUp::Update(double p_deltaTime)
 	float2 result = BOPhysics::BallPadCollision(GetBoundingSphere(), m_direction, m_paddle->GetBoundingSphere(), m_paddle->GetRotation() - 10.6, m_paddle->GetDegrees());
 	if (!(result.x == 0 && result.y == 0))
 	{
-		// Play  sound for PowerUp catched
+		// Play  sound for PowerUp catch
 		BOSoundManager::PlaySound(SOUND_POWERUP);
 		
 		Activate();
