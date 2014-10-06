@@ -194,7 +194,14 @@ void BOBall::SetPosition(float2 p_position)
 	}
 	BOObject::SetPosition(p_position);
 }
-
+float BOBall::GetStuckAngle() const
+{
+    return m_stuckAngle;
+}
+void BOBall::SetStuckAngle(float p_stuckAngle)
+{
+    m_stuckAngle = p_stuckAngle;
+}
 // input false for fire off: true for fire on
 void BOBall::SetBallOnFire(bool p_setOnFire)
 {
