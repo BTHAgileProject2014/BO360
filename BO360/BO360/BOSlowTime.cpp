@@ -21,7 +21,7 @@ bool BOSlowTime::Initialize()
     m_charges = 0; // use -1 for unlimited nr of charges
     m_timeLeft = 0;
     m_active = false;
-    m_duration = 5.0f; // includes fade time, 5-(5*0.2*2) is the actual time at the min time scale
+    m_duration = 5.0f; // includes fade time, 5-(5*0.1*2) is the actual time at the min time scale
     m_minTimeScale = 0.1f;
     m_maxTimeScale = 1.0f;
     m_currentTimeScale = 1.0f;

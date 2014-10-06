@@ -21,7 +21,6 @@ private:
     float m_duration;
     bool m_active;
     float m_timeLeft;
-    int m_fade;
     float m_minTimeScale;
     float m_maxTimeScale;
     float m_currentTimeScale;
