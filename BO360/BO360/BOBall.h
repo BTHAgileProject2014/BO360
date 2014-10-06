@@ -21,6 +21,7 @@ public:
 
 	void SetDirection(float2 p_direction);
 	float2 GetDirection()const;
+    void ActivateShockwave();
 
 	float GetFuel();
 	void SetFuel(float p_Fuel);

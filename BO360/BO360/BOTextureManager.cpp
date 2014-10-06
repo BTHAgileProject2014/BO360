@@ -51,6 +51,8 @@ void BOTextureManager::LoadTexture()
 	GetInstance().textureList.push_back(texture);
 	texture = BOGraphicInterface::LoadTexture("Sprites/PlaceHolderPNG/Hexagons/placeholderHexagonPU4.png");
 	GetInstance().textureList.push_back(texture); 
+    texture = BOGraphicInterface::LoadTexture("Sprites/PlaceHolderPNG/Hexagons/placeholderHexagonPUShockwave.png");
+    GetInstance().textureList.push_back(texture);
 	texture = BOGraphicInterface::LoadTexture("Sprites/PlaceHolderPNG/Hexagons/placeholderHexagonPU.png");
 	GetInstance().textureList.push_back(texture);
 	// Powerups
@@ -64,6 +66,8 @@ void BOTextureManager::LoadTexture()
 	GetInstance().textureList.push_back(texture);
 	texture = BOGraphicInterface::LoadTexture("Sprites/PlaceHolderPNG/Powerups/placeholderPowerup3.png");
 	GetInstance().textureList.push_back(texture);
+    texture = BOGraphicInterface::LoadTexture("Sprites/PlaceHolderPNG/Powerups/placeholderPowerupShockwave.png");
+    GetInstance().textureList.push_back(texture);
 	// Particles
 	texture = BOGraphicInterface::LoadTexture("Sprites/Particles/BallTrail.png");
 	GetInstance().textureList.push_back(texture);

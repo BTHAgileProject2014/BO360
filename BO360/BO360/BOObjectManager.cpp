@@ -81,6 +81,16 @@ bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight)
 
 	m_Shield.Initialize(int2(200, 200), BOTextureManager::GetTexture(TEXSHIELD), BOGraphicInterface::GetWindowSize());
 
+    // Add the shockwave
+    m_shockwave = BOShockwave();
+    result = m_shockwave.Initialize();
+    if (!result)
+    {
+        std::cout << "Initialize shockwave failed" << std::endl;
+
+        return false;
+    }
+
 	return true;
 }
 
@@ -117,12 +127,14 @@ void BOObjectManager::Shutdown()
 	BOPublisher::Unsubscribe(this);
 	m_paddle.Shutdown();
 	m_keyManager.Shutdown();
+    m_shockwave.Shutdown();
 }
 
 void BOObjectManager::Update(double p_deltaTime)
 {
 	m_blackHole.Update();
 	m_paddle.Update(p_deltaTime);
+    m_shockwave.Update(p_deltaTime);
 
 	// Update blocks
 	for (unsigned int i = 0; i < m_blockList.size(); i++)
@@ -149,7 +161,7 @@ void BOObjectManager::Update(double p_deltaTime)
 
 			if (BallDied(m_ballList[i]))
 			{
-				//m_ballList[i]->Shutdown();
+				m_ballList[i]->Shutdown();
 				delete m_ballList[i];
 				m_ballList.erase(m_ballList.begin() + i);
 				i--;
@@ -222,7 +234,7 @@ void BOObjectManager::Handle(PowerUpTypes p_type, bool p_activated)
 	case PUFireBall:
 		if (p_activated)
 		{
-			for (int i = 0; i < m_ballList.size(); i++)
+			for (unsigned int i = 0; i < m_ballList.size(); i++)
 			{
 				m_ballList[i]->SetBallOnFire(true);
 			}			
@@ -238,8 +250,12 @@ void BOObjectManager::Handle(InputMessages p_inputMessage)
 		for (unsigned int i = 0; i < m_ballList.size(); i++)
 		{
 			m_ballList[i]->SetStuckToPad(false);
-	}
-}
+	    }   
+    }
+    if (p_inputMessage.fKey && m_shockwave.Activate())
+    {
+        ActivateShockwave();
+    }
 }
 
 bool BOObjectManager::AddNewBall()
@@ -360,6 +376,10 @@ bool BOObjectManager::LoadBlocksFromMap(std::string p_filename)
 				{
 					result = block->Initialize(float2(x, y), int2(46, 42), BOTextureManager::GetTexture(TEXHEXPU4), PUFireBall, score);
 				}
+                else if (i % 100 == 77)
+                {
+                    result = block->Initialize(float2(x, y), int2(40, 40), BOTextureManager::GetTexture(TEXHEXPUSHOCKWAVE), PUShockwave, score);
+                }
 				else
 				{
 					result = block->Initialize(float2(x, y), int2(46, 42), BOTextureManager::GetTexture(TEXHEXSTANDARD), PUNone, score);
@@ -556,4 +576,12 @@ void BOObjectManager::UpdateParticles(double p_deltaTime)
 	}
 
 	m_particleSystem.Update(p_deltaTime);
+}
+
+void BOObjectManager::ActivateShockwave()
+{
+    for (unsigned int i = 0; i < m_ballList.size(); i++)
+    {
+        m_ballList[i]->ActivateShockwave();
+    }
 }

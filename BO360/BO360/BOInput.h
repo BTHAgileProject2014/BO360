@@ -20,6 +20,6 @@ public:
 
 private:
 	BOPublisher m_publisher;
-	bool m_buttonsPressed[7];
+	bool m_buttonsPressed[10];
 };
 #endif
