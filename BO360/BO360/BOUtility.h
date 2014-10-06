@@ -513,7 +513,8 @@ enum PowerUpTypes
 	PUBiggerPad,
 	PUSmallerPad,
 	PUShield,
-	PUExtraBall,
+    PUExtraBall,
+    PUStickyPad,
 	PUFireBall
 };
 

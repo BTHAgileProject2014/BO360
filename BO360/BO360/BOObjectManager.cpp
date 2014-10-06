@@ -135,10 +135,17 @@ void BOObjectManager::Update(double p_deltaTime)
 	{
 		m_ballList[i]->Update(p_deltaTime, m_blackHole.GetBoundingSphere());
 
-		if (m_ballList[i]->IsStuckToPad())
-		{
-			m_ballList[i]->SetPosition(m_paddle.GetBallSpawnPosition());
-		}
+        if (m_ballList[i]->IsStuckToPad())
+        {
+            if (m_paddle.GetStickyState())
+            {//Calculate position of ball based on position of ball             
+                m_ballList[i]->SetPosition(m_paddle.GetBallStuckPosition(m_ballList[i]->GetStuckAngle()));
+            }
+            else
+            {
+                m_ballList[i]->SetPosition(m_paddle.GetBallSpawnPosition());
+            }
+        }
 		else	// Ball is NOT stuck to pad
 		{
 			BallBlockCollision(m_ballList[i]);
@@ -228,6 +235,12 @@ void BOObjectManager::Handle(PowerUpTypes p_type, bool p_activated)
 			}			
 		}
 		break;
+    case PUStickyPad:
+        if (p_activated)
+        {
+            m_paddle.SetStickyState(true);
+        }
+        break;
 	}
 }
 
@@ -360,6 +373,10 @@ bool BOObjectManager::LoadBlocksFromMap(std::string p_filename)
 				{
 					result = block->Initialize(float2(x, y), int2(46, 42), BOTextureManager::GetTexture(TEXHEXPU4), PUFireBall, score);
 				}
+                else if (i % 100 == 69)
+                {
+                    result = block->Initialize(float2(x, y), int2(40, 40), BOTextureManager::GetTexture(TEXHEXPU2), PUStickyPad, score);
+                }
 				else
 				{
 					result = block->Initialize(float2(x, y), int2(46, 42), BOTextureManager::GetTexture(TEXHEXSTANDARD), PUNone, score);
@@ -486,18 +503,20 @@ void BOObjectManager::BallPadCollision(BOBall* p_ball)
     if (BOPhysics::BallBouncedOnPad(*p_ball, m_paddle, newDir))
 	{
         p_ball->SetDirection(newDir);
+        if (m_paddle.GetStickyState() && !(p_ball->GetFuel() > 0))
+        {
+            p_ball->SetStuckToPad(true);
+            float2 temp = { p_ball->GetPosition().x - m_blackHole.GetPosition().x, p_ball->GetPosition().y - m_blackHole.GetPosition().y };
+            float tempAngle = BOPhysics::AngleBetweenDeg(float2{ 0, -100 }, temp);
+            p_ball->SetStuckAngle(tempAngle - m_paddle.GetRotation());
+
+        }
 		p_ball->BouncedOnPad();
 
 		// Play sound for bounce on pad
 		BOSoundManager::PlaySound(SOUND_BOUNCEONPAD);
 	}
-    /*
-	float2 result = BOPhysics::BallPadCollision(p_ball->GetBoundingSphere(), p_ball->GetDirection(), m_paddle.GetBoundingSphere(), m_paddle.GetRotation() - 10.5, m_paddle.GetDegrees());
-	if (!(result.x == 0 && result.y == 0))
-	{
 
-	}
-    */
 }
 
 bool BOObjectManager::BallDied(BOBall* p_ball)
@@ -511,6 +530,7 @@ bool BOObjectManager::BallDied(BOBall* p_ball)
 		if (m_ballList.size() == 1)
 		{
 			m_life--;
+            m_paddle.SetStickyState(false);
 			BOHUDManager::SetLives(m_life);
 			if (m_life > 0)
 			{

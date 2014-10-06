@@ -33,6 +33,7 @@ bool BOBall::Initialize(float2 p_position, int2 p_size, SDL_Texture* p_sprite, f
 	m_sprite4 = BOTextureManager::GetTexture(TEXFIREBALL);
 
 	m_mouseCheat = false;
+    m_stuckAngle = NULL;
 
 	return true;
 }
@@ -212,4 +213,13 @@ void BOBall::SetBallOnFire(bool p_setOnFire)
 bool BOBall::IsOnFire() const
 {
 	return m_onFire;
+}
+
+float BOBall::GetStuckAngle() const
+{
+    return m_stuckAngle;
+}
+void BOBall::SetStuckAngle(float p_stuckAngle)
+{
+    m_stuckAngle = p_stuckAngle;
 }

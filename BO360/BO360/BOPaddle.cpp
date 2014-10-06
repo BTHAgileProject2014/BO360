@@ -12,6 +12,7 @@ BOPaddle::~BOPaddle()
 
 bool BOPaddle::Initialize(float2 p_position, int2 p_size, SDL_Texture* p_sprite)
 {
+    m_isSticky = false;
 	m_rotation = 0.0f;
 	m_totalDegrees = 21.2;
 	m_segementDegree = m_totalDegrees;
@@ -168,8 +169,35 @@ double BOPaddle::GetDegrees()const
 
 float2 BOPaddle::GetBallSpawnPosition()
 {
-	float tempx = m_position.x + (m_size.x * 0.5f) * (float)cos(((-m_rotation - (21 * (m_segments - 1))) * DEGREES_TO_RADIANS) + 2);
-	float tempy = m_position.y - (m_size.y * 0.5f) * (float)sin(((-m_rotation - (21 * (m_segments - 1))) * DEGREES_TO_RADIANS) + 2);
-	
-	return float2(tempx, tempy);
+    float radius = (m_size.x * 0.5f);
+    float alpha = ((-m_rotation - (21 * (m_segments - 1))) * DEGREES_TO_RADIANS) + 2;
+    float ballPosx = cos(alpha) * radius;
+    float ballPosy = sin(alpha) * radius;
+
+    float tempx = m_position.x + ballPosx;
+    float tempy = m_position.y - ballPosy;
+
+    return float2(tempx, tempy);
+}
+
+float2 BOPaddle::GetBallStuckPosition(float p_angle)
+{
+    //Works
+    float radius = (m_size.x * 0.5f);
+    float alpha = ((-m_rotation - p_angle) * DEGREES_TO_RADIANS) - 1.57;
+    float ballPosx = -cos(alpha) * radius;
+    float ballPosy = sin(alpha) * radius;
+    float tempx = m_position.x + ballPosx;
+    float tempy = m_position.y + ballPosy;
+
+    return float2(tempx, tempy);
+}
+
+bool BOPaddle::GetStickyState()const
+{
+    return m_isSticky;
+}
+void BOPaddle::SetStickyState(bool p_active)
+{
+    m_isSticky = p_active;
 }
