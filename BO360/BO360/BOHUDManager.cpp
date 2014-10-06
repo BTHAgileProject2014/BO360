@@ -65,7 +65,7 @@ bool BOHUDManager::Initialize()
 	m_score.SetPosition(float2(m_scoreAnchor.x + (tempSize.x / 2.0f) - tempSize.x - 10.0f, m_scoreAnchor.y + (tempSize.y / 2.0f)));
 
 	// Initialize keys
-	m_keySprite.Initialize(float2(0, 0), int2(20, 20), BOTextureManager::GetTexture(TEXKEY));
+	m_keySprite.Initialize(float2(0, 0), int2(80, 80), 0.25f, BOTextureManager::GetTexture(TEXKEY));
 	m_keyText.Initialize(float2(0, 0), "x 0 / 0", int3(255, 255, 255), 30, 0);
 	tempSize = m_keySprite.GetSize();
 	tempSizeText = m_keyText.GetSize();
