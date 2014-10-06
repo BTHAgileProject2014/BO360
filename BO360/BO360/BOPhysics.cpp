@@ -127,6 +127,7 @@ bool BOPhysics::CheckCollisionSphereToHexagon(sphere p_sphere, hexagon p_hexagon
 	// Lower Left line \.
 	CheckCollisionSphereToLine(p_sphere, p_hexagon.pointDownLeft, p_hexagon.pointLeft, point1, point2);
 	// Checking if collision in one point
+
 	if (point1.x <= p_hexagon.pointDownLeft.x && point1.x >= p_hexagon.pointLeft.x && point1.y <= p_hexagon.pointDownLeft.y && point1.y >= p_hexagon.pointLeft.y && point2.x == -1000)
 	{
 		p_normal = float2(-0.84f, 0.53f);
@@ -334,6 +335,23 @@ float2 BOPhysics::ReflectBallAroundNormal(float2 p_ballDir, float2 p_normal)
 		newBallDir = (newBallDir - normal);
 	}
 	return newBallDir;
+}
+
+void BOPhysics::BallToBallCollision(BOBall& ball1, BOBall& ball2)
+{
+	float2 direction1, direction2;
+	float2 position1, position2;
+	float2 normal1, normal2;
+
+	direction1 = ball1.GetDirection();
+	direction2 = ball2.GetDirection();
+	position1 = ball1.GetPosition();
+	position2 = ball2.GetPosition();
+
+	normal1 = float2(position2.x - position1.x, position2.y - position1.y);
+	normal2 = float2(position1.x - position2.x, position1.y - position2.y);
+	ball1.SetDirection(ReflectBallAroundNormal(direction1, normal2));
+	ball2.SetDirection(ReflectBallAroundNormal(direction2, normal1));
 }
 
 // Gravity calculation

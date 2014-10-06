@@ -56,6 +56,7 @@ void BOBall::Update(double p_deltaTime, sphere p_blackHoleBounds)
 		m_fireTimeElapsed = 0;
 	}
 
+
 }
 
 void BOBall::SetSpeed(float p_speed)
@@ -212,4 +213,14 @@ void BOBall::SetBallOnFire(bool p_setOnFire)
 bool BOBall::IsOnFire() const
 {
 	return m_onFire;
+}
+
+bool BOBall::HasBallCollidedWithBall() const
+{
+	return m_hasCollidedWithBall;
+}
+
+void BOBall::SetBallCollidedWithBall(bool p_collided)
+{
+	m_hasCollidedWithBall = p_collided;
 }

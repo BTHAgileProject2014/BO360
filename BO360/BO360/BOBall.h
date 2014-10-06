@@ -38,6 +38,8 @@ public:
 	void SetStuckToPad(bool p_stuck);
 	void SetBallOnFire(bool p_setOnFire);
 	bool IsOnFire() const;
+	bool HasBallCollidedWithBall() const;
+	void SetBallCollidedWithBall(bool p_collided);
 
 private:
 	int m_damage;
@@ -49,6 +51,7 @@ private:
 	float m_Fuel;
 	bool m_stuckToPad;
 	bool m_onFire;
+	bool m_hasCollidedWithBall;
 	double m_fireTimeElapsed;
 	const double m_fireTimeDuration = 5; // 5 seconds for fireball duration
 

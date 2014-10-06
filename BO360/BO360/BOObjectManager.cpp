@@ -147,6 +147,18 @@ void BOObjectManager::Update(double p_deltaTime)
 
 			CheckBallOutOfBounds(i);
 
+			for (unsigned int j = 0; j < m_ballList.size(); j++)
+			{
+				if (i != j && !m_ballList[j]->HasBallCollidedWithBall())
+				{
+					if (BOPhysics::CheckCollisionSphereToSphere(m_ballList[i]->GetBoundingSphere(), m_ballList[j]->GetBoundingSphere()))
+					{
+						BOPhysics::BallToBallCollision(*m_ballList[i], *m_ballList[j]);
+						m_ballList[j]->SetBallCollidedWithBall(true);
+					}
+				}
+			}
+
 			if (BallDied(m_ballList[i]))
 			{
 				//m_ballList[i]->Shutdown();
@@ -155,7 +167,7 @@ void BOObjectManager::Update(double p_deltaTime)
 				i--;
 				continue;
 			}
-		
+			
 			// Bounce on shield, this should change once a new ball-ball collision has been added to the physics class.
 			float2 newdir = m_Shield.Update(p_deltaTime, m_ballList[i]->GetBoundingSphere(), m_ballList[i]->GetDirection());
 			m_ballList[i]->SetDirection(newdir);
@@ -164,6 +176,12 @@ void BOObjectManager::Update(double p_deltaTime)
 			m_keyManager.Update(*m_ballList[i]);
 		}
 	}
+	for (unsigned int i = 0; i < m_ballList.size(); i++)
+	{
+		m_ballList[i]->SetBallCollidedWithBall(false);
+	}
+
+
 	UpdateParticles(p_deltaTime);
 }
 
@@ -190,7 +208,7 @@ void BOObjectManager::Draw()
 	}
 		
 	}
-		
+
 	m_particleSystem.DrawParticles();
 
 	for (unsigned int i = 0; i < m_ballList.size(); i++)
@@ -348,7 +366,7 @@ bool BOObjectManager::LoadBlocksFromMap(std::string p_filename)
 				{
 					result = block->Initialize(float2(x, y), int2(46, 42), BOTextureManager::GetTexture(TEXHEXPU2), PUShield, score);
 				}
-				else if (i % 100 == 33)
+				else if (i % 10 == 2)
 				{
 					result = block->Initialize(float2(x, y), int2(46, 42), BOTextureManager::GetTexture(TEXHEXPU1), PUExtraBall, score);
 				}
