@@ -127,7 +127,7 @@ void BOObjectManager::Update(double p_deltaTime)
 	// Update blocks
 	for (unsigned int i = 0; i < m_blockList.size(); i++)
 	{
-		m_blockList[i]->Update();
+        m_blockList[i]->Update(p_deltaTime);
 	}
 
 	// Update balls
@@ -164,6 +164,7 @@ void BOObjectManager::Update(double p_deltaTime)
 			m_keyManager.Update(*m_ballList[i]);
 		}
 	}
+
 	UpdateParticles(p_deltaTime);
 }
 
@@ -177,18 +178,21 @@ void BOObjectManager::Draw()
 	{
 		if (!m_blockList[i]->GetDead())
 		{
+            // Draw the glow behind the block.
+            m_blockList[i]->DrawGlow();
+
+            // Draw the block animated if it is an animated object.
             if (m_blockList[i]->m_animated)
             {
                 m_blockList[i]->DrawAnimated();
             }
 
+            // Else we draw it normally.
             else
             {
-			m_blockList[i]->Draw();
-		}
-		
-	}
-		
+			    m_blockList[i]->Draw();
+		    }
+	    }
 	}
 		
 	m_particleSystem.DrawParticles();
@@ -222,7 +226,7 @@ void BOObjectManager::Handle(PowerUpTypes p_type, bool p_activated)
 	case PUFireBall:
 		if (p_activated)
 		{
-			for (int i = 0; i < m_ballList.size(); i++)
+			for (unsigned int i = 0; i < m_ballList.size(); i++)
 			{
 				m_ballList[i]->SetBallOnFire(true);
 			}			
@@ -316,10 +320,10 @@ bool BOObjectManager::LoadBlocksFromMap(std::string p_filename)
 	bool result = false;
 
 	// Hard coded constants for 40x40 hexagons
-	static const float blockHeightDifference = 19; // The indentation of every other column
-	static const int hexagonWidth = 32;
-	static const int hexagonHeight = 37;
-	static const int marginX = 60;
+	static const float blockHeightDifference = 22; // The indentation of every other column
+	static const int hexagonWidth = 35;
+    static const int hexagonHeight = 44;
+	static const int marginX = 40;
 	static const int marginY = 50;
 
 	for (unsigned int i = 0; i < blockDescriptions.size(); i++)
@@ -363,6 +367,7 @@ bool BOObjectManager::LoadBlocksFromMap(std::string p_filename)
 				else
 				{
 					result = block->Initialize(float2(x, y), int2(46, 42), BOTextureManager::GetTexture(TEXHEXSTANDARD), PUNone, score);
+                    block->AddGlow(float2(x, y), int2(46, 42), int2(46, 42), 0, 5, 0.09, false, BOTextureManager::GetTexture(TEXGLOWSTANDARD));
 				}
 				if (!result)
 				{
@@ -379,6 +384,7 @@ bool BOObjectManager::LoadBlocksFromMap(std::string p_filename)
 			{
 				block = new BOBlockMultiTexture();
                 result = block->InitializeAnimated(float2(x, y), int2(46, 42), int2(46, 42), 0, 5, 0, true, BOTextureManager::GetTexture(TEXHEXARMORED), 5, PUNone, score);
+                block->AddGlow(float2(x, y), int2(46, 42), int2(46, 42), 0, 5, 0.09, false, BOTextureManager::GetTexture(TEXGLOWARMORED));
 				if (!result)
 				{
 					ThrowInitError("BOBlockMultiTexture");
@@ -394,6 +400,7 @@ bool BOObjectManager::LoadBlocksFromMap(std::string p_filename)
 			{
 				block = new BOBlockIron();
 				result = block->Initialize(float2(x, y), int2(46, 42), BOTextureManager::GetTexture(TEXHEXINDES), PUNone, score);
+                block->AddGlow(float2(x, y), int2(46, 42), int2(46, 42), 0, 5, 0.09, false, BOTextureManager::GetTexture(TEXGLOWINDES));
 				if (!result)
 				{
 					ThrowInitError("BOBlockIron");
