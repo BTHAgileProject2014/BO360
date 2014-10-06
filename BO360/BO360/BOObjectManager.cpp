@@ -232,7 +232,6 @@ void BOObjectManager::Handle(PowerUpTypes p_type, bool p_activated)
         if (p_activated)
         {
             m_SlowTime.AddCharges(1);
-            m_SlowTime.Activate();
         }
         break;
 	}
@@ -245,8 +244,14 @@ void BOObjectManager::Handle(InputMessages p_inputMessage)
 		for (unsigned int i = 0; i < m_ballList.size(); i++)
 		{
 			m_ballList[i]->SetStuckToPad(false);
-	}
-}
+	    }
+    }
+    // Activate Slow time
+    if (p_inputMessage.downArrow)
+    {
+        m_SlowTime.Activate();
+    }
+
 }
 
 bool BOObjectManager::AddNewBall()
@@ -365,7 +370,7 @@ bool BOObjectManager::LoadBlocksFromMap(std::string p_filename)
 				}
                 else if (i % 100 == 99)
                 {
-                    result = block->Initialize(float2(x, y), int2(40, 40), BOTextureManager::GetTexture(TEXHEXPU0), PUSlowTime, score);
+                    result = block->Initialize(float2(x, y), int2(40, 40), BOTextureManager::GetTexture(TEXPUSLOWTIME), PUSlowTime, score);
                 }
 				else
 				{
@@ -523,7 +528,7 @@ void BOObjectManager::UpdateParticles(double p_deltaTime)
 	// Balls should be responsible for calculating when they want to spawn particles
 	// This should be added after m_ballList[i]->Update()
 	// Increment time passed.
-	m_SecondsPerParticle -= p_deltaTime;
+    m_SecondsPerParticle -= p_deltaTime * (double)BOPhysics::GetTimeScale();
 
 	if (BALLDEBUGTRAIL == 1 && m_SecondsPerParticle < 0.0f)
 	{
