@@ -47,11 +47,11 @@ void BOPaddle::Handle(InputMessages p_inputMessages)
 
 	if (p_inputMessages.zKey)
 	{
-			RemoveSegments(1);
+			//RemoveSegments(1);
 	}
 	if (p_inputMessages.xKey)
 	{
-			AddSegments(1);
+			//AddSegments(1);
 	}
 }
 

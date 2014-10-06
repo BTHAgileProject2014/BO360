@@ -113,6 +113,7 @@
     <ClInclude Include="BOPUSubscriber.h" />
     <ClInclude Include="BOScore.h" />
     <ClInclude Include="BOShield.h" />
+    <ClInclude Include="BOShockwave.h" />
     <ClInclude Include="BOSoundManager.h" />
     <ClInclude Include="BOState.h" />
     <ClInclude Include="BOStateManager.h" />
@@ -155,6 +156,7 @@
     <ClCompile Include="BOPUSubscriber.cpp" />
     <ClCompile Include="BOScore.cpp" />
     <ClCompile Include="BOShield.cpp" />
+    <ClCompile Include="BOShockwave.cpp" />
     <ClCompile Include="BOSoundManager.cpp" />
     <ClCompile Include="BOState.cpp" />
     <ClCompile Include="BOStateManager.cpp" />

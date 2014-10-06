@@ -356,6 +356,7 @@ struct InputMessages
 	bool downArrow;
 	bool zKey;
 	bool xKey;
+    bool fKey;
 	bool escKey;
 };
 
@@ -420,6 +421,7 @@ enum KeyMessages
 	spacebarKey,
 	zKey,
 	xKey,
+    fKey,
 	escKey
 };
 
@@ -513,9 +515,9 @@ enum PowerUpTypes
 	PUBiggerPad,
 	PUSmallerPad,
 	PUShield,
-    PUExtraBall,
-    PUStickyPad,
-	PUFireBall
+	PUExtraBall,
+	PUFireBall,
+    PUShockwave
 };
 
 inline void ThrowInitError(std::string p_className)
@@ -535,12 +537,14 @@ enum Textures
 	TEXHEXPU2,
 	TEXHEXPU3,
 	TEXHEXPU4,
+    TEXHEXPUSHOCKWAVE,
 	TEXHEXPU0,
 	TEXSHIELD,
 	TEXPUMULTIBALL,
 	TEXPUFIREBALL,
 	TEXPU2,
 	TEXPU3,
+    TEXPUSHOCKWAVE,
 	TEXBALLTRAIL,
 	TEXBALLDEBRIS,
 	TEXBLOCKDEBRIS,
