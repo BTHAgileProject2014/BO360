@@ -50,7 +50,7 @@ bool BOSystem::Initialize()
 	}
 
 	// Initialize the texturemanager
-	if (!BOTextureManager::Initialize("Industrial"))
+	if (!BOTextureManager::Initialize("Neon"))
 	{
 		std::cout << "Initialize texturemanager failed!" << std::endl;
 
