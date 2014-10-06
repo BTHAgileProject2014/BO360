@@ -34,6 +34,8 @@ bool BOBall::Initialize(float2 p_position, int2 p_size, SDL_Texture* p_sprite, f
 
 	m_mouseCheat = false;
 
+    m_stuckAngle = 42;
+
 	return true;
 }
 

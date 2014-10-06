@@ -341,6 +341,8 @@ float2 BOPhysics::ReflectBallAroundNormal(float2 p_ballDir, float2 p_normal)
 // Gravity calculation
 float2 BOPhysics::BlackHoleGravity(sphere p_ball, float2 p_ballDirection, float p_ballSpeed, sphere p_blackHole, double p_deltaTime)
 {
+    //std::cout << p_deltaTime << std::endl;
+    double deltaTime = 0.0008;
 	float2 newDirection = p_ballDirection;
 	float2 center = float2(p_blackHole.pos - p_ball.pos); //En vektor mot hålet från bollen
 	const double G = 0.067;		//Gravitations konstant 6,7 * 10^-11	//Tar bort nollor från G och massa för att lättare se	//0.000000000067
@@ -351,8 +353,10 @@ float2 BOPhysics::BlackHoleGravity(sphere p_ball, float2 p_ballDirection, float 
 
 	center = center.normalized();//Normaliserar vektorn mot hålet 
 	center = center * (float)force;//Multiplicerar vektorn mot hålet med kraften
+
+    float deltaBallSpeed = p_ballSpeed * (float)deltaTime;
 	
-	newDirection = float2(newDirection.x * (p_ballSpeed * (float)p_deltaTime) + center.x, newDirection.y * (p_ballSpeed * (float)p_deltaTime) + center.y);//Beräknar längden av bollens riktningsvektor
+    newDirection = float2(newDirection.x * deltaBallSpeed + center.x, newDirection.y * deltaBallSpeed + center.y);//Beräknar längden av bollens riktningsvektor
 
 	return newDirection = newDirection.normalized();//Returnerar den normaliserade riktningsvektorn.
 }
