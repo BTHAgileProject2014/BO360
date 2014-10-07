@@ -78,6 +78,11 @@ bool BOSystem::Initialize()
 	// Add system as an subscriber
 	BOPublisher::AddSubscriber(this);
 
+    if (!m_techTreeManager.Initialize(BOGraphicInterface::GetWindowSize()))
+    {
+        return false;
+    }
+
 	return true;
 }
 
@@ -194,6 +199,8 @@ bool BOSystem::Run()
 				// Go to defeat screen
 				m_gameState = DEFEAT;
 			}
+
+            m_techTreeManager.Update();
 		}
 
 		else
@@ -214,36 +221,41 @@ bool BOSystem::Run()
 
 		if (m_gameState == RUNNING)
 		{
-			// Render all of the objects.
-			m_objectManager.Draw();
+			//// Render all of the objects.
+			//m_objectManager.Draw();
 
-			// Render the power-ups
-			m_powerUpManager.Draw();
+			//// Render the power-ups
+			//m_powerUpManager.Draw();
 
-			// Render text
-			BOTextManager::DrawTexts();
+			//// Render text
+			//BOTextManager::DrawTexts();
 
-			//RenderHUD
-			BOHUDManager::Draw();
+			////RenderHUD
+            // BOHUDManager::Draw();
+            m_techTreeManager.Draw();
+
 		}
 
 		else
 		{
 			// Draw approperiate menu.
 			m_stateManager.Draw(m_gameState);
-		}
 
+		}
 		BOGraphicInterface::Present();
 		// ============================
 
 		m_deltaTime = 0;
 	}
 	
+
+
 	return result;
 }
 
 void BOSystem::Shutdown()
 {
+    m_techTreeManager.Shutdown();
 	BOPublisher::Unsubscribe(this);
 	m_input.Shutdown();
 	m_objectManager.Shutdown();
