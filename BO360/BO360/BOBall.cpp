@@ -17,6 +17,7 @@ bool BOBall::Initialize(float2 p_position, int2 p_size, SDL_Texture* p_sprite, f
 		return false;
 	}
 	m_damage = 1;
+    m_rocketEngine = false;
 	m_Fuel = 0.0f;
 	m_canColide = true;
 	m_speed = p_speed;
@@ -39,23 +40,22 @@ bool BOBall::Initialize(float2 p_position, int2 p_size, SDL_Texture* p_sprite, f
 
 void BOBall::Update(double p_deltaTime, sphere p_blackHoleBounds)
 {
+    // Move if the ball is not stuck
 	if (!m_stuckToPad && !m_mouseCheat)
 	{
 		Move(p_deltaTime, p_blackHoleBounds);
 	}
+
+    // Tick timer for fire powerup
 	if (m_onFire)
 	{
 		m_fireTimeElapsed += p_deltaTime;
 		if (m_fireTimeElapsed >= m_fireTimeDuration)
 		{
-			SetBallOnFire(false);
-}
+            SetBallOnFire(false);
+            m_fireTimeElapsed = 0;
+        }
 	}
-	else if (!m_onFire)
-	{
-		m_fireTimeElapsed = 0;
-	}
-
 }
 
 void BOBall::SetSpeed(float p_speed)
@@ -88,7 +88,8 @@ bool BOBall::CanColide()
 
 void BOBall::BouncedOnPad()
 {
-	m_Fuel = 5.0f;
+    m_rocketEngine = true;
+	m_Fuel = 1.0f;
 }
 
 box BOBall::GetBoundingBox()
@@ -118,6 +119,7 @@ void BOBall::Handle(InputMessages p_inputMessages)
 
 void BOBall::BouncedOnHexagon()
 {
+    m_rocketEngine = false;
 	m_canColide = true;
 }
 
@@ -147,26 +149,46 @@ void BOBall::SetStuckToPad(bool p_stuck)
 
 void BOBall::Move(double p_deltaTime, sphere p_blackHoleBounds)
 {
-	if (m_Fuel > 0)
-	{
-		m_position.x = (float)(m_speed * p_deltaTime) * m_direction.x + m_position.x;
-		m_position.y = (float)(m_speed * p_deltaTime) * m_direction.y + m_position.y;
-		m_Fuel -= (float)p_deltaTime;
+
+    //std::cout << "Some text!" << std::endl;
+    if (m_Fuel > 0)
+    {
+        m_Fuel -= (float)p_deltaTime * 0.5f;
+    }
+      
+    
+    float speedFactor = 2.0f;
+
+    float2 newDir = BOPhysics::ApplyGravity(m_position, m_direction, m_speed, 1.0f - m_Fuel, p_blackHoleBounds.pos, p_deltaTime);
+    m_direction = newDir;
+    m_position = m_position + (m_direction * m_speed * p_deltaTime);
+    /*
+    if (m_rocketEngine)
+    {
+		m_position.x = (float)(speedFactor * m_speed * p_deltaTime) * m_direction.x + m_position.x;
+		m_position.y = (float)(speedFactor * m_speed * p_deltaTime) * m_direction.y + m_position.y;
 		if (!m_onFire)
 		{
 			m_sprite = m_sprite2;
-	}
+    	}
 	}
 	else
 	{
-		m_position.x = (float)(0.75*m_speed * p_deltaTime) * m_direction.x + m_position.x;
-		m_position.y = (float)(0.75*m_speed * p_deltaTime) * m_direction.y + m_position.y;
-		SetDirection(BOPhysics::BlackHoleGravity(GetBoundingSphere(), GetDirection(), GetSpeed(), p_blackHoleBounds, p_deltaTime));
+		m_position.x = (float)(speedFactor * m_speed * p_deltaTime) * m_direction.x + m_position.x;
+		m_position.y = (float)(speedFactor * m_speed * p_deltaTime) * m_direction.y + m_position.y;
+		
+
+        float2 newDir = BOPhysics::ApplyGravity(m_position, m_direction, m_speed, 1.0f - m_Fuel, p_blackHoleBounds.pos, p_deltaTime);
+        m_direction = newDir;
+    //    newDir = newDir + m_direction;
+    //    SetDirection(newDir.normalized());
+       //SetDirection(BOPhysics::BlackHoleGravity(GetBoundingSphere(), GetDirection(), GetSpeed(), p_blackHoleBounds, p_deltaTime));
 		if (!m_onFire)
 		{
 		m_sprite = m_sprite3;
 		}
 	}
+    */
 
 	if (m_position.x < (m_size.x / 2) || m_position.x >(m_windowSize.x - (m_size.x / 2)))
 	{
@@ -209,6 +231,7 @@ void BOBall::SetBallOnFire(bool p_setOnFire)
 		m_onFire = false;
 	}
 }
+
 bool BOBall::IsOnFire() const
 {
 	return m_onFire;
@@ -216,6 +239,7 @@ bool BOBall::IsOnFire() const
 
 void BOBall::ActivateShockwave()
 {
+    m_Fuel += 0.5f;
     float2 direction = float2();
     direction.x = GetPosition().x - m_windowSize.x * 0.5f;
     direction.y = GetPosition().y - m_windowSize.y * 0.5f;

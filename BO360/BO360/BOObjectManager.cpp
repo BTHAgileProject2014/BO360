@@ -494,7 +494,7 @@ void BOObjectManager::BallBlockCollision(BOBall* p_ball)
 
 			p_ball->SetDirection(newDir);
 			p_ball->BouncedOnHexagon();
-			p_ball->SetFuel(0.0f);
+			//p_ball->SetFuel(0.0f);
 		}
 	}
 }

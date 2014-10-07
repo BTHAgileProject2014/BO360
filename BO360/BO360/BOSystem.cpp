@@ -144,6 +144,7 @@ bool BOSystem::Run()
 		// Low-cap the fps to never do less than 10 updates / sec
 		if (m_deltaTime > 0.1)
 		{
+            std::cout << "DT Overflow" << std::endl;
 			m_deltaTime = 0.1;
 		}
 

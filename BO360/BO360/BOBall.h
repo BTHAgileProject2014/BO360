@@ -52,6 +52,7 @@ private:
 	bool m_onFire;
 	double m_fireTimeElapsed;
 	const double m_fireTimeDuration = 5; // 5 seconds for fireball duration
+    bool m_rocketEngine;
 
 	SDL_Texture* m_sprite2;
 	SDL_Texture* m_sprite3;
