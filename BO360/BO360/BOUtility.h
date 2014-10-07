@@ -569,5 +569,14 @@ enum Textures
 	TEXTOOLTIP,
     TEXKEY
 };
+enum TTEffects
+{
+    PowerUpFallSpeedDown,
+    ShieldBouncePlus,
+    PadSpeedPlus,
+    BallSpeedDecrease,
+    AlloyUpgrade,
+    PowerUpGift
+};
 
 #endif

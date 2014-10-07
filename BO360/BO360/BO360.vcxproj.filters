@@ -169,7 +169,7 @@
       <Filter>Source Files\TechTree</Filter>
     </ClCompile>
     <ClCompile Include="BOTechTreeEffects.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\TechTree</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -306,7 +306,7 @@
       <Filter>Header Files\TechTree</Filter>
     </ClInclude>
     <ClInclude Include="BOTechTreeEffects.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\TechTree</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
