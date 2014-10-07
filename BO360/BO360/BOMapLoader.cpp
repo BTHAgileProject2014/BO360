@@ -18,11 +18,28 @@ bool BOMapLoader::Initialize()
 	return true;
 }
 
-bool BOMapLoader::LoadMap(std::string p_fileName)
+bool BOMapLoader::LoadMap(int p_index)
 {
 	int type;
 	std::string fileName = "Maps/";
-	fileName.append(p_fileName);
+	switch (p_index)
+	{
+	case(0) :
+	{
+		fileName.append("Demo.bom");
+		break;
+	}
+	case(1) :
+	{
+		fileName.append("Filled.bom");
+		break;
+	}
+	default:
+	{
+		fileName.append("Empty.bom");
+		break;
+	}
+	}
 
 	// Open and read map file.
 	std::ifstream file;
@@ -94,7 +111,7 @@ void BOMapLoader::DetermineAction(int p_type, float x, float y)
 			m_blocks.push_back(block);
 		}
 
-		// Add dubble HP blocks at 2 tiles. 
+		// Add double HP blocks at 2 tiles. 
 		if (p_type == 2)
 		{
 			Block block;

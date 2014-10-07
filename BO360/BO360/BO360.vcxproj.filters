@@ -156,6 +156,9 @@
     <ClCompile Include="BOShockwave.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="BOLevelManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BOSystem.h">
@@ -282,6 +285,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="BOShockwave.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BOLevelManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

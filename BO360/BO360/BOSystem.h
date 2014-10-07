@@ -16,6 +16,7 @@
 #include "BOSubscriber.h"
 #include "BOScore.h"
 #include "BOTextureManager.h"
+#include "BOLevelManager.h"
 #include <iostream>
 //#include <vld.h>
 
@@ -32,6 +33,7 @@ public:
 
 private:
 	bool InitializeMap();
+	bool InitializeMap(int p_levelIndex);
 	void HandleAction(ButtonAction p_action);
 	void ShutdownMap();
 
@@ -40,6 +42,7 @@ private:
 	BOObjectManager m_objectManager;
 	BOPowerUpManager m_powerUpManager;
 	BOStateManager m_stateManager;
+	BOLevelManager m_levelManager;
 	GameState m_gameState;
 	bool m_quit;
 	int m_windowWidth, m_windowHeight;
