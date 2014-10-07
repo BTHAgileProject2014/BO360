@@ -143,17 +143,18 @@ void BOParticleSystem::Update(double p_deltaTime)
 {
 	// Clean the lists from dead particles.
 	CleanLists();
+    double time = p_deltaTime * (double)BOPhysics::GetTimeScale();
 
 	// Update moving particles.
 	for (unsigned int i = 0; i < m_movingParticleList.size(); i++)
 	{
-		m_movingParticleList[i].Update(p_deltaTime);
+		m_movingParticleList[i].Update(time);
 	}
 
 	// Update stationary particles.
 	for (unsigned int i = 0; i < m_stationaryParticleList.size(); i++)
 	{
-		m_stationaryParticleList[i].Update(p_deltaTime);
+		m_stationaryParticleList[i].Update(time);
 	}
 }
 

@@ -6,6 +6,7 @@
 #include "BOMovingParticle.h"
 #include "BOStationaryParticle.h"
 #include "BOGraphicInterface.h"
+#include "BOPhysics.h"
 #include <SDL.h>
 #include <vector>
 

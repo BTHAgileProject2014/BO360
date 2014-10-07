@@ -39,6 +39,10 @@ public:
 	void SetStuckToPad(bool p_stuck);
 	void SetBallOnFire(bool p_setOnFire);
 	bool IsOnFire() const;
+    float GetStuckAngle()const;
+    void SetStuckAngle(float p_stuckAngle);
+	bool HasBallCollidedWithBall() const;
+	void SetBallCollidedWithBall(bool p_collided);
 
 private:
 	int m_damage;
@@ -48,10 +52,12 @@ private:
 	bool m_mouseCheat;
 	int2 m_windowSize;
 	float m_Fuel;
-	bool m_stuckToPad;
 	bool m_onFire;
+	bool m_hasCollidedWithBall;
 	double m_fireTimeElapsed;
 	const double m_fireTimeDuration = 5; // 5 seconds for fireball duration
+    bool m_stuckToPad;
+    float m_stuckAngle;
 
 	SDL_Texture* m_sprite2;
 	SDL_Texture* m_sprite3;

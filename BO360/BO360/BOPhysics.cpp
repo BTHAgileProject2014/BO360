@@ -3,6 +3,8 @@
 const double BOPhysics::PI = 3.14159265359;
 const double BOPhysics::HALF_PI = PI / 2;
 
+float BOPhysics::m_timeScale;
+
 bool BOPhysics::CheckCollisionSphereToSphere(const sphere &a, const sphere &b)
 {
 	return CollisionRadiusRadius(a.pos, a.radius, b.pos, b.radius);
@@ -127,6 +129,7 @@ bool BOPhysics::CheckCollisionSphereToHexagon(sphere p_sphere, hexagon p_hexagon
 	// Lower Left line \.
 	CheckCollisionSphereToLine(p_sphere, p_hexagon.pointDownLeft, p_hexagon.pointLeft, point1, point2);
 	// Checking if collision in one point
+
 	if (point1.x <= p_hexagon.pointDownLeft.x && point1.x >= p_hexagon.pointLeft.x && point1.y <= p_hexagon.pointDownLeft.y && point1.y >= p_hexagon.pointLeft.y && point2.x == -1000)
 	{
 		p_normal = float2(-0.84f, 0.53f);
@@ -336,19 +339,37 @@ float2 BOPhysics::ReflectBallAroundNormal(float2 p_ballDir, float2 p_normal)
 	return newBallDir;
 }
 
+void BOPhysics::BallToBallCollision(BOBall& ball1, BOBall& ball2)
+{
+	float2 direction1, direction2;
+	float2 position1, position2;
+	float2 normal1, normal2;
+
+	direction1 = ball1.GetDirection();
+	direction2 = ball2.GetDirection();
+	position1 = ball1.GetPosition();
+	position2 = ball2.GetPosition();
+
+	normal1 = float2(position2.x - position1.x, position2.y - position1.y);
+	normal2 = float2(position1.x - position2.x, position1.y - position2.y);
+	ball1.SetDirection(ReflectBallAroundNormal(direction1, normal2));
+	ball2.SetDirection(ReflectBallAroundNormal(direction2, normal1));
+}
+
 // Gravity calculation
 float2 BOPhysics::BlackHoleGravity(sphere p_ball, float2 p_ballDirection, float p_ballSpeed, sphere p_blackHole, double p_deltaTime)
 {
+    //std::cout << p_deltaTime << std::endl;
 	float2 newDirection = p_ballDirection;
 	float2 center = float2(p_blackHole.pos - p_ball.pos); //En vektor mot hålet från bollen
-	const double G = 0.067;		//Gravitations konstant 6,7 * 10^-11	//Tar bort nollor från G och massa för att lättare se	//0.000000000067
+	const double G = 0.67;		//Gravitations konstant 6,7 * 10^-11	//Tar bort nollor från G och massa för att lättare se	//0.000000000067
 
 	float distanceAdjustment = CalculateDistance(p_ball.pos, p_blackHole.pos);// Beräkna radien mellan bollen och hålet
 		
 	double force = ((G * p_ballSpeed) / (distanceAdjustment*distanceAdjustment)); // F = G*M/R^2  -> Gravitations formel		//5000000000000
 
 	center = center.normalized();//Normaliserar vektorn mot hålet 
-	center = center * (float)force;//Multiplicerar vektorn mot hålet med kraften
+	center = center * (float)force * p_deltaTime * 1000;//Multiplicerar vektorn mot hålet med kraften
 	
 	newDirection = float2(newDirection.x * (p_ballSpeed * (float)p_deltaTime) + center.x, newDirection.y * (p_ballSpeed * (float)p_deltaTime) + center.y);//Beräknar längden av bollens riktningsvektor
 
@@ -461,19 +482,25 @@ double BOPhysics::AngleBetweenDeg(const float2& p_v1, const float2& p_v2)
 // Calculates the angle in radians from p_v1 to p_v2 in SDL rotation coordinate system
 double BOPhysics::AngleBetweenRad(const float2& p_v1, const float2& p_v2)
 {
+
+    float2 v1 = p_v1.normalized();
+    float2 v2 = p_v2.normalized();
+    v1.y *= -1;
+    v2.y *= -1;
+
     // 1. Convert from vectors to angles
-    double v1AngleRad = acos(p_v1.normalized().x);
-    double v2AngleRad = acos(p_v2.normalized().x);
+    double v1AngleRad = acos(v1.normalized().x);
+    double v2AngleRad = acos(v2.normalized().x);
 
     // Move to the same coordinate system as SDL rotations
-    if (p_v1.y < 0)
+    if (v1.y < 0)
     {
         v1AngleRad *= -1;
     }
     v1AngleRad += HALF_PI;
     NormalizeAngle(v1AngleRad);
 
-    if (p_v2.y < 0)
+    if (v2.y < 0)
     {
         v2AngleRad *= -1;
     }
@@ -573,4 +600,14 @@ float2 BOPhysics::ApplyBias(double p_start, double p_end, double p_ball)
     // Scale with an influence factor
     float influenceFactor = 1.0f;
     return biasVector * influenceFactor;
+}
+
+float BOPhysics::GetTimeScale()
+{
+    return m_timeScale;
+}
+
+void BOPhysics::SetTimeScale(float p_timeScale)
+{
+    m_timeScale = p_timeScale;
 }

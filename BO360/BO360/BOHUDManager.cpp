@@ -17,6 +17,10 @@ BOObject BOHUDManager::m_keySprite;
 BODrawableText BOHUDManager::m_keyText;
 bool BOHUDManager::m_keyEnabled;
 
+float2 BOHUDManager::m_shockwaveAnchor;
+BOObject BOHUDManager::m_shockwaveSprite;
+bool BOHUDManager::m_shockwaveEnabled;
+
 
 BOHUDManager::BOHUDManager()
 {
@@ -35,6 +39,7 @@ bool BOHUDManager::Initialize()
 	m_scoreEnabled = true;
 	m_livesEnabled = true;
 	m_keyEnabled = true;
+    m_shockwaveEnabled = false;
 	m_noLives = 0;
 	
 	// Setting anchors
@@ -43,6 +48,7 @@ bool BOHUDManager::Initialize()
 	m_livesAnchor = float2(bounds.x / 2.0f, 0);
 	m_scoreAnchor = float2((float)bounds.x, 0);
 	m_keyAnchor = float2(5, (float)bounds.y);
+    m_shockwaveAnchor = float2(bounds.x / 2.0f, (float)bounds.y);
 
 	// Initialize level
 	m_level.Initialize(m_levelAnchor, "Level: ", int3(255, 255, 255), 30, 0);
@@ -65,13 +71,18 @@ bool BOHUDManager::Initialize()
 	m_score.SetPosition(float2(m_scoreAnchor.x + (tempSize.x / 2.0f) - tempSize.x - 10.0f, m_scoreAnchor.y + (tempSize.y / 2.0f)));
 
 	// Initialize keys
-	m_keySprite.Initialize(float2(0, 0), int2(20, 20), BOTextureManager::GetTexture(TEXKEY));
+	m_keySprite.Initialize(float2(0, 0), int2(80, 80), 0.25f, BOTextureManager::GetTexture(TEXKEY));
 	m_keyText.Initialize(float2(0, 0), "x 0 / 0", int3(255, 255, 255), 30, 0);
 	tempSize = m_keySprite.GetSize();
 	tempSizeText = m_keyText.GetSize();
 	m_keySprite.SetPosition(float2(m_keyAnchor.x + tempSize.x / 2.0f, m_keyAnchor.y - tempSize.y / 2.0f));
 	float2 tempPosition = m_keySprite.GetPosition();
 	m_keyText.SetPosition(float2(5 + tempPosition.x + tempSizeSprite.x / 2.0f + tempSizeText.x / 2.0f, tempPosition.y));
+
+    // Initialize shockwave
+    m_shockwaveSprite.Initialize(float2(0, 0), int2(80, 80), 0.4f, BOTextureManager::GetTexture(TEXPUSHOCKWAVE));
+    tempSize = m_shockwaveSprite.GetSize();
+    m_shockwaveSprite.SetPosition(float2(m_shockwaveAnchor.x + tempSize.x / 2.0f, m_shockwaveAnchor.y - tempSize.y / 2.0f));
 
 	return true;
 }
@@ -119,14 +130,20 @@ void BOHUDManager::Draw()
 		m_keyText.Draw();
 		m_keySprite.Draw();
 	}
+
+    if (m_shockwaveEnabled)
+    {
+        m_shockwaveSprite.Draw();
+    }
 }
 
-void BOHUDManager::ModifyState(bool p_lives, bool p_score, bool p_level, bool p_keys)
+void BOHUDManager::ModifyState(bool p_lives, bool p_score, bool p_level, bool p_keys, bool p_shockwave)
 {
 	m_livesEnabled = p_lives;
 	m_scoreEnabled = p_score;
 	m_levelEnabled = p_level;
 	m_keyEnabled = p_keys;
+    m_shockwaveEnabled = p_shockwave;
 }
 
 void BOHUDManager::SetLives(int p_lives)
@@ -179,4 +196,9 @@ void BOHUDManager::SetKeys(int p_keys, int p_maxKeys)
 	int2 tempSizeSprite = m_keySprite.GetSize();
 	float2 tempPosition = m_keySprite.GetPosition();
 	m_keyText.SetPosition(float2(5+tempPosition.x + tempSizeSprite.x / 2.0f + tempTextSize.x / 2.0f, tempPosition.y));
+}
+
+void BOHUDManager::SetShockwave(bool p_active)
+{
+    m_shockwaveEnabled = p_active;
 }

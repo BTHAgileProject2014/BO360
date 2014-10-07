@@ -25,6 +25,8 @@ bool BOAnimatedObject::Initialize(float2 p_position, int2 p_size, int2 p_sourceS
 	m_size = p_size;
     m_sprite = p_sprite;
 
+    m_alive = true;
+
 	return true;
 }
 
@@ -127,4 +129,14 @@ void BOAnimatedObject::SetFrame(int p_frame)
 	{
 		m_frame = 0;
 	}
+}
+
+bool BOAnimatedObject::Alive()
+{
+    return m_alive;
+}
+
+void BOAnimatedObject::Kill()
+{
+    m_alive = true;
 }

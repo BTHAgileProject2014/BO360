@@ -26,7 +26,11 @@ public:
 	double GetDegrees()const;
 	void Draw();
 
+    bool GetStickyState()const;
+    void SetStickyState(bool p_active);
+
 	float2 GetBallSpawnPosition();
+    float2 GetBallStuckPosition(float angle);
 
 private:
 	double m_rotation;
@@ -36,5 +40,6 @@ private:
 	int m_segments;
 	double m_totalDegrees;
 	double m_segementDegree;
+    bool m_isSticky;
 };
 #endif
