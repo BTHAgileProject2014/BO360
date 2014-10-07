@@ -45,7 +45,7 @@ void BOWindow::Shutdown()
 
 void BOWindow::SetWindowText(std::string p_windowText)
 {
-	SDL_SetWindowTitle(m_sdlWindow, p_windowText.c_str());
+	//SDL_SetWindowTitle(m_sdlWindow, p_windowText.c_str());
 }
 
 SDL_Window* BOWindow::GetUnderlyingSDLWindow()

@@ -168,7 +168,7 @@ SDL_Texture* BOGraphicInterface::DrawTextToTexture(std::string p_text, int3 p_te
 	SDL_Texture* texture;
 
 	// Conversion
-	SDL_Color textColor = { p_textColor.x, p_textColor.y, p_textColor.z, 255 };
+	SDL_Color textColor = { (unsigned int)p_textColor.x, (unsigned int)p_textColor.y, (unsigned int)p_textColor.z, 255 };
 
 	// Render text surface
 	//SDL_Surface* textSurface = TTF_RenderText_Solid(font, p_text.c_str(), textColor);

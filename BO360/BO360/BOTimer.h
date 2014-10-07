@@ -3,7 +3,6 @@
 
 #include "SDL.h"
 #include "BOComponent.h"
-#include <iostream>
 
 class BOTimer : public BOComponent
 {

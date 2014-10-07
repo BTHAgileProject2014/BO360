@@ -157,10 +157,10 @@ bool BOSystem::Run()
 		m_FPS = m_timer.FPS();
 
 		// Output the total time and delta time to the window title for debugging.
-
+#ifdef DEBUG
 		m_string = "Total time: " + std::to_string(m_totalTime) + " seconds. Delta time: " + std::to_string(m_deltaTime) + " milliseconds. FPS: " + std::to_string(m_FPS);
 		BOGraphicInterface::SetWindowTitle(m_string);
-
+#endif
 
 		// Update the input manager.
 		result = m_input.Update();
