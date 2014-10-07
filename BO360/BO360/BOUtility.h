@@ -367,7 +367,8 @@ enum GameState
 	PAUSED,
 	VICTORY,
 	DEFEAT,
-    HIGHSCORESTATE
+    HIGHSCORESTATE,
+	LEVELSELECTOR
 };
 
 enum ButtonAction
@@ -379,7 +380,9 @@ enum ButtonAction
     HIGHSCORE,
 	RESUME,
 	NEXT,
-	RETRY
+	RETRY,
+	LEVELSELECT,
+	LEVEL
 };
 
 enum ParticleType
