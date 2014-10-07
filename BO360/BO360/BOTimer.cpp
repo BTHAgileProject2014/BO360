@@ -46,6 +46,7 @@ void BOTimer::Tick()
 	}
 	double scaleFactor = 1.0f / m_averageFps;
 	m_averageFps = scaleFactor * (m_clocksPerSecond / (double)deltaTime) + (1.0 - scaleFactor) * m_averageFps;
+    //std::cout << m_averageFps << std::endl;
 }
 
 double BOTimer::GetTotalTimeS()
