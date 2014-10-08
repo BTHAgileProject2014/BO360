@@ -18,7 +18,7 @@ public:
 
 
 private:
-    BOTechTreeNode* CreateNode(float2 p_pos, int p_layer, int p_price, int p_effect);
+    BOTechTreeNode* CreateNode(float2 p_pos,int2 p_size, int p_layer, int p_price, int p_effect);
 
 
     int2 m_windowSize;

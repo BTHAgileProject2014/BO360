@@ -571,12 +571,45 @@ enum Textures
 };
 enum TTEffects
 {
-    PowerUpFallSpeedDown,
-    ShieldBouncePlus,
-    PadSpeedPlus,
-    BallSpeedDecrease,
-    AlloyUpgrade,
-    PowerUpGift
+    //Layer 1
+    DecreasePowerUpFallSpeed,   //decrease 10%
+    AddBounceToShield,          //Increase bounce on shield 
+    IncreasePadSpeed,           //
+    DecreaseBallSpeed,
+    DecreaseGravityPull,
+    PowerUpGift,
+    //Layer 2
+    DecreasePowerUpFallSpeed2,   //20% slower
+    StartWithShield,             //Start with a shield
+    StickyPad,
+    IncreaseMaxPadSize,
+    ChanceDoublePadSizeIncrease, // 33% chance to get double effekt
+    IncreaseMaxPadSize2,
+    BallsGetFuelWhenTheyCollide,
+    MoreFuelAtRefill,
+    IncreaseBallDamage,
+    Fireball,
+    IncreaseBallDamage2,
+    SlowTime,
+    //Layer 3
+    PowerUpBoost1,
+    PowerUpBoost2,
+    MegaPad,
+    StackableShield,
+    IncreaseStartPadSize,
+    Regenerate,
+    IncreaseStartPadSize2,
+    ChanceDoublePadSizeIncrease2,
+    GiantBall,
+    MuliSpawn,
+    DoubleMultiBall,
+    SuperTank,                  //Bounce on block doesn't remove fuel
+    DoubleMultiBall2,
+    MultiSpawn2,
+    QuantumFuel,
+    DoubleMultiBall3,
+    PowerUpBoost3,
+    ShockWave
 };
 
 #endif
