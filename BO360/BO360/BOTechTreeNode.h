@@ -19,6 +19,24 @@ public:
 
     void InitializeAdjacentNodes(BOTechTreeNode* p_up, BOTechTreeNode* p_upLeft, BOTechTreeNode* p_upRight, BOTechTreeNode* p_down, BOTechTreeNode* p_downLeft, BOTechTreeNode* p_downRight);
     float2 GetPosition()const;
+
+    BOTechTreeNode* GetUpNode();
+    void SetUpNode(BOTechTreeNode* p_Node);
+
+    BOTechTreeNode* GetUpLeftNode();
+    void SetUpLeftNode(BOTechTreeNode* p_Node);
+
+    BOTechTreeNode* GetUpRightNode();
+    void SetUpRightNode(BOTechTreeNode* p_Node);
+
+    BOTechTreeNode* GetDownNode();
+    void SetDownNode(BOTechTreeNode* p_Node);
+
+    BOTechTreeNode* GetDownLeftNode();
+    void SetDownLeftNode(BOTechTreeNode* p_Node);
+
+    BOTechTreeNode* GetDownRightNode();
+    void SetDownRightNode(BOTechTreeNode* p_Node);
     
 
 private:

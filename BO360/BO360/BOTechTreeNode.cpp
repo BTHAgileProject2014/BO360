@@ -78,3 +78,52 @@ float2 BOTechTreeNode::GetPosition()const
 {
     return m_position;
 }
+
+BOTechTreeNode* BOTechTreeNode::GetUpNode()
+{
+    return m_up;
+}
+void BOTechTreeNode::SetUpNode(BOTechTreeNode* p_node)
+{
+    m_up = p_node;
+}
+BOTechTreeNode* BOTechTreeNode::GetUpLeftNode()
+{
+    return m_upLeft;
+}
+void BOTechTreeNode::SetUpLeftNode(BOTechTreeNode* p_node)
+{
+    m_upLeft = p_node;
+}
+BOTechTreeNode* BOTechTreeNode::GetUpRightNode()
+{
+    return m_upRight;
+}
+void BOTechTreeNode::SetUpRightNode(BOTechTreeNode* p_node)
+{
+    m_upRight = p_node;
+}
+BOTechTreeNode* BOTechTreeNode::GetDownNode()
+{
+    return m_down;
+}
+void BOTechTreeNode::SetDownNode(BOTechTreeNode* p_node)
+{
+    m_down = p_node;
+}
+BOTechTreeNode* BOTechTreeNode::GetDownLeftNode()
+{
+    return m_downLeft;
+}
+void BOTechTreeNode::SetDownLeftNode(BOTechTreeNode* p_node)
+{
+    m_downLeft = p_node;
+}
+BOTechTreeNode* BOTechTreeNode::GetDownRightNode()
+{
+    return m_downRight;
+}
+void BOTechTreeNode::SetDownRightNode(BOTechTreeNode* p_node)
+{
+    m_downRight = p_node;
+}
