@@ -31,7 +31,7 @@ public:
 	BOObjectManager();
 	~BOObjectManager();
 
-	bool Initialize(int windowWidth, int windowHeight);
+	bool Initialize(int windowWidth, int windowHeight, int p_levelIndex);
 	void Shutdown();
 	void Update(double p_deltaTime);
 	void Draw();
@@ -44,7 +44,7 @@ public:
 	bool WonGame();
 
 private:
-	bool LoadBlocksFromMap(std::string p_filename);
+	bool LoadBlocksFromMap(int p_index);
 	void CheckBallOutOfBounds(int p_index);
 	void BallBlockCollision(BOBall* p_ball);
 	void BallPadCollision(BOBall* p_ball);

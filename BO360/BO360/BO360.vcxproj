@@ -100,6 +100,7 @@
     <ClInclude Include="BOHUDManager.h" />
     <ClInclude Include="BOInput.h" />
     <ClInclude Include="BOKeyManager.h" />
+    <ClInclude Include="BOLevelManager.h" />
     <ClInclude Include="BOMapLoader.h" />
     <ClInclude Include="BOMovingParticle.h" />
     <ClInclude Include="BOObject.h" />
@@ -146,6 +147,7 @@
     <ClCompile Include="BOHUDManager.cpp" />
     <ClCompile Include="BOInput.cpp" />
     <ClCompile Include="BOKeyManager.cpp" />
+    <ClCompile Include="BOLevelManager.cpp" />
     <ClCompile Include="BOMain.cpp" />
     <ClCompile Include="BOMapLoader.cpp" />
     <ClCompile Include="BOMovingParticle.cpp" />

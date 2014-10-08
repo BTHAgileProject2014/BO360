@@ -18,7 +18,7 @@ bool BOButton::Initialize(float2 p_position, int2 p_size, SDL_Texture* p_sprite,
 	m_name = p_name;
 
 	// Load non highlighted texture.
-	m_nonHighlighted = BOTextureManager::GetTexture(TEXMENUBUTTON);
+	m_nonHighlighted = p_sprite;
 	if (!m_nonHighlighted)
 	{
 		std::cout << "Failed to load texture " << "TEXMENUBUTTON" << "!" << std::endl;
@@ -34,17 +34,20 @@ bool BOButton::Initialize(float2 p_position, int2 p_size, SDL_Texture* p_sprite,
 	}
 
 	// Load tool tip.
-	if (!m_toolTip.Initialize(float2(m_position.x + 125, m_position.y + 222.5f), int2(250, 295), BOTextureManager::GetTexture(TEXTOOLTIP)))
+	if (p_tooltip != "")
 	{
-		std::cout << "Failed to load tool tip " << "TEXTOOLTIP" << "!" << std::endl;
-		return false;
-	}
+		if (!m_toolTip.Initialize(float2(m_position.x + 125, m_position.y + 222.5f), int2(250, 295), BOTextureManager::GetTexture(TEXTOOLTIP)))
+		{
+			std::cout << "Failed to load tool tip " << "TEXTOOLTIP" << "!" << std::endl;
+			return false;
+		}
 
-	// Load tooltip text
-	if (!m_buttonTooltipText.Initialize(float2(0,0),p_tooltip, int3(0, 148, 255), 40, 242))
-	{
-		std::cout << "Failed to create button text tooltip in " << m_name << "!" << std::endl;
-		return false;
+		// Load tooltip text
+		if (!m_buttonTooltipText.Initialize(float2(0, 0), p_tooltip, int3(0, 148, 255), 40, 242))
+		{
+			std::cout << "Failed to create button text tooltip in " << m_name << "!" << std::endl;
+			return false;
+		}
 	}
 
 	// Set correct position of tooltip text

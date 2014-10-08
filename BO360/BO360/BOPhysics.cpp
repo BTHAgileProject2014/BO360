@@ -465,9 +465,7 @@ bool BOPhysics::BallBouncedOnPad(const BOBall &p_ball, const BOPaddle &p_paddle,
 	// Reflect around the normal
 	p_newDirection = Reflect(ballDirection, centerToBall);
 
-	// Apply bias (?)
-    float biasValue; // Should range from -1 to 1
-    double paddleCenter;
+	// Apply bias
     float2 bias = ApplyBias(padStartRad, padEndRad, ballAngleRad);
     p_newDirection = p_newDirection + bias;
     p_newDirection.normalize();
@@ -588,15 +586,15 @@ float2 BOPhysics::ApplyBias(double p_start, double p_end, double p_ball)
 
     // Scale worst case bias with paddle size
     // The constant can be scaled for more extreme angles
-    float worstCaseBias = maxDistance * 3;
+    double worstCaseBias = maxDistance * 3;
 
     // Calculate the bias angle for this bounce
     double biasAngle = center + ballBias * worstCaseBias;
 
     // Turn into vector
     float2 biasVector;
-    biasVector.x = sin(biasAngle);
-    biasVector.y = -cos(biasAngle);
+    biasVector.x = sinf((float)biasAngle);
+    biasVector.y = -cosf((float)biasAngle);
     biasVector.normalize();
 
     // Scale with an influence factor

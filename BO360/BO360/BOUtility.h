@@ -367,7 +367,8 @@ enum GameState
 	PAUSED,
 	VICTORY,
 	DEFEAT,
-    HIGHSCORESTATE
+    HIGHSCORESTATE,
+	LEVELSELECTOR
 };
 
 enum ButtonAction
@@ -379,7 +380,9 @@ enum ButtonAction
     HIGHSCORE,
 	RESUME,
 	NEXT,
-	RETRY
+	RETRY,
+	LEVELSELECT,
+	LEVEL
 };
 
 enum ParticleType
@@ -567,7 +570,15 @@ enum Textures
 	TEXBLACKHOLE,
 	TEXPADSEG,
 	TEXTOOLTIP,
-    TEXKEY
+    TEXKEY,
+
+	/* HÄR UNDER ÄR DET BARA BANOR PLZ!!!*/
+	nrOfLevels,
+	TEXBUTTON1MAP,
+	TEXBUTTON2MAP,
+	TEXBUTTONDEAFAULTMAP,
+	
+	texNR
 };
 enum TTEffects
 {
