@@ -111,7 +111,7 @@ bool BOSystem::InitializeMap()
 	}
 
 	// Initilialize the object manager.
-	result = m_objectManager.Initialize(m_windowWidth, m_windowHeight, 0);
+	result = m_objectManager.Initialize(m_windowWidth, m_windowHeight, -1);
 	if (!result)
 	{
 		std::cout << "Initialize object manager failed!" << std::endl;
@@ -329,6 +329,7 @@ void BOSystem::HandleAction(ButtonAction p_action)
 			{
 				ShutdownMap();
 				m_gameState = MENU;
+				m_levelManager.SetLevel(0);
 
 				break;
 			}
@@ -345,7 +346,7 @@ void BOSystem::HandleAction(ButtonAction p_action)
 			case(STORY) :
 			{
 				m_gameState = RUNNING;
-				if (!InitializeMap())
+				if (!InitializeMap(0))
 				{
 					std::cout << "Press ENTER to quit." << std::endl;
 					std::cin.get();
@@ -374,13 +375,24 @@ void BOSystem::HandleAction(ButtonAction p_action)
 			case(NEXT) :
 			{
                 m_gameState = RUNNING;
-                if (!InitializeMap())
-                {
-                    std::cout << "Press ENTER to quit." << std::endl;
-                    std::cin.get();
+				int currentLevel = m_levelManager.GetCurrentLevel();
+				int nextLevel = m_levelManager.GetNextLevel();
+				if (currentLevel == nextLevel)
+				{
+					m_gameState = MENU;
+					m_levelManager.SetLevel(0);
+				}
+				else
+				{
+					if (!InitializeMap(nextLevel))
+					{
+						std::cout << "Press ENTER to quit." << std::endl;
+						std::cin.get();
 
-                    m_quit = true;
-                }
+						m_quit = true;
+					}
+				}
+                
 				break;
 			}
 
@@ -388,7 +400,7 @@ void BOSystem::HandleAction(ButtonAction p_action)
 			case(RETRY) :
 			{
 				m_gameState = RUNNING;
-				if (!InitializeMap())
+				if (!InitializeMap(m_levelManager.GetCurrentLevel()))
 				{
 					std::cout << "Press ENTER to quit." << std::endl;
 					std::cin.get();
@@ -410,6 +422,7 @@ void BOSystem::HandleAction(ButtonAction p_action)
 				if (index != -1)
 				{
 					m_gameState = RUNNING;
+					m_levelManager.SetLevel(index);
 					if (!InitializeMap(index))
 					{
 						std::cout << "Press ENTER to quit." << std::endl;
@@ -430,6 +443,10 @@ void BOSystem::Handle(InputMessages p_inputMessages)
 	if (m_gameState == RUNNING && p_inputMessages.escKey)
 	{
 		m_gameState = PAUSED;
+	}
+	if (m_gameState == LEVELSELECTOR && p_inputMessages.escKey)
+	{
+		m_gameState = MENU;
 	}
 }
 

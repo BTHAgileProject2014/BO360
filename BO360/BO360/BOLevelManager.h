@@ -14,9 +14,13 @@ public:
 	bool Initialize();
 	void Shutdown();
 
-	void SelectLevel(int p_indexLevel);
+	void SetLevel(int p_indexLevel);
+	int GetNextLevel();
+	int GetCurrentLevel();
 
 	std::vector<int> m_levelList;
+private:
+	int m_currentLevel;
 };
 
 
