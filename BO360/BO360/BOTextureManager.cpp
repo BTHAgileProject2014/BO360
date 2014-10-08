@@ -30,11 +30,20 @@ void BOTextureManager::LoadTexture(std::string p_theme)
 	SDL_Texture* texture;
 
 	// Balls.
-	texture = BOGraphicInterface::LoadTexture("Sprites/PlaceHolderPNG/placeholderBoll10x10.png");
+	texture = BOGraphicInterface::LoadTexture("Sprites/Map/Ball.png");
+    if (!texture)
+    {
+        std::cout << "Ball texture failed to load!" << std::endl;
+        std::cin.get();
+    }
 	GetInstance().textureList.push_back(texture);
-	texture = BOGraphicInterface::LoadTexture("Sprites/PlaceHolderPNG/placeholderBoll2.png");
-	GetInstance().textureList.push_back(texture);
-	texture = BOGraphicInterface::LoadTexture("Sprites/PlaceHolderPNG/placeholderBollFire.png");
+
+	texture = BOGraphicInterface::LoadTexture("Sprites/Power Ups/Fireball.png");
+    if (!texture)
+    {
+        std::cout << "Fireball texture failed to load!" << std::endl;
+        std::cin.get();
+    }
 	GetInstance().textureList.push_back(texture);
 
 	// Hexagons, loaded using the theme.
@@ -43,58 +52,113 @@ void BOTextureManager::LoadTexture(std::string p_theme)
 
     filename = theme + "/Blocks/BlockRegular.png";
     texture = BOGraphicInterface::LoadTexture(filename);
+    if (!texture)
+    {
+        std::cout << "Regular block texture failed to load!" << std::endl;
+        std::cin.get();
+    }
 	GetInstance().textureList.push_back(texture);
+
+    filename = theme + "/Blocks/BlockPowerUp.png";
+    texture = BOGraphicInterface::LoadTexture(filename);
+    if (!texture)
+    {
+        std::cout << "Power up block texture failed to load!" << std::endl;
+        std::cin.get();
+    }
+    GetInstance().textureList.push_back(texture);
+
+    filename = theme + "/Blocks/BlockDouble.png";
+    texture = BOGraphicInterface::LoadTexture(filename);
+    if (!texture)
+    {
+        std::cout << "Double block texture failed to load!" << std::endl;
+        std::cin.get();
+    }
+    GetInstance().textureList.push_back(texture);
 
     filename = theme + "/Blocks/BlockArmored.png";
     texture = BOGraphicInterface::LoadTexture(filename);
+    if (!texture)
+    {
+        std::cout << "Armored block texture failed to load!" << std::endl;
+        std::cin.get();
+    }
 	GetInstance().textureList.push_back(texture);
 
     filename = theme + "/Blocks/BlockIndestructible.png";
     texture = BOGraphicInterface::LoadTexture(filename);
+    if (!texture)
+    {
+        std::cout << "Indestructible block texture failed to load!" << std::endl;
+        std::cin.get();
+    }
 	GetInstance().textureList.push_back(texture);
 
     // Glows, loaded using the theme.
     filename = theme + "/Glows/GlowRegular.png";
     texture = BOGraphicInterface::LoadTexture(filename);
+    if (!texture)
+    {
+        std::cout << "Regular glow texture failed to load!" << std::endl;
+        std::cin.get();
+    }
 	GetInstance().textureList.push_back(texture);
+
+    filename = theme + "/Glows/GlowDouble.png";
+    texture = BOGraphicInterface::LoadTexture(filename);
+    if (!texture)
+    {
+        std::cout << "Double glow texture failed to load!" << std::endl;
+        std::cin.get();
+    }
+    GetInstance().textureList.push_back(texture);
 
     filename = theme + "/Glows/GlowArmored.png";
     texture = BOGraphicInterface::LoadTexture(filename);
+    if (!texture)
+    {
+        std::cout << "Armored glow texture failed to load!" << std::endl;
+        std::cin.get();
+    }
 	GetInstance().textureList.push_back(texture);
 
     filename = theme + "/Glows/GlowIndestructible.png";
     texture = BOGraphicInterface::LoadTexture(filename);
-	GetInstance().textureList.push_back(texture);
-
-	// Hexagon with powerups.
-	texture = BOGraphicInterface::LoadTexture("Sprites/PlaceHolderPNG/Hexagons/placeholderHexagonPU1.png");
-	GetInstance().textureList.push_back(texture);
-	texture = BOGraphicInterface::LoadTexture("Sprites/PlaceHolderPNG/Hexagons/placeholderHexagonPU2.png");
-	GetInstance().textureList.push_back(texture);
-	texture = BOGraphicInterface::LoadTexture("Sprites/PlaceHolderPNG/Hexagons/placeholderHexagonPU3.png");
-	GetInstance().textureList.push_back(texture);
-	texture = BOGraphicInterface::LoadTexture("Sprites/PlaceHolderPNG/Hexagons/placeholderHexagonPU4.png");
-	GetInstance().textureList.push_back(texture); 
-    texture = BOGraphicInterface::LoadTexture("Sprites/PlaceHolderPNG/Hexagons/placeholderHexagonPUShockwave.png");
-    GetInstance().textureList.push_back(texture);
-	texture = BOGraphicInterface::LoadTexture("Sprites/PlaceHolderPNG/Hexagons/placeholderHexagonPU.png");
+    if (!texture)
+    {
+        std::cout << "Indestructible glow texture failed to load!" << std::endl;
+        std::cin.get();
+    }
 	GetInstance().textureList.push_back(texture);
 
 	// Powerups.
-	texture = BOGraphicInterface::LoadTexture("Sprites/PlaceHolderPNG/Powerups/placeholderSheild.png");
+	texture = BOGraphicInterface::LoadTexture("Sprites/Power Ups/Shield.png");
+    if (!texture)
+    {
+        std::cout << "Shield texture failed to load!" << std::endl;
+        std::cin.get();
+    }
 	GetInstance().textureList.push_back(texture);
+
 	texture = BOGraphicInterface::LoadTexture("Sprites/PlaceHolderPNG/Powerups/placeholderPowerupMultBall.png");
 	GetInstance().textureList.push_back(texture);
+
 	texture = BOGraphicInterface::LoadTexture("Sprites/PlaceHolderPNG/Powerups/placeholderPowerup4.png");
 	GetInstance().textureList.push_back(texture);
+
 	texture = BOGraphicInterface::LoadTexture("Sprites/PlaceHolderPNG/Powerups/placeholderPowerup2.png");
 	GetInstance().textureList.push_back(texture);
+
 	texture = BOGraphicInterface::LoadTexture("Sprites/PlaceHolderPNG/Powerups/placeholderPowerup3.png");
 	GetInstance().textureList.push_back(texture);
+
     texture = BOGraphicInterface::LoadTexture("Sprites/PlaceHolderPNG/Powerups/placeholderPowerupShockwave.png");
     GetInstance().textureList.push_back(texture);
+
     texture = BOGraphicInterface::LoadTexture("Sprites/PlaceHolderPNG/Powerups/placeholderSlowTime.png");
     GetInstance().textureList.push_back(texture);
+
 	// Particles
 	texture = BOGraphicInterface::LoadTexture("Sprites/Particles/BallTrail.png");
 	GetInstance().textureList.push_back(texture);
