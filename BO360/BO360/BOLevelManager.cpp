@@ -17,6 +17,7 @@ bool BOLevelManager::Initialize()
 	m_levelList = std::vector <int>();
 
 	m_currentLevel = 0;
+	m_unlockedLevels = 0;
 
 	return result;
 }
@@ -43,4 +44,14 @@ int BOLevelManager::GetNextLevel()
 int BOLevelManager::GetCurrentLevel()
 {
 	return m_currentLevel;
+}
+
+int BOLevelManager::GetUnlockedLeves()
+{
+	return m_unlockedLevels;
+}
+
+void BOLevelManager::SetUnlockedLevels(int p_numberLevels)
+{
+	m_unlockedLevels = p_numberLevels;
 }

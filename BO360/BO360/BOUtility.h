@@ -571,6 +571,7 @@ enum Textures
 	TEXPADSEG,
 	TEXTOOLTIP,
     TEXKEY,
+	TEXLOCK,
 
 	/* HÄR UNDER ÄR DET BARA BANOR PLZ!!!*/
 	nrOfLevels,

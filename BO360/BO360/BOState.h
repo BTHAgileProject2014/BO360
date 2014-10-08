@@ -26,6 +26,7 @@ public:
 	void SetName(std::string p_name);
 	void SetBackground(Textures p_spriteIndex);
 	int GetLevelIndex();
+	void SetButtonAction(int p_buttonIndex, ButtonAction p_action);
 
 private:
 	std::vector<BOButton> m_buttonList;

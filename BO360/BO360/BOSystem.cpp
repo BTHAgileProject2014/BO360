@@ -82,6 +82,7 @@ bool BOSystem::Initialize()
 
 		return false;
 	}
+	m_stateManager.SetButtonActionLevel(0, LEVEL);
 
 	// Add system as an subscriber
 	BOPublisher::AddSubscriber(this);
@@ -246,6 +247,9 @@ bool BOSystem::Run()
 
 				// Go to victory screen
 				m_gameState = VICTORY;
+
+				// Unlock new map
+				m_stateManager.SetButtonActionLevel(m_levelManager.GetCurrentLevel() + 1, LEVEL);
 			}
 			// Check if the player lost the current game
 			else if (m_objectManager.LostGame())

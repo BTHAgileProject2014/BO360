@@ -15,6 +15,7 @@ public:
 	ButtonAction Update(GameState p_state);
 	void Draw(GameState p_state);
 	int GetLevelIndex();
+	void SetButtonActionLevel(int p_buttonIndex, ButtonAction p_action);
 
 private:
 	bool InitializeLevelSelect(int2 p_screenSize);

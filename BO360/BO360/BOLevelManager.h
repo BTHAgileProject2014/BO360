@@ -18,9 +18,13 @@ public:
 	int GetNextLevel();
 	int GetCurrentLevel();
 
-	std::vector<int> m_levelList;
+	int GetUnlockedLeves();
+	void SetUnlockedLevels(int p_numberLevels);
+	
 private:
+	std::vector<int> m_levelList;
 	int m_currentLevel;
+	int m_unlockedLevels;
 };
 
 
