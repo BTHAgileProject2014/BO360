@@ -18,7 +18,7 @@ bool BOButton::Initialize(float2 p_position, int2 p_size, SDL_Texture* p_sprite,
 	m_name = p_name;
 
 	// Load non highlighted texture.
-	m_nonHighlighted = BOTextureManager::GetTexture(TEXMENUBUTTON);
+	m_nonHighlighted = p_sprite;
 	if (!m_nonHighlighted)
 	{
 		std::cout << "Failed to load texture " << "TEXMENUBUTTON" << "!" << std::endl;
