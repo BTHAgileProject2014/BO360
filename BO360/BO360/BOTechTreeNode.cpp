@@ -30,29 +30,29 @@ bool BOTechTreeNode::Initialize(float2 p_pos, int2 p_size, int p_layer, int p_pr
     m_effect = p_effect;
 
     m_active = BOTextureManager::GetTexture(TEXHEXPU1);
-    m_inactive = BOTextureManager::GetTexture(TEXHEXPU2);
-    m_adjacentActive = BOTextureManager::GetTexture(TEXHEXPU3);
+    m_inactive = BOTextureManager::GetTexture(TEXHEXPUSHOCKWAVE);
+    m_adjacentActive = BOTextureManager::GetTexture(TEXLIFE);
 
-    //m_sprite = m_inactive;
+    m_sprite = m_inactive;
 
-    return BOObject::Initialize(m_position, m_size, m_inactive);
+    return BOObject::Initialize(m_position, m_size, m_sprite);
 }
 
 void BOTechTreeNode::Update()
 {
-    if (m_active)
-    {
-        m_sprite = m_active;
-        
-    }
-    else if (m_adjacentActive)
-    {
-        m_sprite = m_adjacentActive;
-    }
-    else
-    {
-        m_sprite = m_inactive;
-    }
+    //if (m_isActive)
+    //{
+    //    m_sprite = m_active;
+    //    
+    //}
+    //else if (m_adjacentActive)
+    //{
+    //    m_sprite = m_adjacentActive;
+    //}
+    //else
+    //{
+    //    m_sprite = m_inactive;
+    //}
 }
 
 void BOTechTreeNode::Shutdown()
