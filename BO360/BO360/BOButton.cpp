@@ -99,8 +99,13 @@ void BOButton::Draw()
 {
 	BOGraphicInterface::Draw(m_sprite, float2(m_position.x + (m_size.x / 2), m_position.y + (m_size.y / 2)), m_size);
 
+	if (m_action == NOACTION)
+	{
+		BOGraphicInterface::Draw(BOTextureManager::GetTexture(TEXLOCK), float2(m_position.x + (m_size.x / 2), m_position.y + (m_size.y / 2)), m_size);
+		m_buttonText.Draw();
+	}
 	// Draw tool tip if selected.
-	if (m_lit)
+	else if (m_lit)
 	{
 		m_toolTip.Draw();
 		m_buttonTextLit.Draw();
@@ -115,6 +120,11 @@ void BOButton::Draw()
 ButtonAction BOButton::GetAction()
 {
 	return m_action;
+}
+
+void BOButton::SetAction(ButtonAction p_action)
+{
+	m_action = p_action;
 }
 
 void BOButton::Shutdown()

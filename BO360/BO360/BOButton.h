@@ -18,6 +18,7 @@ public:
 	void Draw();
 
 	ButtonAction GetAction();
+	void SetAction(ButtonAction p_action);
 
 private:
 	ButtonAction m_action;
