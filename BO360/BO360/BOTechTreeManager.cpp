@@ -19,34 +19,35 @@ bool BOTechTreeManager::Initialize(int2 p_windowDimension)
 
     for (int y = diameter - 3, x = 0; y != 0; y--, x++)
     {
-        BOTechTreeNode* newNode = CreateNode(float2(midScreen.x                 - x * m_Size.x, midScreen.y                     - (y + 6) * m_Size.y*0.5), m_Size, 3, 6, 0);
+        BOTechTreeNode* newNode = CreateNode(float2(midScreen.x                 - x * m_Size.x, midScreen.y                     - (y + 6) * m_Size.y*0.5), m_Size);
     }
     for (int y = diameter - 2, x = 0; y != 0; y--, x++)
     {
-        BOTechTreeNode* newNode = CreateNode(float2(midScreen.x + m_Size.x      - x * m_Size.x, midScreen.y + m_Size.y * 0.5     - (y + 5) * m_Size.y*0.5), m_Size, 3, 6, 0);
+        BOTechTreeNode* newNode = CreateNode(float2(midScreen.x + m_Size.x      - x * m_Size.x, midScreen.y + m_Size.y * 0.5     - (y + 5) * m_Size.y*0.5), m_Size);
     }
     for (int y = diameter - 1, x = 0; y != 0; y--, x++)
     {
-        BOTechTreeNode* newNode = CreateNode(float2(midScreen.x + m_Size.x * 2  - x * m_Size.x, midScreen.y + m_Size.y * 1.5     - (y + 5) * m_Size.y*0.5), m_Size, 3, 6, 0);
+        BOTechTreeNode* newNode = CreateNode(float2(midScreen.x + m_Size.x * 2  - x * m_Size.x, midScreen.y + m_Size.y * 1.5     - (y + 5) * m_Size.y*0.5), m_Size);
     }
     for (int y = diameter, x = 0; y != 0; y--, x++)
     {
-        BOTechTreeNode* newNode = CreateNode(float2(midScreen.x + m_Size.x * 3  - x * m_Size.x, midScreen.y + m_Size.y * 2.5     - (y + 5) * m_Size.y*0.5), m_Size, 3, 6, 0);
+        BOTechTreeNode* newNode = CreateNode(float2(midScreen.x + m_Size.x * 3  - x * m_Size.x, midScreen.y + m_Size.y * 2.5     - (y + 5) * m_Size.y*0.5), m_Size);
     }
     for (int y = diameter - 1, x = 0; y != 0; y--, x++)
     {
-        BOTechTreeNode* newNode = CreateNode(float2(midScreen.x + m_Size.x * 3  - x * m_Size.x, midScreen.y + m_Size.y * 3       - (y + 5) * m_Size.y*0.5), m_Size, 3, 6, 0);
+        BOTechTreeNode* newNode = CreateNode(float2(midScreen.x + m_Size.x * 3  - x * m_Size.x, midScreen.y + m_Size.y * 3       - (y + 5) * m_Size.y*0.5), m_Size);
     }
     for (int y = diameter - 2, x = 0; y != 0; y--, x++)
     {
-        BOTechTreeNode* newNode = CreateNode(float2(midScreen.x + m_Size.x * 3  - x * m_Size.x, midScreen.y + m_Size.y * 3.5   - (y + 5) * m_Size.y*0.5), m_Size, 3, 6, 0);
+        BOTechTreeNode* newNode = CreateNode(float2(midScreen.x + m_Size.x * 3  - x * m_Size.x, midScreen.y + m_Size.y * 3.5   - (y + 5) * m_Size.y*0.5), m_Size);
     }
     for (int y = diameter - 3, x = 0; y != 0; y-- ,x++)
     {
-        BOTechTreeNode* newNode = CreateNode(float2(midScreen.x + m_Size.x * 3  - x * m_Size.x, midScreen.y + m_Size.y * 4     - (y + 5) * m_Size.y*0.5), m_Size, 3, 6, 0);
+        BOTechTreeNode* newNode = CreateNode(float2(midScreen.x + m_Size.x * 3  - x * m_Size.x, midScreen.y + m_Size.y * 4     - (y + 5) * m_Size.y*0.5), m_Size);
     }
 
     MapNodes();
+    SetLPE();
 
     return true;
 }
@@ -73,10 +74,10 @@ void BOTechTreeManager::Draw()
         m_nodeList[i]->Draw();
     }
 }
-BOTechTreeNode* BOTechTreeManager::CreateNode(float2 p_pos,int2 p_size, int p_layer, int p_price, int p_effect)
+BOTechTreeNode* BOTechTreeManager::CreateNode(float2 p_pos,int2 p_size)
 {
     BOTechTreeNode* newNode = new BOTechTreeNode();
-    newNode->Initialize(p_pos, p_size, p_layer, p_price, p_effect);
+    newNode->Initialize(p_pos, p_size);
     m_nodeList.push_back(newNode);
     return newNode;
 }
@@ -157,4 +158,26 @@ void BOTechTreeManager::MapNodes()
     }
 
     m_startNode = m_nodeList[(m_nodeList.size()-1)/2];
+}
+void BOTechTreeManager::SetLPE()
+{
+    SetNodeLPE(m_startNode, 0, 0, 0);
+    BOTechTreeNode* node = m_nodeList[0];
+
+    while (node->GetDownLeftNode() != NULL)
+    {
+        node->SetLayer(3);
+
+
+
+        node = node->GetDownLeftNode();
+    }
+
+
+}
+void BOTechTreeManager::SetNodeLPE(BOTechTreeNode* p_node, int p_layer, int p_price, int p_effect)
+{
+    p_node->SetLayer(p_layer);
+    p_node->SetPrice(p_price);
+    p_node->SetEffect(p_effect);
 }

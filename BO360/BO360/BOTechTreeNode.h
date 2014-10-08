@@ -9,7 +9,7 @@ public:
     BOTechTreeNode();
     ~BOTechTreeNode();
 
-    bool Initialize(float2 p_pos, int2 p_size, int p_layer, int p_price, int p_effect);
+    bool Initialize(float2 p_pos, int2 p_size);
     void Update();
     void Shutdown();
     void Draw();
@@ -17,7 +17,6 @@ public:
     bool GetActive()const;
     void SetActive(bool p_active);
 
-    void InitializeAdjacentNodes(BOTechTreeNode* p_up, BOTechTreeNode* p_upLeft, BOTechTreeNode* p_upRight, BOTechTreeNode* p_down, BOTechTreeNode* p_downLeft, BOTechTreeNode* p_downRight);
     float2 GetPosition()const;
 
     BOTechTreeNode* GetUpNode();
@@ -37,6 +36,15 @@ public:
 
     BOTechTreeNode* GetDownRightNode();
     void SetDownRightNode(BOTechTreeNode* p_Node);
+
+    int GetLayer();
+    void SetLayer(int p_layer);
+
+    int GetPrice();
+    void SetPrice(int p_price);
+
+    int GetEffect();
+    void SetEffect(int p_effect);
     
 
 private:

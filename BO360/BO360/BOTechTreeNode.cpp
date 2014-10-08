@@ -18,16 +18,16 @@ BOTechTreeNode::~BOTechTreeNode()
 {
 }
 
-bool BOTechTreeNode::Initialize(float2 p_pos, int2 p_size, int p_layer, int p_price, int p_effect)
+bool BOTechTreeNode::Initialize(float2 p_pos, int2 p_size)
 {
     m_position = p_pos;
     m_size = p_size;
 
     m_active = false;
-    m_adjacentActive = false;
-    m_layer = p_layer;
-    m_price = p_price;
-    m_effect = p_effect;
+    m_isAdjacentActive = false;
+    m_layer = 0;
+    m_price = 0;
+    m_effect = 0;
 
     m_active = BOTextureManager::GetTexture(TEXHEXPU1);
     m_inactive = BOTextureManager::GetTexture(TEXHEXPUSHOCKWAVE);
@@ -40,6 +40,20 @@ bool BOTechTreeNode::Initialize(float2 p_pos, int2 p_size, int p_layer, int p_pr
 
 void BOTechTreeNode::Update()
 {
+    //if (m_layer == 3)
+    //{
+    //    m_sprite = m_active;
+    //    
+    //}
+    //else if (m_layer == 1)
+    //{
+    //    m_sprite = m_adjacentActive;
+    //}
+    //else
+    //{
+    //    m_sprite = m_inactive;
+    //}
+
     //if (m_isActive)
     //{
     //    m_sprite = m_active;
@@ -53,6 +67,20 @@ void BOTechTreeNode::Update()
     //{
     //    m_sprite = m_inactive;
     //}
+
+    if (m_down != NULL)
+    {
+        m_sprite = m_active;
+        
+    }
+    else if (m_adjacentActive)
+    {
+        m_sprite = m_adjacentActive;
+    }
+    else
+    {
+        m_sprite = m_inactive;
+    }
 }
 
 void BOTechTreeNode::Shutdown()
@@ -63,16 +91,6 @@ void BOTechTreeNode::Shutdown()
 void BOTechTreeNode::Draw()
 {
     BOObject::Draw();
-}
-
-void BOTechTreeNode::InitializeAdjacentNodes(BOTechTreeNode* p_up, BOTechTreeNode* p_upLeft, BOTechTreeNode* p_upRight, BOTechTreeNode* p_down, BOTechTreeNode* p_downLeft, BOTechTreeNode* p_downRight)
-{
-    m_up = p_up;
-    m_upLeft = p_upLeft;
-    m_upRight = p_upRight;
-    m_down = p_down;
-    m_downLeft = p_downLeft;
-    m_downRight = p_downRight;
 }
 float2 BOTechTreeNode::GetPosition()const
 {
@@ -126,4 +144,30 @@ BOTechTreeNode* BOTechTreeNode::GetDownRightNode()
 void BOTechTreeNode::SetDownRightNode(BOTechTreeNode* p_node)
 {
     m_downRight = p_node;
+}
+int BOTechTreeNode::GetLayer()
+{
+    return m_layer;
+}
+void BOTechTreeNode::SetLayer(int p_layer)
+{
+    m_layer = p_layer;
+}
+
+int BOTechTreeNode::GetPrice()
+{
+    return m_price;
+}
+void BOTechTreeNode::SetPrice(int p_price)
+{
+    m_price = m_price;
+}
+
+int BOTechTreeNode::GetEffect()
+{
+    return m_effect;
+}
+void BOTechTreeNode::SetEffect(int p_effect)
+{
+    m_effect = p_effect;
 }
