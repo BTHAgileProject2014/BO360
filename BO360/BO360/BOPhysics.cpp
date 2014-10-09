@@ -523,7 +523,7 @@ float2 BOPhysics::Reflect(const float2 p_target, const float2 p_normal)
 	float2 normal = p_normal.normalized();
 	float2 direction = p_target.normalized();
 	float vDotN = direction.dot(normal);
-	//std::cout << "dot product: " << vDotN << std::endl;
+	
 	if (vDotN < 0) // Check that we hit from the right side
 	{
 		direction = p_target.normalized();
@@ -549,8 +549,6 @@ bool BOPhysics::IsWithinRad(double p_start, double p_end, double p_toTest)
         }
     }
 
-    //std::cout << std::fixed << std::setprecision(4);
-    //std::cout << "Ball: " << p_toTest << " Pad: " << p_start << " Rot: " << p_end << std::endl;
     // toTest should now always be within start and end's numbers if it is actually within their angles
 
     return (p_start < p_toTest

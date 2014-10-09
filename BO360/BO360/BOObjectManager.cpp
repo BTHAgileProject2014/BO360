@@ -10,7 +10,7 @@ BOObjectManager::~BOObjectManager()
 
 }
 
-bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight)
+bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight, int p_LevelIndex)
 {
 	m_life = 4;
 	BOHUDManager::SetLives(m_life);
@@ -73,7 +73,7 @@ bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight)
 	BOPublisher::AddSubscriber(m_ballList[0]); 
 
 	// Load the map
-	LoadBlocksFromMap("map3.bom");
+	LoadBlocksFromMap(p_LevelIndex);
 
 	// Add subscriber so the object manager knows when a power up activates
 	BOPowerUpManager::AddSubscriber(this);
@@ -382,10 +382,10 @@ void BOObjectManager::CheckBallOutOfBounds(int p_index)
 	m_ballList[p_index]->SetPosition(ballPos);
 }
 
-bool BOObjectManager::LoadBlocksFromMap(std::string p_filename)
+bool BOObjectManager::LoadBlocksFromMap(int p_index)
 {
 	// Load block descriptions from a map file
-	m_mapLoader.LoadMap(p_filename);
+	m_mapLoader.LoadMap(p_index);
 	std::vector<Block> blockDescriptions = m_mapLoader.GetLoadedBlocks();
 	
 	float x = 0;

@@ -136,6 +136,15 @@ void BOTextureManager::LoadTexture(std::string p_theme)
 	GetInstance().textureList.push_back(texture);
     texture = BOGraphicInterface::LoadTexture("Sprites/PlaceHolderPNG/placeholderHyperdrive.png");
     GetInstance().textureList.push_back(texture);
+	texture = BOGraphicInterface::LoadTexture("Sprites/PlaceHolderPNG/placeholderLock.png");
+	GetInstance().textureList.push_back(texture);
+	GetInstance().textureList.push_back(NULL);// Lägg in en tom för att fixa nrOfLevels
+	texture = BOGraphicInterface::LoadTexture("Sprites/PlaceHolderPNG/button1Map.png");
+	GetInstance().textureList.push_back(texture);
+	texture = BOGraphicInterface::LoadTexture("Sprites/PlaceHolderPNG/button2Map.png");
+	GetInstance().textureList.push_back(texture);
+	texture = BOGraphicInterface::LoadTexture("Sprites/PlaceHolderPNG/buttonDefaultMap.png");
+	GetInstance().textureList.push_back(texture);
 }
 
 void BOTextureManager::FreeTexture(int p_textureIndex)
@@ -155,4 +164,9 @@ void BOTextureManager::FreeAll()
 SDL_Texture* BOTextureManager::GetTexture(Textures p_textureEnum)
 {
 	return GetInstance().textureList[p_textureEnum];
+}
+
+SDL_Texture* BOTextureManager::GetTextureInt(int p_textureEnumIndex)
+{
+	return GetInstance().textureList[p_textureEnumIndex];
 }
