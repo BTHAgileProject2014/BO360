@@ -24,7 +24,7 @@ public:
 
 private:
     void HandleUpgrades(BOTechTreeNode* p_node);
-    BOTechTreeNode* CreateNode(float2 p_pos,int2 p_size);
+    BOTechTreeNode* CreateNode(float2 p_pos,int2 p_size, std::string p_tooltip);
     void MapNodes();
     void SetLPE();//Set layer, price and effect
     void SetNodeLPE(BOTechTreeNode* p_node, int p_layer, int p_price, int p_effect);

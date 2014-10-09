@@ -3,6 +3,7 @@
 #include "BOObject.h"
 #include "BOUtility.h"
 #include "BOPhysics.h"
+#include "BODrawableText.h"
 
 class BOTechTreeNode: public BOObject
 {
@@ -10,7 +11,7 @@ public:
     BOTechTreeNode();
     ~BOTechTreeNode();
 
-    bool Initialize(float2 p_pos, int2 p_size);
+    bool Initialize(float2 p_pos, int2 p_size, std::string p_toolTip);
     void Update();
     void Shutdown();
     void Draw();
@@ -51,8 +52,9 @@ public:
     void SetPrice(int p_price);
 
     int GetEffect()const;
+    void SetEffect(int p_effect, std::string p_tooltip);
     void SetEffect(int p_effect);
-    
+
     void Reset();
     bool Intersects(int2 p_mousePosition);
 
@@ -79,7 +81,7 @@ private:
     int m_layer;
     int m_price;
     int m_effect;
-    
+    BODrawableText m_tooltip;
 
 };
 
