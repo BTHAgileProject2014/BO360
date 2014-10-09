@@ -25,6 +25,7 @@ bool BOTechTreeNode::Initialize(float2 p_pos, int2 p_size)
 
     m_isActive = false;
     m_isAdjacentActive = false;
+    m_hoveringOver = false;
     m_layer = 0;
     m_price = 0;
     m_effect = 0;
@@ -47,6 +48,10 @@ void BOTechTreeNode::Update()
     {
         m_sprite = m_active;
         
+    }
+    else if (m_hoveringOver)
+    {
+        m_sprite = m_highlighted;
     }
     else if (m_isAdjacentActive)
     {
@@ -178,4 +183,8 @@ bool BOTechTreeNode::GetAdjacentActive()const
 void BOTechTreeNode::SetAdjacentActive(bool p_active)
 {
     m_isAdjacentActive = p_active;
+}
+void BOTechTreeNode::SetHover(bool p_active)
+{
+    m_hoveringOver = p_active;
 }

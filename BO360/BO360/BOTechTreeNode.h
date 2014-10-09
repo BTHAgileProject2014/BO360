@@ -22,6 +22,8 @@ public:
     bool GetAdjacentActive()const;
     void SetAdjacentActive(bool p_active);
 
+    void SetHover(bool p_active);
+
     float2 GetPosition()const;
 
     BOTechTreeNode* GetUpNode()const;
@@ -73,6 +75,7 @@ private:
 
     bool m_isActive;
     bool m_isAdjacentActive;
+    bool m_hoveringOver;
     int m_layer;
     int m_price;
     int m_effect;

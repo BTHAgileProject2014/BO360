@@ -66,6 +66,10 @@ void BOTechTreeManager::Update()
 
         if (m_nodeList[i]->Intersects(m_mousePosition))
         {
+            if (!m_nodeList[i]->GetActive())
+            {
+               m_nodeList[i]->SetHover(true);
+            }
             if (m_mouseDown && !m_mousePrev)
             {
                 m_mousePositionPrev = m_mousePosition;
@@ -82,6 +86,10 @@ void BOTechTreeManager::Update()
                     }
                 }
             }
+        }
+        else
+        {
+            m_nodeList[i]->SetHover(false);
         }
     }
 
