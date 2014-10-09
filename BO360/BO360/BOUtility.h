@@ -357,6 +357,7 @@ struct InputMessages
 	bool zKey;
 	bool xKey;
     bool fKey;
+    bool tKey;
 	bool escKey;
 };
 
@@ -400,16 +401,10 @@ enum ParticleType
 enum BlockType
 {
 	REGULAR,
-	DUBBLEHP,
+    DOUBLE,
+    ARMORED,
 	KEY,
 	INDESTRUCTIBLE
-};
-
-struct Block
-{
-	float2 m_position;
-	BlockType m_type;
-	int m_worth;
 };
 
 enum KeyMessages
@@ -425,6 +420,7 @@ enum KeyMessages
 	zKey,
 	xKey,
     fKey,
+    tKey,
 	escKey
 };
 
@@ -514,7 +510,7 @@ struct hexagon
 // What types of power-ups we use
 enum PowerUpTypes
 {
-	PUNone,
+	PUNone = 0,
 	PUBiggerPad,
 	PUSmallerPad,
 	PUShield,
@@ -525,6 +521,14 @@ enum PowerUpTypes
     PUSlowTime
 };
 
+struct Block
+{
+    float2 m_position;
+    BlockType m_type;
+    int m_worth;
+    PowerUpTypes m_powerUpType;
+};
+
 inline void ThrowInitError(std::string p_className)
 {
 	std::cout << "Failed to initialize: " << p_className.c_str() << std::endl;
@@ -533,43 +537,44 @@ inline void ThrowInitError(std::string p_className)
 enum Textures
 {
 	TEXBALL,
-	TEXDEBUGBALL,
+    TEXBALLTAIL,
 	TEXFIREBALL,
 	TEXHEXSTANDARD,
+    TEXHEXPOWERUP,
+    TEXHEXDOUBLE,
 	TEXHEXARMORED,
 	TEXHEXINDES,
     TEXGLOWSTANDARD,
+    TEXGLOWDOUBLE,
     TEXGLOWARMORED,
     TEXGLOWINDES,
-	TEXHEXPU1,
-	TEXHEXPU2,
-	TEXHEXPU3,
-	TEXHEXPU4,
-    TEXHEXPUSHOCKWAVE,
-	TEXHEXPU0,
 	TEXSHIELD,
-	TEXPUMULTIBALL,
+	TEXPUADDBALL,
 	TEXPUFIREBALL,
-	TEXPU2,
-	TEXPU3,
+	TEXPUSHIELD,
+	TEXPUBIGGERPAD,
+    TEXPUSTICKYPAD,
     TEXPUSHOCKWAVE,
     TEXPUSLOWTIME,
 	TEXBALLTRAIL,
+    TEXFIREBALLTRAIL,
 	TEXBALLDEBRIS,
 	TEXBLOCKDEBRIS,
 	TEXPUDEBRIS,
 	TEXEXPLOSION,
 	TEXDEBUGTRAIL,
-	TEXLIFE,
+	TEXHUDALIVE,
+    TEXHUDDEAD,
+    TEXHUDCORE,
 	TEXMENUEDGE,
 	TEXMENUBAR,
 	TEXMENUBG,
 	TEXMENUBUTTON,
 	TEXMENUBUTTONHL,
+    TEXTOOLTIP,
 	TEXBACKGROUND,
 	TEXBLACKHOLE,
 	TEXPADSEG,
-	TEXTOOLTIP,
     TEXKEY,
 	TEXLOCK,
 	TEXDEBUGDIR,

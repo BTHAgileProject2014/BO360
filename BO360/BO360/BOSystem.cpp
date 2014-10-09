@@ -448,10 +448,16 @@ void BOSystem::Handle(InputMessages p_inputMessages)
 	{
 		m_gameState = PAUSED;
 	}
+
 	if (m_gameState == LEVELSELECTOR && p_inputMessages.escKey)
 	{
 		m_gameState = MENU;
 	}
+
+    if (m_gameState == RUNNING && p_inputMessages.tKey)
+    {
+
+    }
 }
 
 void BOSystem::ShutdownMap()

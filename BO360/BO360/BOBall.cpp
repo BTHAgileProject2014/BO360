@@ -25,12 +25,12 @@ bool BOBall::Initialize(float2 p_position, int2 p_size, SDL_Texture* p_sprite, f
 	m_stuckToPad = true;
 	m_onFire = false;
 	m_fireTimeElapsed = 0; // Set duration for fireball powerup in header, const variable
+    m_rotation = 0;
 
 	// Load texture.
 	m_sprite = p_sprite;
-	m_sprite2 = BOTextureManager::GetTexture(TEXDEBUGBALL);
-	m_sprite3 = m_sprite;
-	m_sprite4 = BOTextureManager::GetTexture(TEXFIREBALL);
+	m_fireBallTexture = BOTextureManager::GetTexture(TEXFIREBALL);
+    m_thruster.Initialize(p_position, int2(41, 41), int2(41, 41), 0, 2, 0, true, BOTextureManager::GetTexture(TEXBALLTAIL));
 
 	m_mouseCheat = false;
 
@@ -58,7 +58,25 @@ void BOBall::Update(double p_deltaTime, sphere p_blackHoleBounds)
 		m_fireTimeElapsed = 0;
 	}
 
+    m_thruster.SetPosition(m_position);
+    m_rotation = BOPhysics::AngleBetweenDeg(float2(0, 1), m_direction) + 180;
+}
 
+void BOBall::DrawBallWithTail()
+{
+    m_thruster.SetRotation(m_rotation);
+    m_thruster.DrawAnimated();
+
+    int4 source = int4(0, 0, m_size.x, m_size.y);
+    int4 destination = int4((int)(m_position.x - m_scale * (m_size.x / 2)), (int)(m_position.y - m_scale * (m_size.y / 2)), (int)(m_scale * m_size.x), (int)(m_scale * m_size.y));
+    BOGraphicInterface::DrawEx(m_sprite, source, destination, m_rotation, int2(7, 7));
+
+    if (m_onFire)
+    {
+        source = int4(0, 0, 25, 25);
+        destination = int4((int)(m_position.x - m_scale * (25 / 2)), (int)(m_position.y - m_scale * (25 / 2)), (int)(m_scale * 25), (int)(m_scale * 25));
+        BOGraphicInterface::DrawEx(m_fireBallTexture, source, destination, 0, int2(0, 0));
+    }
 }
 
 void BOBall::SetSpeed(float p_speed)
@@ -156,21 +174,15 @@ void BOBall::Move(double p_deltaTime, sphere p_blackHoleBounds)
 	{
         m_position.x = (float)(m_speed * p_deltaTime * timescale) * m_direction.x + m_position.x;
         m_position.y = (float)(m_speed * p_deltaTime * timescale) * m_direction.y + m_position.y;
-        m_Fuel -= (float)p_deltaTime * timescale;
-		if (!m_onFire)
-		{
-			m_sprite = m_sprite2;
-		}			
+        m_Fuel -= (float)p_deltaTime * timescale;	
+        m_thruster.SetFrame(0);
 	}
 	else
 	{
         m_position.x = (float)(0.75*m_speed * p_deltaTime * timescale) * m_direction.x + m_position.x;
         m_position.y = (float)(0.75*m_speed * p_deltaTime * timescale) * m_direction.y + m_position.y;
 		SetDirection(BOPhysics::BlackHoleGravity(GetBoundingSphere(), GetDirection(), GetSpeed(), p_blackHoleBounds, p_deltaTime));
-		if (!m_onFire)
-		{
-			m_sprite = m_sprite3;
-		}
+        m_thruster.SetFrame(1);
 	}
 
 	if (m_position.x < (m_size.x / 2) || m_position.x >(m_windowSize.x - (m_size.x / 2)))
@@ -220,12 +232,10 @@ void BOBall::SetBallOnFire(bool p_setOnFire)
 {
 	if (p_setOnFire)
 	{
-		m_sprite = m_sprite4;
 		m_onFire = true;
 	}
 	else if (!p_setOnFire)
 	{
-		m_sprite = m_sprite2;
 		m_onFire = false;
 	}
 }

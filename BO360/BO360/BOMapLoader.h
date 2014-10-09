@@ -22,6 +22,6 @@ private:
 	int2 m_mapSize;
 	std::vector<Block> m_blocks;
 
-	void DetermineAction(int p_type, float x, float y);
+    void DetermineAction(int p_type, int p_powerUp, float x, float y);
 };
 #endif

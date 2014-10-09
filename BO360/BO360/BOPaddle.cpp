@@ -169,21 +169,21 @@ double BOPaddle::GetDegrees()const
 
 float2 BOPaddle::GetBallSpawnPosition()
 {
-	float radius = (m_size.x * 0.5f);
+    float radius = (m_size.x * 0.5f);
 	float alpha = ((-m_rotation - 21) * DEGREES_TO_RADIANS) - 1.57;
 	float ballPosx = -cos(alpha) * radius;
-	float ballPosy = sin(alpha) * radius;
-	float tempx = m_position.x + ballPosx;
+    float ballPosy = sin(alpha) * radius;
+    float tempx = m_position.x + ballPosx;
 	float tempy = m_position.y + ballPosy;
 
-	return float2(tempx, tempy);
+    return float2(tempx, tempy);
 }
 
 float2 BOPaddle::GetBallStuckPosition(float p_angle)
 {
     //Works
     float radius = (m_size.x * 0.5f);
-    float alpha = ((-m_rotation - p_angle) * DEGREES_TO_RADIANS) - 1.57;
+    float alpha = (float)(((-m_rotation - p_angle) * DEGREES_TO_RADIANS) - 1.57);
     float ballPosx = -cos(alpha) * radius;
     float ballPosy = sin(alpha) * radius;
     float tempx = m_position.x + ballPosx;

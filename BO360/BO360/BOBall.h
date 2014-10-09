@@ -1,9 +1,10 @@
 #ifndef BOBALL_H_
 #define BOBALL_H_
 
-#include "BOObject.h"
+#include "BOAnimatedObject.h"
 #include "BOSubscriber.h"
 #include "BOPhysics.h"
+
 
 class BOBall: public BOObject, public BOSubscriber
 {
@@ -12,7 +13,7 @@ public:
 	~BOBall();
 	bool Initialize(float2 p_position, int2 p_size, SDL_Texture* p_sprite, float p_speed, float2 p_direction, int2 p_windowSize);
 	void Update(double p_deltaTime, sphere p_blackHoleBounds);
-	void Draw();
+    void DrawBallWithTail();
 
 	void Move(double p_deltaTime, sphere p_blackHoleBounds);
 	void SetPosition(float2 p_position);
@@ -60,8 +61,8 @@ private:
     bool m_stuckToPad;
     float m_stuckAngle;
 
-	SDL_Texture* m_sprite2;
-	SDL_Texture* m_sprite3;
-	SDL_Texture* m_sprite4;
+    double m_rotation;
+    BOAnimatedObject m_thruster;
+    SDL_Texture* m_fireBallTexture;
 };
 #endif
