@@ -32,6 +32,7 @@ private:
     BOButton m_resetButton;
     std::vector<BOTechTreeNode*> m_nodeList;
     BOTechTreeNode* m_startNode;
+    SDL_Texture* m_Grid;
 
     int2 m_mousePosition;
     int2 m_mousePositionPrev;

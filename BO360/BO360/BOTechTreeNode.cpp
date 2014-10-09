@@ -29,10 +29,10 @@ bool BOTechTreeNode::Initialize(float2 p_pos, int2 p_size)
     m_price = 0;
     m_effect = 0;
 
-    m_active = BOTextureManager::GetTexture(TEXBALL);
-    m_inactive = BOTextureManager::GetTexture(TEXDEBUGBALL);
-    m_adjacentActive = BOTextureManager::GetTexture(TEXFIREBALL);
-
+    m_active = BOTextureManager::GetTexture(TEXFIREBALL);
+    m_inactive = BOTextureManager::GetTexture(TEXBALL);
+    m_adjacentActive = BOTextureManager::GetTexture(TEXDEBUGBALL);
+    
 
     m_d1 = BOTextureManager::GetTexture(TEXHEXSTANDARD);
     m_d2 = BOTextureManager::GetTexture(TEXHEXARMORED);
@@ -45,7 +45,7 @@ bool BOTechTreeNode::Initialize(float2 p_pos, int2 p_size)
 }
 
 void BOTechTreeNode::Update()
-{
+{/*
     if (m_price == 6)
     {
         m_sprite = m_active;
@@ -79,7 +79,7 @@ void BOTechTreeNode::Update()
     else
     {
         m_sprite = m_d4;
-    }
+    }*/
     //if (m_layer == 3)
     //{
     //    m_sprite = m_active;
@@ -94,19 +94,19 @@ void BOTechTreeNode::Update()
     //    m_sprite = m_inactive;
     //}
 
-    //if (m_isActive)
-    //{
-    //    m_sprite = m_active;
-    //    
-    //}
-    //else if (m_adjacentActive)
-    //{
-    //    m_sprite = m_adjacentActive;
-    //}
-    //else
-    //{
-    //    m_sprite = m_inactive;
-    //}
+    if (m_isActive)
+    {
+        m_sprite = m_active;
+        
+    }
+    else if (m_isAdjacentActive)
+    {
+        m_sprite = m_adjacentActive;
+    }
+    else
+    {
+        m_sprite = m_inactive;
+    }
 
 
 }
