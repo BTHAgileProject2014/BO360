@@ -241,92 +241,164 @@ void BOTechTreeManager::FixAdjacent()
             if (node->GetUpNode() != NULL)
             {
                 if (node->GetUpNode()->GetPrice() == 1)
+                {
                     n1++;
+                }
                 else if (node->GetUpNode()->GetPrice() == 2)
+                {
                     n2++;
+                }
                 else if (node->GetUpNode()->GetPrice() == 3)
+                {
                     n3++;
+                }
                 else if (node->GetUpNode()->GetPrice() == 4)
+                {
                     n4++;
+                }
                 else if (node->GetUpNode()->GetPrice() == 5)
+                {
                     n5++;
+                }
                 else if (node->GetUpNode()->GetPrice() == 6)
+                {
                     n6++;
+                }
             }
             if (node->GetUpLeftNode() != NULL)
             {
                 if (node->GetUpLeftNode()->GetPrice() == 1)
+                {
                     n1++;
+                }
                 else if (node->GetUpLeftNode()->GetPrice() == 2)
+                {
                     n2++;
+                }
                 else if (node->GetUpLeftNode()->GetPrice() == 3)
+                {
                     n3++;
+                }
                 else if (node->GetUpLeftNode()->GetPrice() == 4)
+                {
                     n4++;
+                }
                 else if (node->GetUpLeftNode()->GetPrice() == 5)
+                {
                     n5++;
+                }
                 else if (node->GetUpLeftNode()->GetPrice() == 6)
+                {
                     n6++;
+                }
             }
             if (node->GetUpRightNode() != NULL)
             {
                 if (node->GetUpRightNode()->GetPrice() == 1)
+                {
                     n1++;
+                }
                 else if (node->GetUpRightNode()->GetPrice() == 2)
+                {
                     n2++;
+                }
                 else if (node->GetUpRightNode()->GetPrice() == 3)
+                {
                     n3++;
+                }
                 else if (node->GetUpRightNode()->GetPrice() == 4)
+                {
                     n4++;
+                }
                 else if (node->GetUpRightNode()->GetPrice() == 5)
+                {
                     n5++;
+                }
                 else if (node->GetUpRightNode()->GetPrice() == 6)
+                {
                     n6++;
+                }
             }
             if (node->GetDownNode() != NULL)
             {
                 if (node->GetDownNode()->GetPrice() == 1)
+                {
                     n1++;
+                }
                 else if (node->GetDownNode()->GetPrice() == 2)
+                {
                     n2++;
+                }
                 else if (node->GetDownNode()->GetPrice() == 3)
+                {
                     n3++;
+                }
                 else if (node->GetDownNode()->GetPrice() == 4)
+                {
                     n4++;
+                }
                 else if (node->GetDownNode()->GetPrice() == 5)
+                {
                     n5++;
+                }
                 else if (node->GetDownNode()->GetPrice() == 6)
+                {
                     n6++;
+                }
             }
             if (node->GetDownLeftNode() != NULL)
             {
                 if (node->GetDownLeftNode()->GetPrice() == 1)
+                {
                     n1++;
+                }
                 else if (node->GetDownLeftNode()->GetPrice() == 2)
+                {
                     n2++;
+                }
                 else if (node->GetDownLeftNode()->GetPrice() == 3)
+                {
                     n3++;
+                }
                 else if (node->GetDownLeftNode()->GetPrice() == 4)
+                {
                     n4++;
+                }
                 else if (node->GetDownLeftNode()->GetPrice() == 5)
+                {
                     n5++;
+                }
                 else if (node->GetDownLeftNode()->GetPrice() == 6)
+                {
                     n6++;
+                }
             }
             if (node->GetDownRightNode() != NULL)
             {
                 if (node->GetDownRightNode()->GetPrice() == 1)
+                {
                     n1++;
+                }
                 else if (node->GetDownRightNode()->GetPrice() == 2)
+                {
                     n2++;
+                }
                 else if (node->GetDownRightNode()->GetPrice() == 3)
+                {
                     n3++;
+                }
                 else if (node->GetDownRightNode()->GetPrice() == 4)
+                {
                     n4++;
+                }
                 else if (node->GetDownRightNode()->GetPrice() == 5)
+                {
                     n5++;
+                }
                 else if (node->GetDownRightNode()->GetPrice() == 6)
+                {
                     n6++;
+                }
             }
             //Calculate value for current node
             //Look for value 5
