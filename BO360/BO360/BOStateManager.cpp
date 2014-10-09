@@ -56,7 +56,7 @@ bool BOStateManager::InitializeLevelSelect(int2 p_screenSize)
 	bool result = false;
 	float2 menuPosition = float2(50, 50);
 	result = m_levelSelect.Initialize(float2(p_screenSize.x / 2.0f, p_screenSize.y / 2.0f), p_screenSize, menuPosition, "Level Selector", BOTextureManager::GetTexture(TEXMENUBG));
-	for (int i = nrOfLevels + 1; i < texNR+13; i++)
+	for (int i = nrOfLevels + 1; i < texNR; i++)
 	{
 		if (i % 4 == ((nrOfLevels + 1) % 4) && i != (nrOfLevels + 1))
 		{
