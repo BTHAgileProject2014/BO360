@@ -143,6 +143,18 @@ void BOTextureManager::LoadTexture(std::string p_theme)
 	GetInstance().textureList.push_back(texture);
 	texture = BOGraphicInterface::LoadTexture("Sprites/PlaceHolderPNG/buttonDefaultMap.png");
 	GetInstance().textureList.push_back(texture);
+
+    // Tech Tree
+    texture = BOGraphicInterface::LoadTexture("Sprites/PlaceHolderPNG/Tech/activeTech.png");
+    GetInstance().textureList.push_back(texture);
+    texture = BOGraphicInterface::LoadTexture("Sprites/PlaceHolderPNG/Tech/adjacentActiveTech.png");
+    GetInstance().textureList.push_back(texture);
+    texture = BOGraphicInterface::LoadTexture("Sprites/PlaceHolderPNG/Tech/activeTech.png");
+    GetInstance().textureList.push_back(texture);
+    texture = BOGraphicInterface::LoadTexture("Sprites/PlaceHolderPNG/Tech/inActiveTech.png");
+    GetInstance().textureList.push_back(texture);
+    texture = BOGraphicInterface::LoadTexture("Sprites/PlaceHolderPNG/Tech/border.png");
+    GetInstance().textureList.push_back(texture);
 }
 
 void BOTextureManager::FreeTexture(int p_textureIndex)
