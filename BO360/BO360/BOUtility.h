@@ -579,7 +579,14 @@ enum Textures
 	TEXBUTTON2MAP,
 	TEXBUTTONDEAFAULTMAP,
 	
-	texNR
+	texNR,
+
+    //Tech tree
+    TEXTTACTIVE,
+    TEXTTADJACENTACTIVE,
+    TEXTTHIGHLIGHTED,
+    TEXTTINACTIVE,
+    TEXTTTGRID
 };
 enum TTEffects
 {
