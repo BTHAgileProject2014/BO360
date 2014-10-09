@@ -24,6 +24,9 @@ public:
 	int2 GetSize();
 	void SetSize(int2 p_size);
 
+    double GetRotation();
+    void SetRotation(double p_rotation);
+
 	SDL_Texture* GetSprite();
 	void SetSprite(Textures p_spriteIndex);
 
@@ -32,6 +35,7 @@ public:
 protected:
 	float2 m_position;
 	int2 m_size;
+    double m_rotation;
 	SDL_Texture* m_sprite;
 	float m_radius;
 	float m_scale;

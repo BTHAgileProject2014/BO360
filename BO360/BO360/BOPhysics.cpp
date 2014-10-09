@@ -369,7 +369,7 @@ float2 BOPhysics::BlackHoleGravity(sphere p_ball, float2 p_ballDirection, float 
 	double force = ((G * p_ballSpeed) / (distanceAdjustment*distanceAdjustment)); // F = G*M/R^2  -> Gravitations formel		//5000000000000
 
 	center = center.normalized();//Normaliserar vektorn mot hålet 
-	center = center * (float)force * p_deltaTime * 1000;//Multiplicerar vektorn mot hålet med kraften
+	center = center * (float)force * (float)p_deltaTime * 1000;//Multiplicerar vektorn mot hålet med kraften
 	
 	newDirection = float2(newDirection.x * (p_ballSpeed * (float)p_deltaTime) + center.x, newDirection.y * (p_ballSpeed * (float)p_deltaTime) + center.y);//Beräknar längden av bollens riktningsvektor
 

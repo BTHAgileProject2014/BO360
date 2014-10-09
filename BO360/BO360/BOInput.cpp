@@ -13,7 +13,8 @@ enum BOInputKey
 	BOInput_M2,
 	BOInput_z,
 	BOInput_x,
-    BOInput_f
+    BOInput_f,
+    BOInput_t
 };
 
 BOInput::BOInput()
@@ -169,6 +170,18 @@ bool BOInput::Update()
                         }
                         break;
                     }
+                    case SDLK_t:
+                    {
+                        if (!m_buttonsPressed[BOInput_t])
+                        {
+                            m_buttonsPressed[BOInput_t] = true;
+                            m_publisher.Notify(tKey, true);
+#ifdef DEBUG
+                            std::cout << "t is pressed\n";
+#endif
+                        }
+                        break;
+                    }
 				}
 				break;
 			}
@@ -259,6 +272,16 @@ bool BOInput::Update()
                         m_publisher.Notify(fKey, false);
 #ifdef DEBUG
                         std::cout << "f is released\n";
+#endif
+                        break;
+                    }
+
+                    case SDLK_t:
+                    {
+                        m_buttonsPressed[BOInput_t] = false;
+                        m_publisher.Notify(tKey, false);
+#ifdef DEBUG
+                        std::cout << "t is released\n";
 #endif
                         break;
                     }

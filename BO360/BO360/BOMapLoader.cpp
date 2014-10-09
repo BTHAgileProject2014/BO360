@@ -21,12 +21,14 @@ bool BOMapLoader::Initialize()
 bool BOMapLoader::LoadMap(int p_index)
 {
 	int type;
+    int powerUp;
+
 	std::string fileName = "Maps/";
 	switch (p_index)
 	{
 	case(0) :
 	{
-		fileName.append("Demo.bom");
+		fileName.append("NewFormatTest.bom");
 		break;
 	}
 	case(1) :
@@ -89,8 +91,9 @@ bool BOMapLoader::LoadMap(int p_index)
 		for (int x = 0; x < m_mapSize.x; x++)
 		{
 			file >> type;
+            file >> powerUp;
 
-			DetermineAction(type, (float)x, (float)y);
+            DetermineAction(type, powerUp, (float)x, (float)y);
 		}
 	}
 
@@ -99,8 +102,9 @@ bool BOMapLoader::LoadMap(int p_index)
 		if (x%2 != 0)
 		{
 			file >> type;
+            file >> powerUp;
 
-			DetermineAction(type, (float)x, (float)(m_mapSize.y - 1));
+			DetermineAction(type, powerUp, (float)x, (float)(m_mapSize.y - 1));
 		}
 	}
 
@@ -119,7 +123,7 @@ int2 BOMapLoader::GetMapSize()
 	return m_mapSize;
 }
 
-void BOMapLoader::DetermineAction(int p_type, float x, float y)
+void BOMapLoader::DetermineAction(int p_type, int p_powerUp, float x, float y)
 {
 	// The tile is empty, do nothing.
 	if (!p_type == 0)
@@ -131,6 +135,7 @@ void BOMapLoader::DetermineAction(int p_type, float x, float y)
 
 			block.m_position = float2(x, y);
 			block.m_type = REGULAR;
+            block.m_powerUpType = (PowerUpTypes)p_powerUp;
 			block.m_worth = 10;
 
 			m_blocks.push_back(block);
@@ -142,19 +147,34 @@ void BOMapLoader::DetermineAction(int p_type, float x, float y)
 			Block block;
 
 			block.m_position = float2(x, y);
-			block.m_type = DUBBLEHP;
-			block.m_worth = 30;
+			block.m_type = DOUBLE;
+            block.m_powerUpType = (PowerUpTypes)p_powerUp;
+			block.m_worth = 20;
 
 			m_blocks.push_back(block);
 		}
 
-		// Add indistructible blocks at 9 tiles. 
+        // Add armored blocks at 3 tiles. 
+        if (p_type == 3)
+        {
+            Block block;
+
+            block.m_position = float2(x, y);
+            block.m_type = ARMORED;
+            block.m_powerUpType = (PowerUpTypes)p_powerUp;
+            block.m_worth = 50;
+
+            m_blocks.push_back(block);
+        }
+
+		// Add keys at 8 tiles. 
 		if (p_type == 8)
 		{
 			Block block;
 
 			block.m_position = float2(x, y);
 			block.m_type = KEY;
+            block.m_powerUpType = PUNone;
 			block.m_worth = 10;
 
 			m_blocks.push_back(block);
@@ -167,6 +187,7 @@ void BOMapLoader::DetermineAction(int p_type, float x, float y)
 
 			block.m_position = float2(x, y);
 			block.m_type = INDESTRUCTIBLE;
+            block.m_powerUpType = PUNone;
 			block.m_worth = 30;
 
 			m_blocks.push_back(block);

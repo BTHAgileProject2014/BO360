@@ -9,6 +9,10 @@ public:
 	BOBlackHole();
 	~BOBlackHole();
 
-	void Update();
+    void Update(double p_rotation);
+    void DrawRotating();
+
+private:
+    double m_rotation;
 };
 #endif
