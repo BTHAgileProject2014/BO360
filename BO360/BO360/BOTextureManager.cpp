@@ -38,6 +38,14 @@ void BOTextureManager::LoadTexture(std::string p_theme)
     }
 	GetInstance().textureList.push_back(texture);
 
+    texture = BOGraphicInterface::LoadTexture("Sprites/Map/Thruster.png");
+    if (!texture)
+    {
+        std::cout << "Ball thruster texture failed to load!" << std::endl;
+        std::cin.get();
+    }
+    GetInstance().textureList.push_back(texture);
+
 	texture = BOGraphicInterface::LoadTexture("Sprites/Power Ups/Fireball.png");
     if (!texture)
     {
@@ -141,73 +149,240 @@ void BOTextureManager::LoadTexture(std::string p_theme)
     }
 	GetInstance().textureList.push_back(texture);
 
-	texture = BOGraphicInterface::LoadTexture("Sprites/PlaceHolderPNG/Powerups/placeholderPowerupMultBall.png");
+	texture = BOGraphicInterface::LoadTexture("Sprites/Power Ups/PowerUpAddBall.png");
+    if (!texture)
+    {
+        std::cout << "Add ball power up texture failed to load!" << std::endl;
+        std::cin.get();
+    }
 	GetInstance().textureList.push_back(texture);
 
-	texture = BOGraphicInterface::LoadTexture("Sprites/PlaceHolderPNG/Powerups/placeholderPowerup4.png");
+	texture = BOGraphicInterface::LoadTexture("Sprites/Power Ups/PowerUpFireball.png");
+    if (!texture)
+    {
+        std::cout << "Fireball power up texture failed to load!" << std::endl;
+        std::cin.get();
+    }
 	GetInstance().textureList.push_back(texture);
 
-	texture = BOGraphicInterface::LoadTexture("Sprites/PlaceHolderPNG/Powerups/placeholderPowerup2.png");
+	texture = BOGraphicInterface::LoadTexture("Sprites/Power Ups/PowerUpShield.png");
+    if (!texture)
+    {
+        std::cout << "Shield power up texture failed to load!" << std::endl;
+        std::cin.get();
+    }
 	GetInstance().textureList.push_back(texture);
 
-	texture = BOGraphicInterface::LoadTexture("Sprites/PlaceHolderPNG/Powerups/placeholderPowerup3.png");
+	texture = BOGraphicInterface::LoadTexture("Sprites/Power Ups/PowerUpBiggerPad.png");
+    if (!texture)
+    {
+        std::cout << "Bigger pad power up texture failed to load!" << std::endl;
+        std::cin.get();
+    }
 	GetInstance().textureList.push_back(texture);
 
-    texture = BOGraphicInterface::LoadTexture("Sprites/PlaceHolderPNG/Powerups/placeholderPowerupShockwave.png");
+    texture = BOGraphicInterface::LoadTexture("Sprites/Power Ups/PowerUpStickyPad.png");
+    if (!texture)
+    {
+        std::cout << "Sticky pad power up texture failed to load!" << std::endl;
+        std::cin.get();
+    }
     GetInstance().textureList.push_back(texture);
 
-    texture = BOGraphicInterface::LoadTexture("Sprites/PlaceHolderPNG/Powerups/placeholderSlowTime.png");
+    texture = BOGraphicInterface::LoadTexture("Sprites/Power Ups/PowerUpShockwave.png");
+    if (!texture)
+    {
+        std::cout << "Shockwave power up texture failed to load!" << std::endl;
+        std::cin.get();
+    }
+    GetInstance().textureList.push_back(texture);
+
+    texture = BOGraphicInterface::LoadTexture("Sprites/Power Ups/PowerUpSlowTime.png");
+    if (!texture)
+    {
+        std::cout << "Slow time power up texture failed to load!" << std::endl;
+        std::cin.get();
+    }
     GetInstance().textureList.push_back(texture);
 
 	// Particles
 	texture = BOGraphicInterface::LoadTexture("Sprites/Particles/BallTrail.png");
+    if (!texture)
+    {
+        std::cout << "Ball trail particle texture failed to load!" << std::endl;
+        std::cin.get();
+    }
 	GetInstance().textureList.push_back(texture);
+
+    texture = BOGraphicInterface::LoadTexture("Sprites/Particles/FireballTrail.png");
+    if (!texture)
+    {
+        std::cout << "Fireball trail particle texture failed to load!" << std::endl;
+        std::cin.get();
+    }
+    GetInstance().textureList.push_back(texture);
+
 	texture = BOGraphicInterface::LoadTexture("Sprites/Particles/BallDebris.png");
+    if (!texture)
+    {
+        std::cout << "Ball debris particle texture failed to load!" << std::endl;
+        std::cin.get();
+    }
 	GetInstance().textureList.push_back(texture);
+
 	texture = BOGraphicInterface::LoadTexture("Sprites/Particles/BlockDebris.png");
+    if (!texture)
+    {
+        std::cout << "Block debris particle texture failed to load!" << std::endl;
+        std::cin.get();
+    }
 	GetInstance().textureList.push_back(texture);
+
 	texture = BOGraphicInterface::LoadTexture("Sprites/Particles/PowerUpDebris.png");
+    if (!texture)
+    {
+        std::cout << "Power up debris particle texture failed to load!" << std::endl;
+        std::cin.get();
+    }
 	GetInstance().textureList.push_back(texture);
+
 	texture = BOGraphicInterface::LoadTexture("Sprites/Particles/Explosion.png");
+    if (!texture)
+    {
+        std::cout << "Explosion particle texture failed to load!" << std::endl;
+        std::cin.get();
+    }
 	GetInstance().textureList.push_back(texture);
+
 	texture = BOGraphicInterface::LoadTexture("Sprites/Particles/DebugTrail.png");
+    if (!texture)
+    {
+        std::cout << "Debug trail particle texture failed to load!" << std::endl;
+        std::cin.get();
+    }
 	GetInstance().textureList.push_back(texture);
 
 	// HUD.
-	texture = BOGraphicInterface::LoadTexture("Sprites/PlaceHolderPNG/placeholderLife.png");
+	texture = BOGraphicInterface::LoadTexture("Sprites/HUD/Alive.png");
+    if (!texture)
+    {
+        std::cout << "Fireball trail particle texture failed to load!" << std::endl;
+        std::cin.get();
+    }
 	GetInstance().textureList.push_back(texture);
+
+    texture = BOGraphicInterface::LoadTexture("Sprites/HUD/Dead.png");
+    if (!texture)
+    {
+        std::cout << "Fireball trail particle texture failed to load!" << std::endl;
+        std::cin.get();
+    }
+    GetInstance().textureList.push_back(texture);
+
+    texture = BOGraphicInterface::LoadTexture("Sprites/HUD/Core.png");
+    if (!texture)
+    {
+        std::cout << "Fireball trail particle texture failed to load!" << std::endl;
+        std::cin.get();
+    }
+    GetInstance().textureList.push_back(texture);
 
 	// Menu.
 	texture = BOGraphicInterface::LoadTexture("Sprites/Menu/MenuEdge.png");
-	GetInstance().textureList.push_back(texture);
-	texture = BOGraphicInterface::LoadTexture("Sprites/Menu/MenuBar.png");
-	GetInstance().textureList.push_back(texture);
-	texture = BOGraphicInterface::LoadTexture("Sprites/Menu/MainMenuBackground.png");
-	GetInstance().textureList.push_back(texture);
-	texture = BOGraphicInterface::LoadTexture("Sprites/Menu/Button.png");
-	GetInstance().textureList.push_back(texture);
-	texture = BOGraphicInterface::LoadTexture("Sprites/Menu/ButtonHighlighted.png");
+    if (!texture)
+    {
+        std::cout << "Menu edge texture failed to load!" << std::endl;
+        std::cin.get();
+    }
 	GetInstance().textureList.push_back(texture);
 
-	// Misc.
-	texture = BOGraphicInterface::LoadTexture("Sprites/PlaceHolderPNG/Background.png");
+	texture = BOGraphicInterface::LoadTexture("Sprites/Menu/MenuBar.png");
+    if (!texture)
+    {
+        std::cout << "Menu bar texture failed to load!" << std::endl;
+        std::cin.get();
+    }
 	GetInstance().textureList.push_back(texture);
-	texture = BOGraphicInterface::LoadTexture("Sprites/PlaceHolderPNG/placeholderBlackhole110x110.png");
+
+	texture = BOGraphicInterface::LoadTexture("Sprites/Menu/MainMenuBackground.png");
+    if (!texture)
+    {
+        std::cout << "Menu background texture failed to load!" << std::endl;
+        std::cin.get();
+    }
 	GetInstance().textureList.push_back(texture);
-	texture = BOGraphicInterface::LoadTexture("Sprites/PlaceHolderPNG/placeholderPadSegment5.png");
+
+	texture = BOGraphicInterface::LoadTexture("Sprites/Menu/Button.png");
+    if (!texture)
+    {
+        std::cout << "Menu button texture failed to load!" << std::endl;
+        std::cin.get();
+    }
 	GetInstance().textureList.push_back(texture);
-	texture = BOGraphicInterface::LoadTexture("Sprites/Menu/ButtonToolTip.png");
+
+	texture = BOGraphicInterface::LoadTexture("Sprites/Menu/ButtonHighlighted.png");
+    if (!texture)
+    {
+        std::cout << "Menu highlighted button texture failed to load!" << std::endl;
+        std::cin.get();
+    }
 	GetInstance().textureList.push_back(texture);
-    texture = BOGraphicInterface::LoadTexture("Sprites/PlaceHolderPNG/placeholderHyperdrive.png");
+
+    texture = BOGraphicInterface::LoadTexture("Sprites/Menu/ButtonToolTip.png");
+    if (!texture)
+    {
+        std::cout << "Menu button tooltip texture failed to load!" << std::endl;
+        std::cin.get();
+    }
+	GetInstance().textureList.push_back(texture);
+
+	// Map textures.
+	texture = BOGraphicInterface::LoadTexture("Sprites/Map/Background.png");
+    if (!texture)
+    {
+        std::cout << "Background texture failed to load!" << std::endl;
+        std::cin.get();
+    }
+	GetInstance().textureList.push_back(texture);
+
+	texture = BOGraphicInterface::LoadTexture("Sprites/Map/BlackHole.png");
+    if (!texture)
+    {
+        std::cout << "Black hole texture failed to load!" << std::endl;
+        std::cin.get();
+    }
+	GetInstance().textureList.push_back(texture);
+
+	texture = BOGraphicInterface::LoadTexture("Sprites/Map/PadSegment.png");
+    if (!texture)
+    {
+        std::cout << "Pad segment texture failed to load!" << std::endl;
+        std::cin.get();
+    }
+	GetInstance().textureList.push_back(texture);
+
+    texture = BOGraphicInterface::LoadTexture("Sprites/Map/Core.png");
+    if (!texture)
+    {
+        std::cout << "Map core texture failed to load!" << std::endl;
+        std::cin.get();
+    }
     GetInstance().textureList.push_back(texture);
-	texture = BOGraphicInterface::LoadTexture("Sprites/PlaceHolderPNG/placeholderLock.png");
+
+	texture = BOGraphicInterface::LoadTexture("Sprites/HUD/Lock.png");
+    if (!texture)
+    {
+        std::cout << "Level selector lock texture failed to load!" << std::endl;
+        std::cin.get();
+    }
 	GetInstance().textureList.push_back(texture);
+
 	GetInstance().textureList.push_back(NULL);// Lägg in en tom för att fixa nrOfLevels
-	texture = BOGraphicInterface::LoadTexture("Sprites/PlaceHolderPNG/button1Map.png");
+	texture = BOGraphicInterface::LoadTexture("Maps/MapThumb1.png");
 	GetInstance().textureList.push_back(texture);
-	texture = BOGraphicInterface::LoadTexture("Sprites/PlaceHolderPNG/button2Map.png");
+	texture = BOGraphicInterface::LoadTexture("Maps/MapThumb2.png");
 	GetInstance().textureList.push_back(texture);
-	texture = BOGraphicInterface::LoadTexture("Sprites/PlaceHolderPNG/buttonDefaultMap.png");
+	texture = BOGraphicInterface::LoadTexture("Maps/MapThumbDefault.png");
 	GetInstance().textureList.push_back(texture);
 }
 
@@ -222,7 +397,6 @@ void BOTextureManager::FreeAll()
 	{
 		BOGraphicInterface::DestroyTexture(GetInstance().textureList[i]);
 	}
-	
 }
 
 SDL_Texture* BOTextureManager::GetTexture(Textures p_textureEnum)

@@ -145,7 +145,7 @@ void BOObjectManager::Update(double p_deltaTime)
     // Update SlowTime before the objects
     m_slowTime.Update(p_deltaTime);
 
-	m_blackHole.Update();
+    m_blackHole.Update(p_deltaTime * 100);
 	m_paddle.Update(p_deltaTime);
     m_shockwave.Update(p_deltaTime);
 
@@ -221,7 +221,7 @@ void BOObjectManager::Update(double p_deltaTime)
 void BOObjectManager::Draw()
 {
 	m_background.Draw();
-	m_blackHole.Draw();
+	m_blackHole.DrawRotating();
 	m_keyManager.Draw();
 
 	for (unsigned int i = 0; i < m_blockList.size(); i++)
@@ -249,7 +249,7 @@ void BOObjectManager::Draw()
 
 	for (unsigned int i = 0; i < m_ballList.size(); i++)
 	{
-		m_ballList[i]->Draw();
+        m_ballList[i]->DrawBallWithTail();
 	}
 
 	m_Shield.Draw();
@@ -392,9 +392,9 @@ bool BOObjectManager::LoadBlocksFromMap(int p_index)
 	bool result = false;
 
 	// Hard coded constants for 40x40 hexagons
-	static const float blockHeightDifference = 22; // The indentation of every other column
-	static const int hexagonWidth = 35;
-    static const int hexagonHeight = 44;
+	static const float blockHeightDifference = 19; // The indentation of every other column
+	static const int hexagonWidth = 32;
+    static const int hexagonHeight = 37;
 	static const int marginX = 40;
 	static const int marginY = 50;
 
@@ -422,36 +422,43 @@ bool BOObjectManager::LoadBlocksFromMap(int p_index)
 				// This fat chunk of code is to be removed when the map loader loads power ups
 				if (i % 100 == 1)
 				{
-					result = block->Initialize(float2(x, y), int2(46, 42), BOTextureManager::GetTexture(TEXHEXPU2), PUShield, score);
-				}
+					result = block->Initialize(float2(x, y), int2(46, 42), BOTextureManager::GetTexture(TEXHEXPOWERUP), PUShield, score);
+                    block->AddGlow(float2(x, y), int2(46, 42), int2(46, 42), 0, 5, 0.1, false, BOTextureManager::GetTexture(TEXGLOWSTANDARD));
+                }
 				else if (i % 10 == 2)
 				{
-					result = block->Initialize(float2(x, y), int2(46, 42), BOTextureManager::GetTexture(TEXHEXPU1), PUExtraBall, score);
-				}
+                    result = block->Initialize(float2(x, y), int2(46, 42), BOTextureManager::GetTexture(TEXHEXPOWERUP), PUExtraBall, score);
+                    block->AddGlow(float2(x, y), int2(46, 42), int2(46, 42), 0, 5, 0.1, false, BOTextureManager::GetTexture(TEXGLOWSTANDARD));
+                }
 				else if (i % 100 == 66)
 				{
-					result = block->Initialize(float2(x, y), int2(46, 42), BOTextureManager::GetTexture(TEXHEXPU3), PUBiggerPad, score);
+                    result = block->Initialize(float2(x, y), int2(46, 42), BOTextureManager::GetTexture(TEXHEXPOWERUP), PUBiggerPad, score);
+                    block->AddGlow(float2(x, y), int2(46, 42), int2(46, 42), 0, 5, 0.1, false, BOTextureManager::GetTexture(TEXGLOWSTANDARD));
 				}
 				else if (i % 100 == 99)
 				{
-					result = block->Initialize(float2(x, y), int2(46, 42), BOTextureManager::GetTexture(TEXHEXPU4), PUFireBall, score);
+                    result = block->Initialize(float2(x, y), int2(46, 42), BOTextureManager::GetTexture(TEXHEXPOWERUP), PUFireBall, score);
+                    block->AddGlow(float2(x, y), int2(46, 42), int2(46, 42), 0, 5, 0.1, false, BOTextureManager::GetTexture(TEXGLOWSTANDARD));
 				}
                 else if (i % 100 == 77)
                 {
-                    result = block->Initialize(float2(x, y), int2(40, 40), BOTextureManager::GetTexture(TEXHEXPUSHOCKWAVE), PUShockwave, score);
+                    result = block->Initialize(float2(x, y), int2(46, 42), BOTextureManager::GetTexture(TEXHEXPOWERUP), PUShockwave, score);
+                    block->AddGlow(float2(x, y), int2(46, 42), int2(46, 42), 0, 5, 0.1, false, BOTextureManager::GetTexture(TEXGLOWSTANDARD));
 				}
                 else if (i % 100 == 69)
                 {
-                    result = block->Initialize(float2(x, y), int2(40, 40), BOTextureManager::GetTexture(TEXHEXPU1), PUStickyPad, score);
+                    result = block->Initialize(float2(x, y), int2(46, 42), BOTextureManager::GetTexture(TEXHEXPOWERUP), PUStickyPad, score);
+                    block->AddGlow(float2(x, y), int2(46, 42), int2(46, 42), 0, 5, 0.1, false, BOTextureManager::GetTexture(TEXGLOWSTANDARD));
                 }
                 else if (i % 100 == 97)
                 {
-                    result = block->Initialize(float2(x, y), int2(40, 40), BOTextureManager::GetTexture(TEXPUSLOWTIME), PUSlowTime, score);
+                    result = block->Initialize(float2(x, y), int2(46, 42), BOTextureManager::GetTexture(TEXHEXPOWERUP), PUSlowTime, score);
+                    block->AddGlow(float2(x, y), int2(46, 42), int2(46, 42), 0, 5, 0.1, false, BOTextureManager::GetTexture(TEXGLOWSTANDARD));
                 }
 				else
 				{
 					result = block->Initialize(float2(x, y), int2(46, 42), BOTextureManager::GetTexture(TEXHEXSTANDARD), PUNone, score);
-                    block->AddGlow(float2(x, y), int2(46, 42), int2(46, 42), 0, 5, 0.09, false, BOTextureManager::GetTexture(TEXGLOWSTANDARD));
+                    block->AddGlow(float2(x, y), int2(46, 42), int2(46, 42), 0, 5, 0.1, false, BOTextureManager::GetTexture(TEXGLOWSTANDARD));
 				}
 				if (!result)
 				{
@@ -468,7 +475,7 @@ bool BOObjectManager::LoadBlocksFromMap(int p_index)
 			{
 				block = new BOBlockMultiTexture();
                 result = block->InitializeAnimated(float2(x, y), int2(46, 42), int2(46, 42), 0, 5, 0, true, BOTextureManager::GetTexture(TEXHEXARMORED), 5, PUNone, score);
-                block->AddGlow(float2(x, y), int2(46, 42), int2(46, 42), 0, 5, 0.09, false, BOTextureManager::GetTexture(TEXGLOWARMORED));
+                block->AddGlow(float2(x, y), int2(46, 42), int2(46, 42), 0, 5, 0.1, false, BOTextureManager::GetTexture(TEXGLOWARMORED));
 				if (!result)
 				{
 					ThrowInitError("BOBlockMultiTexture");
@@ -484,7 +491,7 @@ bool BOObjectManager::LoadBlocksFromMap(int p_index)
 			{
 				block = new BOBlockIron();
 				result = block->Initialize(float2(x, y), int2(46, 42), BOTextureManager::GetTexture(TEXHEXINDES), PUNone, score);
-                block->AddGlow(float2(x, y), int2(46, 42), int2(46, 42), 0, 5, 0.09, false, BOTextureManager::GetTexture(TEXGLOWINDES));
+                block->AddGlow(float2(x, y), int2(46, 42), int2(46, 42), 0, 5, 0.1, false, BOTextureManager::GetTexture(TEXGLOWINDES));
 				if (!result)
 				{
 					ThrowInitError("BOBlockIron");
@@ -581,8 +588,8 @@ void BOObjectManager::BallPadCollision(BOBall* p_ball)
 	{
             p_ball->SetStuckToPad(true);
             float2 temp = { p_ball->GetPosition().x - m_blackHole.GetPosition().x, p_ball->GetPosition().y - m_blackHole.GetPosition().y };
-            float tempAngle = BOPhysics::AngleBetweenDeg(float2{ 0, -100 }, temp);
-            p_ball->SetStuckAngle(tempAngle - m_paddle.GetRotation());
+            double tempAngle = BOPhysics::AngleBetweenDeg(float2{ 0, -100 }, temp);
+            p_ball->SetStuckAngle((float)(tempAngle - m_paddle.GetRotation()));
 
         }
 		p_ball->BouncedOnPad();
