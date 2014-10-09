@@ -143,9 +143,15 @@ void BOObjectManager::Shutdown()
 
 void BOObjectManager::Update(double p_deltaTime)
 {
+    // First, check if we've catched all the keys
+    if (m_keyManager.AllKeysCatched())
+    {
+        // In that case, start blowing all existing blocks up!
+        PewPewPew();
+    }
+
     // Update SlowTime before the objects
     m_slowTime.Update(p_deltaTime);
-
     m_blackHole.Update(p_deltaTime * 100);
 	m_paddle.Update(p_deltaTime);
     m_shockwave.Update(p_deltaTime);
@@ -349,7 +355,9 @@ bool BOObjectManager::LostGame()
 
 bool BOObjectManager::WonGame()
 {
-	return m_keyManager.AllKeysCatched();
+    bool didWin = m_keyManager.AllKeysCatched()
+        && m_blockList.size() == 0;
+	return didWin;
 }
 
 void BOObjectManager::CheckBallOutOfBounds(int p_index)
@@ -658,5 +666,19 @@ void BOObjectManager::ActivateShockwave()
     for (unsigned int i = 0; i < m_ballList.size(); i++)
     {
         m_ballList[i]->ActivateShockwave();
+    }
+}
+
+void BOObjectManager::PewPewPew()
+{
+    if (m_blockList.size() > 0)
+    {
+        int l = rand() % (m_blockList.size() * 5);
+        if (l < m_blockList.size())
+        {
+            m_particleSystem.RegularBlockExplosion(m_blockList[l]->GetPosition());
+            delete m_blockList[l];
+            m_blockList.erase(m_blockList.begin() + l);
+        }
     }
 }
