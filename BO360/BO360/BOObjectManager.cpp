@@ -73,11 +73,12 @@ bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight)
 	BOPublisher::AddSubscriber(m_ballList[0]); 
 
 	// Load the map
-	LoadBlocksFromMap("Demo.bom");
+	LoadBlocksFromMap("map3.bom");
 
 	// Add subscriber so the object manager knows when a power up activates
 	BOPowerUpManager::AddSubscriber(this);
 	BOPublisher::AddSubscriber(this);
+
 
 	m_Shield.Initialize(int2(200, 200), BOTextureManager::GetTexture(TEXSHIELD), BOGraphicInterface::GetWindowSize());
 
@@ -392,9 +393,9 @@ bool BOObjectManager::LoadBlocksFromMap(std::string p_filename)
 	bool result = false;
 
 	// Hard coded constants for 40x40 hexagons
-	static const float blockHeightDifference = 22; // The indentation of every other column
-	static const int hexagonWidth = 35;
-    static const int hexagonHeight = 44;
+	static const float blockHeightDifference = 19; // The indentation of every other column
+	static const int hexagonWidth = 32;
+    static const int hexagonHeight = 37;
 	static const int marginX = 40;
 	static const int marginY = 50;
 
