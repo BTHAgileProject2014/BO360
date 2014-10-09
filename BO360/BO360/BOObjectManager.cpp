@@ -79,6 +79,7 @@ bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight, int p_Le
 	BOPowerUpManager::AddSubscriber(this);
 	BOPublisher::AddSubscriber(this);
 
+
 	m_Shield.Initialize(int2(200, 200), BOTextureManager::GetTexture(TEXSHIELD), BOGraphicInterface::GetWindowSize());
 
     // Add the shockwave
