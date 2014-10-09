@@ -50,7 +50,7 @@ bool BOSystem::Initialize()
 	}
 
 	// Initialize the texturemanager
-	if (!BOTextureManager::Initialize())
+	if (!BOTextureManager::Initialize("Neon"))
 	{
 		std::cout << "Initialize texturemanager failed!" << std::endl;
 
@@ -66,6 +66,14 @@ bool BOSystem::Initialize()
 		return false;
 	}
 
+	result = m_levelManager.Initialize();
+	if (!result)
+	{
+		std::cout << "Initialize level manager failed!" << std::endl;
+
+		return false;
+	}
+
 	// Initialize the state handler.
 	m_gameState = MENU;
 	if (!m_stateManager.Initialize(int2(m_windowWidth, m_windowHeight)))
@@ -74,6 +82,7 @@ bool BOSystem::Initialize()
 
 		return false;
 	}
+	m_stateManager.SetButtonActionLevel(0, LEVEL);
 
 	// Add system as an subscriber
 	BOPublisher::AddSubscriber(this);
@@ -103,7 +112,7 @@ bool BOSystem::InitializeMap()
 	}
 
 	// Initilialize the object manager.
-	result = m_objectManager.Initialize(m_windowWidth, m_windowHeight);
+	result = m_objectManager.Initialize(m_windowWidth, m_windowHeight, -1);
 	if (!result)
 	{
 		std::cout << "Initialize object manager failed!" << std::endl;
@@ -128,6 +137,63 @@ bool BOSystem::InitializeMap()
 
 	// Example usage of HUD
 	BOHUDManager::SetLevel(1);
+
+    // Set the time scale to 1.0
+    BOPhysics::SetTimeScale(1.0f);
+
+	return true;
+}
+
+bool BOSystem::InitializeMap(int p_levelIndex)
+{
+	bool result;
+
+	// Initialize the power up manager.
+	result = m_powerUpManager.Initialize();
+	if (!result)
+	{
+		std::cout << "Initialize power up manager failed!" << std::endl;
+
+		return false;
+	}
+
+	result = BOHUDManager::Initialize();
+	if (!result)
+	{
+		std::cout << "Initialize HUD failed!" << std::endl;
+
+		return false;
+	}
+
+	// Initilialize the object manager.
+	result = m_objectManager.Initialize(m_windowWidth, m_windowHeight, p_levelIndex);
+	if (!result)
+	{
+		std::cout << "Initialize object manager failed!" << std::endl;
+
+		return false;
+	}
+
+	// Initialize the sound engine.
+	if (!BOSoundManager::Initialize())
+	{
+		std::cout << "Initialize sound manager failed!" << std::endl;
+
+		return false;
+	}
+
+	// Initialize score
+	if (!BOScore::Initialize())
+	{
+		std::cout << "Failed to initialize score in system";
+		return false;
+	}
+
+	// Example usage of HUD
+	BOHUDManager::SetLevel(p_levelIndex + 1);
+
+	// Set the time scale to 1.0
+	BOPhysics::SetTimeScale(1.0f);
 
 	return true;
 }
@@ -182,6 +248,9 @@ bool BOSystem::Run()
 
 				// Go to victory screen
 				m_gameState = VICTORY;
+
+				// Unlock new map
+				m_stateManager.SetButtonActionLevel(m_levelManager.GetCurrentLevel() + 1, LEVEL);
 			}
 			// Check if the player lost the current game
 			else if (m_objectManager.LostGame())
@@ -247,6 +316,7 @@ void BOSystem::Shutdown()
 	m_objectManager.Shutdown();
 	m_powerUpManager.Shutdown();
 	m_stateManager.Shutdown();
+	m_levelManager.Shutdown();
 	BOSoundManager::Shutdown();
 	BOTextManager::Shutdown();
 	BOHUDManager::Shutdown();
@@ -264,6 +334,7 @@ void BOSystem::HandleAction(ButtonAction p_action)
 			{
 				ShutdownMap();
 				m_gameState = MENU;
+				m_levelManager.SetLevel(0);
 
 				break;
 			}
@@ -280,7 +351,7 @@ void BOSystem::HandleAction(ButtonAction p_action)
 			case(STORY) :
 			{
 				m_gameState = RUNNING;
-				if (!InitializeMap())
+				if (!InitializeMap(0))
 				{
 					std::cout << "Press ENTER to quit." << std::endl;
 					std::cin.get();
@@ -309,13 +380,24 @@ void BOSystem::HandleAction(ButtonAction p_action)
 			case(NEXT) :
 			{
                 m_gameState = RUNNING;
-                if (!InitializeMap())
-                {
-                    std::cout << "Press ENTER to quit." << std::endl;
-                    std::cin.get();
+				int currentLevel = m_levelManager.GetCurrentLevel();
+				int nextLevel = m_levelManager.GetNextLevel();
+				if (currentLevel == nextLevel)
+				{
+					m_gameState = MENU;
+					m_levelManager.SetLevel(0);
+				}
+				else
+				{
+					if (!InitializeMap(nextLevel))
+					{
+						std::cout << "Press ENTER to quit." << std::endl;
+						std::cin.get();
 
-                    m_quit = true;
-                }
+						m_quit = true;
+					}
+				}
+                
 				break;
 			}
 
@@ -323,7 +405,7 @@ void BOSystem::HandleAction(ButtonAction p_action)
 			case(RETRY) :
 			{
 				m_gameState = RUNNING;
-				if (!InitializeMap())
+				if (!InitializeMap(m_levelManager.GetCurrentLevel()))
 				{
 					std::cout << "Press ENTER to quit." << std::endl;
 					std::cin.get();
@@ -332,6 +414,30 @@ void BOSystem::HandleAction(ButtonAction p_action)
 				}
 				break;
 
+			}
+			case (LEVELSELECT) :
+			{
+				// Kolla index och ladda bana.
+				m_gameState = LEVELSELECTOR;
+				break;
+			}
+			case (LEVEL) :
+			{
+				int index =	m_stateManager.GetLevelIndex();
+				if (index != -1)
+				{
+					m_gameState = RUNNING;
+					m_levelManager.SetLevel(index);
+					if (!InitializeMap(index))
+					{
+						std::cout << "Press ENTER to quit." << std::endl;
+						std::cin.get();
+
+						m_quit = true;
+					}
+				}
+				
+				break;
 			}
 		}
 	}
@@ -342,6 +448,10 @@ void BOSystem::Handle(InputMessages p_inputMessages)
 	if (m_gameState == RUNNING && p_inputMessages.escKey)
 	{
 		m_gameState = PAUSED;
+	}
+	if (m_gameState == LEVELSELECTOR && p_inputMessages.escKey)
+	{
+		m_gameState = MENU;
 	}
 }
 

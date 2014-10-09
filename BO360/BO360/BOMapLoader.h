@@ -14,7 +14,7 @@ public:
 	~BOMapLoader();
 
 	bool Initialize();
-	bool LoadMap(std::string p_fileName);
+	bool LoadMap(int p_index);
 	int2 GetMapSize();
 	std::vector<Block> GetLoadedBlocks();
 

@@ -367,7 +367,8 @@ enum GameState
 	PAUSED,
 	VICTORY,
 	DEFEAT,
-    HIGHSCORESTATE
+    HIGHSCORESTATE,
+	LEVELSELECTOR
 };
 
 enum ButtonAction
@@ -379,7 +380,9 @@ enum ButtonAction
     HIGHSCORE,
 	RESUME,
 	NEXT,
-	RETRY
+	RETRY,
+	LEVELSELECT,
+	LEVEL
 };
 
 enum ParticleType
@@ -517,7 +520,9 @@ enum PowerUpTypes
 	PUShield,
 	PUExtraBall,
 	PUFireBall,
-    PUShockwave
+    PUShockwave,
+    PUStickyPad,
+    PUSlowTime
 };
 
 inline void ThrowInitError(std::string p_className)
@@ -533,6 +538,9 @@ enum Textures
 	TEXHEXSTANDARD,
 	TEXHEXARMORED,
 	TEXHEXINDES,
+    TEXGLOWSTANDARD,
+    TEXGLOWARMORED,
+    TEXGLOWINDES,
 	TEXHEXPU1,
 	TEXHEXPU2,
 	TEXHEXPU3,
@@ -545,6 +553,7 @@ enum Textures
 	TEXPU2,
 	TEXPU3,
     TEXPUSHOCKWAVE,
+    TEXPUSLOWTIME,
 	TEXBALLTRAIL,
 	TEXBALLDEBRIS,
 	TEXBLOCKDEBRIS,
@@ -561,7 +570,16 @@ enum Textures
 	TEXBLACKHOLE,
 	TEXPADSEG,
 	TEXTOOLTIP,
-    TEXKEY
+    TEXKEY,
+	TEXLOCK,
+
+	/* HÄR UNDER ÄR DET BARA BANOR PLZ!!!*/
+	nrOfLevels,
+	TEXBUTTON1MAP,
+	TEXBUTTON2MAP,
+	TEXBUTTONDEAFAULTMAP,
+	
+	texNR
 };
 
 #endif

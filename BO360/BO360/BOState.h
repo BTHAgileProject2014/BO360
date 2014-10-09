@@ -25,6 +25,8 @@ public:
 	void AddButton(float2 p_position, int2 p_size, float2 p_menuPosition, SDL_Texture* p_sprite, std::string p_name, ButtonAction p_action, std::string p_tooltip);
 	void SetName(std::string p_name);
 	void SetBackground(Textures p_spriteIndex);
+	int GetLevelIndex();
+	void SetButtonAction(int p_buttonIndex, ButtonAction p_action);
 
 private:
 	std::vector<BOButton> m_buttonList;

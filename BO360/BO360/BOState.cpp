@@ -81,9 +81,12 @@ void BOState::AddButton(float2 p_position, int2 p_size, float2 p_menuPosition, S
 	m_buttonList.push_back(button);
 
 	// Change position and size of the menu bar
-	m_menuBar[1].SetSize(int2(240 * m_buttonList.size() + 10 * (m_buttonList.size() - 1), 70));
-	m_menuBar[1].SetPosition(float2((p_menuPosition.x + 125) + 120 * (m_buttonList.size() - 1) + 5 * (m_buttonList.size() - 1), p_menuPosition.y + 35));
-	m_menuBar[2].SetPosition(float2((p_menuPosition.x + 7.5f) + m_menuBar[1].GetSize().x, p_menuPosition.y + 35));
+	if (m_buttonList.size() < 5)
+	{
+		m_menuBar[1].SetSize(int2(240 * m_buttonList.size() + 10 * (m_buttonList.size() - 1), 70));
+		m_menuBar[1].SetPosition(float2((p_menuPosition.x + 125) + 120 * (m_buttonList.size() - 1) + 5 * (m_buttonList.size() - 1), p_menuPosition.y + 35));
+		m_menuBar[2].SetPosition(float2((p_menuPosition.x + 7.5f) + m_menuBar[1].GetSize().x, p_menuPosition.y + 35));
+	}
 }
 
 void BOState::Handle(InputMessages p_inputMessages)
@@ -106,6 +109,7 @@ ButtonAction BOState::Update()
 			{
 				if (m_buttonList[i].Intersects(m_mousePositionPrev))
 				{
+					m_mousePrev = m_mouseDown;
 					return m_buttonList[i].GetAction();
 				}
 			}
@@ -113,8 +117,20 @@ ButtonAction BOState::Update()
 	}
 
 	m_mousePrev = m_mouseDown;
-	//m_clickedPrev = m_clicked;
+	
 	return NOACTION;
+}
+
+int BOState::GetLevelIndex()
+{
+	for (unsigned int i = 0; i < m_buttonList.size(); i++)
+	{
+		if (m_buttonList[i].Intersects(m_mousePosition))
+		{
+			return i;
+		}
+	}
+	return -1;
 }
 
 void BOState::Draw()
@@ -156,4 +172,13 @@ void BOState::Shutdown()
 
 	m_buttonList.empty();
 	m_menuText.Shutdown();
+}
+
+
+void BOState::SetButtonAction(int p_buttonIndex, ButtonAction p_action)
+{
+	if (p_buttonIndex >= 0 && (unsigned int)p_buttonIndex < m_buttonList.size())
+	{
+		m_buttonList[p_buttonIndex].SetAction(p_action);
+	}	
 }

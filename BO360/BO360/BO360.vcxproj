@@ -100,6 +100,7 @@
     <ClInclude Include="BOHUDManager.h" />
     <ClInclude Include="BOInput.h" />
     <ClInclude Include="BOKeyManager.h" />
+    <ClInclude Include="BOLevelManager.h" />
     <ClInclude Include="BOMapLoader.h" />
     <ClInclude Include="BOMovingParticle.h" />
     <ClInclude Include="BOObject.h" />
@@ -113,6 +114,7 @@
     <ClInclude Include="BOPUSubscriber.h" />
     <ClInclude Include="BOScore.h" />
     <ClInclude Include="BOShield.h" />
+    <ClInclude Include="BOSlowTime.h" />
     <ClInclude Include="BOShockwave.h" />
     <ClInclude Include="BOSoundManager.h" />
     <ClInclude Include="BOState.h" />
@@ -142,6 +144,7 @@
     <ClCompile Include="BOHUDManager.cpp" />
     <ClCompile Include="BOInput.cpp" />
     <ClCompile Include="BOKeyManager.cpp" />
+    <ClCompile Include="BOLevelManager.cpp" />
     <ClCompile Include="BOMain.cpp" />
     <ClCompile Include="BOMapLoader.cpp" />
     <ClCompile Include="BOMovingParticle.cpp" />
@@ -156,6 +159,7 @@
     <ClCompile Include="BOPUSubscriber.cpp" />
     <ClCompile Include="BOScore.cpp" />
     <ClCompile Include="BOShield.cpp" />
+    <ClCompile Include="BOSlowTime.cpp" />
     <ClCompile Include="BOShockwave.cpp" />
     <ClCompile Include="BOSoundManager.cpp" />
     <ClCompile Include="BOState.cpp" />
