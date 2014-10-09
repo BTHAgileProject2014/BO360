@@ -591,6 +591,8 @@ enum Textures
 };
 enum TTEffects
 {
+
+    //List order
     //Lane 1
     ShockWave,
     PowerUpBoost3,
@@ -636,7 +638,7 @@ enum TTEffects
     ChanceDoublePadSizeIncrease2,
     GiantBall
 
-    /*
+    /*//In order
     //Layer 1
     DecreasePowerUpFallSpeed,   //decrease 10%
     AddBounceToShield,          //Increase bounce on shield 

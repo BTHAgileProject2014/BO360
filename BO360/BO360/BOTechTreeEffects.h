@@ -12,7 +12,7 @@ struct TechTreeBallEffects
 
     TechTreeBallEffects()
     {
-        speed = 5.0f;
+        speed = 1.0f;
         gravity = 0;
         damage = 0;
     }

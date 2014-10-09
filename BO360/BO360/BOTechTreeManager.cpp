@@ -83,6 +83,7 @@ void BOTechTreeManager::Update()
                         m_mousePrev = m_mouseDown;
                         m_nodeList[i]->SetActive(true);
                         SetAdjacentNodes(m_nodeList[i]);
+                        HandleUpgrades(m_nodeList[i]);
                     }
                 }
             }
@@ -512,18 +513,24 @@ void BOTechTreeManager::HandleUpgrades(BOTechTreeNode* p_node)
     case DropBasicPowerUp:
         break;
     case DecreasePowerUpFallSpeed:
+        BOTechTreeEffects::PUEffects.speed -= 0.25f;
         break;
     case AddBounceToShield:
+        BOTechTreeEffects::PUEffects.shieldCharge++;
         break;
     case IncreasePadSpeed:
+        BOTechTreeEffects::PaddleEffects.speed + 1.25f;
         break;
     case DecreaseBallSpeed:
+        BOTechTreeEffects::BallEffects.speed -= 0.25f;
         break;
     case DecreaseGravityPull:
+        BOTechTreeEffects::BallEffects.gravity = 1;
         break;
     case PowerUpGift:
+        BOTechTreeEffects::UtilityEffects.PUGiftEnabled = true;
         break;
-    case DecreasePowerUpFallSpeed2:
+    case DecreasePowerUpFallSpeed2:///////////_STOP
         break;
     case StartWithShield:
         break;
