@@ -376,6 +376,8 @@ void BOTextureManager::LoadTexture(std::string p_theme)
         std::cin.get();
     }
 	GetInstance().textureList.push_back(texture);
+	texture = BOGraphicInterface::LoadTexture("Sprites/PlaceHolderPNG/DEBUGDIR.png");
+	GetInstance().textureList.push_back(texture);
 
 	GetInstance().textureList.push_back(NULL);// Lägg in en tom för att fixa nrOfLevels
 	texture = BOGraphicInterface::LoadTexture("Maps/MapThumb1.png");
