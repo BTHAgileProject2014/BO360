@@ -160,78 +160,10 @@ void BOTechTreeManager::MapNodes()
 }
 void BOTechTreeManager::SetLPE()
 {
-    SetNodeLPE(m_startNode, 0, 0, 0);
-   /* 
-    BOTechTreeNode* node = m_nodeList[0];
-    int layer = 3;
-    while (node->GetDownLeftNode() != NULL)
-    {
-        node->SetLayer(layer);
-        node = node->GetDownLeftNode();
-    }
-    while (node->GetDownNode() != NULL)
-    {
-        node->SetLayer(layer);
-        node = node->GetDownNode();
-    }
-    while (node->GetDownRightNode() != NULL)
-    {
-        node->SetLayer(layer);
-        node = node->GetDownRightNode();
-    }
-    while (node->GetUpRightNode() != NULL)
-    {
-        node->SetLayer(layer);
-        node = node->GetUpRightNode();
-    }
-    while (node->GetUpNode() != NULL)
-    {
-        node->SetLayer(layer);
-        node = node->GetUpNode();
-    }
-    while (node->GetUpLeftNode() != NULL)
-    {
-        node->SetLayer(layer);
-        node = node->GetUpLeftNode();
-    }
+    //Sets start node
+    SetNodeLPE(m_startNode, 0, 99, 0);
 
-    node = m_nodeList[0]->GetDownNode();
-    for (int i = layer--; i > 0; i--)
-    {
-        while (node->GetDownLeftNode()->GetLayer() == 0)
-        {
-            node->SetLayer(i);
-            node = node->GetDownLeftNode();
-        }
-        while (node->GetDownNode()->GetLayer() == 0)
-        {
-            node->SetLayer(i);
-            node = node->GetDownNode();
-        }
-        while (node->GetDownRightNode()->GetLayer() == 0)
-        {
-            node->SetLayer(i);
-            node = node->GetDownRightNode();
-        }
-        while (node->GetUpRightNode()->GetLayer() == 0)
-        {
-            node->SetLayer(i);
-            node = node->GetUpRightNode();
-        }
-        while (node->GetUpNode()->GetLayer() == 0)
-        {
-            node->SetLayer(i);
-            node = node->GetUpNode();
-        }
-        while (node->GetUpLeftNode()->GetLayer() == 0)
-        {
-            node->SetLayer(i);
-            node = node->GetUpLeftNode();
-        }
-    }*/
-
-
-    //Set Price
+    //Set Price for layer 1
     m_startNode->GetUpNode()->SetPrice(1);
     m_startNode->GetUpRightNode()->SetPrice(2);
     m_startNode->GetUpLeftNode()->SetPrice(2);
@@ -239,8 +171,11 @@ void BOTechTreeManager::SetLPE()
     m_startNode->GetDownRightNode()->SetPrice(1);
     m_startNode->GetDownLeftNode()->SetPrice(1);
 
-
-
+    //Sets the price for layer 2 & 3
+    FixAdjacent();
+    FixAdjacent();
+    FixAdjacent();
+    FixAdjacent();
 
     for (int i = 0; i < m_nodeList.size(); i++)
     {
@@ -265,4 +200,129 @@ void BOTechTreeManager::SetNodeLPE(BOTechTreeNode* p_node, int p_layer, int p_pr
     p_node->SetLayer(p_layer);
     p_node->SetPrice(p_price);
     p_node->SetEffect(p_effect);
+}
+void BOTechTreeManager::FixAdjacent()
+{
+    int n1 = 0, n2 = 0, n3 = 0, n4 = 0, n5 = 0, n6 = 0;
+    for (int i = 0; i < m_nodeList.size(); i++)
+    {
+        if (m_nodeList[i]->GetPrice() == 0)
+        {
+            BOTechTreeNode* node = m_nodeList[i];
+            n1 = n2 = n3 = n4 = n5 = n6 = 0;
+            //Calculate value of adjacent nodes
+            if (node->GetUpNode() != NULL)
+            {
+                if (node->GetUpNode()->GetPrice() == 1)
+                    n1++;
+                else if (node->GetUpNode()->GetPrice() == 2)
+                    n2++;
+                else if (node->GetUpNode()->GetPrice() == 3)
+                    n3++;
+                else if (node->GetUpNode()->GetPrice() == 4)
+                    n4++;
+                else if (node->GetUpNode()->GetPrice() == 5)
+                    n5++;
+                else if (node->GetUpNode()->GetPrice() == 6)
+                    n6++;
+            }
+            if (node->GetUpLeftNode() != NULL)
+            {
+                if (node->GetUpLeftNode()->GetPrice() == 1)
+                    n1++;
+                else if (node->GetUpLeftNode()->GetPrice() == 2)
+                    n2++;
+                else if (node->GetUpLeftNode()->GetPrice() == 3)
+                    n3++;
+                else if (node->GetUpLeftNode()->GetPrice() == 4)
+                    n4++;
+                else if (node->GetUpLeftNode()->GetPrice() == 5)
+                    n5++;
+                else if (node->GetUpLeftNode()->GetPrice() == 6)
+                    n6++;
+            }
+            if (node->GetUpRightNode() != NULL)
+            {
+                if (node->GetUpRightNode()->GetPrice() == 1)
+                    n1++;
+                else if (node->GetUpRightNode()->GetPrice() == 2)
+                    n2++;
+                else if (node->GetUpRightNode()->GetPrice() == 3)
+                    n3++;
+                else if (node->GetUpRightNode()->GetPrice() == 4)
+                    n4++;
+                else if (node->GetUpRightNode()->GetPrice() == 5)
+                    n5++;
+                else if (node->GetUpRightNode()->GetPrice() == 6)
+                    n6++;
+            }
+            if (node->GetDownNode() != NULL)
+            {
+                if (node->GetDownNode()->GetPrice() == 1)
+                    n1++;
+                else if (node->GetDownNode()->GetPrice() == 2)
+                    n2++;
+                else if (node->GetDownNode()->GetPrice() == 3)
+                    n3++;
+                else if (node->GetDownNode()->GetPrice() == 4)
+                    n4++;
+                else if (node->GetDownNode()->GetPrice() == 5)
+                    n5++;
+                else if (node->GetDownNode()->GetPrice() == 6)
+                    n6++;
+            }
+            if (node->GetDownLeftNode() != NULL)
+            {
+                if (node->GetDownLeftNode()->GetPrice() == 1)
+                    n1++;
+                else if (node->GetDownLeftNode()->GetPrice() == 2)
+                    n2++;
+                else if (node->GetDownLeftNode()->GetPrice() == 3)
+                    n3++;
+                else if (node->GetDownLeftNode()->GetPrice() == 4)
+                    n4++;
+                else if (node->GetDownLeftNode()->GetPrice() == 5)
+                    n5++;
+                else if (node->GetDownLeftNode()->GetPrice() == 6)
+                    n6++;
+            }
+            if (node->GetDownRightNode() != NULL)
+            {
+                if (node->GetDownRightNode()->GetPrice() == 1)
+                    n1++;
+                else if (node->GetDownRightNode()->GetPrice() == 2)
+                    n2++;
+                else if (node->GetDownRightNode()->GetPrice() == 3)
+                    n3++;
+                else if (node->GetDownRightNode()->GetPrice() == 4)
+                    n4++;
+                else if (node->GetDownRightNode()->GetPrice() == 5)
+                    n5++;
+                else if (node->GetDownRightNode()->GetPrice() == 6)
+                    n6++;
+            }
+            //Calculate value for current node
+            //Look for value 5
+            if (n3 == 1 && n4 == 1)
+            {
+                node->SetPrice(5);
+            }
+            //Look for value 6
+            else if (n4 == 1 && n5 == 2)
+            {
+                node->SetPrice(6);
+            }
+            //Look for value 4
+            else if ((n1 == 1 && n3 == 2) || (n2 == 1 && n3 == 2))
+            {
+                node->SetPrice(4);
+            }
+            //Look for value 3
+            else if (n1 == 1 && n2 == 1)
+            {
+                node->SetPrice(3);
+            }
+        }
+    }
+    m_startNode->GetPrice();
 }

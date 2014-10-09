@@ -22,6 +22,7 @@ private:
     void MapNodes();
     void SetLPE();//Set layer, price and effect
     void SetNodeLPE(BOTechTreeNode* p_node, int p_layer, int p_price, int p_effect);
+    void FixAdjacent();
 
 
     int2 m_windowSize;
