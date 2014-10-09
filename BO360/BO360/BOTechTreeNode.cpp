@@ -168,6 +168,11 @@ bool BOTechTreeNode::Intersects(int2 p_mousePosition)
     {
         return true;
     }
+    if (BOPhysics::CheckCollisionSphereToSphere(sphere(float2((float)p_mousePosition.x,(float)p_mousePosition.y), 1), sphere(m_position, m_size.x / 2)));
+    {
+        return true;
+    }
+
 
     return false;
 }
