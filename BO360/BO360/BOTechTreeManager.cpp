@@ -504,3 +504,11 @@ void BOTechTreeManager::SetAdjacentNodes(BOTechTreeNode* p_node)
         p_node->GetDownRightNode()->SetAdjacentActive(true);
     }
 }
+void BOTechTreeManager::HandleUpgrades(BOTechTreeNode* p_node)
+{
+    /*int upgradeIdentifier = p_;
+    switch
+    {
+
+    }*/
+}

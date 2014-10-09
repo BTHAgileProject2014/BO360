@@ -23,6 +23,7 @@ public:
     
 
 private:
+    void HandleUpgrades(BOTechTreeNode* p_node);
     BOTechTreeNode* CreateNode(float2 p_pos,int2 p_size);
     void MapNodes();
     void SetLPE();//Set layer, price and effect
