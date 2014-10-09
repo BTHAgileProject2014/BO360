@@ -125,6 +125,8 @@ void BOTextureManager::LoadTexture(std::string p_theme)
 	texture = BOGraphicInterface::LoadTexture("Sprites/Menu/ButtonHighlighted.png");
 	GetInstance().textureList.push_back(texture);
 
+
+
 	// Misc.
 	texture = BOGraphicInterface::LoadTexture("Sprites/PlaceHolderPNG/Background.png");
 	GetInstance().textureList.push_back(texture);
@@ -136,6 +138,19 @@ void BOTextureManager::LoadTexture(std::string p_theme)
 	GetInstance().textureList.push_back(texture);
     texture = BOGraphicInterface::LoadTexture("Sprites/PlaceHolderPNG/placeholderHyperdrive.png");
     GetInstance().textureList.push_back(texture);
+
+    // Tech Tree
+    texture = BOGraphicInterface::LoadTexture("Sprites/PlaceHolderPNG/Techs/activeTech.png");
+    GetInstance().textureList.push_back(texture);
+    texture = BOGraphicInterface::LoadTexture("Sprites/PlaceHolderPNG/Techs/canChooseTech.png");
+    GetInstance().textureList.push_back(texture);
+    texture = BOGraphicInterface::LoadTexture("Sprites/PlaceHolderPNG/Techs/highlightTech.png");
+    GetInstance().textureList.push_back(texture);
+    texture = BOGraphicInterface::LoadTexture("Sprites/PlaceHolderPNG/Techs/disabledTech.png");
+    GetInstance().textureList.push_back(texture);
+    texture = BOGraphicInterface::LoadTexture("Sprites/PlaceHolderPNG/Techs/techBorder.png");
+    GetInstance().textureList.push_back(texture);
+
 	GetInstance().textureList.push_back(NULL);// Lägg in en tom för att fixa nrOfLevels
 	texture = BOGraphicInterface::LoadTexture("Sprites/PlaceHolderPNG/button1Map.png");
 	GetInstance().textureList.push_back(texture);
@@ -144,17 +159,7 @@ void BOTextureManager::LoadTexture(std::string p_theme)
 	texture = BOGraphicInterface::LoadTexture("Sprites/PlaceHolderPNG/buttonDefaultMap.png");
 	GetInstance().textureList.push_back(texture);
 
-    // Tech Tree
-    texture = BOGraphicInterface::LoadTexture("Sprites/PlaceHolderPNG/Tech/activeTech.png");
-    GetInstance().textureList.push_back(texture);
-    texture = BOGraphicInterface::LoadTexture("Sprites/PlaceHolderPNG/Tech/adjacentActiveTech.png");
-    GetInstance().textureList.push_back(texture);
-    texture = BOGraphicInterface::LoadTexture("Sprites/PlaceHolderPNG/Tech/activeTech.png");
-    GetInstance().textureList.push_back(texture);
-    texture = BOGraphicInterface::LoadTexture("Sprites/PlaceHolderPNG/Tech/inActiveTech.png");
-    GetInstance().textureList.push_back(texture);
-    texture = BOGraphicInterface::LoadTexture("Sprites/PlaceHolderPNG/Tech/border.png");
-    GetInstance().textureList.push_back(texture);
+
 }
 
 void BOTextureManager::FreeTexture(int p_textureIndex)

@@ -13,6 +13,8 @@ bool BOTechTreeManager::Initialize(int2 p_windowDimension)
 {
     m_windowSize = p_windowDimension;
 
+    m_grid = BOTextureManager::GetTexture(TEXTTHIGHLIGHTED);
+
     int2 m_Size = int2(100, 100);
     float2 midScreen = float2(m_windowSize.x * 0.5, m_windowSize.y * 0.5 + 150); // To save computation
     int diameter = 7; // Original is 7
