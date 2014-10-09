@@ -5,6 +5,7 @@
 #include "BOButton.h"
 #include "BOSubscriber.h"
 #include "BOPublisher.h"
+#include "BODrawableText.h"
 #include <vector>
 
 class BOTechTreeManager: public BOSubscriber 
@@ -18,6 +19,7 @@ public:
     void Shutdown();
     void Draw();
     void Handle(InputMessages p_inputMessages);
+    
 
 private:
     BOTechTreeNode* CreateNode(float2 p_pos,int2 p_size);
@@ -31,6 +33,9 @@ private:
 
     int2 m_windowSize;
     BOButton m_resetButton;
+    BODrawableText m_techPointsText;
+    int m_maxTechPoints;
+    int m_techPointsLeft;
     std::vector<BOTechTreeNode*> m_nodeList;
     BOTechTreeNode* m_startNode;
     SDL_Texture* m_grid;
