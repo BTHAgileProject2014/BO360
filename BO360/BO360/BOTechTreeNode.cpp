@@ -29,9 +29,9 @@ bool BOTechTreeNode::Initialize(float2 p_pos, int2 p_size)
     m_price = 0;
     m_effect = 0;
 
-    m_active = BOTextureManager::GetTexture(TEXHEXPU1);
-    m_inactive = BOTextureManager::GetTexture(TEXHEXPUSHOCKWAVE);
-    m_adjacentActive = BOTextureManager::GetTexture(TEXLIFE);
+    m_active = BOTextureManager::GetTexture(TEXBALL);
+    m_inactive = BOTextureManager::GetTexture(TEXDEBUGBALL);
+    m_adjacentActive = BOTextureManager::GetTexture(TEXFIREBALL);
 
 
     m_d1 = BOTextureManager::GetTexture(TEXHEXSTANDARD);
@@ -188,7 +188,7 @@ int BOTechTreeNode::GetPrice()
 }
 void BOTechTreeNode::SetPrice(int p_price)
 {
-    m_price = m_price;
+    m_price = p_price;
 }
 
 int BOTechTreeNode::GetEffect()

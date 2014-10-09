@@ -13,37 +13,37 @@ bool BOTechTreeManager::Initialize(int2 p_windowDimension)
 {
     m_windowSize = p_windowDimension;
 
-    int2 m_Size = int2(50, 50);
+    int2 m_Size = int2(100, 100);
     float2 midScreen = float2(m_windowSize.x * 0.5, m_windowSize.y * 0.5);//To save computation
     int diameter = 7;//Original is 7
 
     for (int y = diameter - 3, x = 0; y != 0; y--, x++)
     {
-        BOTechTreeNode* newNode = CreateNode(float2(midScreen.x                 - x * m_Size.x, midScreen.y                     - (y + 6) * m_Size.y*0.5), m_Size);
+        BOTechTreeNode* newNode = CreateNode(float2(midScreen.x                 - x * m_Size.x, midScreen.y                     - (y + 4) * m_Size.y*0.5), m_Size);
     }
     for (int y = diameter - 2, x = 0; y != 0; y--, x++)
     {
-        BOTechTreeNode* newNode = CreateNode(float2(midScreen.x + m_Size.x      - x * m_Size.x, midScreen.y + m_Size.y * 0.5     - (y + 5) * m_Size.y*0.5), m_Size);
+        BOTechTreeNode* newNode = CreateNode(float2(midScreen.x + m_Size.x      - x * m_Size.x, midScreen.y + m_Size.y * 0.5     - (y + 3) * m_Size.y*0.5), m_Size);
     }
     for (int y = diameter - 1, x = 0; y != 0; y--, x++)
     {
-        BOTechTreeNode* newNode = CreateNode(float2(midScreen.x + m_Size.x * 2  - x * m_Size.x, midScreen.y + m_Size.y * 1.5     - (y + 5) * m_Size.y*0.5), m_Size);
+        BOTechTreeNode* newNode = CreateNode(float2(midScreen.x + m_Size.x * 2  - x * m_Size.x, midScreen.y + m_Size.y * 1.5     - (y + 3) * m_Size.y*0.5), m_Size);
     }
     for (int y = diameter, x = 0; y != 0; y--, x++)
     {
-        BOTechTreeNode* newNode = CreateNode(float2(midScreen.x + m_Size.x * 3  - x * m_Size.x, midScreen.y + m_Size.y * 2.5     - (y + 5) * m_Size.y*0.5), m_Size);
+        BOTechTreeNode* newNode = CreateNode(float2(midScreen.x + m_Size.x * 3  - x * m_Size.x, midScreen.y + m_Size.y * 2.5     - (y + 3) * m_Size.y*0.5), m_Size);
     }
     for (int y = diameter - 1, x = 0; y != 0; y--, x++)
     {
-        BOTechTreeNode* newNode = CreateNode(float2(midScreen.x + m_Size.x * 3  - x * m_Size.x, midScreen.y + m_Size.y * 3       - (y + 5) * m_Size.y*0.5), m_Size);
+        BOTechTreeNode* newNode = CreateNode(float2(midScreen.x + m_Size.x * 3  - x * m_Size.x, midScreen.y + m_Size.y * 3       - (y + 3) * m_Size.y*0.5), m_Size);
     }
     for (int y = diameter - 2, x = 0; y != 0; y--, x++)
     {
-        BOTechTreeNode* newNode = CreateNode(float2(midScreen.x + m_Size.x * 3  - x * m_Size.x, midScreen.y + m_Size.y * 3.5   - (y + 5) * m_Size.y*0.5), m_Size);
+        BOTechTreeNode* newNode = CreateNode(float2(midScreen.x + m_Size.x * 3  - x * m_Size.x, midScreen.y + m_Size.y * 3.5   - (y + 3) * m_Size.y*0.5), m_Size);
     }
     for (int y = diameter - 3, x = 0; y != 0; y-- ,x++)
     {
-        BOTechTreeNode* newNode = CreateNode(float2(midScreen.x + m_Size.x * 3  - x * m_Size.x, midScreen.y + m_Size.y * 4     - (y + 5) * m_Size.y*0.5), m_Size);
+        BOTechTreeNode* newNode = CreateNode(float2(midScreen.x + m_Size.x * 3  - x * m_Size.x, midScreen.y + m_Size.y * 4     - (y + 3) * m_Size.y*0.5), m_Size);
     }
 
     MapNodes();
@@ -160,6 +160,8 @@ void BOTechTreeManager::MapNodes()
 }
 void BOTechTreeManager::SetLPE()
 {
+
+    //Set Price
     //Sets start node
     SetNodeLPE(m_startNode, 0, 99, 0);
 
@@ -177,6 +179,7 @@ void BOTechTreeManager::SetLPE()
     FixAdjacent();
     FixAdjacent();
 
+    //Set Layer
     for (int i = 0; i < m_nodeList.size(); i++)
     {
         if (m_nodeList[i]->GetPrice() == 1 || m_nodeList[i]->GetPrice() == 2)
@@ -193,6 +196,7 @@ void BOTechTreeManager::SetLPE()
         }
     }
 
+    //Set Effect
 
 }
 void BOTechTreeManager::SetNodeLPE(BOTechTreeNode* p_node, int p_layer, int p_price, int p_effect)
