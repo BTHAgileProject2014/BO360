@@ -28,6 +28,13 @@ bool BOSystem::Initialize()
 		return false;
 	}
 
+	result = m_techTreeEffects.Initialize();
+	if (!result)
+	{
+		return false;
+	}
+
+
 	// Initialize input manager.
 	result = m_input.Initialize();
 	if (!result)

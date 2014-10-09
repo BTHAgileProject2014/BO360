@@ -55,7 +55,7 @@ private:
 
 	Uint32 m_timePassedMS;
 
-
+	BOTechTreeEffects m_techTreeEffects;
 
     BOTechTreeManager m_techTreeManager;
 };

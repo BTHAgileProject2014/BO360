@@ -12,7 +12,7 @@ struct TechTreeBallEffects
 
     TechTreeBallEffects()
     {
-        speed = 0;
+        speed = 5.0f;
         gravity = 0;
         damage = 0;
     }
@@ -34,7 +34,7 @@ struct TechTreePUEffects
 
     TechTreePUEffects()
     {
-        speed = 0;
+        speed = 1.0f;
         shieldCharge = 0;
         startShield = false;
         biggerPadEffectMultiplier = 0;
@@ -55,7 +55,7 @@ struct TechTreePaddleEffects
 
     TechTreePaddleEffects()
     {
-        speed = 0;
+        speed = 1.0f;
         size = 0;
         maxSize = 0;
     }
@@ -116,18 +116,11 @@ public:
     bool Initialize();
     void Shutdown();
 
-    TechTreeBallEffects GetBallEffects()const;
-    TechTreeLevelEffects GetLevelEffects()const;
-    TechTreePaddleEffects GetPaddleEffects()const;
-    TechTreePUEffects GetPUEffects()const;
-    TechTreeUtilityEffects GetUtilityEffects()const;
-    
-private:
-    TechTreeBallEffects m_ballEffects;
-    TechTreeLevelEffects m_levelEffects;
-    TechTreePaddleEffects m_paddleEffects;
-    TechTreePUEffects m_PUEffects;
-    TechTreeUtilityEffects m_utilityEffects;
+    static TechTreeBallEffects BallEffects;
+    static TechTreeLevelEffects LevelEffects;
+    static TechTreePaddleEffects PaddleEffects;
+    static TechTreePUEffects PUEffects;
+    static TechTreeUtilityEffects UtilityEffects;
 };
 
 #endif

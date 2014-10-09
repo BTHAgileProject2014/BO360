@@ -22,6 +22,7 @@ bool BOShield::Initialize(int2 p_ShieldSize, SDL_Texture* p_sprite, int2 p_Windo
 	m_ShieldSize = p_ShieldSize;
 
 	m_ShieldSprite = p_sprite;
+	m_lifes = 1 + BOTechTreeEffects::PUEffects.shieldCharge;
 
 	return true;
 }
@@ -36,11 +37,15 @@ float2 BOShield::Update(double p_deltaTime, sphere p_Ball, float2 p_BallDirectio
 	float2 ballDir = p_BallDirection;
 	if (m_IsActive)
 	{
-		if (BOPhysics::CheckCollisionBallShield(p_Ball, m_ShieldSphere) !=0)
+		if (BOPhysics::CheckCollisionBallShield(p_Ball, m_ShieldSphere) != 0)
 		{
-			m_IsActive = false;
 			ballDir.y *= (-1);
 			ballDir.x *= (-1);
+			m_lifes -= 1;
+			if (m_lifes <= 0)
+			{
+				m_IsActive = false;
+			}
 		}
 	}
 	return ballDir;

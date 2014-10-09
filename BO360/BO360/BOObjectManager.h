@@ -51,6 +51,8 @@ private:
 	bool BallDied(BOBall* p_ball);
 	void UpdateParticles(double p_deltaTime);
     void ActivateShockwave();
+	void CheckBallToBall(int i);
+	void BallNewlyLaunched(BOBall* ball);
 
 	int m_life;
 

@@ -43,6 +43,7 @@ public:
     void SetStuckAngle(float p_stuckAngle);
 	bool HasBallCollidedWithBall() const;
 	void SetBallCollidedWithBall(bool p_collided);
+	bool GetNewlyLaunched();
 
 private:
 	int m_damage;
@@ -57,7 +58,10 @@ private:
 	double m_fireTimeElapsed;
 	const double m_fireTimeDuration = 5; // 5 seconds for fireball duration
     bool m_stuckToPad;
+	bool m_stuckToPadPrev;
     float m_stuckAngle;
+	bool m_newlyLaunched;
+	bool m_newlyLaunchedPrev;
 
 	SDL_Texture* m_sprite2;
 	SDL_Texture* m_sprite3;

@@ -19,7 +19,7 @@ bool BOBall::Initialize(float2 p_position, int2 p_size, SDL_Texture* p_sprite, f
 	m_damage = 1;
 	m_Fuel = 0.0f;
 	m_canColide = true;
-	m_speed = p_speed;
+	m_speed = p_speed * BOTechTreeEffects::BallEffects.speed;
 	m_direction = p_direction.normalized();
 	m_windowSize = p_windowSize;
 	m_stuckToPad = true;
@@ -35,6 +35,8 @@ bool BOBall::Initialize(float2 p_position, int2 p_size, SDL_Texture* p_sprite, f
 	m_mouseCheat = false;
 
     m_stuckAngle = 42;
+
+	m_newlyLaunched = false;
 
 	return true;
 }
@@ -58,6 +60,15 @@ void BOBall::Update(double p_deltaTime, sphere p_blackHoleBounds)
 		m_fireTimeElapsed = 0;
 	}
 
+	if (!m_stuckToPad && m_stuckToPadPrev && BOTechTreeEffects::UtilityEffects.PUGiftEnabled)
+	{
+		m_newlyLaunched = true;
+	}
+	else
+	{
+		m_newlyLaunched = false;
+	}
+	m_stuckToPadPrev = m_stuckToPad;
 
 }
 
@@ -244,4 +255,9 @@ bool BOBall::HasBallCollidedWithBall() const
 void BOBall::SetBallCollidedWithBall(bool p_collided)
 {
 	m_hasCollidedWithBall = p_collided;
+}
+
+bool BOBall::GetNewlyLaunched()
+{
+	return m_newlyLaunched;
 }
