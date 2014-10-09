@@ -170,3 +170,12 @@ bool BOTechTreeNode::Intersects(int2 p_mousePosition)
     }
     return false;
 }
+
+bool BOTechTreeNode::GetAdjacentActive()const
+{
+    return m_isAdjacentActive;
+}
+void BOTechTreeNode::SetAdjacentActive(bool p_active)
+{
+    m_isAdjacentActive = p_active;
+}

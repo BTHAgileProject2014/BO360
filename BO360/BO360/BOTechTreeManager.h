@@ -26,6 +26,7 @@ private:
     void SetNodeLPE(BOTechTreeNode* p_node, int p_layer, int p_price, int p_effect);
     void FixAdjacent();
     void Reset();
+    void SetAdjacentNodes(BOTechTreeNode* p_node);
 
 
     int2 m_windowSize;

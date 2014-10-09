@@ -15,8 +15,12 @@ public:
     void Shutdown();
     void Draw();
 
+
     bool GetActive()const;
     void SetActive(bool p_active);
+
+    bool GetAdjacentActive()const;
+    void SetAdjacentActive(bool p_active);
 
     float2 GetPosition()const;
 

@@ -59,6 +59,7 @@ bool BOTechTreeManager::Initialize(int2 p_windowDimension)
 }
 void BOTechTreeManager::Update()
 {
+    m_startNode->SetAdjacentActive(true);
     for (int i = 0; i < m_nodeList.size(); i++)
     {
         m_nodeList[i]->Update();
@@ -73,8 +74,12 @@ void BOTechTreeManager::Update()
             {
                 if (m_nodeList[i]->Intersects(m_mousePositionPrev))
                 {
-                    m_mousePrev = m_mouseDown;
-                    m_nodeList[i]->SetActive(true);
+                    if (m_nodeList[i]->GetAdjacentActive())
+                    {
+                        m_mousePrev = m_mouseDown;
+                        m_nodeList[i]->SetActive(true);
+                        SetAdjacentNodes(m_nodeList[i]);
+                    }
                 }
             }
         }
@@ -458,4 +463,32 @@ void BOTechTreeManager::Handle(InputMessages p_inputMessages)
 {
     m_mousePosition = int2(p_inputMessages.mouseX, p_inputMessages.mouseY);
     m_mouseDown = p_inputMessages.leftMouseKey;
+}
+
+void BOTechTreeManager::SetAdjacentNodes(BOTechTreeNode* p_node)
+{
+    if (p_node->GetUpNode() != NULL)
+    {
+        p_node->GetUpNode()->SetAdjacentActive(true);
+    }
+    if (p_node->GetUpLeftNode() != NULL)
+    {
+        p_node->GetUpLeftNode()->SetAdjacentActive(true);
+    }
+    if (p_node->GetUpRightNode() != NULL)
+    {
+        p_node->GetUpRightNode()->SetAdjacentActive(true);
+    }
+    if (p_node->GetDownNode() != NULL)
+    {
+        p_node->GetDownNode()->SetAdjacentActive(true);
+    }
+    if (p_node->GetDownLeftNode() != NULL)
+    {
+        p_node->GetDownLeftNode()->SetAdjacentActive(true);
+    }
+    if (p_node->GetDownRightNode() != NULL)
+    {
+        p_node->GetDownRightNode()->SetAdjacentActive(true);
+    }
 }
