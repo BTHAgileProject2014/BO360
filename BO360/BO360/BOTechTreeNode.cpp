@@ -33,6 +33,12 @@ bool BOTechTreeNode::Initialize(float2 p_pos, int2 p_size)
     m_inactive = BOTextureManager::GetTexture(TEXHEXPUSHOCKWAVE);
     m_adjacentActive = BOTextureManager::GetTexture(TEXLIFE);
 
+
+    m_d1 = BOTextureManager::GetTexture(TEXHEXSTANDARD);
+    m_d2 = BOTextureManager::GetTexture(TEXHEXARMORED);
+    m_d3 = BOTextureManager::GetTexture(TEXHEXINDES);
+    m_d4 = BOTextureManager::GetTexture(TEXGLOWSTANDARD);
+
     m_sprite = m_inactive;
 
     return BOObject::Initialize(m_position, m_size, m_sprite);

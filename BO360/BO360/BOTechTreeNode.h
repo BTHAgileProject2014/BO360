@@ -56,6 +56,10 @@ private:
     SDL_Texture* m_inactive;
     SDL_Texture* m_adjacentActive;
 
+    SDL_Texture* m_d1;
+    SDL_Texture* m_d2;
+    SDL_Texture* m_d3;
+    SDL_Texture* m_d4;
 
     BOTechTreeNode* m_up;
     BOTechTreeNode* m_upLeft;
