@@ -423,13 +423,13 @@ bool BOObjectManager::LoadBlocksFromMap(int p_index)
                 if (blockDescriptions[i].m_powerUpType == PUNone)
                 {
                     result = block->Initialize(float2(x, y), int2(46, 42), BOTextureManager::GetTexture(TEXHEXSTANDARD), PUNone, score);
-                    block->AddGlow(float2(x, y), int2(46, 42), int2(46, 42), 0, 5, 0.1, false, BOTextureManager::GetTexture(TEXGLOWSTANDARD));
+                    block->AddGlow(float2(x, y), int2(46, 42), int2(46, 42), 0, 5, 0.12f, false, BOTextureManager::GetTexture(TEXGLOWSTANDARD));
                 }
 
 				else
 				{
                     result = block->Initialize(float2(x, y), int2(46, 42), BOTextureManager::GetTexture(TEXHEXPOWERUP), blockDescriptions[i].m_powerUpType, score);
-                    block->AddGlow(float2(x, y), int2(46, 42), int2(46, 42), 0, 5, 0.1, false, BOTextureManager::GetTexture(TEXGLOWSTANDARD));
+                    block->AddGlow(float2(x, y), int2(46, 42), int2(46, 42), 1, 5, 0.12, false, BOTextureManager::GetTexture(TEXGLOWSTANDARD));
 				}
 
 				if (!result)
@@ -447,7 +447,7 @@ bool BOObjectManager::LoadBlocksFromMap(int p_index)
 			{
 				block = new BOBlockMultiTexture();
                 result = block->InitializeAnimated(float2(x, y), int2(46, 42), int2(46, 42), 0, 2, 0, true, BOTextureManager::GetTexture(TEXHEXDOUBLE), 2, blockDescriptions[i].m_powerUpType, score);
-                block->AddGlow(float2(x, y), int2(46, 42), int2(46, 42), 0, 5, 0.1, false, BOTextureManager::GetTexture(TEXGLOWDOUBLE));
+                block->AddGlow(float2(x, y), int2(46, 42), int2(46, 42), 2, 5, 0.12, false, BOTextureManager::GetTexture(TEXGLOWDOUBLE));
 				if (!result)
 				{
 					ThrowInitError("BOBlockDouble");
@@ -463,7 +463,7 @@ bool BOObjectManager::LoadBlocksFromMap(int p_index)
             {
                 block = new BOBlockMultiTexture();
                 result = block->InitializeAnimated(float2(x, y), int2(46, 42), int2(46, 42), 0, 5, 0, true, BOTextureManager::GetTexture(TEXHEXARMORED), 5, blockDescriptions[i].m_powerUpType, score);
-                block->AddGlow(float2(x, y), int2(46, 42), int2(46, 42), 0, 5, 0.1, false, BOTextureManager::GetTexture(TEXGLOWARMORED));
+                block->AddGlow(float2(x, y), int2(46, 42), int2(46, 42), 3, 5, 0.12, false, BOTextureManager::GetTexture(TEXGLOWARMORED));
                 if (!result)
                 {
                     ThrowInitError("BOBlockArmored");
@@ -479,7 +479,7 @@ bool BOObjectManager::LoadBlocksFromMap(int p_index)
 			{
 				block = new BOBlockIron();
 				result = block->Initialize(float2(x, y), int2(46, 42), BOTextureManager::GetTexture(TEXHEXINDES), PUNone, score);
-                block->AddGlow(float2(x, y), int2(46, 42), int2(46, 42), 0, 5, 0.1, false, BOTextureManager::GetTexture(TEXGLOWINDES));
+                block->AddGlow(float2(x, y), int2(46, 42), int2(46, 42), 4, 5, 0.12, false, BOTextureManager::GetTexture(TEXGLOWINDES));
 				if (!result)
 				{
 					ThrowInitError("BOBlockIron");
