@@ -401,16 +401,10 @@ enum ParticleType
 enum BlockType
 {
 	REGULAR,
-	DUBBLEHP,
+    DOUBLE,
+    ARMORED,
 	KEY,
 	INDESTRUCTIBLE
-};
-
-struct Block
-{
-	float2 m_position;
-	BlockType m_type;
-	int m_worth;
 };
 
 enum KeyMessages
@@ -516,7 +510,7 @@ struct hexagon
 // What types of power-ups we use
 enum PowerUpTypes
 {
-	PUNone,
+	PUNone = 0,
 	PUBiggerPad,
 	PUSmallerPad,
 	PUShield,
@@ -525,6 +519,14 @@ enum PowerUpTypes
     PUShockwave,
     PUStickyPad,
     PUSlowTime
+};
+
+struct Block
+{
+    float2 m_position;
+    BlockType m_type;
+    int m_worth;
+    PowerUpTypes m_powerUpType;
 };
 
 inline void ThrowInitError(std::string p_className)

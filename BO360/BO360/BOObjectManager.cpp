@@ -419,47 +419,18 @@ bool BOObjectManager::LoadBlocksFromMap(int p_index)
 			{
 				block = new BOBlock();
 
-				// This fat chunk of code is to be removed when the map loader loads power ups
-				if (i % 100 == 1)
-				{
-					result = block->Initialize(float2(x, y), int2(46, 42), BOTextureManager::GetTexture(TEXHEXPOWERUP), PUShield, score);
-                    block->AddGlow(float2(x, y), int2(46, 42), int2(46, 42), 0, 5, 0.1, false, BOTextureManager::GetTexture(TEXGLOWSTANDARD));
-                }
-				else if (i % 10 == 2)
-				{
-                    result = block->Initialize(float2(x, y), int2(46, 42), BOTextureManager::GetTexture(TEXHEXPOWERUP), PUExtraBall, score);
-                    block->AddGlow(float2(x, y), int2(46, 42), int2(46, 42), 0, 5, 0.1, false, BOTextureManager::GetTexture(TEXGLOWSTANDARD));
-                }
-				else if (i % 100 == 66)
-				{
-                    result = block->Initialize(float2(x, y), int2(46, 42), BOTextureManager::GetTexture(TEXHEXPOWERUP), PUBiggerPad, score);
-                    block->AddGlow(float2(x, y), int2(46, 42), int2(46, 42), 0, 5, 0.1, false, BOTextureManager::GetTexture(TEXGLOWSTANDARD));
-				}
-				else if (i % 100 == 99)
-				{
-                    result = block->Initialize(float2(x, y), int2(46, 42), BOTextureManager::GetTexture(TEXHEXPOWERUP), PUFireBall, score);
-                    block->AddGlow(float2(x, y), int2(46, 42), int2(46, 42), 0, 5, 0.1, false, BOTextureManager::GetTexture(TEXGLOWSTANDARD));
-				}
-                else if (i % 100 == 77)
+                if (blockDescriptions[i].m_powerUpType == PUNone)
                 {
-                    result = block->Initialize(float2(x, y), int2(46, 42), BOTextureManager::GetTexture(TEXHEXPOWERUP), PUShockwave, score);
-                    block->AddGlow(float2(x, y), int2(46, 42), int2(46, 42), 0, 5, 0.1, false, BOTextureManager::GetTexture(TEXGLOWSTANDARD));
-				}
-                else if (i % 100 == 69)
-                {
-                    result = block->Initialize(float2(x, y), int2(46, 42), BOTextureManager::GetTexture(TEXHEXPOWERUP), PUStickyPad, score);
+                    result = block->Initialize(float2(x, y), int2(46, 42), BOTextureManager::GetTexture(TEXHEXSTANDARD), PUNone, score);
                     block->AddGlow(float2(x, y), int2(46, 42), int2(46, 42), 0, 5, 0.1, false, BOTextureManager::GetTexture(TEXGLOWSTANDARD));
                 }
-                else if (i % 100 == 97)
-                {
-                    result = block->Initialize(float2(x, y), int2(46, 42), BOTextureManager::GetTexture(TEXHEXPOWERUP), PUSlowTime, score);
-                    block->AddGlow(float2(x, y), int2(46, 42), int2(46, 42), 0, 5, 0.1, false, BOTextureManager::GetTexture(TEXGLOWSTANDARD));
-                }
+
 				else
 				{
-					result = block->Initialize(float2(x, y), int2(46, 42), BOTextureManager::GetTexture(TEXHEXSTANDARD), PUNone, score);
+                    result = block->Initialize(float2(x, y), int2(46, 42), BOTextureManager::GetTexture(TEXHEXPOWERUP), blockDescriptions[i].m_powerUpType, score);
                     block->AddGlow(float2(x, y), int2(46, 42), int2(46, 42), 0, 5, 0.1, false, BOTextureManager::GetTexture(TEXGLOWSTANDARD));
 				}
+
 				if (!result)
 				{
 					ThrowInitError("BOBlock");
@@ -471,14 +442,14 @@ bool BOObjectManager::LoadBlocksFromMap(int p_index)
 				break;
 			}
 
-			case(DUBBLEHP) :
+			case(DOUBLE) :
 			{
 				block = new BOBlockMultiTexture();
-                result = block->InitializeAnimated(float2(x, y), int2(46, 42), int2(46, 42), 0, 5, 0, true, BOTextureManager::GetTexture(TEXHEXARMORED), 5, PUNone, score);
-                block->AddGlow(float2(x, y), int2(46, 42), int2(46, 42), 0, 5, 0.1, false, BOTextureManager::GetTexture(TEXGLOWARMORED));
+                result = block->InitializeAnimated(float2(x, y), int2(46, 42), int2(46, 42), 0, 2, 0, true, BOTextureManager::GetTexture(TEXHEXDOUBLE), 2, blockDescriptions[i].m_powerUpType, score);
+                block->AddGlow(float2(x, y), int2(46, 42), int2(46, 42), 0, 5, 0.1, false, BOTextureManager::GetTexture(TEXGLOWDOUBLE));
 				if (!result)
 				{
-					ThrowInitError("BOBlockMultiTexture");
+					ThrowInitError("BOBlockDouble");
 					return false;
 				}
 				
@@ -486,6 +457,22 @@ bool BOObjectManager::LoadBlocksFromMap(int p_index)
 
 				break;
 			}
+
+            case(ARMORED) :
+            {
+                block = new BOBlockMultiTexture();
+                result = block->InitializeAnimated(float2(x, y), int2(46, 42), int2(46, 42), 0, 5, 0, true, BOTextureManager::GetTexture(TEXHEXARMORED), 5, blockDescriptions[i].m_powerUpType, score);
+                block->AddGlow(float2(x, y), int2(46, 42), int2(46, 42), 0, 5, 0.1, false, BOTextureManager::GetTexture(TEXGLOWARMORED));
+                if (!result)
+                {
+                    ThrowInitError("BOBlockArmored");
+                    return false;
+                }
+
+                m_blockList.push_back(block);
+
+                break;
+            }
 	
 			case(INDESTRUCTIBLE) :
 			{
@@ -505,7 +492,7 @@ bool BOObjectManager::LoadBlocksFromMap(int p_index)
 
 			case(KEY) :
 			{
-                m_keyManager.AddKey(float2(x, y), int2(80, 80), 0.4f, BOTextureManager::GetTexture(TEXKEY));
+                m_keyManager.AddKey(float2(x, y), int2(46, 42), 1.0f, BOTextureManager::GetTexture(TEXKEY));
 				break;
 			}
 
