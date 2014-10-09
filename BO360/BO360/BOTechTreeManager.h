@@ -1,6 +1,7 @@
 #ifndef BOTECHTREEMANAGER_H_
 #define BOTECHTREEMANAGER_H_
 #include "BOTechTreeNode.h"
+#include "BOTechTreeEffects.h"
 #include "BOUtility.h"
 #include "BOButton.h"
 #include "BOSubscriber.h"

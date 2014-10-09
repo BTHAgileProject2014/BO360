@@ -464,7 +464,11 @@ void BOTechTreeManager::Reset()
         m_nodeList[i]->Reset();
     }
     
-    // RESET EFFECTS NYI
+    BOTechTreeEffects::BallEffects = TechTreeBallEffects();
+    BOTechTreeEffects::LevelEffects = TechTreeLevelEffects();
+    BOTechTreeEffects::PaddleEffects = TechTreePaddleEffects();
+    BOTechTreeEffects::PUEffects = TechTreePUEffects();
+    BOTechTreeEffects::UtilityEffects = TechTreeUtilityEffects();
 }
 
 void BOTechTreeManager::Handle(InputMessages p_inputMessages)
