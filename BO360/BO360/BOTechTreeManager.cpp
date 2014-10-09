@@ -160,7 +160,6 @@ void BOTechTreeManager::MapNodes()
 }
 void BOTechTreeManager::SetLPE()
 {
-
     //Set Price
     //Sets start node
     SetNodeLPE(m_startNode, 0, 99, 0);
@@ -194,10 +193,9 @@ void BOTechTreeManager::SetLPE()
         {
             m_nodeList[i]->SetLayer(3);
         }
+        //Set Effect
+        m_nodeList[i]->SetEffect(i);
     }
-
-    //Set Effect
-
 }
 void BOTechTreeManager::SetNodeLPE(BOTechTreeNode* p_node, int p_layer, int p_price, int p_effect)
 {

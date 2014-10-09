@@ -583,6 +583,52 @@ enum Textures
 };
 enum TTEffects
 {
+    //Lane 1
+    ShockWave,
+    PowerUpBoost3,
+    DoubleMultiBall3,
+    QuantumFuel,
+    //Lane 2
+    PowerUpBoost1,
+    SlowTime,
+    IncreaseBallDamage2,
+    Fireball,
+    MultiSpawn2,
+    //Lane 3
+    PowerUpBoost2,
+    DecreasePowerUpFallSpeed2,
+    PowerUpGift,
+    DecreaseGravityPull,
+    IncreaseBallDamage,
+    DoubleMultiBall2,
+    //Laer 4
+    MegaPad,
+    StartWithShield,
+    DecreasePowerUpFallSpeed,
+    DropBasicPowerUp,    
+    DecreaseBallSpeed,
+    MoreFuelAtRefill,
+    SuperTank,
+    //Lane 5
+    StackableShield,
+    StickyPad,
+    AddBounceToShield,
+    IncreasePadSpeed,
+    BallsGetFuelWhenTheyCollide,
+    DoubleMultiBall,
+    //Lane 6
+    IncreaseStartPadSize,
+    IncreaseMaxPadSize,
+    ChanceDoublePadSizeIncrease, 
+    IncreaseMaxPadSize2,
+    MuliSpawn, 
+    //Lane 7
+    Regenerate,
+    IncreaseStartPadSize2,
+    ChanceDoublePadSizeIncrease2,
+    GiantBall
+
+    /*
     //Layer 1
     DecreasePowerUpFallSpeed,   //decrease 10%
     AddBounceToShield,          //Increase bounce on shield 
@@ -622,6 +668,7 @@ enum TTEffects
     DoubleMultiBall3,
     PowerUpBoost3,
     ShockWave
+    */
 };
 
 #endif
