@@ -44,7 +44,7 @@ void BOTextureManager::LoadTexture(std::string p_theme)
         std::cout << "Ball thruster texture failed to load!" << std::endl;
         std::cin.get();
     }
-    GetInstance().textureList.push_back(texture);
+	GetInstance().textureList.push_back(texture);
 
 	texture = BOGraphicInterface::LoadTexture("Sprites/Power Ups/Fireball.png");
     if (!texture)
@@ -171,7 +171,7 @@ void BOTextureManager::LoadTexture(std::string p_theme)
         std::cout << "Shield power up texture failed to load!" << std::endl;
         std::cin.get();
     }
-	GetInstance().textureList.push_back(texture);
+	GetInstance().textureList.push_back(texture); 
 
 	texture = BOGraphicInterface::LoadTexture("Sprites/Power Ups/PowerUpBiggerPad.png");
     if (!texture)
@@ -179,7 +179,7 @@ void BOTextureManager::LoadTexture(std::string p_theme)
         std::cout << "Bigger pad power up texture failed to load!" << std::endl;
         std::cin.get();
     }
-	GetInstance().textureList.push_back(texture);
+    GetInstance().textureList.push_back(texture);
 
     texture = BOGraphicInterface::LoadTexture("Sprites/Power Ups/PowerUpStickyPad.png");
     if (!texture)
@@ -187,7 +187,7 @@ void BOTextureManager::LoadTexture(std::string p_theme)
         std::cout << "Sticky pad power up texture failed to load!" << std::endl;
         std::cin.get();
     }
-    GetInstance().textureList.push_back(texture);
+	GetInstance().textureList.push_back(texture);
 
     texture = BOGraphicInterface::LoadTexture("Sprites/Power Ups/PowerUpShockwave.png");
     if (!texture)
@@ -195,7 +195,7 @@ void BOTextureManager::LoadTexture(std::string p_theme)
         std::cout << "Shockwave power up texture failed to load!" << std::endl;
         std::cin.get();
     }
-    GetInstance().textureList.push_back(texture);
+	GetInstance().textureList.push_back(texture);
 
     texture = BOGraphicInterface::LoadTexture("Sprites/Power Ups/PowerUpSlowTime.png");
     if (!texture)
@@ -203,7 +203,7 @@ void BOTextureManager::LoadTexture(std::string p_theme)
         std::cout << "Slow time power up texture failed to load!" << std::endl;
         std::cin.get();
     }
-    GetInstance().textureList.push_back(texture);
+	GetInstance().textureList.push_back(texture);
 
 	// Particles
 	texture = BOGraphicInterface::LoadTexture("Sprites/Particles/BallTrail.png");
@@ -220,7 +220,7 @@ void BOTextureManager::LoadTexture(std::string p_theme)
         std::cout << "Fireball trail particle texture failed to load!" << std::endl;
         std::cin.get();
     }
-    GetInstance().textureList.push_back(texture);
+	GetInstance().textureList.push_back(texture);
 
 	texture = BOGraphicInterface::LoadTexture("Sprites/Particles/BallDebris.png");
     if (!texture)
@@ -285,7 +285,7 @@ void BOTextureManager::LoadTexture(std::string p_theme)
         std::cout << "Fireball trail particle texture failed to load!" << std::endl;
         std::cin.get();
     }
-    GetInstance().textureList.push_back(texture);
+	GetInstance().textureList.push_back(texture);
 
 	// Menu.
 	texture = BOGraphicInterface::LoadTexture("Sprites/Menu/MenuEdge.png");
@@ -375,6 +375,8 @@ void BOTextureManager::LoadTexture(std::string p_theme)
         std::cout << "Level selector lock texture failed to load!" << std::endl;
         std::cin.get();
     }
+	GetInstance().textureList.push_back(texture);
+	texture = BOGraphicInterface::LoadTexture("Sprites/PlaceHolderPNG/DEBUGDIR.png");
 	GetInstance().textureList.push_back(texture);
 
 	GetInstance().textureList.push_back(NULL);// Lägg in en tom för att fixa nrOfLevels
