@@ -46,6 +46,7 @@ public:
     int GetEffect();
     void SetEffect(int p_effect);
     
+    void Reset();
 
 private:
     void SetEffect();

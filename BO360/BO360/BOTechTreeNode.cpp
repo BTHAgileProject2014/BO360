@@ -23,7 +23,7 @@ bool BOTechTreeNode::Initialize(float2 p_pos, int2 p_size)
     m_position = p_pos;
     m_size = p_size;
 
-    m_active = false;
+    m_isActive = false;
     m_isAdjacentActive = false;
     m_layer = 0;
     m_price = 0;
@@ -198,4 +198,9 @@ int BOTechTreeNode::GetEffect()
 void BOTechTreeNode::SetEffect(int p_effect)
 {
     m_effect = p_effect;
+}
+void BOTechTreeNode::Reset()
+{
+    m_isActive = false;
+    m_isAdjacentActive = false;
 }

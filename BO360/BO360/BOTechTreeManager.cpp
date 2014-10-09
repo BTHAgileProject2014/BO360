@@ -49,6 +49,10 @@ bool BOTechTreeManager::Initialize(int2 p_windowDimension)
     MapNodes();
     SetLPE();
 
+    m_resetButton.Initialize(float2(800.0f, 700.0f), int2(250, 75), BOTextureManager::GetTexture(TEXMENUBUTTON), "Reset", NOACTION, "");
+
+    BOPublisher::AddSubscriber(this);
+
     return true;
 }
 void BOTechTreeManager::Update()
@@ -57,6 +61,24 @@ void BOTechTreeManager::Update()
     {
         m_nodeList[i]->Update();
     }
+
+    if (m_resetButton.Intersects(m_mousePosition))
+    {
+        if (m_mouseDown && !m_mousePrev)
+        {
+            m_mousePositionPrev = m_mousePosition;
+        }
+        if (!m_mouseDown && m_mousePrev)
+        {
+            if (m_resetButton.Intersects(m_mousePositionPrev))
+            {
+                m_mousePrev = m_mouseDown;
+                Reset();
+            }
+        }
+    }
+
+    m_mousePrev = m_mouseDown;
 }
 void BOTechTreeManager::Shutdown()
 {
@@ -66,6 +88,7 @@ void BOTechTreeManager::Shutdown()
         delete m_nodeList[i];
         m_nodeList[i] = NULL;
     }
+    m_resetButton.Shutdown();
 }
 void BOTechTreeManager::Draw()
 {
@@ -73,6 +96,8 @@ void BOTechTreeManager::Draw()
     {
         m_nodeList[i]->Draw();
     }
+
+    m_resetButton.Draw();
 }
 BOTechTreeNode* BOTechTreeManager::CreateNode(float2 p_pos,int2 p_size)
 {
@@ -327,4 +352,19 @@ void BOTechTreeManager::FixAdjacent()
         }
     }
     m_startNode->GetPrice();
+}
+void BOTechTreeManager::Reset()
+{
+    for (int i = 0; i < m_nodeList.size(); i++)
+    {
+        m_nodeList[i]->Reset();
+    }
+    
+    // RESET EFFECTS NYI
+}
+
+void BOTechTreeManager::Handle(InputMessages p_inputMessages)
+{
+    m_mousePosition = int2(p_inputMessages.mouseX, p_inputMessages.mouseY);
+    m_mouseDown = p_inputMessages.leftMouseKey;
 }
