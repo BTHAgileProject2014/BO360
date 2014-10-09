@@ -506,9 +506,82 @@ void BOTechTreeManager::SetAdjacentNodes(BOTechTreeNode* p_node)
 }
 void BOTechTreeManager::HandleUpgrades(BOTechTreeNode* p_node)
 {
-    /*int upgradeIdentifier = p_;
-    switch
+    int upgradeIdentifier = p_node->GetEffect();
+    switch (upgradeIdentifier)
     {
-
-    }*/
+    case DropBasicPowerUp:
+        break;
+    case DecreasePowerUpFallSpeed:
+        break;
+    case AddBounceToShield:
+        break;
+    case IncreasePadSpeed:
+        break;
+    case DecreaseBallSpeed:
+        break;
+    case DecreaseGravityPull:
+        break;
+    case PowerUpGift:
+        break;
+    case DecreasePowerUpFallSpeed2:
+        break;
+    case StartWithShield:
+        break;
+    case StickyPad:
+        break;
+    case IncreaseMaxPadSize:
+        break;
+    case ChanceDoublePadSizeIncrease:
+        break;
+    case IncreaseMaxPadSize2:
+        break;
+    case BallsGetFuelWhenTheyCollide:
+        break;
+    case MoreFuelAtRefill:
+        break;
+    case IncreaseBallDamage:
+        break;
+    case Fireball:
+        break;
+    case IncreaseBallDamage2:
+        break;
+    case SlowTime:
+        break;
+    case PowerUpBoost1:
+        break;
+    case PowerUpBoost2:
+        break;
+    case MegaPad:
+        break;
+    case StackableShield:
+        break;
+    case IncreaseStartPadSize:
+        break;
+    case Regenerate:
+        break;
+    case IncreaseStartPadSize2:
+        break;
+    case ChanceDoublePadSizeIncrease2:
+        break;
+    case GiantBall:
+        break;
+    case MuliSpawn:
+        break;
+    case DoubleMultiBall:
+        break;
+    case SuperTank:
+        break;
+    case DoubleMultiBall2:
+        break;
+    case MultiSpawn2:
+        break;
+    case QuantumFuel:
+        break;
+    case DoubleMultiBall3:
+        break;
+    case PowerUpBoost3:
+        break;
+    case ShockWave:
+        break;
+    }
 }
