@@ -2,6 +2,7 @@
 #define BOTECHTREENODE_H_
 #include "BOObject.h"
 #include "BOUtility.h"
+#include "BOPhysics.h"
 
 class BOTechTreeNode: public BOObject
 {
@@ -19,34 +20,35 @@ public:
 
     float2 GetPosition()const;
 
-    BOTechTreeNode* GetUpNode();
+    BOTechTreeNode* GetUpNode()const;
     void SetUpNode(BOTechTreeNode* p_Node);
 
-    BOTechTreeNode* GetUpLeftNode();
+    BOTechTreeNode* GetUpLeftNode()const;
     void SetUpLeftNode(BOTechTreeNode* p_Node);
 
-    BOTechTreeNode* GetUpRightNode();
+    BOTechTreeNode* GetUpRightNode()const;
     void SetUpRightNode(BOTechTreeNode* p_Node);
 
-    BOTechTreeNode* GetDownNode();
+    BOTechTreeNode* GetDownNode()const;
     void SetDownNode(BOTechTreeNode* p_Node);
 
-    BOTechTreeNode* GetDownLeftNode();
+    BOTechTreeNode* GetDownLeftNode()const;
     void SetDownLeftNode(BOTechTreeNode* p_Node);
 
-    BOTechTreeNode* GetDownRightNode();
+    BOTechTreeNode* GetDownRightNode()const;
     void SetDownRightNode(BOTechTreeNode* p_Node);
 
-    int GetLayer();
+    int GetLayer()const;
     void SetLayer(int p_layer);
 
-    int GetPrice();
+    int GetPrice()const;
     void SetPrice(int p_price);
 
-    int GetEffect();
+    int GetEffect()const;
     void SetEffect(int p_effect);
     
     void Reset();
+    bool Intersects(int2 p_mousePosition);
 
 private:
     void SetEffect();

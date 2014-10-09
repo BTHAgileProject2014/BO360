@@ -125,7 +125,16 @@ float2 BOTechTreeNode::GetPosition()const
     return m_position;
 }
 
-BOTechTreeNode* BOTechTreeNode::GetUpNode()
+void BOTechTreeNode::SetActive(bool p_active)
+{
+    m_isActive = p_active;
+}
+bool BOTechTreeNode::GetActive()const
+{
+    return m_isActive;
+}
+
+BOTechTreeNode* BOTechTreeNode::GetUpNode()const
 {
     return m_up;
 }
@@ -133,7 +142,7 @@ void BOTechTreeNode::SetUpNode(BOTechTreeNode* p_node)
 {
     m_up = p_node;
 }
-BOTechTreeNode* BOTechTreeNode::GetUpLeftNode()
+BOTechTreeNode* BOTechTreeNode::GetUpLeftNode()const
 {
     return m_upLeft;
 }
@@ -141,7 +150,7 @@ void BOTechTreeNode::SetUpLeftNode(BOTechTreeNode* p_node)
 {
     m_upLeft = p_node;
 }
-BOTechTreeNode* BOTechTreeNode::GetUpRightNode()
+BOTechTreeNode* BOTechTreeNode::GetUpRightNode()const
 {
     return m_upRight;
 }
@@ -149,7 +158,7 @@ void BOTechTreeNode::SetUpRightNode(BOTechTreeNode* p_node)
 {
     m_upRight = p_node;
 }
-BOTechTreeNode* BOTechTreeNode::GetDownNode()
+BOTechTreeNode* BOTechTreeNode::GetDownNode()const
 {
     return m_down;
 }
@@ -157,7 +166,7 @@ void BOTechTreeNode::SetDownNode(BOTechTreeNode* p_node)
 {
     m_down = p_node;
 }
-BOTechTreeNode* BOTechTreeNode::GetDownLeftNode()
+BOTechTreeNode* BOTechTreeNode::GetDownLeftNode()const
 {
     return m_downLeft;
 }
@@ -165,7 +174,7 @@ void BOTechTreeNode::SetDownLeftNode(BOTechTreeNode* p_node)
 {
     m_downLeft = p_node;
 }
-BOTechTreeNode* BOTechTreeNode::GetDownRightNode()
+BOTechTreeNode* BOTechTreeNode::GetDownRightNode()const
 {
     return m_downRight;
 }
@@ -173,7 +182,7 @@ void BOTechTreeNode::SetDownRightNode(BOTechTreeNode* p_node)
 {
     m_downRight = p_node;
 }
-int BOTechTreeNode::GetLayer()
+int BOTechTreeNode::GetLayer()const
 {
     return m_layer;
 }
@@ -182,7 +191,7 @@ void BOTechTreeNode::SetLayer(int p_layer)
     m_layer = p_layer;
 }
 
-int BOTechTreeNode::GetPrice()
+int BOTechTreeNode::GetPrice()const
 {
     return m_price;
 }
@@ -191,7 +200,7 @@ void BOTechTreeNode::SetPrice(int p_price)
     m_price = p_price;
 }
 
-int BOTechTreeNode::GetEffect()
+int BOTechTreeNode::GetEffect()const
 {
     return m_effect;
 }
@@ -203,4 +212,14 @@ void BOTechTreeNode::Reset()
 {
     m_isActive = false;
     m_isAdjacentActive = false;
+}
+bool BOTechTreeNode::Intersects(int2 p_mousePosition)
+{
+    // Intersection test.
+    if (BOPhysics::CheckCollisionPointToBox(p_mousePosition, box(m_position, m_size)))
+    {
+        return true;
+    }
+
+    return false;
 }

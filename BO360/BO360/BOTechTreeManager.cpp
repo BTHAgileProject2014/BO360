@@ -14,8 +14,8 @@ bool BOTechTreeManager::Initialize(int2 p_windowDimension)
     m_windowSize = p_windowDimension;
 
     int2 m_Size = int2(100, 100);
-    float2 midScreen = float2(m_windowSize.x * 0.5, m_windowSize.y * 0.5);//To save computation
-    int diameter = 7;//Original is 7
+    float2 midScreen = float2(m_windowSize.x * 0.5, m_windowSize.y * 0.5 + 150); // To save computation
+    int diameter = 7; // Original is 7
 
     for (int y = diameter - 3, x = 0; y != 0; y--, x++)
     {
@@ -49,7 +49,7 @@ bool BOTechTreeManager::Initialize(int2 p_windowDimension)
     MapNodes();
     SetLPE();
 
-    m_resetButton.Initialize(float2(800.0f, 700.0f), int2(250, 75), BOTextureManager::GetTexture(TEXMENUBUTTON), "Reset", NOACTION, "");
+    m_resetButton.Initialize(float2(785.0f, 785.0f), int2(250, 75), BOTextureManager::GetTexture(TEXMENUBUTTON), "Reset", NOACTION, "");
 
     BOPublisher::AddSubscriber(this);
 
@@ -60,8 +60,25 @@ void BOTechTreeManager::Update()
     for (int i = 0; i < m_nodeList.size(); i++)
     {
         m_nodeList[i]->Update();
+
+        if (m_nodeList[i]->Intersects(m_mousePosition))
+        {
+            if (m_mouseDown && !m_mousePrev)
+            {
+                m_mousePositionPrev = m_mousePosition;
+            }
+            if (!m_mouseDown && m_mousePrev)
+            {
+                if (m_nodeList[i]->Intersects(m_mousePositionPrev))
+                {
+                    m_mousePrev = m_mouseDown;
+                    m_nodeList[i]->SetActive(true);
+                }
+            }
+        }
     }
 
+    // Reset button pressed
     if (m_resetButton.Intersects(m_mousePosition))
     {
         if (m_mouseDown && !m_mousePrev)
