@@ -20,7 +20,7 @@ public:
     void Shutdown();
     void Draw();
     void Handle(InputMessages p_inputMessages);
-    
+    void Reset();
 
 private:
     void HandleUpgrades(BOTechTreeNode* p_node);
@@ -29,7 +29,7 @@ private:
     void SetLPE();//Set layer, price and effect
     void SetNodeLPE(BOTechTreeNode* p_node, int p_layer, int p_price, int p_effect);
     void FixAdjacent();
-    void Reset();
+    
     void SetAdjacentNodes(BOTechTreeNode* p_node);
 
 

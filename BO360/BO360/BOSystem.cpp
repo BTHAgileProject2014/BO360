@@ -373,6 +373,8 @@ void BOSystem::HandleAction(ButtonAction p_action)
 			// PLAY STORY MODE.
 			case(STORY) :
 			{
+                // Reset tech tree
+                m_techTreeManager.Reset();
 				m_gameState = RUNNING;
 				if (!InitializeMap(0))
 				{
@@ -410,16 +412,6 @@ void BOSystem::HandleAction(ButtonAction p_action)
 					m_gameState = MENU;
 					m_levelManager.SetLevel(0);
 				}
-				else
-				{
-					if (!InitializeMap(nextLevel))
-					{
-						std::cout << "Press ENTER to quit." << std::endl;
-						std::cin.get();
-
-						m_quit = true;
-					}
-				}
                 break;
             }
 
@@ -450,19 +442,20 @@ void BOSystem::HandleAction(ButtonAction p_action)
 				{
 					m_gameState = TECHTREE;
 					m_levelManager.SetLevel(index);
-					if (!InitializeMap(index))
-					{
-						std::cout << "Press ENTER to quit." << std::endl;
-						std::cin.get();
-
-						m_quit = true;
-					}
+					
 				}
-				
 				break;
 			}
             case(TECHTREEACTION) :
             {
+                // Initialize the new map
+                if (!InitializeMap(m_stateManager.GetLevelIndex()))
+                {
+                    std::cout << "Press ENTER to quit." << std::endl;
+                    std::cin.get();
+
+                    m_quit = true;
+                }
                 m_gameState = RUNNING;
                 break;
             }
