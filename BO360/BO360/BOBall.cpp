@@ -264,12 +264,16 @@ void BOBall::SetBallCollidedWithBall(bool p_collided)
 	m_hasCollidedWithBall = p_collided;
 }
 
+/*
 void BOBall::Draw()
 {
 	BOObject::Draw();
 
 	// DEBUG DIRECTION ARROW IF NEEDED
-	/*int4 source = int4(0, 0, 40, 40);
+	
+    int4 source = int4(0, 0, 40, 40);
 	int4 dest = int4(m_position.x, m_position.y, 40, 40);
-	BOGraphicInterface::DrawEx(BOTextureManager::GetTexture(TEXDEBUGDIR),source, dest, BOPhysics::AngleBetweenDeg(float2(0, -1),m_direction), int2(0, 0));*/
+	BOGraphicInterface::DrawEx(BOTextureManager::GetTexture(TEXDEBUGDIR),source, dest, BOPhysics::AngleBetweenDeg(float2(0, -1),m_direction), int2(0, 0));
+    
 }
+*/
