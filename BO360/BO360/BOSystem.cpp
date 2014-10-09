@@ -82,7 +82,7 @@ bool BOSystem::Initialize()
 	}
 
 	// Initialize the state handler.
-	m_gameState = TECHTREE;
+	m_gameState = MENU;
 	if (!m_stateManager.Initialize(int2(m_windowWidth, m_windowHeight)))
 	{
 		std::cout << "Initialize state manager failed!" << std::endl;
@@ -146,7 +146,7 @@ bool BOSystem::InitializeMap()
 		return false;
 	}
 
-	// Example usage of HUD
+	// Set level on HUD
 	BOHUDManager::SetLevel(1);
 
     // Set the time scale to 1.0
@@ -200,7 +200,7 @@ bool BOSystem::InitializeMap(int p_levelIndex)
 		return false;
 	}
 
-	// Example usage of HUD
+	// Set the correct level on the HUD
 	BOHUDManager::SetLevel(p_levelIndex + 1);
 
 	// Set the time scale to 1.0
@@ -272,13 +272,14 @@ bool BOSystem::Run()
 
 		else
 		{
-			// Update approperiate menu and handle the actions.
-			HandleAction(m_stateManager.Update(m_gameState));
-
+            // Update TechTree
             if (m_gameState == TECHTREE)
             {
                 m_techTreeManager.Update();
             }
+
+			// Update approperiate menu and handle the actions.
+			HandleAction(m_stateManager.Update(m_gameState));
 
 			if (m_quit)
 			{
@@ -312,6 +313,7 @@ bool BOSystem::Run()
 			// Draw approperiate menu.
 			m_stateManager.Draw(m_gameState);
 
+            // Draw TechTree
             if (m_gameState == TECHTREE)
             {
                 m_techTreeManager.Draw();
@@ -400,7 +402,7 @@ void BOSystem::HandleAction(ButtonAction p_action)
 			// NEXT, load next map.
 			case(NEXT) :
 			{
-                m_gameState = RUNNING;
+                m_gameState = TECHTREE;
 				int currentLevel = m_levelManager.GetCurrentLevel();
 				int nextLevel = m_levelManager.GetNextLevel();
 				if (currentLevel == nextLevel)
@@ -418,9 +420,8 @@ void BOSystem::HandleAction(ButtonAction p_action)
 						m_quit = true;
 					}
 				}
-                
-				break;
-			}
+                break;
+            }
 
 			// RETRY, reload the map.
 			case(RETRY) :
@@ -447,7 +448,7 @@ void BOSystem::HandleAction(ButtonAction p_action)
 				int index =	m_stateManager.GetLevelIndex();
 				if (index != -1)
 				{
-					m_gameState = RUNNING;
+					m_gameState = TECHTREE;
 					m_levelManager.SetLevel(index);
 					if (!InitializeMap(index))
 					{
@@ -460,6 +461,11 @@ void BOSystem::HandleAction(ButtonAction p_action)
 				
 				break;
 			}
+            case(TECHTREEACTION) :
+            {
+                m_gameState = RUNNING;
+                break;
+            }
 		}
 	}
 }

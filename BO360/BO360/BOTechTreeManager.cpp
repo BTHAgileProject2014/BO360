@@ -51,7 +51,7 @@ bool BOTechTreeManager::Initialize(int2 p_windowDimension)
     MapNodes();
     SetLPE();
 
-    m_resetButton.Initialize(float2(785.0f, 785.0f), int2(250, 75), BOTextureManager::GetTexture(TEXMENUBUTTON), "Reset", NOACTION, "");
+    m_resetButton.Initialize(float2(m_windowSize.x-50.0f-250.0f, m_windowSize.y-50.0f-75.0f), int2(250, 75), BOTextureManager::GetTexture(TEXMENUBUTTON), "RESET", NOACTION, "");
 
     BOPublisher::AddSubscriber(this);
 
@@ -122,6 +122,7 @@ void BOTechTreeManager::Shutdown()
         m_nodeList[i] = NULL;
     }
     m_resetButton.Shutdown();
+    m_techPointsText.Shutdown();
 }
 void BOTechTreeManager::Draw()
 {

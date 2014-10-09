@@ -383,7 +383,8 @@ enum ButtonAction
 	NEXT,
 	RETRY,
 	LEVELSELECT,
-	LEVEL
+	LEVEL,
+    TECHTREEACTION
 };
 
 enum ParticleType

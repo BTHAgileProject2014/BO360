@@ -86,7 +86,7 @@ bool BOStateManager::InitializeTechTree(int2 p_screenSize)
     bool result = true;
     float2 menuPosition = float2(50, 50);
     result = m_techTree.Initialize(float2(p_screenSize.x / 2.0f, p_screenSize.y / 2.0f), p_screenSize, menuPosition, "TECH TREE", BOTextureManager::GetTexture(TEXMENUBG));
-    m_techTree.AddButton(float2(menuPosition.x, menuPosition.y + 70), int2(250, 75), menuPosition, BOTextureManager::GetTexture(TEXMENUBUTTON), "NEXT", NEXT, "");
+    m_techTree.AddButton(float2(menuPosition.x, menuPosition.y + 70), int2(250, 75), menuPosition, BOTextureManager::GetTexture(TEXMENUBUTTON), "CONTINUE", TECHTREEACTION, "");
     m_techTree.AddButton(float2(menuPosition.x, menuPosition.y + 70), int2(250, 75), menuPosition, BOTextureManager::GetTexture(TEXMENUBUTTON), "MENU", QUIT, "");
     return result;
 }
