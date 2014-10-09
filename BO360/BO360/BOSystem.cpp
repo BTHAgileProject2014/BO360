@@ -438,7 +438,22 @@ void BOSystem::HandleAction(ButtonAction p_action)
 			case (LEVEL) :
 			{
 				int index =	m_stateManager.GetLevelIndex();
-				if (index != -1)
+
+                // Special case for the first level, skipping the tech tree
+                if (index == 0)
+                {
+                    m_techTreeManager.Reset();
+                    m_gameState = RUNNING;
+
+                    if (!InitializeMap(0))
+                    {
+                        std::cout << "Press ENTER to quit." << std::endl;
+                        std::cin.get();
+
+                        m_quit = true;
+                    }
+                }
+                else if (index != -1)
 				{
 					m_gameState = TECHTREE;
 					m_levelManager.SetLevel(index);
