@@ -521,7 +521,7 @@ void BOTechTreeManager::HandleUpgrades(BOTechTreeNode* p_node)
         BOTechTreeEffects::PUEffects.shieldCharge++;
         break;
     case IncreasePadSpeed:
-        BOTechTreeEffects::PaddleEffects.speed + 1.25f;
+        BOTechTreeEffects::PaddleEffects.speed += 1.20f;
         break;
     case DecreaseBallSpeed:
         BOTechTreeEffects::BallEffects.speed -= 0.25f;
