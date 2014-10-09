@@ -572,6 +572,7 @@ enum Textures
 	TEXTOOLTIP,
     TEXKEY,
 	TEXLOCK,
+	TEXDEBUGDIR,
 
 	/* HÄR UNDER ÄR DET BARA BANOR PLZ!!!*/
 	nrOfLevels,

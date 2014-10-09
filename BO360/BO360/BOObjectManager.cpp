@@ -163,10 +163,11 @@ void BOObjectManager::Update(double p_deltaTime)
 
 		if (m_ballList[i]->IsStuckToPad())
 		{
-            if (m_paddle.GetStickyState())
+			if (m_paddle.GetStickyState())
             {
                 //Calculate position of ball based on position of ball             
                 m_ballList[i]->SetPosition(m_paddle.GetBallStuckPosition(m_ballList[i]->GetStuckAngle()));
+				m_ballList[i]->SetDirection(float2(m_ballList[i]->GetPosition().x - m_blackHole.GetPosition().x, m_ballList[i]->GetPosition().y - m_blackHole.GetPosition().y));
             }
             else
             {
@@ -304,7 +305,11 @@ void BOObjectManager::Handle(InputMessages p_inputMessage)
 	{
 		for (unsigned int i = 0; i < m_ballList.size(); i++)
 		{
-			m_ballList[i]->SetStuckToPad(false);
+			if (m_ballList[i]->IsStuckToPad())
+			{
+				m_ballList[i]->SetStuckToPad(false);
+				//m_ballList[i]->SetDirection(float2(m_ballList[i]->GetPosition().x - m_blackHole.GetPosition().x, m_ballList[i]->GetPosition().y - m_blackHole.GetPosition().y));
+			}
 	}
 }
     if (p_inputMessage.fKey && m_shockwave.Activate())
@@ -579,11 +584,11 @@ void BOObjectManager::BallPadCollision(BOBall* p_ball)
 	{
         p_ball->SetDirection(newDir);
         if (m_paddle.GetStickyState() && !(p_ball->GetFuel() > 0))
-	{
+		{
             p_ball->SetStuckToPad(true);
             float2 temp = { p_ball->GetPosition().x - m_blackHole.GetPosition().x, p_ball->GetPosition().y - m_blackHole.GetPosition().y };
-            float tempAngle = BOPhysics::AngleBetweenDeg(float2{ 0, -100 }, temp);
-            p_ball->SetStuckAngle(tempAngle - m_paddle.GetRotation());
+            float tempAngle = BOPhysics::AngleBetweenDeg(float2( 0, -100 ), temp);
+			p_ball->SetStuckAngle(tempAngle - m_paddle.GetRotation());
 
         }
 		p_ball->BouncedOnPad();
