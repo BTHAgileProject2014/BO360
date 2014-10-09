@@ -83,13 +83,12 @@ BOTechTreeNode* BOTechTreeManager::CreateNode(float2 p_pos,int2 p_size)
 }
 void BOTechTreeManager::MapNodes()
 {
-    
     for (int i = 0; i < m_nodeList.size() - 1; i++)
     {
         if (i != 3 && i != 8 && i != 14 && i != 21 && i != 27 && i != 32)
         {
-            m_nodeList[i]->SetDownLeftNode(m_nodeList[i++]);
-            m_nodeList[i++]->SetUpRightNode(m_nodeList[i]);
+            m_nodeList[i]->SetDownLeftNode(m_nodeList[i+ 1]);
+            m_nodeList[i+ 1]->SetUpRightNode(m_nodeList[i]);
         }
 
         if (i < 4)
@@ -162,15 +161,101 @@ void BOTechTreeManager::MapNodes()
 void BOTechTreeManager::SetLPE()
 {
     SetNodeLPE(m_startNode, 0, 0, 0);
+   /* 
     BOTechTreeNode* node = m_nodeList[0];
-
+    int layer = 3;
     while (node->GetDownLeftNode() != NULL)
     {
-        node->SetLayer(3);
-
-
-
+        node->SetLayer(layer);
         node = node->GetDownLeftNode();
+    }
+    while (node->GetDownNode() != NULL)
+    {
+        node->SetLayer(layer);
+        node = node->GetDownNode();
+    }
+    while (node->GetDownRightNode() != NULL)
+    {
+        node->SetLayer(layer);
+        node = node->GetDownRightNode();
+    }
+    while (node->GetUpRightNode() != NULL)
+    {
+        node->SetLayer(layer);
+        node = node->GetUpRightNode();
+    }
+    while (node->GetUpNode() != NULL)
+    {
+        node->SetLayer(layer);
+        node = node->GetUpNode();
+    }
+    while (node->GetUpLeftNode() != NULL)
+    {
+        node->SetLayer(layer);
+        node = node->GetUpLeftNode();
+    }
+
+    node = m_nodeList[0]->GetDownNode();
+    for (int i = layer--; i > 0; i--)
+    {
+        while (node->GetDownLeftNode()->GetLayer() == 0)
+        {
+            node->SetLayer(i);
+            node = node->GetDownLeftNode();
+        }
+        while (node->GetDownNode()->GetLayer() == 0)
+        {
+            node->SetLayer(i);
+            node = node->GetDownNode();
+        }
+        while (node->GetDownRightNode()->GetLayer() == 0)
+        {
+            node->SetLayer(i);
+            node = node->GetDownRightNode();
+        }
+        while (node->GetUpRightNode()->GetLayer() == 0)
+        {
+            node->SetLayer(i);
+            node = node->GetUpRightNode();
+        }
+        while (node->GetUpNode()->GetLayer() == 0)
+        {
+            node->SetLayer(i);
+            node = node->GetUpNode();
+        }
+        while (node->GetUpLeftNode()->GetLayer() == 0)
+        {
+            node->SetLayer(i);
+            node = node->GetUpLeftNode();
+        }
+    }*/
+
+
+    //Set Price
+    m_startNode->GetUpNode()->SetPrice(1);
+    m_startNode->GetUpRightNode()->SetPrice(2);
+    m_startNode->GetUpLeftNode()->SetPrice(2);
+    m_startNode->GetDownNode()->SetPrice(2);
+    m_startNode->GetDownRightNode()->SetPrice(1);
+    m_startNode->GetDownLeftNode()->SetPrice(1);
+
+
+
+
+    for (int i = 0; i < m_nodeList.size(); i++)
+    {
+        if (m_nodeList[i]->GetPrice() == 1 || m_nodeList[i]->GetPrice() == 2)
+        {
+            m_nodeList[i]->SetLayer(1);
+        }
+        else if (m_nodeList[i]->GetPrice() == 3 || m_nodeList[i]->GetPrice() == 4)
+        {
+            m_nodeList[i]->SetLayer(2);
+        }
+        else if (m_nodeList[i]->GetPrice() == 5 || m_nodeList[i]->GetPrice() == 6)
+        {
+            m_nodeList[i]->SetLayer(3);
+        }
     }
 
 

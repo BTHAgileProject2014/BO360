@@ -40,19 +40,19 @@ bool BOTechTreeNode::Initialize(float2 p_pos, int2 p_size)
 
 void BOTechTreeNode::Update()
 {
-    //if (m_layer == 3)
-    //{
-    //    m_sprite = m_active;
-    //    
-    //}
-    //else if (m_layer == 1)
-    //{
-    //    m_sprite = m_adjacentActive;
-    //}
-    //else
-    //{
-    //    m_sprite = m_inactive;
-    //}
+    if (m_layer == 3)
+    {
+        m_sprite = m_active;
+        
+    }
+    else if (m_layer == 1)
+    {
+        m_sprite = m_adjacentActive;
+    }
+    else
+    {
+        m_sprite = m_inactive;
+    }
 
     //if (m_isActive)
     //{
@@ -68,19 +68,7 @@ void BOTechTreeNode::Update()
     //    m_sprite = m_inactive;
     //}
 
-    if (m_down != NULL)
-    {
-        m_sprite = m_active;
-        
-    }
-    else if (m_adjacentActive)
-    {
-        m_sprite = m_adjacentActive;
-    }
-    else
-    {
-        m_sprite = m_inactive;
-    }
+
 }
 
 void BOTechTreeNode::Shutdown()
