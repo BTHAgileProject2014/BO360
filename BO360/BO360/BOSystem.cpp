@@ -75,7 +75,7 @@ bool BOSystem::Initialize()
 	}
 
 	// Initialize the state handler.
-	m_gameState = MENU;
+	m_gameState = TECHTREE;
 	if (!m_stateManager.Initialize(int2(m_windowWidth, m_windowHeight)))
 	{
 		std::cout << "Initialize state manager failed!" << std::endl;
@@ -261,14 +261,17 @@ bool BOSystem::Run()
 				// Go to defeat screen
 				m_gameState = DEFEAT;
 			}
-
-            m_techTreeManager.Update();
 		}
 
 		else
 		{
 			// Update approperiate menu and handle the actions.
 			HandleAction(m_stateManager.Update(m_gameState));
+
+            if (m_gameState == TECHTREE)
+            {
+                m_techTreeManager.Update();
+            }
 
 			if (m_quit)
 			{
@@ -283,18 +286,17 @@ bool BOSystem::Run()
 
 		if (m_gameState == RUNNING)
 		{
-			//// Render all of the objects.
-			//m_objectManager.Draw();
+			// Render all of the objects.
+			m_objectManager.Draw();
 
-			//// Render the power-ups
-			//m_powerUpManager.Draw();
+			// Render the power-ups
+			m_powerUpManager.Draw();
 
-			//// Render text
-			//BOTextManager::DrawTexts();
+			// Render text
+			BOTextManager::DrawTexts();
 
-			////RenderHUD
-            // BOHUDManager::Draw();
-            m_techTreeManager.Draw();
+			//RenderHUD
+             BOHUDManager::Draw();
 
 		}
 
@@ -303,6 +305,11 @@ bool BOSystem::Run()
 			// Draw approperiate menu.
 			m_stateManager.Draw(m_gameState);
 
+            if (m_gameState == TECHTREE)
+            {
+                m_techTreeManager.Draw();
+
+            }
 		}
 		BOGraphicInterface::Present();
 		// ============================

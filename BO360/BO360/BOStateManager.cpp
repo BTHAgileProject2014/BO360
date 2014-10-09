@@ -47,7 +47,10 @@ bool BOStateManager::Initialize(int2 p_screenSize)
 	if (!result) return false;
 
 	result = InitializeLevelSelect(p_screenSize);
+    if (!result) return false;
 	
+    result = InitializeTechTree(p_screenSize);
+
 	return result;
 }
 
@@ -76,6 +79,16 @@ bool BOStateManager::InitializeLevelSelect(int2 p_screenSize)
 	}
 
 	return result;
+}
+
+bool BOStateManager::InitializeTechTree(int2 p_screenSize)
+{
+    bool result = true;
+    float2 menuPosition = float2(50, 50);
+    result = m_techTree.Initialize(float2(p_screenSize.x / 2.0f, p_screenSize.y / 2.0f), p_screenSize, menuPosition, "TECH TREE", BOTextureManager::GetTexture(TEXMENUBG));
+    m_techTree.AddButton(float2(menuPosition.x, menuPosition.y + 70), int2(250, 75), menuPosition, BOTextureManager::GetTexture(TEXMENUBUTTON), "NEXT", NEXT, "");
+    m_techTree.AddButton(float2(menuPosition.x, menuPosition.y + 70), int2(250, 75), menuPosition, BOTextureManager::GetTexture(TEXMENUBUTTON), "MENU", QUIT, "");
+    return result;
 }
 
 ButtonAction BOStateManager::Update(GameState p_state)
@@ -117,6 +130,10 @@ ButtonAction BOStateManager::Update(GameState p_state)
 
 			break;
 		}
+        case(TECHTREE) :
+        {
+            action = m_techTree.Update();
+        }
 
 		default:
 		{
@@ -166,6 +183,10 @@ void BOStateManager::Draw(GameState p_state)
 			break;
 		}
 
+        case(TECHTREE) :
+        {
+            m_techTree.Draw();
+        }
 		default:
 		{
 			break;

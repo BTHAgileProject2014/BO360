@@ -30,6 +30,7 @@ struct TechTreePUEffects
     float slowTimeTime; // 20, 35
     int shieldMaxCharges; // 22
     int multiBallEffectMultiplier; // 29, 31, 34
+    float multiBallMultiplyChance; // 29, 31, 34
 
     TechTreePUEffects()
     {

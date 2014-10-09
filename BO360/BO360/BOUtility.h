@@ -368,7 +368,8 @@ enum GameState
 	VICTORY,
 	DEFEAT,
     HIGHSCORESTATE,
-	LEVELSELECTOR
+	LEVELSELECTOR,
+    TECHTREE
 };
 
 enum ButtonAction
