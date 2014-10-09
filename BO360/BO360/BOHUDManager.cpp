@@ -57,7 +57,7 @@ bool BOHUDManager::Initialize()
 
 	//Initialize lives
 	m_lives.Initialize(m_livesAnchor, "Lives: ", int3(255, 255, 255), 30, 0);
-	m_life.Initialize(float2(0, 0), int2(20, 20), BOTextureManager::GetTexture(TEXLIFE)); // Always relative to m_lives position
+	m_life.Initialize(float2(0, 0), int2(20, 20), BOTextureManager::GetTexture(TEXHUDALIVE)); // Always relative to m_lives position
 	int2 tempSizeText = m_lives.GetSize();
 	int2 tempSizeSprite = m_life.GetSize();
 

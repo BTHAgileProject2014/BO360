@@ -173,3 +173,12 @@ void BOState::Shutdown()
 	m_buttonList.empty();
 	m_menuText.Shutdown();
 }
+
+
+void BOState::SetButtonAction(int p_buttonIndex, ButtonAction p_action)
+{
+	if (p_buttonIndex >= 0 && (unsigned int)p_buttonIndex < m_buttonList.size())
+	{
+		m_buttonList[p_buttonIndex].SetAction(p_action);
+	}	
+}

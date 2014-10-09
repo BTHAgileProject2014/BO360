@@ -369,7 +369,7 @@ float2 BOPhysics::BlackHoleGravity(sphere p_ball, float2 p_ballDirection, float 
 	double force = ((G * p_ballSpeed) / (distanceAdjustment*distanceAdjustment)); // F = G*M/R^2  -> Gravitations formel		//5000000000000
 
 	center = center.normalized();//Normaliserar vektorn mot hålet 
-	center = center * (float)force * p_deltaTime * 1000;//Multiplicerar vektorn mot hålet med kraften
+	center = center * (float)force * (float)p_deltaTime * 1000;//Multiplicerar vektorn mot hålet med kraften
 	
 	newDirection = float2(newDirection.x * (p_ballSpeed * (float)p_deltaTime) + center.x, newDirection.y * (p_ballSpeed * (float)p_deltaTime) + center.y);//Beräknar längden av bollens riktningsvektor
 
@@ -523,7 +523,7 @@ float2 BOPhysics::Reflect(const float2 p_target, const float2 p_normal)
 	float2 normal = p_normal.normalized();
 	float2 direction = p_target.normalized();
 	float vDotN = direction.dot(normal);
-	//std::cout << "dot product: " << vDotN << std::endl;
+	
 	if (vDotN < 0) // Check that we hit from the right side
 	{
 		direction = p_target.normalized();
@@ -549,8 +549,6 @@ bool BOPhysics::IsWithinRad(double p_start, double p_end, double p_toTest)
         }
     }
 
-    //std::cout << std::fixed << std::setprecision(4);
-    //std::cout << "Ball: " << p_toTest << " Pad: " << p_start << " Rot: " << p_end << std::endl;
     // toTest should now always be within start and end's numbers if it is actually within their angles
 
     return (p_start < p_toTest
