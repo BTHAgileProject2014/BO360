@@ -18,7 +18,7 @@ public:
 	int GetNextLevel();
 	int GetCurrentLevel();
 
-	int GetUnlockedLeves();
+	int GetUnlockedLevels();
 	void SetUnlockedLevels(int p_numberLevels);
 	
 private:

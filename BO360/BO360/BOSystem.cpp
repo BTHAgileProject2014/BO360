@@ -468,7 +468,7 @@ void BOSystem::HandleAction(ButtonAction p_action)
             case(TECHTREEACTION) :
             {
                 // Initialize the new map
-                if (!InitializeMap(m_stateManager.GetLevelIndex()+1))
+                if (!InitializeMap(m_levelManager.GetNextLevel()))
                 {
                     std::cout << "Press ENTER to quit." << std::endl;
                     std::cin.get();
