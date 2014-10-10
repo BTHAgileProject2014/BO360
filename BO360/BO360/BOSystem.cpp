@@ -411,7 +411,7 @@ void BOSystem::HandleAction(ButtonAction p_action)
                 m_gameState = TECHTREE;
 				int currentLevel = m_levelManager.GetCurrentLevel();
 				int nextLevel = m_levelManager.GetNextLevel();
-				if (currentLevel == nextLevel)
+				if (currentLevel == nextLevel)	// Same if last map
 				{
 					m_gameState = MENU;
 					m_levelManager.SetLevel(0);
