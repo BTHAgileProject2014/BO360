@@ -686,7 +686,7 @@ void BOObjectManager::CheckBallToBall(int i)
 
 void BOObjectManager::BallNewlyLaunched(BOBall* p_ball)
 {
-    if (p_ball->GetNewlyLaunched())
+    if (p_ball->GetNewlyLaunched() && !m_paddle.GetStickyState())
     {
         int spawnPU, powerupType;
         PowerUpTypes PUType = PUNone;
