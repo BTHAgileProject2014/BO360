@@ -59,23 +59,15 @@ bool BOStateManager::InitializeLevelSelect(int2 p_screenSize)
 	bool result = false;
 	float2 menuPosition = float2(50, 50);
 	result = m_levelSelect.Initialize(float2(p_screenSize.x / 2.0f, p_screenSize.y / 2.0f), p_screenSize, menuPosition, "Level Selector", BOTextureManager::GetTexture(TEXMENUBG));
-	for (int i = nrOfLevels + 1; i < texNR+13; i++)
+	for (int i = nrOfLevels + 1; i < texNR; i++)
 	{
 		if (i % 4 == ((nrOfLevels + 1) % 4) && i != (nrOfLevels + 1))
 		{
 			menuPosition.y += 175;
 			menuPosition.x -= 250 * 4;
 		}
-		if (i >= texNR)
-		{
-			m_levelSelect.AddButton(float2(menuPosition.x, menuPosition.y + 70), int2(250, 175), menuPosition, BOTextureManager::GetTextureInt(TEXBUTTONDEAFAULTMAP),
-				std::string("LEVEL " + std::to_string(i - nrOfLevels)), NOACTION, "");
-		}
-		else
-		{
-			m_levelSelect.AddButton(float2(menuPosition.x, menuPosition.y + 70), int2(250, 175), menuPosition, BOTextureManager::GetTextureInt(i),
-				std::string("LEVEL " + std::to_string(i - nrOfLevels)), NOACTION, "");
-		}
+        m_levelSelect.AddButton(float2(menuPosition.x, menuPosition.y + 70), int2(250, 175), menuPosition, BOTextureManager::GetTextureInt(i),
+            std::string("LEVEL " + std::to_string(i - nrOfLevels)), NOACTION, "");
 	}
 
 	return result;

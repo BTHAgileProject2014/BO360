@@ -367,7 +367,7 @@ void BOTextureManager::LoadTexture(std::string p_theme)
         std::cout << "Map core texture failed to load!" << std::endl;
         std::cin.get();
     }
-	GetInstance().textureList.push_back(texture);
+    GetInstance().textureList.push_back(texture);
 
 	texture = BOGraphicInterface::LoadTexture("Sprites/HUD/Lock.png");
     if (!texture)
@@ -375,7 +375,7 @@ void BOTextureManager::LoadTexture(std::string p_theme)
         std::cout << "Level selector lock texture failed to load!" << std::endl;
         std::cin.get();
     }
-    GetInstance().textureList.push_back(texture);
+	GetInstance().textureList.push_back(texture);
 
     // Tech Tree
     texture = BOGraphicInterface::LoadTexture("Sprites/PlaceHolderPNG/Techs/activeTech.png");
@@ -392,11 +392,19 @@ void BOTextureManager::LoadTexture(std::string p_theme)
 	GetInstance().textureList.push_back(texture);
 
 	GetInstance().textureList.push_back(NULL);// Lägg in en tom för att fixa nrOfLevels
-	texture = BOGraphicInterface::LoadTexture("Maps/MapThumb1.png");
+	texture = BOGraphicInterface::LoadTexture("Maps/button1Map.png");
 	GetInstance().textureList.push_back(texture);
-	texture = BOGraphicInterface::LoadTexture("Maps/MapThumb2.png");
+	texture = BOGraphicInterface::LoadTexture("Maps/button2Map.png");
 	GetInstance().textureList.push_back(texture);
-	texture = BOGraphicInterface::LoadTexture("Maps/MapThumbDefault.png");
+    texture = BOGraphicInterface::LoadTexture("Maps/button3Map.png");
+    GetInstance().textureList.push_back(texture);
+    texture = BOGraphicInterface::LoadTexture("Maps/button4Map.png");
+    GetInstance().textureList.push_back(texture);
+    texture = BOGraphicInterface::LoadTexture("Maps/button5Map.png");
+	GetInstance().textureList.push_back(texture);
+    texture = BOGraphicInterface::LoadTexture("Maps/button6Map.png");
+	GetInstance().textureList.push_back(texture);
+    texture = BOGraphicInterface::LoadTexture("Maps/button7Map.png");
 	GetInstance().textureList.push_back(texture);
 
 
