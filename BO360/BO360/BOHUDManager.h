@@ -21,7 +21,8 @@ public:
 	static void SetLevel(int p_level);
 	static void SetKeys(int p_keys, int p_maxKeys);
     static void SetShockwave(bool p_active);
-	static void ModifyState(bool p_lives, bool p_score, bool p_level, bool p_keys, bool p_shockwave);
+    static void SetSlowtime(bool p_active);
+    static void ModifyState(bool p_lives, bool p_score, bool p_level, bool p_keys, bool p_shockwave, bool p_slowtime);
 
 private:
 	static float2 m_livesAnchor;
@@ -46,6 +47,12 @@ private:
     static float2 m_shockwaveAnchor;
     static BOObject m_shockwaveSprite;
     static bool m_shockwaveEnabled;
+    static BODrawableText m_shockwaveText;
+
+    static float2 m_slowtimeAnchor;
+    static BOObject m_slowtimeSprite;
+    static bool m_slowtimeEnabled;
+    static BODrawableText m_slowtimeText;
 
 };
 #endif

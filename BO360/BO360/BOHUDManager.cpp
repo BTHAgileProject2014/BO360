@@ -20,6 +20,12 @@ bool BOHUDManager::m_keyEnabled;
 float2 BOHUDManager::m_shockwaveAnchor;
 BOObject BOHUDManager::m_shockwaveSprite;
 bool BOHUDManager::m_shockwaveEnabled;
+BODrawableText BOHUDManager::m_shockwaveText;
+
+float2 BOHUDManager::m_slowtimeAnchor;
+BOObject BOHUDManager::m_slowtimeSprite;
+bool BOHUDManager::m_slowtimeEnabled;
+BODrawableText BOHUDManager::m_slowtimeText;
 
 
 BOHUDManager::BOHUDManager()
@@ -40,6 +46,7 @@ bool BOHUDManager::Initialize()
 	m_livesEnabled = true;
 	m_keyEnabled = true;
     m_shockwaveEnabled = false;
+    m_slowtimeEnabled = false;
 	m_noLives = 0;
 	
 	// Setting anchors
@@ -49,6 +56,7 @@ bool BOHUDManager::Initialize()
 	m_scoreAnchor = float2((float)bounds.x, 0);
 	m_keyAnchor = float2(5, (float)bounds.y);
     m_shockwaveAnchor = float2(bounds.x / 2.0f, (float)bounds.y);
+    m_slowtimeAnchor = float2(bounds.x / 2.0f, (float)bounds.y);
 
 	// Initialize level
 	m_level.Initialize(m_levelAnchor, "Level: ", int3(255, 255, 255), 30, 0);
@@ -81,8 +89,19 @@ bool BOHUDManager::Initialize()
 
     // Initialize shockwave
     m_shockwaveSprite.Initialize(float2(0, 0), int2(80, 80), 0.4f, BOTextureManager::GetTexture(TEXPUSHOCKWAVE));
+    m_shockwaveText.Initialize(float2(0, 0), "F", int3(255, 255, 255), 30, 0);
     tempSize = m_shockwaveSprite.GetSize();
-    m_shockwaveSprite.SetPosition(float2(m_shockwaveAnchor.x + tempSize.x / 2.0f, m_shockwaveAnchor.y - tempSize.y / 2.0f));
+    tempSizeSprite = m_shockwaveText.GetSize();
+    m_shockwaveSprite.SetPosition(float2(m_shockwaveAnchor.x + tempSize.x / 2.0f - 20, m_shockwaveAnchor.y - tempSize.y / 2.0f));
+    m_shockwaveText.SetPosition(float2(m_shockwaveAnchor.x + tempSize.x / 2.0f - 20, m_shockwaveAnchor.y - tempSize.y - tempSizeSprite.y / 2.0f));
+
+    // Initialize Slowtime
+    m_slowtimeSprite.Initialize(float2(0, 0), int2(80, 80),0.4f, BOTextureManager::GetTexture(TEXPUSLOWTIME));
+    m_slowtimeText.Initialize(float2(0, 0), "Down", int3(255, 255, 255), 30, 0);
+    tempSize = m_slowtimeSprite.GetSize();
+    tempSizeSprite = m_slowtimeText.GetSize();
+    m_slowtimeSprite.SetPosition(float2(m_slowtimeAnchor.x + tempSize.x / 2.0f + 20, m_slowtimeAnchor.y - tempSize.y / 2.0f));
+    m_slowtimeText.SetPosition(float2(m_slowtimeAnchor.x + tempSize.x / 2.0f + 20, m_slowtimeAnchor.y - tempSize.y - tempSizeSprite.y/2.0f));
 
 	return true;
 }
@@ -98,6 +117,10 @@ void BOHUDManager::Shutdown()
 
 	m_keySprite.Shutdown();
 	m_keyText.Shutdown();
+    m_shockwaveSprite.Shutdown();
+    m_slowtimeSprite.Shutdown();
+    m_shockwaveText.Shutdown();
+    m_slowtimeText.Shutdown();
 }
 
 void BOHUDManager::Draw()
@@ -134,16 +157,24 @@ void BOHUDManager::Draw()
     if (m_shockwaveEnabled)
     {
         m_shockwaveSprite.Draw();
+        m_shockwaveText.Draw();
+    }
+
+    if (m_slowtimeEnabled)
+    {
+        m_slowtimeSprite.Draw();
+        m_slowtimeText.Draw();
     }
 }
 
-void BOHUDManager::ModifyState(bool p_lives, bool p_score, bool p_level, bool p_keys, bool p_shockwave)
+void BOHUDManager::ModifyState(bool p_lives, bool p_score, bool p_level, bool p_keys, bool p_shockwave, bool p_slowtime)
 {
 	m_livesEnabled = p_lives;
 	m_scoreEnabled = p_score;
 	m_levelEnabled = p_level;
 	m_keyEnabled = p_keys;
     m_shockwaveEnabled = p_shockwave;
+    m_slowtimeEnabled = p_slowtime;
 }
 
 void BOHUDManager::SetLives(int p_lives)
@@ -201,4 +232,9 @@ void BOHUDManager::SetKeys(int p_keys, int p_maxKeys)
 void BOHUDManager::SetShockwave(bool p_active)
 {
     m_shockwaveEnabled = p_active;
+}
+
+void BOHUDManager::SetSlowtime(bool p_active)
+{
+    m_slowtimeEnabled = p_active;
 }

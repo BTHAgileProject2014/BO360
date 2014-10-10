@@ -307,8 +307,8 @@ void BOObjectManager::Handle(InputMessages p_inputMessage)
 			{
 			m_ballList[i]->SetStuckToPad(false);
 				//m_ballList[i]->SetDirection(float2(m_ballList[i]->GetPosition().x - m_blackHole.GetPosition().x, m_ballList[i]->GetPosition().y - m_blackHole.GetPosition().y));
-			}
 	}
+}
 }
     if (p_inputMessage.fKey && m_shockwave.Activate())
     {
@@ -427,10 +427,10 @@ bool BOObjectManager::LoadBlocksFromMap(int p_index)
 				block = new BOBlock();
 
                 if (blockDescriptions[i].m_powerUpType == PUNone)
-				{
+                {
                     result = block->Initialize(float2(x, y), int2(46, 42), BOTextureManager::GetTexture(TEXHEXSTANDARD), PUNone, score);
                     block->AddGlow(float2(x, y), int2(46, 42), int2(46, 42), 0, 5, 0.12f, false, BOTextureManager::GetTexture(TEXGLOWSTANDARD));
-				}
+                }
 
 				else
 				{
@@ -447,10 +447,10 @@ bool BOObjectManager::LoadBlocksFromMap(int p_index)
 				m_blockList.push_back(block);
 
 				break;
-				}
+			}
 
 			case(DOUBLE) :
-				{
+			{
 				block = new BOBlockMultiTexture();
                 result = block->InitializeAnimated(float2(x, y), int2(46, 42), int2(46, 42), 0, 2, 0, true, BOTextureManager::GetTexture(TEXHEXDOUBLE), 2, blockDescriptions[i].m_powerUpType, score);
                 block->AddGlow(float2(x, y), int2(46, 42), int2(46, 42), 2, 5, 0.12, false, BOTextureManager::GetTexture(TEXGLOWDOUBLE));
@@ -459,27 +459,27 @@ bool BOObjectManager::LoadBlocksFromMap(int p_index)
 					ThrowInitError("BOBlockDouble");
 					return false;
 				}
-
+				
 				m_blockList.push_back(block);
 
 				break;
 			}
 
             case(ARMORED) :
-			{
-				block = new BOBlockMultiTexture();
+            {
+                block = new BOBlockMultiTexture();
                 result = block->InitializeAnimated(float2(x, y), int2(46, 42), int2(46, 42), 0, 5, 0, true, BOTextureManager::GetTexture(TEXHEXARMORED), 5, blockDescriptions[i].m_powerUpType, score);
                 block->AddGlow(float2(x, y), int2(46, 42), int2(46, 42), 3, 5, 0.12, false, BOTextureManager::GetTexture(TEXGLOWARMORED));
-				if (!result)
-				{
+                if (!result)
+                {
                     ThrowInitError("BOBlockArmored");
-					return false;
-				}
-				
-				m_blockList.push_back(block);
+                    return false;
+                }
 
-				break;
-			}
+                m_blockList.push_back(block);
+
+                break;
+            }
 	
 			case(INDESTRUCTIBLE) :
 			{
@@ -583,7 +583,7 @@ void BOObjectManager::BallPadCollision(BOBall* p_ball)
             p_ball->SetStuckToPad(true);
             float2 temp = { p_ball->GetPosition().x - m_blackHole.GetPosition().x, p_ball->GetPosition().y - m_blackHole.GetPosition().y };
             float tempAngle = BOPhysics::AngleBetweenDeg(float2( 0, -100 ), temp);
-			p_ball->SetStuckAngle((float)(tempAngle - m_paddle.GetRotation()));
+            p_ball->SetStuckAngle((float)(tempAngle - m_paddle.GetRotation()));
 
         }
 		p_ball->BouncedOnPad();
@@ -688,53 +688,53 @@ void BOObjectManager::CheckBallToBall(int i)
 void BOObjectManager::BallNewlyLaunched(BOBall* p_ball)
 {
     if (p_ball->GetNewlyLaunched() && !m_paddle.GetStickyState())
-    {
-        int spawnPU, powerupType;
-        PowerUpTypes PUType = PUNone;
-        spawnPU = rand() % 10;
-        powerupType = rand() % 7;
-        if (spawnPU == 9)
-        {
-            switch (powerupType)
-            {
-            case 0:
-            {
-                      PUType = PUExtraBall;
-                      break;
-            }
-            case 1:
-            {
-                      PUType = PUBiggerPad;
-                      break;
-            }
-            case 2:
-            {
-                      PUType = PUFireBall;
-                      break;
-            }
-            case 3:
-            {
-                      PUType = PUShield;
-                      break;
-            }
-            case 4:
-            {
-                      PUType = PUShockwave;
-                      break;
-            }
-            case 5:
-            {
-                      PUType = PUSlowTime;
-                      break;
-            }
-            case 6:
-            {
-                      PUType = PUStickyPad;
-                      break;
-            }
-            }
-            BOPowerUpManager::AddPowerUp(PUType, float2(BOGraphicInterface::GetWindowSize().x / 2, 50), &m_paddle, m_blackHole.GetPosition());
-        }
+	{
+		int spawnPU, powerupType;
+		PowerUpTypes PUType = PUNone;
+		spawnPU = rand() % 10;
+		powerupType = rand() % 7;
+		if (spawnPU == 9)
+		{
+			switch (powerupType)
+			{
+			case 0:
+			{
+				PUType = PUExtraBall;
+				break;
+			}
+			case 1:
+			{
+				PUType = PUBiggerPad;
+				break;
+			}
+			case 2:
+			{
+				PUType = PUFireBall;
+				break;
+			}
+			case 3:
+			{
+				PUType = PUShield;
+				break;
+			}
+			case 4:
+			{
+				PUType = PUShockwave;
+				break;
+			}
+			case 5:
+			{
+				PUType = PUSlowTime;
+				break;
+			}
+			case 6:
+			{
+				PUType = PUStickyPad;
+				break;
+			}
+			}
+			BOPowerUpManager::AddPowerUp(PUType, float2(BOGraphicInterface::GetWindowSize().x / 2, 50), &m_paddle, m_blackHole.GetPosition());
+		}
 		p_ball->BouncedOnPad();
     }
 }
@@ -749,5 +749,5 @@ void BOObjectManager::PewPewPew()
             delete m_blockList[l];
             m_blockList.erase(m_blockList.begin() + l);
         }
-    }
+	}
 }
