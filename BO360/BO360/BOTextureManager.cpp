@@ -376,6 +376,18 @@ void BOTextureManager::LoadTexture(std::string p_theme)
         std::cin.get();
     }
 	GetInstance().textureList.push_back(texture);
+
+    // Tech Tree
+    texture = BOGraphicInterface::LoadTexture("Sprites/PlaceHolderPNG/Techs/activeTech.png");
+    GetInstance().textureList.push_back(texture);
+    texture = BOGraphicInterface::LoadTexture("Sprites/PlaceHolderPNG/Techs/canChooseTech.png");
+    GetInstance().textureList.push_back(texture);
+    texture = BOGraphicInterface::LoadTexture("Sprites/PlaceHolderPNG/Techs/highlightTech.png");
+    GetInstance().textureList.push_back(texture);
+    texture = BOGraphicInterface::LoadTexture("Sprites/PlaceHolderPNG/Techs/disabledTech.png");
+    GetInstance().textureList.push_back(texture);
+    texture = BOGraphicInterface::LoadTexture("Sprites/PlaceHolderPNG/Techs/techBorder.png");
+    GetInstance().textureList.push_back(texture);
 	texture = BOGraphicInterface::LoadTexture("Sprites/PlaceHolderPNG/DEBUGDIR.png");
 	GetInstance().textureList.push_back(texture);
 
@@ -389,11 +401,13 @@ void BOTextureManager::LoadTexture(std::string p_theme)
     texture = BOGraphicInterface::LoadTexture("Maps/button4Map.png");
     GetInstance().textureList.push_back(texture);
     texture = BOGraphicInterface::LoadTexture("Maps/button5Map.png");
-    GetInstance().textureList.push_back(texture);
+	GetInstance().textureList.push_back(texture);
     texture = BOGraphicInterface::LoadTexture("Maps/button6Map.png");
-    GetInstance().textureList.push_back(texture);
+	GetInstance().textureList.push_back(texture);
     texture = BOGraphicInterface::LoadTexture("Maps/button7Map.png");
-    GetInstance().textureList.push_back(texture);
+	GetInstance().textureList.push_back(texture);
+
+
 }
 
 void BOTextureManager::FreeTexture(int p_textureIndex)

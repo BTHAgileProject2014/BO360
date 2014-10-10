@@ -7,6 +7,7 @@
 #include "BOPowerUpManager.h"
 #include "BOPhysics.h"
 #include "BOSoundManager.h"
+#include "BOTechTreeEffects.h"
 
 class BOPaddle;
 class BOPowerUp : public BOObject

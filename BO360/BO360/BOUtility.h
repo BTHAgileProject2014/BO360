@@ -369,7 +369,8 @@ enum GameState
 	VICTORY,
 	DEFEAT,
     HIGHSCORESTATE,
-	LEVELSELECTOR
+	LEVELSELECTOR,
+    TECHTREE
 };
 
 enum ButtonAction
@@ -383,7 +384,8 @@ enum ButtonAction
 	NEXT,
 	RETRY,
 	LEVELSELECT,
-	LEVEL
+	LEVEL,
+    TECHTREEACTION
 };
 
 enum ParticleType
@@ -577,6 +579,12 @@ enum Textures
 	TEXPADSEG,
     TEXKEY,
 	TEXLOCK,
+    //Tech tree
+    TEXTTACTIVE,
+    TEXTTADJACENTACTIVE,
+    TEXTTHIGHLIGHTED,
+    TEXTTINACTIVE,
+    TEXTTTGRID,
 	TEXDEBUGDIR,
 
 	/* HÄR UNDER ÄR DET BARA BANOR PLZ!!!*/
@@ -590,6 +598,99 @@ enum Textures
     TEXBUTTON7MAP,
 	
 	texNR
+
+
+};
+enum TTEffects
+{
+
+    //List order
+    //Lane 1
+    ShockWave,
+    PowerUpBoost3,
+    DoubleMultiBall3,
+    QuantumFuel,
+    //Lane 2
+    PowerUpBoost1,
+    SlowTime,
+    IncreaseBallDamage2,
+    Fireball,
+    MultiSpawn2,
+    //Lane 3
+    PowerUpBoost2,
+    DecreasePowerUpFallSpeed2,
+    PowerUpGift,
+    DecreaseGravityPull,
+    IncreaseBallDamage,
+    DoubleMultiBall2,
+    //Laer 4
+    MegaPad,
+    StartWithShield,
+    DecreasePowerUpFallSpeed,
+    DropBasicPowerUp,    
+    DecreaseBallSpeed,
+    MoreFuelAtRefill,
+    SuperTank,
+    //Lane 5
+    StackableShield,
+    StickyPad,
+    AddBounceToShield,
+    IncreasePadSpeed,
+    BallsGetFuelWhenTheyCollide,
+    DoubleMultiBall,
+    //Lane 6
+    IncreaseStartPadSize,
+    IncreaseMaxPadSize,
+    ChanceDoublePadSizeIncrease, 
+    IncreaseMaxPadSize2,
+    MuliSpawn, 
+    //Lane 7
+    Regenerate,
+    IncreaseStartPadSize2,
+    ChanceDoublePadSizeIncrease2,
+    GiantBall
+
+    /*//In order
+    //Layer 1
+    DecreasePowerUpFallSpeed,   //decrease 10%
+    AddBounceToShield,          //Increase bounce on shield 
+    IncreasePadSpeed,           //
+    DecreaseBallSpeed,
+    DecreaseGravityPull,
+    PowerUpGift,
+    //Layer 2
+    DecreasePowerUpFallSpeed2,   //20% slower
+    StartWithShield,             //Start with a shield
+    StickyPad,
+    IncreaseMaxPadSize,
+    ChanceDoublePadSizeIncrease, // 33% chance to get double effekt
+    IncreaseMaxPadSize2,
+    BallsGetFuelWhenTheyCollide,
+    MoreFuelAtRefill,
+    IncreaseBallDamage,
+    Fireball,
+    IncreaseBallDamage2,
+    SlowTime,
+    //Layer 3
+    PowerUpBoost1,
+    PowerUpBoost2,
+    MegaPad,
+    StackableShield,
+    IncreaseStartPadSize,
+    Regenerate,
+    IncreaseStartPadSize2,
+    ChanceDoublePadSizeIncrease2,
+    GiantBall,
+    MuliSpawn,
+    DoubleMultiBall,
+    SuperTank,                  //Bounce on block doesn't remove fuel
+    DoubleMultiBall2,
+    MultiSpawn2,
+    QuantumFuel,
+    DoubleMultiBall3,
+    PowerUpBoost3,
+    ShockWave
+    */
 };
 
 #endif

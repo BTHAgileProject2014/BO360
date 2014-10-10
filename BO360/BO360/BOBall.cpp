@@ -19,7 +19,7 @@ bool BOBall::Initialize(float2 p_position, int2 p_size, SDL_Texture* p_sprite, f
 	m_damage = 1;
 	m_Fuel = 0.0f;
 	m_canColide = true;
-	m_speed = p_speed;
+	m_speed = p_speed * BOTechTreeEffects::BallEffects.speed;
 	m_direction = p_direction.normalized();
 	m_windowSize = p_windowSize;
 	m_stuckToPad = true;
@@ -35,6 +35,8 @@ bool BOBall::Initialize(float2 p_position, int2 p_size, SDL_Texture* p_sprite, f
 	m_mouseCheat = false;
 
     m_stuckAngle = 42;
+
+	m_newlyLaunched = false;
 
 	return true;
 }
@@ -60,7 +62,17 @@ void BOBall::Update(double p_deltaTime, sphere p_blackHoleBounds)
 
     m_thruster.SetPosition(m_position);
     m_rotation = BOPhysics::AngleBetweenDeg(float2(0, 1), m_direction) + 180;
+    if (!m_stuckToPad && m_stuckToPadPrev && BOTechTreeEffects::UtilityEffects.PUGiftEnabled)
+    {
+        m_newlyLaunched = true;
+    }
+    else
+    {
+        m_newlyLaunched = false;
+    }
+    m_stuckToPadPrev = m_stuckToPad;
 }
+	
 
 void BOBall::DrawBallWithTail()
 {
@@ -153,7 +165,15 @@ void BOBall::SetFuel(float p_fuel)
 
 int BOBall::GetDamage()
 {
-	return m_damage;
+    if (m_onFire)
+    {
+        return m_damage * 2;
+    }
+    else
+    {
+        return m_damage;
+    }
+	
 }
 
 bool BOBall::IsStuckToPad()
@@ -174,7 +194,7 @@ void BOBall::Move(double p_deltaTime, sphere p_blackHoleBounds)
 	{
         m_position.x = (float)(m_speed * p_deltaTime * timescale) * m_direction.x + m_position.x;
         m_position.y = (float)(m_speed * p_deltaTime * timescale) * m_direction.y + m_position.y;
-        m_Fuel -= (float)p_deltaTime * timescale;	
+        m_Fuel -= (float)p_deltaTime * timescale;
         m_thruster.SetFrame(0);
 	}
 	else
@@ -264,16 +284,7 @@ void BOBall::SetBallCollidedWithBall(bool p_collided)
 	m_hasCollidedWithBall = p_collided;
 }
 
-/*
-void BOBall::Draw()
+bool BOBall::GetNewlyLaunched()
 {
-	BOObject::Draw();
-
-	// DEBUG DIRECTION ARROW IF NEEDED
-	
-    int4 source = int4(0, 0, 40, 40);
-	int4 dest = int4(m_position.x, m_position.y, 40, 40);
-	BOGraphicInterface::DrawEx(BOTextureManager::GetTexture(TEXDEBUGDIR),source, dest, BOPhysics::AngleBetweenDeg(float2(0, -1),m_direction), int2(0, 0));
-    
+	return m_newlyLaunched;
 }
-*/

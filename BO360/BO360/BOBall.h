@@ -45,6 +45,7 @@ public:
     void SetStuckAngle(float p_stuckAngle);
 	bool HasBallCollidedWithBall() const;
 	void SetBallCollidedWithBall(bool p_collided);
+	bool GetNewlyLaunched();
 
 private:
 	int m_damage;
@@ -57,9 +58,12 @@ private:
 	bool m_onFire;
 	bool m_hasCollidedWithBall;
 	double m_fireTimeElapsed;
-	const double m_fireTimeDuration = 5; // 5 seconds for fireball duration
+	const double m_fireTimeDuration = 10; // 5 seconds for fireball duration
     bool m_stuckToPad;
+	bool m_stuckToPadPrev;
     float m_stuckAngle;
+	bool m_newlyLaunched;
+	bool m_newlyLaunchedPrev;
 
     double m_rotation;
     BOAnimatedObject m_thruster;

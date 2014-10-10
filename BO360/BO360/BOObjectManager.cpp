@@ -182,23 +182,15 @@ void BOObjectManager::Update(double p_deltaTime)
         }
 		else	// Ball is NOT stuck to pad
 		{
+			BallNewlyLaunched(m_ballList[i]);
+
 			BallBlockCollision(m_ballList[i]);
 
 			BallPadCollision(m_ballList[i]);
 
 		    CheckBallOutOfBounds(i);
 
-			for (unsigned int j = 0; j < m_ballList.size(); j++)
-			{
-				if (i != j && !m_ballList[j]->HasBallCollidedWithBall())
-				{
-					if (BOPhysics::CheckCollisionSphereToSphere(m_ballList[i]->GetBoundingSphere(), m_ballList[j]->GetBoundingSphere()))
-					{
-						BOPhysics::BallToBallCollision(*m_ballList[i], *m_ballList[j]);
-						m_ballList[j]->SetBallCollidedWithBall(true);
-					}
-				}
-			}
+			CheckBallToBall(i);
 
 			if (BallDied(m_ballList[i]))
 			{
@@ -674,6 +666,76 @@ void BOObjectManager::ActivateShockwave()
     }
 }
 
+void BOObjectManager::CheckBallToBall(int i)
+{
+	if (!m_ballList[i]->HasBallCollidedWithBall())
+	{
+		for (unsigned int j = 0; j < m_ballList.size(); j++)
+		{
+			if (i != j && !m_ballList[j]->HasBallCollidedWithBall())
+			{
+				if (BOPhysics::CheckCollisionSphereToSphere(m_ballList[i]->GetBoundingSphere(), m_ballList[j]->GetBoundingSphere()))
+				{
+					BOPhysics::BallToBallCollision(*m_ballList[i], *m_ballList[j]);
+					m_ballList[j]->SetBallCollidedWithBall(true);
+				}
+			}
+		}
+	}
+}
+
+void BOObjectManager::BallNewlyLaunched(BOBall* ball)
+{
+    if (ball->GetNewlyLaunched())
+    {
+        int spawnPU, powerupType;
+        PowerUpTypes PUType = PUNone;
+        spawnPU = rand() % 10;
+        powerupType = rand() % 7;
+        if (spawnPU == 9)
+        {
+            switch (powerupType)
+            {
+            case 0:
+            {
+                      PUType = PUExtraBall;
+                      break;
+            }
+            case 1:
+            {
+                      PUType = PUBiggerPad;
+                      break;
+            }
+            case 2:
+            {
+                      PUType = PUFireBall;
+                      break;
+            }
+            case 3:
+            {
+                      PUType = PUShield;
+                      break;
+            }
+            case 4:
+            {
+                      PUType = PUShockwave;
+                      break;
+            }
+            case 5:
+            {
+                      PUType = PUSlowTime;
+                      break;
+            }
+            case 6:
+            {
+                      PUType = PUStickyPad;
+                      break;
+            }
+            }
+            BOPowerUpManager::AddPowerUp(PUType, float2(BOGraphicInterface::GetWindowSize().x / 2, 50), &m_paddle, m_blackHole.GetPosition());
+        }
+    }
+}
 void BOObjectManager::PewPewPew()
 {
     if (m_blockList.size() > 0)

@@ -28,6 +28,13 @@ bool BOSystem::Initialize()
 		return false;
 	}
 
+	result = m_techTreeEffects.Initialize();
+	if (!result)
+	{
+		return false;
+	}
+
+
 	// Initialize input manager.
 	result = m_input.Initialize();
 	if (!result)
@@ -50,7 +57,7 @@ bool BOSystem::Initialize()
 	}
 
 	// Initialize the texturemanager
-	if (!BOTextureManager::Initialize("Neon"))
+	if (!BOTextureManager::Initialize("Industrial"))
 	{
 		std::cout << "Initialize texturemanager failed!" << std::endl;
 
@@ -86,6 +93,11 @@ bool BOSystem::Initialize()
 
 	// Add system as an subscriber
 	BOPublisher::AddSubscriber(this);
+
+    if (!m_techTreeManager.Initialize(BOGraphicInterface::GetWindowSize()))
+    {
+        return false;
+    }
 
 	return true;
 }
@@ -135,7 +147,7 @@ bool BOSystem::InitializeMap()
 		return false;
 	}
 
-	// Example usage of HUD
+	// Set level on HUD
 	BOHUDManager::SetLevel(1);
 
     // Set the time scale to 1.0
@@ -189,7 +201,7 @@ bool BOSystem::InitializeMap(int p_levelIndex)
 		return false;
 	}
 
-	// Example usage of HUD
+	// Set the correct level on the HUD
 	BOHUDManager::SetLevel(p_levelIndex + 1);
 
 	// Set the time scale to 1.0
@@ -264,6 +276,12 @@ bool BOSystem::Run()
 
 		else
 		{
+            // Update TechTree
+            if (m_gameState == TECHTREE)
+            {
+                m_techTreeManager.Update();
+            }
+
 			// Update approperiate menu and handle the actions.
 			HandleAction(m_stateManager.Update(m_gameState));
 
@@ -290,26 +308,36 @@ bool BOSystem::Run()
 			BOTextManager::DrawTexts();
 
 			//RenderHUD
-			BOHUDManager::Draw();
+             BOHUDManager::Draw();
+
 		}
 
 		else
 		{
 			// Draw approperiate menu.
 			m_stateManager.Draw(m_gameState);
-		}
 
+            // Draw TechTree
+            if (m_gameState == TECHTREE)
+            {
+                m_techTreeManager.Draw();
+
+            }
+		}
 		BOGraphicInterface::Present();
 		// ============================
 
 		m_deltaTime = 0;
 	}
 	
+
+
 	return result;
 }
 
 void BOSystem::Shutdown()
 {
+    m_techTreeManager.Shutdown();
 	BOPublisher::Unsubscribe(this);
 	m_input.Shutdown();
 	m_objectManager.Shutdown();
@@ -349,6 +377,8 @@ void BOSystem::HandleAction(ButtonAction p_action)
 			// PLAY STORY MODE.
 			case(STORY) :
 			{
+                // Reset tech tree
+                m_techTreeManager.Reset();
 				m_gameState = RUNNING;
 				if (!InitializeMap(0))
 				{
@@ -378,7 +408,7 @@ void BOSystem::HandleAction(ButtonAction p_action)
 			// NEXT, load next map.
 			case(NEXT) :
 			{
-                m_gameState = RUNNING;
+                m_gameState = TECHTREE;
 				int currentLevel = m_levelManager.GetCurrentLevel();
 				int nextLevel = m_levelManager.GetNextLevel();
 				if (currentLevel == nextLevel)
@@ -386,19 +416,8 @@ void BOSystem::HandleAction(ButtonAction p_action)
 					m_gameState = MENU;
 					m_levelManager.SetLevel(0);
 				}
-				else
-				{
-					if (!InitializeMap(nextLevel))
-					{
-						std::cout << "Press ENTER to quit." << std::endl;
-						std::cin.get();
-
-						m_quit = true;
-					}
-				}
-                
-				break;
-			}
+                break;
+            }
 
 			// RETRY, reload the map.
 			case(RETRY) :
@@ -423,21 +442,42 @@ void BOSystem::HandleAction(ButtonAction p_action)
 			case (LEVEL) :
 			{
 				int index =	m_stateManager.GetLevelIndex();
-				if (index != -1)
-				{
-					m_gameState = RUNNING;
-					m_levelManager.SetLevel(index);
-					if (!InitializeMap(index))
-					{
-						std::cout << "Press ENTER to quit." << std::endl;
-						std::cin.get();
 
-						m_quit = true;
-					}
+                // Special case for the first level, skipping the tech tree
+                if (index == 0)
+                {
+                    m_techTreeManager.Reset();
+                    m_gameState = RUNNING;
+
+                    if (!InitializeMap(0))
+                    {
+                        std::cout << "Press ENTER to quit." << std::endl;
+                        std::cin.get();
+
+                        m_quit = true;
+                    }
+                }
+                else if (index != -1)
+				{
+					m_gameState = TECHTREE;
+					m_levelManager.SetLevel(index);
+					
 				}
-				
 				break;
 			}
+            case(TECHTREEACTION) :
+            {
+                // Initialize the new map
+                if (!InitializeMap(m_stateManager.GetLevelIndex()+1))
+                {
+                    std::cout << "Press ENTER to quit." << std::endl;
+                    std::cin.get();
+
+                    m_quit = true;
+                }
+                m_gameState = RUNNING;
+                break;
+            }
 		}
 	}
 }

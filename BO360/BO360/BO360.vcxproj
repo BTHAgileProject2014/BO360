@@ -122,6 +122,9 @@
     <ClInclude Include="BOStationaryParticle.h" />
     <ClInclude Include="BOSubscriber.h" />
     <ClInclude Include="BOSystem.h" />
+    <ClInclude Include="BOTechTreeEffects.h" />
+    <ClInclude Include="BOTechTreeManager.h" />
+    <ClInclude Include="BOTechTreeNode.h" />
     <ClInclude Include="BOTextManager.h" />
     <ClInclude Include="BOTextureManager.h" />
     <ClInclude Include="BOTimer.h" />
@@ -167,6 +170,9 @@
     <ClCompile Include="BOStationaryParticle.cpp" />
     <ClCompile Include="BOSubscriber.cpp" />
     <ClCompile Include="BOSystem.cpp" />
+    <ClCompile Include="BOTechTreeEffects.cpp" />
+    <ClCompile Include="BOTechTreeManager.cpp" />
+    <ClCompile Include="BOTechTreeNode.cpp" />
     <ClCompile Include="BOTextManager.cpp" />
     <ClCompile Include="BOTextureManager.cpp" />
     <ClCompile Include="BOTimer.cpp" />

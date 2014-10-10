@@ -18,7 +18,7 @@ bool BOPaddle::Initialize(float2 p_position, int2 p_size, SDL_Texture* p_sprite)
 	m_segementDegree = m_totalDegrees;
 	m_segments = 1;
 	AddSegments(2);
-	m_deltaRotation = 200;
+	m_deltaRotation = 200 * BOTechTreeEffects::PaddleEffects.speed;
 	BOPublisher::AddSubscriber(this);
 	BOPowerUpManager::AddSubscriber(this);
 	return BOObject::Initialize(p_position, p_size, p_sprite);
