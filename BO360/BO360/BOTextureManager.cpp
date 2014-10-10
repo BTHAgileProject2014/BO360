@@ -380,22 +380,20 @@ void BOTextureManager::LoadTexture(std::string p_theme)
 	GetInstance().textureList.push_back(texture);
 
 	GetInstance().textureList.push_back(NULL);// Lägg in en tom för att fixa nrOfLevels
-	texture = BOGraphicInterface::LoadTexture("Maps/MapThumb1.png");
+	texture = BOGraphicInterface::LoadTexture("Maps/button1Map.png");
 	GetInstance().textureList.push_back(texture);
-	texture = BOGraphicInterface::LoadTexture("Maps/MapThumb2.png");
+	texture = BOGraphicInterface::LoadTexture("Maps/button2Map.png");
 	GetInstance().textureList.push_back(texture);
-    texture = BOGraphicInterface::LoadTexture("Sprites/PlaceHolderPNG/button3Map.png");
+    texture = BOGraphicInterface::LoadTexture("Maps/button3Map.png");
     GetInstance().textureList.push_back(texture);
-    texture = BOGraphicInterface::LoadTexture("Sprites/PlaceHolderPNG/button4Map.png");
+    texture = BOGraphicInterface::LoadTexture("Maps/button4Map.png");
     GetInstance().textureList.push_back(texture);
-    texture = BOGraphicInterface::LoadTexture("Sprites/PlaceHolderPNG/button5Map.png");
+    texture = BOGraphicInterface::LoadTexture("Maps/button5Map.png");
     GetInstance().textureList.push_back(texture);
-    texture = BOGraphicInterface::LoadTexture("Sprites/PlaceHolderPNG/button6Map.png");
+    texture = BOGraphicInterface::LoadTexture("Maps/button6Map.png");
     GetInstance().textureList.push_back(texture);
-    texture = BOGraphicInterface::LoadTexture("Sprites/PlaceHolderPNG/button7Map.png");
+    texture = BOGraphicInterface::LoadTexture("Maps/button7Map.png");
     GetInstance().textureList.push_back(texture);
-	texture = BOGraphicInterface::LoadTexture("Sprites/PlaceHolderPNG/buttonDefaultMap.png");
-	GetInstance().textureList.push_back(texture);
 }
 
 void BOTextureManager::FreeTexture(int p_textureIndex)
