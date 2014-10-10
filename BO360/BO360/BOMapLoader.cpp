@@ -28,17 +28,42 @@ bool BOMapLoader::LoadMap(int p_index)
 	{
 	case(0) :
 	{
-		fileName.append("NewFormatTest.bom");
+		fileName.append("map15.bom");
 		break;
 	}
 	case(1) :
 	{
-		fileName.append("Filled.bom");
+		fileName.append("map2.bom");
 		break;
 	}
+    case(2) :
+    {
+        fileName.append("map3.bom");
+        break;
+    }
+    case(3) :
+    {
+        fileName.append("map4.bom");
+        break;
+    }
+    case(4) :
+    {
+        fileName.append("map5.bom");
+        break;
+    }
+    case(5) :
+    {
+        fileName.append("map6.bom");
+        break;
+    }
+    case(6) :
+    {
+        fileName.append("map7.bom");
+        break;
+    }
 	default:
 	{
-		fileName.append("Empty.bom");
+		fileName.append("Demo.bom");
 		break;
 	}
 	}

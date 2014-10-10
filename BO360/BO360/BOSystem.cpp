@@ -222,6 +222,7 @@ bool BOSystem::Run()
 		// Low-cap the fps to never do less than 10 updates / sec
 		if (m_deltaTime > 0.1)
 		{
+            std::cout << "DT Overflow" << std::endl;
 			m_deltaTime = 0.1;
 		}
 
@@ -411,7 +412,7 @@ void BOSystem::HandleAction(ButtonAction p_action)
                 m_gameState = TECHTREE;
 				int currentLevel = m_levelManager.GetCurrentLevel();
 				int nextLevel = m_levelManager.GetNextLevel();
-				if (currentLevel == nextLevel)
+				if (currentLevel == nextLevel)	// Same if last map
 				{
 					m_gameState = MENU;
 					m_levelManager.SetLevel(0);
@@ -468,7 +469,7 @@ void BOSystem::HandleAction(ButtonAction p_action)
             case(TECHTREEACTION) :
             {
                 // Initialize the new map
-                if (!InitializeMap(m_stateManager.GetLevelIndex()))
+                if (!InitializeMap(m_levelManager.GetCurrentLevel()))
                 {
                     std::cout << "Press ENTER to quit." << std::endl;
                     std::cin.get();
@@ -497,6 +498,15 @@ void BOSystem::Handle(InputMessages p_inputMessages)
     if (m_gameState == RUNNING && p_inputMessages.tKey)
     {
 
+    }
+
+    if (p_inputMessages.xKey)
+    {
+        for (int i = 0; i < 100; i++)
+        {
+            m_stateManager.SetButtonActionLevel(i, LEVEL);
+        }
+        
     }
 }
 

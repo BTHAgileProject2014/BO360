@@ -46,7 +46,7 @@ int BOLevelManager::GetCurrentLevel()
 	return m_currentLevel;
 }
 
-int BOLevelManager::GetUnlockedLeves()
+int BOLevelManager::GetUnlockedLevels()
 {
 	return m_unlockedLevels;
 }

@@ -53,6 +53,7 @@ private:
     void ActivateShockwave();
 	void CheckBallToBall(int i);
 	void BallNewlyLaunched(BOBall* ball);
+    void PewPewPew();
 
 	int m_life;
 

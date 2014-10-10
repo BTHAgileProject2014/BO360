@@ -45,6 +45,7 @@ public:
     static void SetTimeScale(float p_timeScale);
 	static void BallToBallCollision(BOBall& ball1, BOBall& ball2);
 
+    static float2 ApplyGravity(float2 p_position, float2 p_direction, float p_speed, float p_influenceFactor, float2 p_blackHolePos, double p_deltaTime);
     static double AngleBetweenDeg(const float2& p_v1, const float2& p_v2);
     static double AngleBetweenRad(const float2& p_v1, const float2& p_v2);
 

@@ -143,9 +143,15 @@ void BOObjectManager::Shutdown()
 
 void BOObjectManager::Update(double p_deltaTime)
 {
+    // First, check if we've catched all the keys
+    if (m_keyManager.AllKeysCatched())
+    {
+        // In that case, start blowing all existing blocks up!
+        PewPewPew();
+    }
+
     // Update SlowTime before the objects
     m_slowTime.Update(p_deltaTime);
-
     m_blackHole.Update(p_deltaTime * 100);
 	m_paddle.Update(p_deltaTime);
     m_shockwave.Update(p_deltaTime);
@@ -167,6 +173,7 @@ void BOObjectManager::Update(double p_deltaTime)
             {
                 //Calculate position of ball based on position of ball             
                 m_ballList[i]->SetPosition(m_paddle.GetBallStuckPosition(m_ballList[i]->GetStuckAngle()));
+				m_ballList[i]->SetDirection(float2(m_ballList[i]->GetPosition().x - m_blackHole.GetPosition().x, m_ballList[i]->GetPosition().y - m_blackHole.GetPosition().y));
             }
             else
             {
@@ -296,9 +303,13 @@ void BOObjectManager::Handle(InputMessages p_inputMessage)
 	{
 		for (unsigned int i = 0; i < m_ballList.size(); i++)
 		{
+			if (m_ballList[i]->IsStuckToPad())
+			{
 			m_ballList[i]->SetStuckToPad(false);
-	    }
-    }
+				//m_ballList[i]->SetDirection(float2(m_ballList[i]->GetPosition().x - m_blackHole.GetPosition().x, m_ballList[i]->GetPosition().y - m_blackHole.GetPosition().y));
+	}
+}
+}
     if (p_inputMessage.fKey && m_shockwave.Activate())
     {
         ActivateShockwave();
@@ -341,7 +352,9 @@ bool BOObjectManager::LostGame()
 
 bool BOObjectManager::WonGame()
 {
-	return m_keyManager.AllKeysCatched();
+    bool didWin = m_keyManager.AllKeysCatched()
+        && m_blockList.size() == 0;
+	return didWin;
 }
 
 void BOObjectManager::CheckBallOutOfBounds(int p_index)
@@ -552,7 +565,7 @@ void BOObjectManager::BallBlockCollision(BOBall* p_ball)
 
 			p_ball->SetDirection(newDir);
 			p_ball->BouncedOnHexagon();
-			p_ball->SetFuel(0.0f);
+			//p_ball->SetFuel(0.0f);
 		}
 	}
 }
@@ -568,7 +581,7 @@ void BOObjectManager::BallPadCollision(BOBall* p_ball)
 	{
             p_ball->SetStuckToPad(true);
             float2 temp = { p_ball->GetPosition().x - m_blackHole.GetPosition().x, p_ball->GetPosition().y - m_blackHole.GetPosition().y };
-            double tempAngle = BOPhysics::AngleBetweenDeg(float2{ 0, -100 }, temp);
+            float tempAngle = BOPhysics::AngleBetweenDeg(float2( 0, -100 ), temp);
             p_ball->SetStuckAngle((float)(tempAngle - m_paddle.GetRotation()));
 
         }
@@ -671,9 +684,9 @@ void BOObjectManager::CheckBallToBall(int i)
 	}
 }
 
-void BOObjectManager::BallNewlyLaunched(BOBall* ball)
+void BOObjectManager::BallNewlyLaunched(BOBall* p_ball)
 {
-	if (ball->GetNewlyLaunched())
+    if (p_ball->GetNewlyLaunched() && !m_paddle.GetStickyState())
 	{
 		int spawnPU, powerupType;
 		PowerUpTypes PUType = PUNone;
@@ -721,5 +734,19 @@ void BOObjectManager::BallNewlyLaunched(BOBall* ball)
 			}
 			BOPowerUpManager::AddPowerUp(PUType, float2(BOGraphicInterface::GetWindowSize().x / 2, 50), &m_paddle, m_blackHole.GetPosition());
 		}
+		p_ball->BouncedOnPad();
+    }
+}
+void BOObjectManager::PewPewPew()
+{
+    if (m_blockList.size() > 0)
+    {
+        int l = rand() % (m_blockList.size() * 5);
+        if (l < m_blockList.size())
+        {
+            m_particleSystem.RegularBlockExplosion(m_blockList[l]->GetPosition());
+            delete m_blockList[l];
+            m_blockList.erase(m_blockList.begin() + l);
+        }
 	}
 }
