@@ -218,8 +218,8 @@ void BOBall::SetPosition(float2 p_position)
 		int2 windowSize = BOGraphicInterface::GetWindowSize();
 		m_direction = p_position - float2((windowSize.x * 0.5f), (windowSize.y *0.5f));
 		m_direction.normalize();
-		p_position.x += m_direction.x * 6;
-		p_position.y += m_direction.y * 6;
+		p_position.x += m_direction.x * 8;
+		p_position.y += m_direction.y * 8;
 	}
 	BOObject::SetPosition(p_position);
 }
@@ -229,6 +229,14 @@ float BOBall::GetStuckAngle() const
 }
 void BOBall::SetStuckAngle(float p_stuckAngle)
 {
+	if (p_stuckAngle > 360)
+	{
+		p_stuckAngle -= 360;
+	}
+	else if (p_stuckAngle < 0)
+	{
+		p_stuckAngle += 360;
+	}
     m_stuckAngle = p_stuckAngle;
 }
 // input false for fire off: true for fire on
