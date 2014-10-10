@@ -97,12 +97,25 @@ void BOSlowTime::Activate()
             m_active = true;
             FadeState = FadeIn;
         }
+        if (m_charges == 0)
+        {
+            BOHUDManager::SetSlowtime(false);
+        }
+        else
+        {
+            BOHUDManager::SetSlowtime(true);
+        }
     }
 }
 
 void BOSlowTime::AddCharges(int p_charges)
 {
     m_charges += p_charges;
+    if (m_charges != 0)
+    {
+        BOHUDManager::SetSlowtime(true);
+        
+    }
 }
 
 

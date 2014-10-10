@@ -2,6 +2,7 @@
 #define BOSLOWTIME_H_
 #include "BOComponent.h"
 #include "BOPhysics.h"
+#include "BOHUDManager.h"
 
 class BOSlowTime: public BOComponent
 {
