@@ -57,7 +57,7 @@ bool BOSystem::Initialize()
 	}
 
 	// Initialize the texturemanager
-	if (!BOTextureManager::Initialize("Industrial"))
+	if (!BOTextureManager::Initialize("Neon"))
 	{
 		std::cout << "Initialize texturemanager failed!" << std::endl;
 
@@ -468,7 +468,7 @@ void BOSystem::HandleAction(ButtonAction p_action)
             case(TECHTREEACTION) :
             {
                 // Initialize the new map
-                if (!InitializeMap(m_stateManager.GetLevelIndex()+1))
+                if (!InitializeMap(m_levelManager.GetCurrentLevel()))
                 {
                     std::cout << "Press ENTER to quit." << std::endl;
                     std::cin.get();
