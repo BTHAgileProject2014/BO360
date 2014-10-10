@@ -165,7 +165,15 @@ void BOBall::SetFuel(float p_fuel)
 
 int BOBall::GetDamage()
 {
-	return m_damage;
+    if (m_onFire)
+    {
+        return m_damage * 2;
+    }
+    else
+    {
+        return m_damage;
+    }
+	
 }
 
 bool BOBall::IsStuckToPad()

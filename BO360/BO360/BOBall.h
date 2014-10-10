@@ -58,7 +58,7 @@ private:
 	bool m_onFire;
 	bool m_hasCollidedWithBall;
 	double m_fireTimeElapsed;
-	const double m_fireTimeDuration = 5; // 5 seconds for fireball duration
+	const double m_fireTimeDuration = 10; // 5 seconds for fireball duration
     bool m_stuckToPad;
 	bool m_stuckToPadPrev;
     float m_stuckAngle;
