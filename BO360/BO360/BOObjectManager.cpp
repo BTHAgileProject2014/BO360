@@ -684,9 +684,9 @@ void BOObjectManager::CheckBallToBall(int i)
 	}
 }
 
-void BOObjectManager::BallNewlyLaunched(BOBall* ball)
+void BOObjectManager::BallNewlyLaunched(BOBall* p_ball)
 {
-    if (ball->GetNewlyLaunched())
+    if (p_ball->GetNewlyLaunched())
     {
         int spawnPU, powerupType;
         PowerUpTypes PUType = PUNone;
@@ -734,6 +734,7 @@ void BOObjectManager::BallNewlyLaunched(BOBall* ball)
             }
             BOPowerUpManager::AddPowerUp(PUType, float2(BOGraphicInterface::GetWindowSize().x / 2, 50), &m_paddle, m_blackHole.GetPosition());
         }
+		p_ball->BouncedOnPad();
     }
 }
 void BOObjectManager::PewPewPew()

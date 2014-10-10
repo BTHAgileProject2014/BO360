@@ -57,7 +57,7 @@ bool BOSystem::Initialize()
 	}
 
 	// Initialize the texturemanager
-	if (!BOTextureManager::Initialize("Industrial"))
+	if (!BOTextureManager::Initialize("Neon"))
 	{
 		std::cout << "Initialize texturemanager failed!" << std::endl;
 
@@ -412,7 +412,7 @@ void BOSystem::HandleAction(ButtonAction p_action)
                 m_gameState = TECHTREE;
 				int currentLevel = m_levelManager.GetCurrentLevel();
 				int nextLevel = m_levelManager.GetNextLevel();
-				if (currentLevel == nextLevel)
+				if (currentLevel == nextLevel)	// Same if last map
 				{
 					m_gameState = MENU;
 					m_levelManager.SetLevel(0);
@@ -469,7 +469,7 @@ void BOSystem::HandleAction(ButtonAction p_action)
             case(TECHTREEACTION) :
             {
                 // Initialize the new map
-                if (!InitializeMap(m_stateManager.GetLevelIndex()+1))
+                if (!InitializeMap(m_levelManager.GetCurrentLevel()))
                 {
                     std::cout << "Press ENTER to quit." << std::endl;
                     std::cin.get();
@@ -498,6 +498,15 @@ void BOSystem::Handle(InputMessages p_inputMessages)
     if (m_gameState == RUNNING && p_inputMessages.tKey)
     {
 
+    }
+
+    if (p_inputMessages.xKey)
+    {
+        for (int i = 0; i < 100; i++)
+        {
+            m_stateManager.SetButtonActionLevel(i, LEVEL);
+        }
+        
     }
 }
 
