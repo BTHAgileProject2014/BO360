@@ -458,6 +458,15 @@ void BOSystem::Handle(InputMessages p_inputMessages)
     {
 
     }
+
+    if (p_inputMessages.xKey)
+    {
+        for (int i = 0; i < 100; i++)
+        {
+            m_stateManager.SetButtonActionLevel(i, LEVEL);
+        }
+        
+    }
 }
 
 void BOSystem::ShutdownMap()
