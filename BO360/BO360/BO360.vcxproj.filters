@@ -34,6 +34,12 @@
     <Filter Include="Source Files\ObjectTypes">
       <UniqueIdentifier>{d402d120-0906-423d-bc83-3d3f3b87ee42}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\TechTree">
+      <UniqueIdentifier>{7a467b49-55cd-4b61-a8ca-e656cb2fbbfb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\TechTree">
+      <UniqueIdentifier>{5fdc1556-caab-4956-8eb7-ac4e22518945}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BOSystem.cpp">
@@ -155,6 +161,15 @@
     </ClCompile>
     <ClCompile Include="BOShockwave.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="BOTechTreeNode.cpp">
+      <Filter>Source Files\TechTree</Filter>
+    </ClCompile>
+    <ClCompile Include="BOTechTreeManager.cpp">
+      <Filter>Source Files\TechTree</Filter>
+    </ClCompile>
+    <ClCompile Include="BOTechTreeEffects.cpp">
+      <Filter>Source Files\TechTree</Filter>
     </ClCompile>
     <ClCompile Include="BOLevelManager.cpp">
       <Filter>Source Files</Filter>
@@ -286,6 +301,15 @@
     </ClInclude>
     <ClInclude Include="BOShockwave.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BOTechTreeNode.h">
+      <Filter>Header Files\TechTree</Filter>
+    </ClInclude>
+    <ClInclude Include="BOTechTreeManager.h">
+      <Filter>Header Files\TechTree</Filter>
+    </ClInclude>
+    <ClInclude Include="BOTechTreeEffects.h">
+      <Filter>Header Files\TechTree</Filter>
     </ClInclude>
     <ClInclude Include="BOLevelManager.h">
       <Filter>Header Files</Filter>

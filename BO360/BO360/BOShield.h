@@ -29,5 +29,6 @@ private:
 	sphere m_ShieldSphere;
 	int2 m_WindowSize;
 	bool m_IsActive;
+	int m_lifes;
 };
 #endif

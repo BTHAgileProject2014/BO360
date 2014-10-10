@@ -16,6 +16,7 @@
 #include "BOSubscriber.h"
 #include "BOScore.h"
 #include "BOTextureManager.h"
+#include "BOTechTreeManager.h"
 #include "BOLevelManager.h"
 #include <iostream>
 //#include <vld.h>
@@ -53,5 +54,9 @@ private:
 	int m_FPS;
 
 	Uint32 m_timePassedMS;
+
+	BOTechTreeEffects m_techTreeEffects;
+
+    BOTechTreeManager m_techTreeManager;
 };
 #endif

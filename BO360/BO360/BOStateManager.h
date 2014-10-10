@@ -19,11 +19,13 @@ public:
 
 private:
 	bool InitializeLevelSelect(int2 p_screenSize);
-private:
+    bool InitializeTechTree(int2 p_screenSize);
+
 	BOState m_menu;
 	BOState m_paused;
 	BOState m_victory;
 	BOState m_defeat;
 	BOState m_levelSelect;
+    BOState m_techTree;
 };
 #endif

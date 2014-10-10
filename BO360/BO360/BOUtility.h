@@ -357,6 +357,7 @@ struct InputMessages
 	bool zKey;
 	bool xKey;
     bool fKey;
+    bool tKey;
 	bool escKey;
 };
 
@@ -368,7 +369,8 @@ enum GameState
 	VICTORY,
 	DEFEAT,
     HIGHSCORESTATE,
-	LEVELSELECTOR
+	LEVELSELECTOR,
+    TECHTREE
 };
 
 enum ButtonAction
@@ -382,7 +384,8 @@ enum ButtonAction
 	NEXT,
 	RETRY,
 	LEVELSELECT,
-	LEVEL
+	LEVEL,
+    TECHTREEACTION
 };
 
 enum ParticleType
@@ -400,16 +403,10 @@ enum ParticleType
 enum BlockType
 {
 	REGULAR,
-	DUBBLEHP,
+    DOUBLE,
+    ARMORED,
 	KEY,
 	INDESTRUCTIBLE
-};
-
-struct Block
-{
-	float2 m_position;
-	BlockType m_type;
-	int m_worth;
 };
 
 enum KeyMessages
@@ -425,6 +422,7 @@ enum KeyMessages
 	zKey,
 	xKey,
     fKey,
+    tKey,
 	escKey
 };
 
@@ -514,7 +512,7 @@ struct hexagon
 // What types of power-ups we use
 enum PowerUpTypes
 {
-	PUNone,
+	PUNone = 0,
 	PUBiggerPad,
 	PUSmallerPad,
 	PUShield,
@@ -525,6 +523,14 @@ enum PowerUpTypes
     PUSlowTime
 };
 
+struct Block
+{
+    float2 m_position;
+    BlockType m_type;
+    int m_worth;
+    PowerUpTypes m_powerUpType;
+};
+
 inline void ThrowInitError(std::string p_className)
 {
 	std::cout << "Failed to initialize: " << p_className.c_str() << std::endl;
@@ -533,45 +539,53 @@ inline void ThrowInitError(std::string p_className)
 enum Textures
 {
 	TEXBALL,
-	TEXDEBUGBALL,
+    TEXBALLTAIL,
 	TEXFIREBALL,
 	TEXHEXSTANDARD,
+    TEXHEXPOWERUP,
+    TEXHEXDOUBLE,
 	TEXHEXARMORED,
 	TEXHEXINDES,
     TEXGLOWSTANDARD,
+    TEXGLOWDOUBLE,
     TEXGLOWARMORED,
     TEXGLOWINDES,
-	TEXHEXPU1,
-	TEXHEXPU2,
-	TEXHEXPU3,
-	TEXHEXPU4,
-    TEXHEXPUSHOCKWAVE,
-	TEXHEXPU0,
 	TEXSHIELD,
-	TEXPUMULTIBALL,
+	TEXPUADDBALL,
 	TEXPUFIREBALL,
-	TEXPU2,
-	TEXPU3,
+	TEXPUSHIELD,
+	TEXPUBIGGERPAD,
+    TEXPUSTICKYPAD,
     TEXPUSHOCKWAVE,
     TEXPUSLOWTIME,
 	TEXBALLTRAIL,
+    TEXFIREBALLTRAIL,
 	TEXBALLDEBRIS,
 	TEXBLOCKDEBRIS,
 	TEXPUDEBRIS,
 	TEXEXPLOSION,
 	TEXDEBUGTRAIL,
-	TEXLIFE,
+	TEXHUDALIVE,
+    TEXHUDDEAD,
+    TEXHUDCORE,
 	TEXMENUEDGE,
 	TEXMENUBAR,
 	TEXMENUBG,
 	TEXMENUBUTTON,
 	TEXMENUBUTTONHL,
+    TEXTOOLTIP,
 	TEXBACKGROUND,
 	TEXBLACKHOLE,
 	TEXPADSEG,
-	TEXTOOLTIP,
     TEXKEY,
 	TEXLOCK,
+    //Tech tree
+    TEXTTACTIVE,
+    TEXTTADJACENTACTIVE,
+    TEXTTHIGHLIGHTED,
+    TEXTTINACTIVE,
+    TEXTTTGRID,
+	TEXDEBUGDIR,
 
 	/* HÄR UNDER ÄR DET BARA BANOR PLZ!!!*/
 	nrOfLevels,
@@ -580,6 +594,99 @@ enum Textures
 	TEXBUTTONDEAFAULTMAP,
 	
 	texNR
+
+
+};
+enum TTEffects
+{
+
+    //List order
+    //Lane 1
+    ShockWave,
+    PowerUpBoost3,
+    DoubleMultiBall3,
+    QuantumFuel,
+    //Lane 2
+    PowerUpBoost1,
+    SlowTime,
+    IncreaseBallDamage2,
+    Fireball,
+    MultiSpawn2,
+    //Lane 3
+    PowerUpBoost2,
+    DecreasePowerUpFallSpeed2,
+    PowerUpGift,
+    DecreaseGravityPull,
+    IncreaseBallDamage,
+    DoubleMultiBall2,
+    //Laer 4
+    MegaPad,
+    StartWithShield,
+    DecreasePowerUpFallSpeed,
+    DropBasicPowerUp,    
+    DecreaseBallSpeed,
+    MoreFuelAtRefill,
+    SuperTank,
+    //Lane 5
+    StackableShield,
+    StickyPad,
+    AddBounceToShield,
+    IncreasePadSpeed,
+    BallsGetFuelWhenTheyCollide,
+    DoubleMultiBall,
+    //Lane 6
+    IncreaseStartPadSize,
+    IncreaseMaxPadSize,
+    ChanceDoublePadSizeIncrease, 
+    IncreaseMaxPadSize2,
+    MuliSpawn, 
+    //Lane 7
+    Regenerate,
+    IncreaseStartPadSize2,
+    ChanceDoublePadSizeIncrease2,
+    GiantBall
+
+    /*//In order
+    //Layer 1
+    DecreasePowerUpFallSpeed,   //decrease 10%
+    AddBounceToShield,          //Increase bounce on shield 
+    IncreasePadSpeed,           //
+    DecreaseBallSpeed,
+    DecreaseGravityPull,
+    PowerUpGift,
+    //Layer 2
+    DecreasePowerUpFallSpeed2,   //20% slower
+    StartWithShield,             //Start with a shield
+    StickyPad,
+    IncreaseMaxPadSize,
+    ChanceDoublePadSizeIncrease, // 33% chance to get double effekt
+    IncreaseMaxPadSize2,
+    BallsGetFuelWhenTheyCollide,
+    MoreFuelAtRefill,
+    IncreaseBallDamage,
+    Fireball,
+    IncreaseBallDamage2,
+    SlowTime,
+    //Layer 3
+    PowerUpBoost1,
+    PowerUpBoost2,
+    MegaPad,
+    StackableShield,
+    IncreaseStartPadSize,
+    Regenerate,
+    IncreaseStartPadSize2,
+    ChanceDoublePadSizeIncrease2,
+    GiantBall,
+    MuliSpawn,
+    DoubleMultiBall,
+    SuperTank,                  //Bounce on block doesn't remove fuel
+    DoubleMultiBall2,
+    MultiSpawn2,
+    QuantumFuel,
+    DoubleMultiBall3,
+    PowerUpBoost3,
+    ShockWave
+    */
 };
 
 #endif
