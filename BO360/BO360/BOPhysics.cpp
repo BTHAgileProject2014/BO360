@@ -365,7 +365,7 @@ float2 BOPhysics::ApplyGravity(float2 p_position, float2 p_direction, float p_sp
 
     distance *= 0.05f;
 
-    const double GravityFactor = 200;
+    const double GravityFactor = 400;
     double force = (GravityFactor * p_influenceFactor) / (distance * distance);
 
     float2 newDir = p_direction * p_speed + gravityDirection * force;
