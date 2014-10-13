@@ -36,13 +36,13 @@ void BOPowerUpManager::Notify(PowerUpTypes p_type, bool p_activated)
 
 void BOPowerUpManager::AddPowerUp(PowerUpTypes p_type, float2 p_startPosition, BOPaddle* p_paddle, float2 p_blackholePosition)
 {
-	
+    float powerUpSpeed = 400.0f;
 	switch (p_type)
 	{
 		case PUBiggerPad:
 		{
 			BOPowerUp* biggerPad = new BOPowerUp();
-            biggerPad->Initialize(PUBiggerPad, p_startPosition, int2(40, 40), BOTextureManager::GetTexture(TEXPUBIGGERPAD), 500.0f, p_paddle, p_blackholePosition);
+            biggerPad->Initialize(PUBiggerPad, p_startPosition, int2(40, 40), BOTextureManager::GetTexture(TEXPUBIGGERPAD), powerUpSpeed, p_paddle, p_blackholePosition);
 			m_powerUps.push_back(biggerPad);
 			break;
 		}
@@ -55,7 +55,7 @@ void BOPowerUpManager::AddPowerUp(PowerUpTypes p_type, float2 p_startPosition, B
 		case PUShield:
 		{
 			BOPowerUp* shield = new BOPowerUp();
-            shield->Initialize(PUShield, p_startPosition, int2(40, 40), BOTextureManager::GetTexture(TEXPUSHIELD), 500.0f, p_paddle, p_blackholePosition);
+            shield->Initialize(PUShield, p_startPosition, int2(40, 40), BOTextureManager::GetTexture(TEXPUSHIELD), powerUpSpeed, p_paddle, p_blackholePosition);
 			m_powerUps.push_back(shield);
 			break;
 		}	
@@ -63,7 +63,7 @@ void BOPowerUpManager::AddPowerUp(PowerUpTypes p_type, float2 p_startPosition, B
 		case PUExtraBall:
 		{
 			BOPowerUp* extraBall = new BOPowerUp();
-			extraBall->Initialize(PUExtraBall, p_startPosition, int2(40, 40), BOTextureManager::GetTexture(TEXPUADDBALL), 500.0f, p_paddle, p_blackholePosition);
+            extraBall->Initialize(PUExtraBall, p_startPosition, int2(40, 40), BOTextureManager::GetTexture(TEXPUADDBALL), powerUpSpeed, p_paddle, p_blackholePosition);
 			m_powerUps.push_back(extraBall);
 			break;
 		}
@@ -71,7 +71,7 @@ void BOPowerUpManager::AddPowerUp(PowerUpTypes p_type, float2 p_startPosition, B
         case PUStickyPad:
         {
             BOPowerUp* sticky = new BOPowerUp();
-            sticky->Initialize(PUStickyPad, p_startPosition, int2(40, 40), BOTextureManager::GetTexture(TEXPUSTICKYPAD), 500.0f, p_paddle, p_blackholePosition);
+            sticky->Initialize(PUStickyPad, p_startPosition, int2(40, 40), BOTextureManager::GetTexture(TEXPUSTICKYPAD), powerUpSpeed, p_paddle, p_blackholePosition);
             m_powerUps.push_back(sticky);
             break;
         }
@@ -79,7 +79,7 @@ void BOPowerUpManager::AddPowerUp(PowerUpTypes p_type, float2 p_startPosition, B
 		case PUFireBall:
 		{
 			BOPowerUp* fireBall = new BOPowerUp();
-			fireBall->Initialize(PUFireBall, p_startPosition, int2(40, 40), BOTextureManager::GetTexture(TEXPUFIREBALL), 500.0f, p_paddle, p_blackholePosition);
+            fireBall->Initialize(PUFireBall, p_startPosition, int2(40, 40), BOTextureManager::GetTexture(TEXPUFIREBALL), powerUpSpeed, p_paddle, p_blackholePosition);
 			m_powerUps.push_back(fireBall);
 			break;
 		}
@@ -87,7 +87,7 @@ void BOPowerUpManager::AddPowerUp(PowerUpTypes p_type, float2 p_startPosition, B
         case PUShockwave:
         {
             BOPowerUp* shockwave = new BOPowerUp();
-            shockwave->Initialize(PUShockwave, p_startPosition, int2(40, 40), BOTextureManager::GetTexture(TEXPUSHOCKWAVE), 500.0f, p_paddle, p_blackholePosition);
+            shockwave->Initialize(PUShockwave, p_startPosition, int2(40, 40), BOTextureManager::GetTexture(TEXPUSHOCKWAVE), powerUpSpeed, p_paddle, p_blackholePosition);
             m_powerUps.push_back(shockwave);
             break;
         }
@@ -95,7 +95,7 @@ void BOPowerUpManager::AddPowerUp(PowerUpTypes p_type, float2 p_startPosition, B
         case PUSlowTime:
         {
             BOPowerUp* slowTime = new BOPowerUp();
-            slowTime->Initialize(PUSlowTime, p_startPosition, int2(40, 40), BOTextureManager::GetTexture(TEXPUSLOWTIME), 500.0f, p_paddle, p_blackholePosition);
+            slowTime->Initialize(PUSlowTime, p_startPosition, int2(40, 40), BOTextureManager::GetTexture(TEXPUSLOWTIME), powerUpSpeed, p_paddle, p_blackholePosition);
             m_powerUps.push_back(slowTime);
             break;
         }

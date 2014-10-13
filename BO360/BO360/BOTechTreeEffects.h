@@ -34,7 +34,7 @@ struct TechTreePUEffects
 
     TechTreePUEffects()
     {
-        speed = 0.80f;
+        speed = 1.0f;
         shieldCharge = 0;
         startShield = false;
         biggerPadEffectMultiplier = 0;
