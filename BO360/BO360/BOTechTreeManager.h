@@ -22,6 +22,8 @@ public:
     void Handle(InputMessages p_inputMessages);
     void Reset();
 
+    void SetTechPoint(int p_numberOfLevels);
+
 private:
     void HandleUpgrades(BOTechTreeNode* p_node);
     void HandleToolTips(BOTechTreeNode* p_node);
@@ -37,9 +39,11 @@ private:
 
     int2 m_windowSize;
     BOButton m_resetButton;
+
     BODrawableText m_techPointsText;
     int m_maxTechPoints;
     int m_techPointsLeft;
+
     std::vector<BOTechTreeNode*> m_nodeList;
     BOTechTreeNode* m_startNode;
     SDL_Texture* m_grid;

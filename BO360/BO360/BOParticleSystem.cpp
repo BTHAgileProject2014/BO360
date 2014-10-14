@@ -260,7 +260,7 @@ void BOParticleSystem::BallTrail(float2 p_position)
 	AddStationaryParticle(BALLTRAIL, 1.0f, position, true, (float)rotation, (float)rotation);
 }
 
-void BOParticleSystem::RegularBlockExplosion(float2 p_position)
+void BOParticleSystem::BlockExplosion(float2 p_position)
 {
 	int parts = rand() % BLOCKDEBIRSPEREXPLOSION.x + BLOCKDEBIRSPEREXPLOSION.y;
 	for (int p = 0; p < parts; p++)
@@ -271,7 +271,7 @@ void BOParticleSystem::RegularBlockExplosion(float2 p_position)
 		float2 position = p_position;
 		float2 direction = float2(1 * sin((float)angle), 1 * cos((float)angle));
 
-		AddMovingParticle(BLOCKDEBRIS, 0.25f, position, true, (float)angle, (float)angle, direction, (float)speed);
+		AddMovingParticle(BLOCKDEBRIS, 0.35f, position, true, (float)angle, (float)angle, direction, (float)speed);
 	}
 
 	int explosions = rand() % EXPLOSIONS.x + EXPLOSIONS.y;
@@ -283,6 +283,21 @@ void BOParticleSystem::RegularBlockExplosion(float2 p_position)
 		float2 position = p_position;
 		float2 direction = float2(1 * sin((float)angle), 1 * cos((float)angle));
 
-		AddMovingParticle(EXPLOSION, 0.15f, position, false, (float)angle, 0.0f, direction, (float)speed);
+		AddMovingParticle(EXPLOSION, 0.25f, position, false, (float)angle, 0.0f, direction, (float)speed);
 	}
+}
+
+void BOParticleSystem::Explosion(float2 p_position)
+{
+    int explosions = rand() % EXPLOSIONS.x + EXPLOSIONS.y;
+    for (int e = 0; e < explosions; e++)
+    {
+        int angle = rand() % PARTICLEROTATIONVARIATION - (PARTICLEROTATIONVARIATION / 2);
+        int speed = rand() % PARTICLESEXPLOSIONSPEED.x + PARTICLESEXPLOSIONSPEED.y;
+
+        float2 position = p_position;
+        float2 direction = float2(1 * sin((float)angle), 1 * cos((float)angle));
+
+        AddMovingParticle(EXPLOSION, 0.25f, position, false, (float)angle, 0.0f, direction, (float)speed);
+    }
 }

@@ -149,6 +149,14 @@ void BOTextureManager::LoadTexture(std::string p_theme)
     }
 	GetInstance().textureList.push_back(texture);
 
+    texture = BOGraphicInterface::LoadTexture("Sprites/Power Ups/Shockwave.png");
+    if (!texture)
+    {
+        std::cout << "Shockwave texture failed to load!" << std::endl;
+        std::cin.get();
+    }
+    GetInstance().textureList.push_back(texture);
+
     texture = BOGraphicInterface::LoadTexture("Sprites/Power Ups/StickyPad.png");
     if (!texture)
     {
