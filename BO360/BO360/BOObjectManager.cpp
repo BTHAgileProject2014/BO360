@@ -520,11 +520,8 @@ void BOObjectManager::BallBlockCollision(BOBall* p_ball)
 {
 	for (unsigned int i = 0; i < m_blockList.size(); i++)
 	{
-		box blockBounds = m_blockList[i]->GetBoundingBox();
-		box ballBounds = p_ball->GetBoundingBox();
-
 		// Cheap collision test		
-		bool result = BOPhysics::CheckCollisionBoxToBox(p_ball->GetBoundingBox(), blockBounds);
+		bool result = BOPhysics::CheckCollisionSphereToSphere(p_ball->GetBoundingSphere(), m_blockList[i]->GetBoundingSphere());
 		if (!result)
 		{
 			continue;
@@ -539,7 +536,11 @@ void BOObjectManager::BallBlockCollision(BOBall* p_ball)
 		// Make sure that we haven't already turned away from the hexagon
 		float2 ballDir = p_ball->GetDirection();
 		float2 newDir = BOPhysics::ReflectBallAroundNormal(p_ball->GetDirection(), normal);
-		if (newDir.x != ballDir.x || newDir.y != ballDir.y)
+		if (newDir.x == ballDir.x && newDir.y == ballDir.y)
+		{
+			// boll träffa från fel håll.
+		}
+		else
 		{
 			BOSoundManager::PlaySound(SOUND_POP);
 			//std::cout << "Ball bounced on [" << i << "]" << std::endl;

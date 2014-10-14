@@ -23,7 +23,7 @@ bool BOShield::Initialize(int2 p_ShieldSize, SDL_Texture* p_sprite, int2 p_Windo
     m_opacity = 255;
 
 	m_ShieldSprite = p_sprite;
-	m_lifes = 1 + BOTechTreeEffects::PUEffects.shieldCharge;
+	m_lifes = 100000 + BOTechTreeEffects::PUEffects.shieldCharge;
 
 	return true;
 }
