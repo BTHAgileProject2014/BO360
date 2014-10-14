@@ -54,6 +54,7 @@ private:
 	void CheckBallToBall(int i);
 	void BallNewlyLaunched(BOBall* ball);
     void PewPewPew();
+	void ActivateMegaPad();
 
 	int m_life;
     bool m_continue;

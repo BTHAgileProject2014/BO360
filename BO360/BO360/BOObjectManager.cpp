@@ -274,13 +274,15 @@ void BOObjectManager::Handle(PowerUpTypes p_type, bool p_activated)
 				if (BOTechTreeEffects::PUEffects.stackableShield)
 				{
 					if (m_Shield.GetLifes() < BOTechTreeEffects::PUEffects.maxStackShield)
+					{
 						m_Shield.AddLife(1);
+					}
 				}
 			}
 			else
 			{
-			m_Shield.SetActive(true);
-		}
+				m_Shield.SetActive(true);
+			}
 		}
 		break;
 	case PUExtraBall:
@@ -292,8 +294,7 @@ void BOObjectManager::Handle(PowerUpTypes p_type, bool p_activated)
 			if (randomNr <= (100 * BOTechTreeEffects::PUEffects.multiBallMultiplyChance))
 			{
 				AddNewBall();
-		}
-			
+			}			
 		}
 		break;
 	case PUFireBall:
@@ -339,6 +340,10 @@ void BOObjectManager::Handle(InputMessages p_inputMessage)
         ActivateShockwave();
     }
 
+	if (p_inputMessage.gKey)
+	{
+		ActivateMegaPad();
+	}
     // Activate Slow time
     if (p_inputMessage.downArrow)
     {
@@ -806,4 +811,9 @@ void BOObjectManager::PewPewPew()
             m_blockList.erase(m_blockList.begin() + l);
         }
 	}
+}
+
+void BOObjectManager::ActivateMegaPad()
+{
+	m_paddle.ActivateMegaPad();
 }

@@ -9,13 +9,14 @@ enum BOInputKey
 	BOInput_Left,
 	BOInput_Right,
 	BOInput_Space,
-    BOInput_Enter,
+	BOInput_Enter,
 	BOInput_M1,
 	BOInput_M2,
 	BOInput_z,
 	BOInput_x,
-    BOInput_f,
-    BOInput_t
+	BOInput_f,
+	BOInput_t,
+	BOInput_g
 };
 
 BOInput::BOInput()
@@ -30,7 +31,7 @@ BOInput::~BOInput()
 
 bool BOInput::Initialize()
 {
-	for (int i = 0; i < 11; i++)
+	for (int i = 0; i < 13; i++)
 	{
 		m_buttonsPressed[i] = false;
 	}
@@ -195,6 +196,18 @@ bool BOInput::Update()
                         }
                         break;
                     }
+					case SDLK_g:
+					{
+						if (!m_buttonsPressed[BOInput_g])
+						{
+							m_buttonsPressed[BOInput_g] = true;
+							m_publisher.Notify(gKey, true);
+#ifdef DEBUG
+							std::cout << "g is pressed\n";
+#endif
+						}
+						break;
+					}
 				}
 				break;
 			}
@@ -307,6 +320,15 @@ bool BOInput::Update()
 #endif
                         break;
                     }
+					case SDLK_g:
+					{
+						m_buttonsPressed[BOInput_g] = false;
+						m_publisher.Notify(gKey, false);
+#ifdef DEBUG
+						std::cout << "g is released\n";
+#endif
+						break;
+					}
 				}
 				break;
 			}

@@ -21,6 +21,9 @@ bool BOPaddle::Initialize(float2 p_position, int2 p_size, int2 p_sourceSize, int
 	m_maxSegments = 5 + BOTechTreeEffects::PaddleEffects.maxSize;
 	AddSegments(2 + BOTechTreeEffects::PaddleEffects.size); // 2 here -> Start with total 3 segments
 	m_deltaRotation = 200 * BOTechTreeEffects::PaddleEffects.speed;
+	m_megaPadActive = false;
+	m_megaPadTimeElapsed = 0;
+	m_megaPadTimeDuration = 8.0;
 	BOPublisher::AddSubscriber(this);
 	BOPowerUpManager::AddSubscriber(this);
 
@@ -130,6 +133,13 @@ void BOPaddle::Update(double p_deltaTime)
 		}
 	}
 
+	m_megaPadTimeElapsed += p_deltaTime * BOPhysics::GetTimeScale();
+	if (m_megaPadTimeElapsed >= m_megaPadTimeDuration)
+	{
+		DeactivateMegaPad();
+		m_megaPadTimeElapsed = 0;
+	}
+
     BOAnimatedObject::Animate(p_deltaTime);
 }
 
@@ -224,4 +234,23 @@ bool BOPaddle::GetStickyState()const
 void BOPaddle::SetStickyState(bool p_active)
 {
     m_isSticky = p_active;
+}
+
+void BOPaddle::ActivateMegaPad()
+{
+	int megapad = 20;
+	m_preMegaSegments = m_segments;
+	m_totalDegrees = (m_segementDegree * megapad);
+	m_segments = megapad;
+
+
+	m_megaPadActive = true;
+}
+
+void BOPaddle::DeactivateMegaPad()
+{
+	m_totalDegrees = (m_segementDegree * m_preMegaSegments);
+	m_segments = m_preMegaSegments;
+
+	m_megaPadActive = false;
 }

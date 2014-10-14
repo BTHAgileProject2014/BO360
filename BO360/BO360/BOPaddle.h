@@ -32,6 +32,9 @@ public:
 	float2 GetBallSpawnPosition();
     float2 GetBallStuckPosition(float angle);
 
+	void ActivateMegaPad();
+	void DeactivateMegaPad();
+
 private:
 	double m_deltaRotation;
 	bool m_movingLeft;
@@ -39,9 +42,13 @@ private:
 	int m_segments;
 	int m_minSegments;
 	int m_maxSegments;
+	int m_preMegaSegments;
 	double m_totalDegrees;
 	double m_segementDegree;
     bool m_isSticky;
+	bool m_megaPadActive;
+	double m_megaPadTimeElapsed;
+	double m_megaPadTimeDuration;
 
     SDL_Texture* m_stickyGlow;
 };

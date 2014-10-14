@@ -93,6 +93,9 @@ void BOPublisher::Notify(KeyMessages p_keyMessage, bool p_value)
     case tKey:
         m_inputMessage.tKey = p_value;
         break;
+	case gKey:
+		m_inputMessage.gKey = p_value;
+		break;
 	case escKey:
 		m_inputMessage.escKey = p_value;
 		break;
