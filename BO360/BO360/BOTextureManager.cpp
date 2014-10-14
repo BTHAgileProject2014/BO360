@@ -320,6 +320,14 @@ void BOTextureManager::LoadTexture(std::string p_theme)
     }
 	GetInstance().textureList.push_back(texture);
 
+    texture = BOGraphicInterface::LoadTexture("Sprites/Menu/GrayBackground.png");
+    if (!texture)
+    {
+        std::cout << "Gray Menu background texture failed to load!" << std::endl;
+        std::cin.get();
+    }
+    GetInstance().textureList.push_back(texture);
+
 	texture = BOGraphicInterface::LoadTexture("Sprites/Menu/Button.png");
     if (!texture)
     {
