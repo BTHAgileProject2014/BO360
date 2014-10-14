@@ -202,9 +202,8 @@ void BOObjectManager::Update(double p_deltaTime)
 				continue;
 		    }
 		
-		    // Bounce on shield, this should change once a new ball-ball collision has been added to the physics class.
-		    float2 newdir = m_Shield.Update(p_deltaTime, m_ballList[i]->GetBoundingSphere(), m_ballList[i]->GetDirection());
-		    m_ballList[i]->SetDirection(newdir);
+		    // Bounce on shield
+            m_Shield.Update(p_deltaTime, *m_ballList[i]);
 
 		    // Check collision between ball and keys
 		    m_keyManager.Update(*m_ballList[i]);
