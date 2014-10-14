@@ -55,7 +55,7 @@ void BOMovingParticle::Update(double p_deltaTime)
     if (m_timeLeftS <= m_startFadeTime)
     {
         double fadePercentage = m_timeLeftS / m_startFadeTime;
-        m_opacity = (255 * fadePercentage);
+        m_opacity = (Uint8)(255 * fadePercentage);
 
     }
 
