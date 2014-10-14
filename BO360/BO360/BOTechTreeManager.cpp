@@ -52,7 +52,7 @@ bool BOTechTreeManager::Initialize(int2 p_windowDimension)
     MapNodes();
     SetLPE();
 
-    m_resetButton.Initialize(float2(m_windowSize.x-50.0f-250.0f, m_windowSize.y-50.0f-75.0f), int2(250, 75), BOTextureManager::GetTexture(TEXMENUBUTTON), "RESET", NOACTION, "");
+    m_resetButton.Initialize(float2(m_windowSize.x-50.0f-250.0f, m_windowSize.y-50.0f-75.0f), int2(250, 75), BOTextureManager::GetTexture(TEXMENUBUTTON), "RESET", TECHTREERESET, "");
 
     BOPublisher::AddSubscriber(this);
 
@@ -253,53 +253,12 @@ void BOTechTreeManager::SetLPE()
         {
             m_nodeList[i]->SetLayer(3);
         }
+
         //Set Effect
+        m_nodeList[i]->SetEffect(i);
 
+        // Tooltips
         HandleToolTips(m_nodeList[i]);
-
-
-        // Temporary tooltips for demo
-        switch (i)
-        {
-            case(11) :
-            {
-                m_nodeList[i]->SetEffect(i, "PUG");
-                break;
-            }
-            case(12) :
-            {
-                m_nodeList[i]->SetEffect(i, "DGP");
-                break;
-            }
-            case(17) :
-            {
-                m_nodeList[i]->SetEffect(i, "PUFS");
-                break;
-            }
-            case(18) :
-            {
-                m_nodeList[i]->SetEffect(i, "START");
-                break;
-            }
-            case(19) :
-            {
-                m_nodeList[i]->SetEffect(i,"DBS");
-                break;
-            }
-            case(24) :
-            {
-                m_nodeList[i]->SetEffect(i, "SC");
-                break;
-            }
-            case(25) :
-            {
-                m_nodeList[i]->SetEffect(i, "IPS");
-                break;
-            }
-            default:
-                m_nodeList[i]->SetEffect(i);
-                break;
-        }
     }
 }
 void BOTechTreeManager::SetNodeLPE(BOTechTreeNode* p_node, int p_layer, int p_price, int p_effect)

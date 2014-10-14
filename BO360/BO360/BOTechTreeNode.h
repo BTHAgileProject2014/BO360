@@ -60,7 +60,6 @@ public:
     void Reset();
     bool Intersects(int2 p_mousePosition);
 
-    std::string GetToolTip();
     void SetToolTip(std::string p_toolTip);
 
 private:
@@ -80,15 +79,16 @@ private:
     BOTechTreeNode* m_downLeft;
     BOTechTreeNode* m_downRight;
 
-    std::string m_toolTip;
     bool m_isActive;
     bool m_isAdjacentActive;
     bool m_hoveringOver;
     int m_layer;
     int m_price;
     int m_effect;
-    BODrawableText m_tooltip;
 
+    BODrawableText m_tooltipHeading;
+    BODrawableText m_tooltipText;
+    BOObject m_tooltipFrame;
 };
 
 #endif

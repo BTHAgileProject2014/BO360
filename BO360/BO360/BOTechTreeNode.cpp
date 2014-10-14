@@ -20,9 +20,6 @@ BOTechTreeNode::~BOTechTreeNode()
 
 bool BOTechTreeNode::Initialize(float2 p_pos, int2 p_size, std::string p_tooltip)
 {
-    m_position = p_pos;
-    m_size = p_size;
-
     m_isActive = false;
     m_isAdjacentActive = false;
     m_hoveringOver = false;
@@ -35,9 +32,10 @@ bool BOTechTreeNode::Initialize(float2 p_pos, int2 p_size, std::string p_tooltip
     m_adjacentActive = BOTextureManager::GetTexture(TEXTTADJACENTACTIVE);
     m_highlighted = BOTextureManager::GetTexture(TEXTTHIGHLIGHTED);
 
-    m_sprite = m_inactive;
-
-    return BOObject::Initialize(m_position, m_size, m_sprite);
+    m_tooltipText.Initialize(float2(0,0), " ", int3(255, 255, 255), 30, 0);
+    int2 windowBounds = BOGraphicInterface::GetWindowSize();
+    m_tooltipFrame.Initialize(float2(windowBounds.x - 205, 205), int2(310,310), BOTextureManager::GetTexture(TEXTTTOLTIPFRAME));
+    return BOObject::Initialize(p_pos, p_size, m_inactive);
 }
 
 void BOTechTreeNode::Update()
@@ -64,14 +62,25 @@ void BOTechTreeNode::Update()
 
 void BOTechTreeNode::Shutdown()
 {
-    m_tooltip.Shutdown();
+    m_tooltipText.Shutdown();
+    m_tooltipFrame.Shutdown();
+    m_tooltipHeading.Shutdown();
     BOObject::Shutdown();
 }
 
 void BOTechTreeNode::Draw()
 {
     BOObject::Draw();
-    m_tooltip.Draw();
+    if (m_hoveringOver)
+    {
+        m_tooltipFrame.Draw();
+        m_tooltipText.Draw();
+    }
+    else if (m_active && m_hoveringOver)
+    {
+        m_tooltipFrame.Draw();
+        m_tooltipText.Draw();
+    }
 }
 float2 BOTechTreeNode::GetPosition()const
 {
@@ -153,13 +162,12 @@ void BOTechTreeNode::SetPrice(int p_price)
     m_price = p_price;
 }
 
-std::string BOTechTreeNode::GetToolTip()
-{
-    return m_toolTip;
-}
 void BOTechTreeNode::SetToolTip(std::string p_toolTip)
 {
-    m_toolTip = p_toolTip;
+    m_tooltipText.SetText(p_toolTip, int3(255, 255, 255), 290);
+    int2 windowBounds = BOGraphicInterface::GetWindowSize();
+    int2 textSize = m_tooltipText.GetSize();
+    m_tooltipText.SetPosition(float2(windowBounds.x - textSize.x*0.5f -60.0f, textSize.y*0.5f + 60.0f));
 }
 
 int BOTechTreeNode::GetEffect()const
@@ -169,12 +177,10 @@ int BOTechTreeNode::GetEffect()const
 void BOTechTreeNode::SetEffect(int p_effect, std::string p_tooltip)
 {
     m_effect = p_effect;
-    m_tooltip.Initialize(m_position, p_tooltip, int3(255, 255, 255), 30, 0);
 }
 void BOTechTreeNode::SetEffect(int p_effect)
 {
     m_effect = p_effect;
-    m_tooltip.Initialize(m_position, " ", int3(255, 255, 255), 30, 0);
 }
 void BOTechTreeNode::Reset()
 {
