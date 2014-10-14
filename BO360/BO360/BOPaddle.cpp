@@ -13,11 +13,11 @@ BOPaddle::~BOPaddle()
 bool BOPaddle::Initialize(float2 p_position, int2 p_size, SDL_Texture* p_sprite)
 {
     m_isSticky = false;
-	m_rotation = 0.0f;
+	m_rotation = 0.0;
 	m_totalDegrees = 21.2;
 	m_segementDegree = m_totalDegrees;
 	m_segments = 1;
-	AddSegments(2);
+	AddSegments(2); // 2 here -> Start with total 3 segments
 	m_deltaRotation = 200 * BOTechTreeEffects::PaddleEffects.speed;
 	BOPublisher::AddSubscriber(this);
 	BOPowerUpManager::AddSubscriber(this);
@@ -170,7 +170,7 @@ double BOPaddle::GetDegrees()const
 float2 BOPaddle::GetBallSpawnPosition()
 {
     float radius = (m_size.x * 0.5f);
-	float alpha = ((-m_rotation - 21) * DEGREES_TO_RADIANS) - 1.57;
+	float alpha = (float)((-m_rotation - (21.2f + (0.5f * 21.2f * (m_segments - 3.0f)))) * DEGREES_TO_RADIANS) - 1.57f;
 	float ballPosx = -cos(alpha) * radius;
     float ballPosy = sin(alpha) * radius;
     float tempx = m_position.x + ballPosx;

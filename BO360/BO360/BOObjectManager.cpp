@@ -169,7 +169,7 @@ void BOObjectManager::Update(double p_deltaTime)
 
 		if (m_ballList[i]->IsStuckToPad())
 		{
-            if (m_paddle.GetStickyState())
+            if (m_paddle.GetStickyState() && m_ballList[i]->IsSpawned())
             {
                 //Calculate position of ball based on position of ball             
                 m_ballList[i]->SetPosition(m_paddle.GetBallStuckPosition(m_ballList[i]->GetStuckAngle()));
@@ -330,10 +330,10 @@ bool BOObjectManager::AddNewBall()
 	int2 windowSize = BOGraphicInterface::GetWindowSize();
 
 	// Set the direction outwards from the screen center
-	float2 ballDir = ballPos - float2(windowSize.x * 0.5f, windowSize.y * 0.5f);
-	ballDir.normalize();
-	ballPos.x += ballDir.x * 6;
-	ballPos.y += ballDir.y * 6;
+	float2 ballDir = float2(0, 0);
+	//ballDir.normalize();
+	//ballPos.x += ballDir.x * 8;
+	//ballPos.y += ballDir.y * 8;
 
 	if (!ball->Initialize(ballPos, int2(15,15), BOTextureManager::GetTexture(TEXBALL), 400.0f, ballDir, windowSize))
 	{
