@@ -24,6 +24,7 @@ bool BOBall::Initialize(float2 p_position, int2 p_size, SDL_Texture* p_sprite, f
 	m_direction = p_direction.normalized();
 	m_windowSize = p_windowSize;
 	m_stuckToPad = true;
+	m_spawned = false;
 	m_onFire = false;
 	m_fireTimeElapsed = 0; // Set duration for fireball powerup in header, const variable
     m_rotation = 0;
@@ -48,6 +49,7 @@ void BOBall::Update(double p_deltaTime, sphere p_blackHoleBounds)
 	if (!m_stuckToPad && !m_mouseCheat)
 	{
 		Move(p_deltaTime, p_blackHoleBounds);
+		m_spawned = true;
 	}
 
     // Tick timer for fire powerup
@@ -317,4 +319,9 @@ void BOBall::SetBallCollidedWithBall(bool p_collided)
 bool BOBall::GetNewlyLaunched()
 {
 	return m_newlyLaunched;
+}
+
+bool BOBall::IsSpawned()
+{
+	return m_spawned;
 }

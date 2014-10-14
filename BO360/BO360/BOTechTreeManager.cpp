@@ -554,9 +554,10 @@ void BOTechTreeManager::HandleUpgrades(BOTechTreeNode* p_node)
     switch (upgradeIdentifier)
     {
     case DropBasicPowerUp:
+        BOTechTreeEffects::LevelEffects.startNodePowerups = true;
         break;
     case DecreasePowerUpFallSpeed:
-        BOTechTreeEffects::PUEffects.speed -= 0.25f;
+        BOTechTreeEffects::PUEffects.speed -= 0.15f;
         break;
     case AddBounceToShield:
         BOTechTreeEffects::PUEffects.shieldCharge++;
@@ -573,65 +574,97 @@ void BOTechTreeManager::HandleUpgrades(BOTechTreeNode* p_node)
     case PowerUpGift:
         BOTechTreeEffects::UtilityEffects.PUGiftEnabled = true;
         break;
-    case DecreasePowerUpFallSpeed2:///////////_STOP
+    case DecreasePowerUpFallSpeed2:
+        BOTechTreeEffects::PUEffects.speed -= 0.20f;
         break;
     case StartWithShield:
+        BOTechTreeEffects::PUEffects.startShield = true;
         break;
     case StickyPad:
+        BOTechTreeEffects::LevelEffects.stickyPadPUEnabled = true;
         break;
     case IncreaseMaxPadSize:
+        BOTechTreeEffects::PaddleEffects.maxSize += 1;
         break;
     case ChanceDoublePadSizeIncrease:
+        BOTechTreeEffects::PUEffects.biggerPadEffectMultiplier += 0.33f;
         break;
     case IncreaseMaxPadSize2:
+        BOTechTreeEffects::PaddleEffects.maxSize += 1;
         break;
     case BallsGetFuelWhenTheyCollide:
+        BOTechTreeEffects::UtilityEffects.ballsCollideFuel = true;
         break;
     case MoreFuelAtRefill:
+        BOTechTreeEffects::UtilityEffects.extraBallFuel = 3.0f;
         break;
     case IncreaseBallDamage:
+        BOTechTreeEffects::BallEffects.damage += 1;
         break;
     case Fireball:
+        BOTechTreeEffects::LevelEffects.fireBallPUEnabled = true;
         break;
     case IncreaseBallDamage2:
+        BOTechTreeEffects::BallEffects.damage += 1;
         break;
     case SlowTime:
+        BOTechTreeEffects::LevelEffects.slowTimePUEnabled = true;
         break;
     case PowerUpBoost1:
+        BOTechTreeEffects::PUEffects.multiBallMultiplyChance += 0.33f;
+        BOTechTreeEffects::PUEffects.biggerPadEffectMultiplier += 0.33f;
         break;
     case PowerUpBoost2:
+        BOTechTreeEffects::PUEffects.slowTimeTime += 3;
+        BOTechTreeEffects::PUEffects.fireBallDamage += 3;
         break;
     case MegaPad:
+        BOTechTreeEffects::UtilityEffects.megaPadEnabled = true;
         break;
     case StackableShield:
+        BOTechTreeEffects::PUEffects.stackableShield = true;
         break;
     case IncreaseStartPadSize:
+        BOTechTreeEffects::PaddleEffects.size += 1;
         break;
     case Regenerate:
+        BOTechTreeEffects::UtilityEffects.extraLifePerLevel = 1;
         break;
     case IncreaseStartPadSize2:
+        BOTechTreeEffects::PaddleEffects.size += 1;
         break;
     case ChanceDoublePadSizeIncrease2:
+        BOTechTreeEffects::PUEffects.biggerPadEffectMultiplier += 0.33f;
         break;
     case GiantBall:
+        BOTechTreeEffects::UtilityEffects.giantBallEnabled = true;
         break;
     case MuliSpawn:
+        BOTechTreeEffects::UtilityEffects.extraBallsFirstLaunch += 0.33f;
         break;
     case DoubleMultiBall:
+        BOTechTreeEffects::PUEffects.multiBallMultiplyChance += 0.33f;
         break;
     case SuperTank:
+        BOTechTreeEffects::UtilityEffects.superBouncy = true;
         break;
     case DoubleMultiBall2:
+        BOTechTreeEffects::PUEffects.multiBallMultiplyChance += 0.33f;
         break;
     case MultiSpawn2:
+        BOTechTreeEffects::UtilityEffects.extraBallsFirstLaunch += 0.33f;
         break;
     case QuantumFuel:
+        BOTechTreeEffects::UtilityEffects.quantumFuelEnabled = true;
         break;
-    case DoubleMultiBall3:
+    case DecreaseCD:
+        BOTechTreeEffects::PUEffects.decreaseCD = 0.75f;
         break;
-    case PowerUpBoost3:
+    case MultiSpawn3:
+        BOTechTreeEffects::UtilityEffects.extraBallsFirstLaunch += 0.33f;
         break;
     case ShockWave:
+        BOTechTreeEffects::UtilityEffects.shockwaveEnabled = true;
         break;
     }
 }

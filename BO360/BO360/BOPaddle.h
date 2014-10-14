@@ -1,12 +1,12 @@
 #ifndef BOPADDLE_H_
 #define BOPADDLE_H_
-#include "BOObject.h"
+#include "BOAnimatedObject.h"
 #include "BOSubscriber.h"
 #include "BOPublisher.h"
 #include "BOPUSubscriber.h"
 #include "BOPowerUpManager.h"
 
-class BOPaddle : public BOObject, public BOSubscriber, public BOPUSubscriber
+class BOPaddle : public BOAnimatedObject, public BOSubscriber, public BOPUSubscriber
 {
 public:
 	BOPaddle();
@@ -17,7 +17,7 @@ public:
     double GetStartRotation()const; // This returns the actual start of the paddle
 
 	// Overloaded functions
-	bool Initialize(float2 p_position, int2 p_size, SDL_Texture* p_sprite);
+    bool Initialize(float2 p_position, int2 p_size, int2 p_sourceSize, int p_frame, int p_numberOfFrames, double p_timePerFrame, bool p_hardReset, SDL_Texture* p_sprite);
 	void Handle(InputMessages p_inputMessages);
 	void Handle(PowerUpTypes p_type, bool p_activated);
 	int GetSegments()const;
@@ -33,7 +33,6 @@ public:
     float2 GetBallStuckPosition(float angle);
 
 private:
-	double m_rotation;
 	double m_deltaRotation;
 	bool m_movingLeft;
 	bool m_movingRight;

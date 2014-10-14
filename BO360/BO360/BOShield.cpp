@@ -33,23 +33,22 @@ void BOShield::Shutdown()
 	m_ShieldSprite = NULL;
 }
 
-float2 BOShield::Update(double p_deltaTime, sphere p_Ball, float2 p_BallDirection)
+void BOShield::Update(double p_deltaTime, BOBall& p_ball)
 {
-	float2 ballDir = p_BallDirection;
-	if (m_IsActive)
-	{
-		if (BOPhysics::CheckCollisionBallShield(p_Ball, m_ShieldSphere) != 0)
-		{
-			ballDir.y *= (-1);
-			ballDir.x *= (-1);
-			m_lifes -= 1;
-			if (m_lifes <= 0)
-			{
-				m_IsActive = false;
-			}
-		}
-	}
-	return ballDir;
+    if (m_IsActive)
+    {
+        if (BOPhysics::BallToSphereCollision(p_ball, m_ShieldSphere))
+        {
+            // Set fuel when the ball have bounced on the pad
+            p_ball.BouncedOnPad();
+
+            m_lifes--;
+            if (m_lifes <= 0)
+            {
+                m_IsActive = false;
+            }
+        }
+    }
 }
 
 void BOShield::Draw()
