@@ -27,7 +27,7 @@ bool BOTechTreeNode::Initialize(float2 p_pos, int2 p_size, std::string p_tooltip
     m_price = 0;
     m_effect = 0;
 
-    m_active = BOTextureManager::GetTexture(TEXTTACTIVE);
+    m_active = BOTextureManager::GetTexture(TEXTTSHOCKWAVE);
     m_inactive = BOTextureManager::GetTexture(TEXTTINACTIVE);
     m_adjacentActive = BOTextureManager::GetTexture(TEXTTADJACENTACTIVE);
     m_highlighted = BOTextureManager::GetTexture(TEXTTHIGHLIGHTED);
@@ -214,4 +214,9 @@ void BOTechTreeNode::SetAdjacentActive(bool p_active)
 void BOTechTreeNode::SetHover(bool p_active)
 {
     m_hoveringOver = p_active;
+}
+
+void BOTechTreeNode::SetTexture(SDL_Texture* p_texture)
+{
+    m_active = p_texture;
 }

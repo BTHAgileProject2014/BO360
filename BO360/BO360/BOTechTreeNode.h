@@ -61,6 +61,7 @@ public:
     bool Intersects(int2 p_mousePosition);
 
     void SetToolTip(std::string p_toolTip, std::string p_heading);
+    void SetTexture(SDL_Texture* p_texture);
 
 private:
     void SetEffect();
