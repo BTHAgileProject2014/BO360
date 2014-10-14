@@ -359,6 +359,7 @@ struct InputMessages
     bool fKey;
     bool tKey;
 	bool escKey;
+    bool enterKey;
 };
 
 enum GameState
@@ -419,6 +420,7 @@ enum KeyMessages
 	rightMouseKey,
 	middleMouseKey,
 	spacebarKey,
+    enterKey,
 	zKey,
 	xKey,
     fKey,
