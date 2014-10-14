@@ -81,13 +81,13 @@ void BOBall::DrawBallWithTail()
 
     int4 source = int4(0, 0, m_size.x, m_size.y);
     int4 destination = int4((int)(m_position.x - m_scale * (m_size.x / 2)), (int)(m_position.y - m_scale * (m_size.y / 2)), (int)(m_scale * m_size.x), (int)(m_scale * m_size.y));
-    BOGraphicInterface::DrawEx(m_sprite, source, destination, m_rotation, int2(7, 7));
+    BOGraphicInterface::DrawEx(m_sprite, source, destination, m_rotation, int2(7, 7), m_opacity);
 
     if (m_onFire)
     {
         source = int4(0, 0, 25, 25);
         destination = int4((int)(m_position.x - m_scale * (25 / 2)), (int)(m_position.y - m_scale * (25 / 2)), (int)(m_scale * 25), (int)(m_scale * 25));
-        BOGraphicInterface::DrawEx(m_fireBallTexture, source, destination, 0, int2(0, 0));
+        BOGraphicInterface::DrawEx(m_fireBallTexture, source, destination, 0, int2(0, 0), m_opacity);
     }
 }
 

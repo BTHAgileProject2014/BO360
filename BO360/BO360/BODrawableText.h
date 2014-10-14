@@ -31,6 +31,7 @@ private:
 	int2 m_size;
 	float2 m_position;
 	int m_fontSize;
+    Uint8 m_opacity;
 };
 #endif
 

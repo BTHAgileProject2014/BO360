@@ -32,6 +32,9 @@ public:
 
 	sphere GetBoundingSphere() const;
 
+    Uint8 GetOpacity()const;
+    void SetOpacity(Uint8 p_opacity);
+
 protected:
 	float2 m_position;
 	int2 m_size;
@@ -39,5 +42,6 @@ protected:
 	SDL_Texture* m_sprite;
 	float m_radius;
 	float m_scale;
+    Uint8 m_opacity;
 };
 #endif

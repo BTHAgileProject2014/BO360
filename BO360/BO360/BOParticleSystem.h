@@ -54,5 +54,6 @@ private:
 
 	int m_maxParticles;
 	int m_currentParticles;
+
 };
 #endif

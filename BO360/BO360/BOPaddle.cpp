@@ -125,7 +125,7 @@ void BOPaddle::Draw()
 
 	for (int i = 0; i < m_segments; i++)
 	{
-		BOGraphicInterface::DrawEx(m_sprite, mySource, myDest, m_rotation + ((double)m_segementDegree * i), int2(m_size.x / 2, m_size.y / 2));
+		BOGraphicInterface::DrawEx(m_sprite, mySource, myDest, m_rotation + ((double)m_segementDegree * i), int2(m_size.x / 2, m_size.y / 2), m_opacity);
 	}
 }
 

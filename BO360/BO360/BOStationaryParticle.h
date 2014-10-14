@@ -23,7 +23,8 @@ private:
 	bool m_rotate;
 	float m_rotation;
 	float m_angleIncrement;
-
+   
 	bool m_dead;
+    double m_startFadeTime;
 };
 #endif

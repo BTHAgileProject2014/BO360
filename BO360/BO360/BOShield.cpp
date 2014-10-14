@@ -20,6 +20,7 @@ bool BOShield::Initialize(int2 p_ShieldSize, SDL_Texture* p_sprite, int2 p_Windo
 	m_ShieldSphere.pos.y = m_WindowSize.y / 2.0f;
 	m_ShieldSphere.radius = p_ShieldSize.x / 2.0f;
 	m_ShieldSize = p_ShieldSize;
+    m_opacity = 255;
 
 	m_ShieldSprite = p_sprite;
 	m_lifes = 1 + BOTechTreeEffects::PUEffects.shieldCharge;
@@ -55,7 +56,7 @@ void BOShield::Draw()
 {
 	if (m_IsActive)
 	{
-		BOGraphicInterface::Draw(m_ShieldSprite, m_ShieldSphere.pos, m_ShieldSize);
+		BOGraphicInterface::Draw(m_ShieldSprite, m_ShieldSphere.pos, m_ShieldSize, m_opacity);
 	}
 }
 
