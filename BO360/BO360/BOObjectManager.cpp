@@ -386,10 +386,6 @@ bool BOObjectManager::WonGame()
 {
     bool didWin = m_keyManager.AllKeysCatched()
         && m_continue;
-    if (didWin)
-    {
-        BOPhysics::SetTimeScale(0.25f);
-    }
 	return didWin;
 }
 
