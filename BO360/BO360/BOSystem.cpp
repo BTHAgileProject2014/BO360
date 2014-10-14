@@ -256,7 +256,7 @@ bool BOSystem::Run()
 			if (m_objectManager.WonGame())
 			{
 				// Shutdown map
-				ShutdownMap();
+				//ShutdownMap();
 
 				// Go to victory screen
 				m_gameState = VICTORY;
@@ -409,6 +409,7 @@ void BOSystem::HandleAction(ButtonAction p_action)
 			// NEXT, load next map.
 			case(NEXT) :
 			{
+                ShutdownMap();
                 m_gameState = TECHTREE;
 				int currentLevel = m_levelManager.GetCurrentLevel();
 				int nextLevel = m_levelManager.GetNextLevel();
@@ -423,6 +424,7 @@ void BOSystem::HandleAction(ButtonAction p_action)
 			// RETRY, reload the map.
 			case(RETRY) :
 			{
+                ShutdownMap();
 				m_gameState = RUNNING;
 				if (!InitializeMap(m_levelManager.GetCurrentLevel()))
 				{

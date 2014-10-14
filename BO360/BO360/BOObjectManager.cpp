@@ -14,6 +14,7 @@ bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight, int p_Le
 {
 	m_life = 4;
 	BOHUDManager::SetLives(m_life);
+    m_continue = false;
 
 	// Initialize the map loader.
 	bool result;
@@ -144,7 +145,7 @@ void BOObjectManager::Shutdown()
 void BOObjectManager::Update(double p_deltaTime)
 {
     // First, check if we've catched all the keys
-    if (m_keyManager.AllKeysCatched())
+    if (m_keyManager.AllKeysCatched() && m_continue)
     {
         // In that case, start blowing all existing blocks up!
         PewPewPew();
@@ -307,9 +308,9 @@ void BOObjectManager::Handle(InputMessages p_inputMessage)
 			{
 			m_ballList[i]->SetStuckToPad(false);
 				//m_ballList[i]->SetDirection(float2(m_ballList[i]->GetPosition().x - m_blackHole.GetPosition().x, m_ballList[i]->GetPosition().y - m_blackHole.GetPosition().y));
-	}
-}
-}
+	        }
+        }
+    }
     if (p_inputMessage.fKey && m_shockwave.Activate())
     {
         ActivateShockwave();
@@ -319,6 +320,12 @@ void BOObjectManager::Handle(InputMessages p_inputMessage)
     if (p_inputMessage.downArrow)
     {
         m_slowTime.Activate();
+    }
+
+    // Check for if the player wants to continue to the next level when all keys are catched
+    if (p_inputMessage.enterKey && m_keyManager.AllKeysCatched())
+    {
+        m_continue = true;
     }
 }
 
@@ -354,7 +361,7 @@ bool BOObjectManager::LostGame()
 bool BOObjectManager::WonGame()
 {
     bool didWin = m_keyManager.AllKeysCatched()
-        && m_blockList.size() == 0;
+        && m_continue;
 	return didWin;
 }
 
