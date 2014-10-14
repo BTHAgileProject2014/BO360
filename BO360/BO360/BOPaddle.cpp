@@ -10,7 +10,7 @@ BOPaddle::~BOPaddle()
 
 }
 
-bool BOPaddle::Initialize(float2 p_position, int2 p_size, SDL_Texture* p_sprite)
+bool BOPaddle::Initialize(float2 p_position, int2 p_size, int2 p_sourceSize, int p_frame, int p_numberOfFrames, double p_timePerFrame, bool p_hardReset, SDL_Texture* p_sprite)
 {
     m_isSticky = false;
 	m_rotation = 0.0;
@@ -21,8 +21,8 @@ bool BOPaddle::Initialize(float2 p_position, int2 p_size, SDL_Texture* p_sprite)
 	m_deltaRotation = 200 * BOTechTreeEffects::PaddleEffects.speed;
 	BOPublisher::AddSubscriber(this);
 	BOPowerUpManager::AddSubscriber(this);
-	return BOObject::Initialize(p_position, p_size, p_sprite);
-	
+
+    return BOAnimatedObject::Initialize(p_position, p_size, p_sourceSize, p_frame, p_numberOfFrames, p_timePerFrame, p_hardReset, p_sprite);
 }
 
 void BOPaddle::Handle(InputMessages p_inputMessages)
@@ -116,16 +116,21 @@ void BOPaddle::Update(double p_deltaTime)
 			m_rotation -= 360;
 		}
 	}
+
+    BOAnimatedObject::Animate(p_deltaTime);
 }
 
 void BOPaddle::Draw()
 {
-	int4 mySource = int4(0, 0, m_size.x, m_size.y);
-	int4 myDest = int4((int)m_position.x - (m_size.x / 2), (int)m_position.y - (m_size.y / 2), m_size.x, m_size.y);
+    int4 l_target = int4((int)m_position.x - m_size.x / 2, (int)m_position.y - m_size.y / 2, m_size.x, m_size.y);
+   
 
 	for (int i = 0; i < m_segments; i++)
 	{
-		BOGraphicInterface::DrawEx(m_sprite, mySource, myDest, m_rotation + ((double)m_segementDegree * i), int2(m_size.x / 2, m_size.y / 2));
+        int frame = (m_frame + i) % 4;
+
+        int4 l_source = int4(m_sourceSize.x * frame, 0, m_sourceSize.x, m_sourceSize.y);
+        BOGraphicInterface::DrawEx(m_sprite, l_source, l_target, m_rotation + ((double)m_segementDegree * i), int2(l_source.z / 2, l_source.w / 2));
 	}
 }
 

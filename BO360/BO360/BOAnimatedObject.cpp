@@ -13,6 +13,7 @@ BOAnimatedObject::~BOAnimatedObject()
 // Variable initilaize.
 bool BOAnimatedObject::Initialize(float2 p_position, int2 p_size, int2 p_sourceSize, int p_frame, int p_numberOfFrames, double p_timePerFrame, bool p_hardReset, SDL_Texture* p_sprite)
 {
+    BOObject::Initialize(p_position, p_size, p_sprite);
 	m_sourceSize = p_sourceSize;
 	m_frame = p_frame;
 	m_numberOfFrames = p_numberOfFrames - 1;
@@ -20,10 +21,6 @@ bool BOAnimatedObject::Initialize(float2 p_position, int2 p_size, int2 p_sourceS
 	m_timePassed = 0;
 	m_hardReset = p_hardReset;
 	m_increment = true;
-
-	m_position = p_position;
-	m_size = p_size;
-    m_sprite = p_sprite;
 
     m_alive = true;
 

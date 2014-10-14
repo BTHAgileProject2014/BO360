@@ -41,7 +41,7 @@ bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight, int p_Le
 	}
 
 	// Initialize the pad.
-	result = m_paddle.Initialize(float2((p_windowWidth / 2.0f), (p_windowHeight / 2.0f)), int2(208, 208), BOTextureManager::GetTexture(TEXPADSEG));
+    result = m_paddle.Initialize(float2((p_windowWidth / 2.0f), (p_windowHeight / 2.0f)), int2(208, 208), int2(208, 208), 0, 4, 0.1, false, BOTextureManager::GetTexture(TEXPADSEG));
 	if (!result)
 	{
 		ThrowInitError("BOPaddle");
