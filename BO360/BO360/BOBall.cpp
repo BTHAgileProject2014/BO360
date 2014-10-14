@@ -43,7 +43,7 @@ bool BOBall::Initialize(float2 p_position, int2 p_size, SDL_Texture* p_sprite, f
 	return true;
 }
 
-void BOBall::Update(double p_deltaTime, sphere p_blackHoleBounds)
+void BOBall::Update(double p_deltaTime, sphere p_blackHoleBounds, bool p_won)
 {
     // Move if the ball is not stuck
 	if (!m_stuckToPad && !m_mouseCheat)
@@ -73,6 +73,16 @@ void BOBall::Update(double p_deltaTime, sphere p_blackHoleBounds)
         m_newlyLaunched = false;
     }
     m_stuckToPadPrev = m_stuckToPad;
+
+    // Launch the ball out in space if the game is won
+    if (p_won)
+    {
+        float2 outDir = float2(m_position.x - p_blackHoleBounds.pos.x, m_position.y - p_blackHoleBounds.pos.y);
+        outDir.normalize();
+        SetDirection(outDir);
+        SetFuel(1.0f);
+        return;
+    }
 }
 	
 

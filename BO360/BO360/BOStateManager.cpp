@@ -25,7 +25,7 @@ bool BOStateManager::Initialize(int2 p_screenSize)
 
 	// Setup pause menu.
 	menuPosition = float2(50, 50);
-    result = m_paused.Initialize(float2(p_screenSize.x / 2.0f, p_screenSize.y / 2.0f), p_screenSize, menuPosition, "PAUSE MENU", BOTextureManager::GetTexture(TEXMENUBG));
+    result = m_paused.Initialize(float2(p_screenSize.x / 2.0f, p_screenSize.y / 2.0f), p_screenSize, menuPosition, "PAUSE MENU", BOTextureManager::GetTexture(TEXMENUGRAY));
     m_paused.AddButton(float2(menuPosition.x, menuPosition.y + 70), int2(250, 75), menuPosition, BOTextureManager::GetTexture(TEXMENUBUTTON), "RESUME", RESUME, "         Resume the game.");
     m_paused.AddButton(float2(menuPosition.x, menuPosition.y + 70), int2(250, 75), menuPosition, BOTextureManager::GetTexture(TEXMENUBUTTON), "MENU", QUIT, "         Quit your current game and return to the main menu.");
     m_paused.AddButton(float2(menuPosition.x, menuPosition.y + 70), int2(250, 75), menuPosition, BOTextureManager::GetTexture(TEXMENUBUTTON), "EXIT", EXIT, "         Exit the game and return to desktop.");
@@ -33,14 +33,14 @@ bool BOStateManager::Initialize(int2 p_screenSize)
 
 	// Setup end screen menus.
 	menuPosition = float2(50, 50);
-    result = m_victory.Initialize(float2(p_screenSize.x / 2.0f, p_screenSize.y / 2.0f), p_screenSize, menuPosition, "VICTORY", BOTextureManager::GetTexture(TEXMENUBG));
+    result = m_victory.Initialize(float2(p_screenSize.x / 2.0f, p_screenSize.y / 2.0f), p_screenSize, menuPosition, "VICTORY", BOTextureManager::GetTexture(TEXMENUGRAY));
     m_victory.AddButton(float2(menuPosition.x, menuPosition.y + 70), int2(250, 75), menuPosition, BOTextureManager::GetTexture(TEXMENUBUTTON), "NEXT LEVEL", NEXT, "         Play the next level.");
     m_victory.AddButton(float2(menuPosition.x, menuPosition.y + 70), int2(250, 75), menuPosition, BOTextureManager::GetTexture(TEXMENUBUTTON), "MENU", QUIT, "         Quit your current game and return to the main menu.");
     m_victory.AddButton(float2(menuPosition.x, menuPosition.y + 70), int2(250, 75), menuPosition, BOTextureManager::GetTexture(TEXMENUBUTTON), "EXIT", EXIT, "         Exit the game and return to desktop.");
 	if (!result) return false;
 
 	menuPosition = float2(50, 50);
-    result = m_defeat.Initialize(float2(p_screenSize.x / 2.0f, p_screenSize.y / 2.0f), p_screenSize, menuPosition, "DEFEAT", BOTextureManager::GetTexture(TEXMENUBG));
+    result = m_defeat.Initialize(float2(p_screenSize.x / 2.0f, p_screenSize.y / 2.0f), p_screenSize, menuPosition, "DEFEAT", BOTextureManager::GetTexture(TEXMENUGRAY));
     m_defeat.AddButton(float2(menuPosition.x, menuPosition.y + 70), int2(250, 75), menuPosition, BOTextureManager::GetTexture(TEXMENUBUTTON), "RETRY", RETRY, "         Retry your current level.");
     m_defeat.AddButton(float2(menuPosition.x, menuPosition.y + 70), int2(250, 75), menuPosition, BOTextureManager::GetTexture(TEXMENUBUTTON), "MENU", QUIT, "         Quit your current game and return to the main menu.");
     m_defeat.AddButton(float2(menuPosition.x, menuPosition.y + 70), int2(250, 75), menuPosition, BOTextureManager::GetTexture(TEXMENUBUTTON), "EXIT", EXIT, "         Exit the game and return to desktop.");

@@ -240,8 +240,12 @@ bool BOSystem::Run()
 
 		// Update the input manager.
 		result = m_input.Update();
+        bool updateMap = (m_gameState == RUNNING || m_gameState == VICTORY || m_gameState == DEFEAT);
+        bool updateRest = (m_gameState != RUNNING);
+        bool renderMap = (m_gameState == RUNNING || m_gameState == VICTORY || m_gameState == DEFEAT || m_gameState == PAUSED);
+        bool renderRest = (m_gameState != RUNNING);
 
-		if (m_gameState == RUNNING)
+		if (updateMap)
 		{
 			// Update all of the objects.
 			m_objectManager.Update(m_deltaTime);
@@ -255,9 +259,6 @@ bool BOSystem::Run()
 			// Check if the player won the current game
 			if (m_objectManager.WonGame())
 			{
-				// Shutdown map
-				ShutdownMap();
-
 				// Go to victory screen
 				m_gameState = VICTORY;
 
@@ -267,15 +268,12 @@ bool BOSystem::Run()
 			// Check if the player lost the current game
 			else if (m_objectManager.LostGame())
 			{
-				// Shutdown map
-				ShutdownMap();
-
 				// Go to defeat screen
 				m_gameState = DEFEAT;
 			}
 		}
 
-		else
+		if (updateRest)
 		{
             // Update TechTree
             if (m_gameState == TECHTREE)
@@ -297,7 +295,7 @@ bool BOSystem::Run()
 		// ========== RENDER ==========
 		BOGraphicInterface::Clear();
 
-		if (m_gameState == RUNNING)
+		if (renderMap)
 		{
 			// Render all of the objects.
 			m_objectManager.Draw();
@@ -313,7 +311,7 @@ bool BOSystem::Run()
 
 		}
 
-		else
+		if (renderRest)
 		{
 			// Draw approperiate menu.
 			m_stateManager.Draw(m_gameState);
@@ -338,6 +336,7 @@ bool BOSystem::Run()
 
 void BOSystem::Shutdown()
 {
+    ShutdownMap();
     m_techTreeManager.Shutdown();
 	BOPublisher::Unsubscribe(this);
 	m_input.Shutdown();
@@ -380,6 +379,7 @@ void BOSystem::HandleAction(ButtonAction p_action)
 			{
                 // Reset tech tree
                 m_techTreeManager.Reset();
+                m_techTreeManager.SetTechPoint(0);
 				m_gameState = RUNNING;
 				if (!InitializeMap(0))
 				{
@@ -409,6 +409,7 @@ void BOSystem::HandleAction(ButtonAction p_action)
 			// NEXT, load next map.
 			case(NEXT) :
 			{
+                ShutdownMap();
                 m_gameState = TECHTREE;
 				int currentLevel = m_levelManager.GetCurrentLevel();
 				int nextLevel = m_levelManager.GetNextLevel();
@@ -417,12 +418,15 @@ void BOSystem::HandleAction(ButtonAction p_action)
 					m_gameState = MENU;
 					m_levelManager.SetLevel(0);
 				}
+                m_techTreeManager.Reset();
+                m_techTreeManager.SetTechPoint(m_levelManager.GetCurrentLevel());
                 break;
             }
 
 			// RETRY, reload the map.
 			case(RETRY) :
 			{
+                ShutdownMap();
 				m_gameState = RUNNING;
 				if (!InitializeMap(m_levelManager.GetCurrentLevel()))
 				{
@@ -447,14 +451,13 @@ void BOSystem::HandleAction(ButtonAction p_action)
                 // Special case for the first level, skipping the tech tree
                 if (index == 0)
                 {
-                    m_techTreeManager.Reset();
+                    
                     m_gameState = RUNNING;
 
                     if (!InitializeMap(0))
                     {
                         std::cout << "Press ENTER to quit." << std::endl;
                         std::cin.get();
-
                         m_quit = true;
                     }
                 }
@@ -462,8 +465,9 @@ void BOSystem::HandleAction(ButtonAction p_action)
 				{
 					m_gameState = TECHTREE;
 					m_levelManager.SetLevel(index);
-					
 				}
+                m_techTreeManager.Reset();
+                m_techTreeManager.SetTechPoint(index);
 				break;
 			}
             case(TECHTREEACTION) :

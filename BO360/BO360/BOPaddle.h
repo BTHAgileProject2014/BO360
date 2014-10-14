@@ -42,5 +42,7 @@ private:
 	double m_totalDegrees;
 	double m_segementDegree;
     bool m_isSticky;
+
+    SDL_Texture* m_stickyGlow;
 };
 #endif
