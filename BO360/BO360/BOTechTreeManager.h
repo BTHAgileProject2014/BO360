@@ -22,6 +22,8 @@ public:
     void Handle(InputMessages p_inputMessages);
     void Reset();
 
+    void SetTechPoint(int p_numberOfLevels);
+
 private:
     void HandleUpgrades(BOTechTreeNode* p_node);
     void HandleToolTips(BOTechTreeNode* p_node);
@@ -49,5 +51,6 @@ private:
     bool m_mousePrev;
     bool m_clicked;
     bool m_clickedPrev;
+    int m_techPoints;
 };
 #endif

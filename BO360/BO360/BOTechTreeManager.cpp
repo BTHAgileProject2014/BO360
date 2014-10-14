@@ -517,6 +517,8 @@ void BOTechTreeManager::Reset()
     BOTechTreeEffects::PaddleEffects = TechTreePaddleEffects();
     BOTechTreeEffects::PUEffects = TechTreePUEffects();
     BOTechTreeEffects::UtilityEffects = TechTreeUtilityEffects();
+
+    m_techPointsLeft = m_techPoints;
 }
 
 void BOTechTreeManager::Handle(InputMessages p_inputMessages)
@@ -789,4 +791,9 @@ void BOTechTreeManager::HandleToolTips(BOTechTreeNode* p_node)
         p_node->SetToolTip("This is an activational ability that pushes all the balls away from the black hole. The ability has a cooldown of (cd time) seconds."); //////Cd time
         break;
     }
+}
+void BOTechTreeManager::SetTechPoint(int p_numberOfLevels)
+{
+    int temp = p_numberOfLevels * 3;
+    m_techPoints = 99 + temp;
 }
