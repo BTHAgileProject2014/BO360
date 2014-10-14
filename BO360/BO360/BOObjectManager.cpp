@@ -331,7 +331,7 @@ void BOObjectManager::Handle(InputMessages p_inputMessage)
         }
     }
 
-    if (p_inputMessage.fKey && m_shockwave.Activate())
+    if (p_inputMessage.fKey)
     {
         ActivateShockwave();
     }
