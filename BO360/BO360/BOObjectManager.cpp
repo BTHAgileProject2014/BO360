@@ -306,12 +306,13 @@ void BOObjectManager::Handle(InputMessages p_inputMessage)
 		{
 			if (m_ballList[i]->IsStuckToPad())
 			{
-			m_ballList[i]->SetStuckToPad(false);
+			    m_ballList[i]->SetStuckToPad(false);
 				//m_ballList[i]->SetDirection(float2(m_ballList[i]->GetPosition().x - m_blackHole.GetPosition().x, m_ballList[i]->GetPosition().y - m_blackHole.GetPosition().y));
-	}
-}
-}
-    if (p_inputMessage.fKey)
+	        }
+        }
+    }
+
+    if (p_inputMessage.fKey && m_shockwave.Activate())
     {
         ActivateShockwave();
     }
