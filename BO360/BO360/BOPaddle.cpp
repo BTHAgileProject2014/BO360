@@ -123,13 +123,10 @@ void BOPaddle::Update(double p_deltaTime)
 void BOPaddle::Draw()
 {
     int4 l_target = int4((int)m_position.x - m_size.x / 2, (int)m_position.y - m_size.y / 2, m_size.x, m_size.y);
-   
+    int4 l_source = int4(m_sourceSize.x * m_frame, 0, m_sourceSize.x, m_sourceSize.y);
 
 	for (int i = 0; i < m_segments; i++)
 	{
-        int frame = (m_frame + i) % 4;
-
-        int4 l_source = int4(m_sourceSize.x * frame, 0, m_sourceSize.x, m_sourceSize.y);
         BOGraphicInterface::DrawEx(m_sprite, l_source, l_target, m_rotation + ((double)m_segementDegree * i), int2(l_source.z / 2, l_source.w / 2));
 	}
 }
