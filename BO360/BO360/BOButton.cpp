@@ -12,9 +12,8 @@ BOButton::~BOButton()
 
 bool BOButton::Initialize(float2 p_position, int2 p_size, SDL_Texture* p_sprite, std::string p_name, ButtonAction p_action, std::string p_tooltip)
 {
+    BOObject::Initialize(p_position, p_size, NULL);
 	m_action = p_action;
-	m_position = p_position;
-	m_size = p_size;
 	m_name = p_name;
 
 	// Load non highlighted texture.

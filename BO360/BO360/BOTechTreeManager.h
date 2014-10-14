@@ -38,9 +38,11 @@ private:
 
     int2 m_windowSize;
     BOButton m_resetButton;
+
     BODrawableText m_techPointsText;
     int m_maxTechPoints;
     int m_techPointsLeft;
+
     std::vector<BOTechTreeNode*> m_nodeList;
     BOTechTreeNode* m_startNode;
     SDL_Texture* m_grid;
@@ -51,6 +53,5 @@ private:
     bool m_mousePrev;
     bool m_clicked;
     bool m_clickedPrev;
-    int m_techPoints;
 };
 #endif

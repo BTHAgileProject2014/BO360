@@ -54,13 +54,24 @@ bool BOTechTreeManager::Initialize(int2 p_windowDimension)
 
     m_resetButton.Initialize(float2(m_windowSize.x-50.0f-250.0f, m_windowSize.y-50.0f-75.0f), int2(250, 75), BOTextureManager::GetTexture(TEXMENUBUTTON), "RESET", NOACTION, "");
 
+    // Tech Points
+    m_techPointsText.Initialize(float2(0,0), "ERROR", int3(255, 255, 255), 50, 0);
+    float2 resetPos = m_resetButton.GetPosition();
+    int2 resetSize = m_resetButton.GetSize();
+    int2 textSize = m_techPointsText.GetSize();
+    m_techPointsText.SetPosition(float2(resetPos.x - textSize.x*0.5f - 50.0f, resetPos.y + resetSize.y*0.5f));
+    m_maxTechPoints = 0;
+    m_techPointsLeft = 0;
+
     BOPublisher::AddSubscriber(this);
 
     return true;
 }
 void BOTechTreeManager::Update()
 {
-    m_startNode->SetAdjacentActive(true);
+    m_startNode->SetActive(true);
+    SetAdjacentNodes(m_startNode);
+
     for (unsigned int i = 0; i < m_nodeList.size(); i++)
     {
         m_nodeList[i]->Update();
@@ -81,10 +92,15 @@ void BOTechTreeManager::Update()
                 {
                     if (m_nodeList[i]->GetAdjacentActive())
                     {
-                        m_mousePrev = m_mouseDown;
-                        m_nodeList[i]->SetActive(true);
-                        SetAdjacentNodes(m_nodeList[i]);
-                        HandleUpgrades(m_nodeList[i]);
+                        if (m_techPointsLeft >= m_nodeList[i]->GetPrice())
+                        {
+                            m_mousePrev = m_mouseDown;
+                            m_nodeList[i]->SetActive(true);
+                            SetAdjacentNodes(m_nodeList[i]);
+                            HandleUpgrades(m_nodeList[i]);
+                            m_techPointsLeft -= m_nodeList[i]->GetPrice();
+                            m_techPointsText.SetText(std::to_string(m_techPointsLeft), int3(255, 255, 255), 0);
+                        }
                     }
                 }
             }
@@ -133,6 +149,7 @@ void BOTechTreeManager::Draw()
     }
 
     m_resetButton.Draw();
+    m_techPointsText.Draw();
 }
 BOTechTreeNode* BOTechTreeManager::CreateNode(float2 p_pos,int2 p_size, std::string p_tooltip)
 {
@@ -222,7 +239,7 @@ void BOTechTreeManager::SetLPE()
 {
     //Set Price
     //Sets start node
-    SetNodeLPE(m_startNode, 0, 99, 0);
+    SetNodeLPE(m_startNode, 0, 0, 0);
 
     //Set Price for layer 1
     m_startNode->GetUpNode()->SetPrice(1);
@@ -518,7 +535,8 @@ void BOTechTreeManager::Reset()
     BOTechTreeEffects::PUEffects = TechTreePUEffects();
     BOTechTreeEffects::UtilityEffects = TechTreeUtilityEffects();
 
-    m_techPointsLeft = m_techPoints;
+    m_techPointsLeft = m_maxTechPoints;
+    m_techPointsText.SetText(std::to_string(m_techPointsLeft), int3(255, 255, 255), 0);
 }
 
 void BOTechTreeManager::Handle(InputMessages p_inputMessages)
@@ -794,6 +812,7 @@ void BOTechTreeManager::HandleToolTips(BOTechTreeNode* p_node)
 }
 void BOTechTreeManager::SetTechPoint(int p_numberOfLevels)
 {
-    int temp = p_numberOfLevels * 3;
-    m_techPoints = 99 + temp;
+    m_maxTechPoints = p_numberOfLevels * 3;
+    m_techPointsLeft = m_maxTechPoints;
+    m_techPointsText.SetText(std::to_string(m_techPointsLeft), int3(255, 255, 255), 0);
 }
