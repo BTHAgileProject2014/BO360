@@ -160,11 +160,13 @@ void BOTechTreeNode::SetPrice(int p_price)
     m_price = p_price;
 }
 
-void BOTechTreeNode::SetToolTip(std::string p_toolTip)
+void BOTechTreeNode::SetToolTip(std::string p_toolTip, std::string p_heading)
 {
     int2 windowBounds = BOGraphicInterface::GetWindowSize();
     float2 tooltipPos = m_tooltipFrame.GetPosition();
     
+    m_tooltipHeading.SetText(p_heading, int3(255, 255, 255), 0);
+
     int2 headingSize = m_tooltipHeading.GetSize();
     m_tooltipHeading.SetPosition(float2(tooltipPos.x, headingSize.y*0.5f + 60.0f));
 

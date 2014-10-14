@@ -60,7 +60,7 @@ public:
     void Reset();
     bool Intersects(int2 p_mousePosition);
 
-    void SetToolTip(std::string p_toolTip);
+    void SetToolTip(std::string p_toolTip, std::string p_heading);
 
 private:
     void SetEffect();
