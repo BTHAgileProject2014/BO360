@@ -336,6 +336,7 @@ bool BOSystem::Run()
 
 void BOSystem::Shutdown()
 {
+    ShutdownMap();
     m_techTreeManager.Shutdown();
 	BOPublisher::Unsubscribe(this);
 	m_input.Shutdown();
