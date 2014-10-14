@@ -18,7 +18,8 @@ bool BOObject::Initialize(float2 p_position, int2 p_size, float p_scale, SDL_Tex
 	m_scale = p_scale;
     m_rotation = 0.0;
 	SetSize(p_size);
-	
+    m_opacity = 255;
+
 	// Load texture.
 	m_sprite = p_sprite;
 
@@ -42,7 +43,7 @@ void BOObject::Draw()
 {
 	int4 source = int4(0, 0, m_size.x, m_size.y);
 	int4 dest = int4((int)(m_position.x - m_scale * (m_size.x / 2)), (int)(m_position.y - m_scale * (m_size.y / 2)), (int)(m_scale * m_size.x), (int)(m_scale * m_size.y));
-	BOGraphicInterface::DrawEx(m_sprite, source, dest, m_rotation, int2(0, 0));
+    BOGraphicInterface::DrawEx(m_sprite, source, dest, m_rotation, int2(0, 0), m_opacity);
 }
 
 // Position Get / Set functions.
@@ -93,4 +94,14 @@ double BOObject::GetRotation()
 void BOObject::SetRotation(double p_rotation)
 {
     m_rotation = p_rotation;
+}
+
+Uint8 BOObject::GetOpacity()const
+{
+    return m_opacity;
+}
+
+void BOObject::SetOpacity(Uint8 p_opacity)
+{
+    m_opacity = p_opacity;
 }
