@@ -611,7 +611,7 @@ void BOTechTreeManager::HandleUpgrades(BOTechTreeNode* p_node)
         BOTechTreeEffects::LevelEffects.slowTimePUEnabled = true;
         break;
     case PowerUpBoost1:
-        BOTechTreeEffects::UtilityEffects.extraBallsFirstLaunch += 0.33f;
+        BOTechTreeEffects::PUEffects.multiBallMultiplyChance += 0.33f;
         BOTechTreeEffects::PUEffects.biggerPadEffectMultiplier += 0.33f;
         break;
     case PowerUpBoost2:
@@ -628,7 +628,7 @@ void BOTechTreeManager::HandleUpgrades(BOTechTreeNode* p_node)
         BOTechTreeEffects::PaddleEffects.size += 1;
         break;
     case Regenerate:
-        BOTechTreeEffects::UtilityEffects.extraLifePerLevel += 1;
+        BOTechTreeEffects::UtilityEffects.extraLifePerLevel = 1;
         break;
     case IncreaseStartPadSize2:
         BOTechTreeEffects::PaddleEffects.size += 1;
@@ -657,11 +657,11 @@ void BOTechTreeManager::HandleUpgrades(BOTechTreeNode* p_node)
     case QuantumFuel:
         BOTechTreeEffects::UtilityEffects.quantumFuelEnabled = true;
         break;
-    case DoubleMultiBall3:
-        BOTechTreeEffects::PUEffects.multiBallMultiplyChance += 0.33f;
-        break;
     case DecreaseCD:
         BOTechTreeEffects::PUEffects.decreaseCD = 0.75f;
+        break;
+    case MultiSpawn3:
+        BOTechTreeEffects::UtilityEffects.extraBallsFirstLaunch += 0.33f;
         break;
     case ShockWave:
         BOTechTreeEffects::UtilityEffects.shockwaveEnabled = true;

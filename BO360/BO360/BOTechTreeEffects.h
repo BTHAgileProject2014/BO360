@@ -31,6 +31,7 @@ struct TechTreePUEffects
     bool stackableShield; // 22
     //int multiBallEffectMultiplier; // 29, 31, 34//////////////////dafuq?
     float multiBallMultiplyChance; // 29, 31, 34
+    float decreaseCD;
 
     TechTreePUEffects()
     {
@@ -43,6 +44,7 @@ struct TechTreePUEffects
         slowTimeTime = 0;
         stackableShield = false;
         multiBallMultiplyChance = 0;
+        decreaseCD = 1;
     }
 };
 
