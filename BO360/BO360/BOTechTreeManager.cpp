@@ -78,10 +78,7 @@ void BOTechTreeManager::Update()
 
         if (m_nodeList[i]->Intersects(m_mousePosition))
         {
-            if (!m_nodeList[i]->GetActive())
-            {
-               m_nodeList[i]->SetHover(true);
-            }
+            m_nodeList[i]->SetHover(true);
             if (m_mouseDown && !m_mousePrev)
             {
                 m_mousePositionPrev = m_mousePosition;
@@ -90,20 +87,20 @@ void BOTechTreeManager::Update()
             {
                 if (m_nodeList[i]->Intersects(m_mousePositionPrev))
                 {
-                    if (m_nodeList[i]->GetAdjacentActive())
+                    if (m_nodeList[i]->GetAdjacentActive() && !m_nodeList[i]->GetActive())
                     {
                         if (m_techPointsLeft >= m_nodeList[i]->GetPrice())
                         {
-                        m_mousePrev = m_mouseDown;
-                        m_nodeList[i]->SetActive(true);
-                        SetAdjacentNodes(m_nodeList[i]);
-                        HandleUpgrades(m_nodeList[i]);
+                            m_mousePrev = m_mouseDown;
+                            m_nodeList[i]->SetActive(true);
+                            SetAdjacentNodes(m_nodeList[i]);
+                            HandleUpgrades(m_nodeList[i]);
                             m_techPointsLeft -= m_nodeList[i]->GetPrice();
                             m_techPointsText.SetText(std::to_string(m_techPointsLeft), int3(255, 255, 255), 0);
+                        }
                     }
                 }
             }
-        }
         }
         else
         {
