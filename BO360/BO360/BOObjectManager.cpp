@@ -220,7 +220,8 @@ void BOObjectManager::Update(double p_deltaTime)
 		m_ballList[i]->SetBallCollidedWithBall(false);
 	}
 
-    m_boss->Update(p_deltaTime);
+    // m_boss->Update(p_deltaTime);
+
 	UpdateParticles(p_deltaTime);
 }
 
@@ -247,7 +248,7 @@ void BOObjectManager::Draw()
         m_ballList[i]->DrawBallWithTail();
 	}
 
-    m_boss->Draw();
+    //m_boss->Draw();
 	m_Shield.Draw();
 	m_paddle.Draw();
 }
@@ -602,40 +603,43 @@ void BOObjectManager::BallBlockCollision(BOBall* p_ball)
 
     float2 newDir;
     BOBlock* hitBlock = NULL;
-    if (m_boss->CheckCollisions(p_ball, newDir, hitBlock))
-    {
-        BOSoundManager::PlaySound(SOUND_POP);
-        //std::cout << "Ball bounced on [" << i << "]" << std::endl;
 
-        bool blockWasKilled = hitBlock->Hit(p_ball->GetDamage());
-        if (blockWasKilled)
-        {
-            // Create explosion.
-            m_particleSystem.BlockExplosion(hitBlock->GetPosition() + m_boss->GetPosition());
+    // Please leave this block of commented code!
+    // It handles collision against boss blocks, but the boss is currently not feeling so well. :(
+    //if (m_boss->CheckCollisions(p_ball, newDir, hitBlock))
+    //{
+    //    BOSoundManager::PlaySound(SOUND_POP);
+    //    //std::cout << "Ball bounced on [" << i << "]" << std::endl;
 
-            // Spawn powerup if there is one
-            BOPowerUpManager::AddPowerUp(hitBlock->GetPowerUp(), hitBlock->GetPosition(), &m_paddle, m_blackHole.GetPosition());
+    //    bool blockWasKilled = hitBlock->Hit(p_ball->GetDamage());
+    //    if (blockWasKilled)
+    //    {
+    //        // Create explosion.
+    //        m_particleSystem.BlockExplosion(hitBlock->GetPosition() + m_boss->GetPosition());
 
-            // Add score
-            BOScore::AddScore(hitBlock->GetScore());
+    //        // Spawn powerup if there is one
+    //        BOPowerUpManager::AddPowerUp(hitBlock->GetPowerUp(), hitBlock->GetPosition(), &m_paddle, m_blackHole.GetPosition());
 
-            // Delete the block
-            if (!m_boss->KillBlock(hitBlock))
-            {
-                std::cout << "Warning! Failed to kill a block" << std::endl;
-            }
-        }
+    //        // Add score
+    //        BOScore::AddScore(hitBlock->GetScore());
 
-        // This if probably looks a bit ugly, so I guess I'll have to explain the logic
-        // If a block is killed while the ball is on fire, we don't want to change the direction
-        // Thus we only change the direction if the above statement is false
-        if (!(blockWasKilled && p_ball->IsOnFire()))
-        {
-            p_ball->SetDirection(newDir);
-        }
-        p_ball->BouncedOnHexagon();
-        //p_ball->SetFuel(0.0f);
-    }
+    //        // Delete the block
+    //        if (!m_boss->KillBlock(hitBlock))
+    //        {
+    //            std::cout << "Warning! Failed to kill a block" << std::endl;
+    //        }
+    //    }
+
+    //    // This if probably looks a bit ugly, so I guess I'll have to explain the logic
+    //    // If a block is killed while the ball is on fire, we don't want to change the direction
+    //    // Thus we only change the direction if the above statement is false
+    //    if (!(blockWasKilled && p_ball->IsOnFire()))
+    //    {
+    //        p_ball->SetDirection(newDir);
+    //    }
+    //    p_ball->BouncedOnHexagon();
+    //    //p_ball->SetFuel(0.0f);
+    //}
 
 }
 
