@@ -2,6 +2,7 @@
 #define BOOBJECTMANGAGER_H_
 
 #include <vector>
+#include "BOGlobals.h"
 #include "BOComponent.h"
 #include "BOBackground.h"
 #include "BOObject.h"

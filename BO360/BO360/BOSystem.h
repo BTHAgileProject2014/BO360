@@ -2,6 +2,7 @@
 #define BOSYSTEM_H_
 #define DEBUG
 
+#include "BOGlobals.h"
 #include "BOComponent.h"
 #include "BOWindow.h"
 #include "BOInput.h"
@@ -44,7 +45,6 @@ private:
 	BOPowerUpManager m_powerUpManager;
 	BOStateManager m_stateManager;
 	BOLevelManager m_levelManager;
-	GameState m_gameState;
 	bool m_quit;
 	int m_windowWidth, m_windowHeight;
 
