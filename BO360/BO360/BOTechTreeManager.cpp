@@ -254,6 +254,10 @@ void BOTechTreeManager::SetLPE()
             m_nodeList[i]->SetLayer(3);
         }
         //Set Effect
+
+        HandleToolTips(m_nodeList[i]);
+
+
         // Temporary tooltips for demo
         switch (i)
         {
@@ -665,6 +669,124 @@ void BOTechTreeManager::HandleUpgrades(BOTechTreeNode* p_node)
         break;
     case ShockWave:
         BOTechTreeEffects::UtilityEffects.shockwaveEnabled = true;
+        break;
+    }
+}
+void BOTechTreeManager::HandleToolTips(BOTechTreeNode* p_node)
+{
+    int upgradeIdentifier = p_node->GetEffect();
+    switch (upgradeIdentifier)
+    {
+    case DropBasicPowerUp:
+        p_node->SetToolTip("Makes it possible for 3 different power ups to drop. BiggerPad, Shield and Multiball.");
+        break;
+    case DecreasePowerUpFallSpeed:
+        p_node->SetToolTip("Lowers the fall speed of power ups by 15%.");
+        break;
+    case AddBounceToShield:
+        p_node->SetToolTip("Gives the shield life so that a ball can bounce on it one extra time.");
+        break;
+    case IncreasePadSpeed:
+        p_node->SetToolTip("Increases the movement speed of the pad by 20%.");
+        break;
+    case DecreaseBallSpeed:
+        p_node->SetToolTip("Decrease the speed on the ball by 15%.");
+        break;
+    case DecreaseGravityPull:
+        p_node->SetToolTip("Lowers the gravitational pull of the ball.");//////////////////////////////////////////////////////
+        break;
+    case PowerUpGift:
+        p_node->SetToolTip("There is a chance that a random power up drops down.");
+        break;
+    case DecreasePowerUpFallSpeed2:
+        p_node->SetToolTip("Lowers the fall speed of power ups by 20%.");
+        break;
+    case StartWithShield:
+        p_node->SetToolTip("At the beginning of a level start with at shield.");
+        break;
+    case StickyPad:
+        p_node->SetToolTip("Allows the power up Sticky Pad to be dropped.");
+        break;
+    case IncreaseMaxPadSize:
+        p_node->SetToolTip("Increases the maximum pad size by 1 segment.");
+        break;
+    case ChanceDoublePadSizeIncrease:
+        p_node->SetToolTip("Gives a chance to get double effect of Bigger Pad power up. Adds a 33% chance.");
+        break;
+    case IncreaseMaxPadSize2:
+        p_node->SetToolTip("Increases the maximum pad size by 1 segment.");
+        break;
+    case BallsGetFuelWhenTheyCollide:
+        p_node->SetToolTip("Makes it so that when balls collide they refill each others tanks.");
+        break;
+    case MoreFuelAtRefill:
+        p_node->SetToolTip("Increases the tank size of every ball by 3 units.");
+        break;
+    case IncreaseBallDamage:
+        p_node->SetToolTip("Increase the ball damage by 1.");
+        break;
+    case Fireball:
+        p_node->SetToolTip("Allows the power up Fireball to be dropped.");
+        break;
+    case IncreaseBallDamage2:
+        p_node->SetToolTip("Increase the ball damage by 1.");
+        break;
+    case SlowTime:
+        p_node->SetToolTip("Allows the power up Slow Time to be dropped.");
+        break;
+    case PowerUpBoost1:
+        p_node->SetToolTip("Gives a chance to get double effect of Bigger Pad and MultiBall power ups. Adds a 33% chance.");
+        break;
+    case PowerUpBoost2:
+        p_node->SetToolTip("Increases the slow duration of Slow Time by 3 and increases the damage of Fireball by 3.");
+        break;
+    case MegaPad:
+        p_node->SetToolTip("Enabled the use of Mega Pad ability. Mega Pad is an ability that the player can activate by pressing . It will increase the size to (number?) segments for 5 seconds. ");///////////////////Key press mega pad, number of segments, time?
+        break;
+    case StackableShield:
+        p_node->SetToolTip("Makes it possible to stack number of shields. If there already is a shield active then that shield gains the new shields life increase the amount of bounces on the shield.");
+        break;
+    case IncreaseStartPadSize:
+        p_node->SetToolTip("Adds a segment to the initial start pad.");
+        break;
+    case Regenerate:
+        p_node->SetToolTip("Whenever you complete a level you gain 1 extra ball.");
+        break;
+    case IncreaseStartPadSize2:
+        p_node->SetToolTip("Adds a segment to the initial start pad.");
+        break;
+    case ChanceDoublePadSizeIncrease2:
+        p_node->SetToolTip("Gives a chance to get double effect of Bigger Pad power up. Adds a 33% chance.");
+        break;
+    case GiantBall:
+        p_node->SetToolTip("This is an activational ability that increases the ball size 4 times when pressing (button). It will last (time) seconds and has a cooldown of (cd time) seconds.");/////button, time and cd time
+        break;
+    case MuliSpawn:
+        p_node->SetToolTip("Gives a 33% chance to spawn an extra ball at the beginning of a level.");
+        break;
+    case DoubleMultiBall:
+        p_node->SetToolTip("Gives a chance to get double effect of Multiball power up. Adds a 33% chance.");
+        break;
+    case SuperTank:
+        p_node->SetToolTip("Makes it so that balls doesn't lose fuel when bouncing on a block.");
+        break;
+    case DoubleMultiBall2:
+        p_node->SetToolTip("Gives a chance to get double effect of Multiball power up. Adds a 33% chance.");
+        break;
+    case MultiSpawn2:
+        p_node->SetToolTip("Gives a 33% chance to spawn an extra ball at the beginning of a level.");
+        break;
+    case QuantumFuel:
+        p_node->SetToolTip("This is an activational ability that teleports fuel to all balls. The ability has a cooldown of (cd time) seconds."); //////Cd time
+        break;
+    case DecreaseCD:
+        p_node->SetToolTip("Lowers the cooldown time of all activational abilities by 25%.");
+        break;
+    case MultiSpawn3:
+        p_node->SetToolTip("Gives a 33% chance to spawn an extra ball at the beginning of a level.");
+        break;
+    case ShockWave:
+        p_node->SetToolTip("This is an activational ability that pushes all the balls away from the black hole. The ability has a cooldown of (cd time) seconds."); //////Cd time
         break;
     }
 }
