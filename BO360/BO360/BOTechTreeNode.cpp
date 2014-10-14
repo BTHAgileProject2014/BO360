@@ -36,7 +36,9 @@ bool BOTechTreeNode::Initialize(float2 p_pos, int2 p_size, std::string p_tooltip
     m_tooltipHeading.Initialize(float2(0, 0), "Heading", int3(255, 255, 255), 40, 0);
     m_tooltipText.Initialize(float2(0,0), " ", int3(255, 255, 255), 30, 0);
     int2 windowBounds = BOGraphicInterface::GetWindowSize();
-    m_tooltipFrame.Initialize(float2(windowBounds.x - 205, 205), int2(310,310), BOTextureManager::GetTexture(TEXTTTOLTIPFRAME));
+    m_tooltipFrame.Initialize(float2(0,0), int2(310,210), BOTextureManager::GetTexture(TEXTTTOLTIPFRAME));
+    int2 framesSize = m_tooltipFrame.GetSize();
+    m_tooltipFrame.SetPosition(float2(windowBounds.x - 50 - framesSize.x*0.5f, framesSize.y*0.5f +50));
     return BOObject::Initialize(p_pos, p_size, m_inactive);
 }
 

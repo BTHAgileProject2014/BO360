@@ -97,6 +97,7 @@ void BOTechTreeManager::Update()
                             HandleUpgrades(m_nodeList[i]);
                             m_techPointsLeft -= m_nodeList[i]->GetPrice();
                             m_techPointsText.SetText(std::to_string(m_techPointsLeft), int3(255, 255, 255), 0);
+                            //m_techPointsText.SetPosition(float2(m_techPointsText.GetSize().x * 0.5f + 50, m_windowSize.y - 50 - m_techPointsText.GetSize().y * 0.5f));
                         }
                     }
                 }
@@ -492,6 +493,7 @@ void BOTechTreeManager::Reset()
 
     m_techPointsLeft = m_maxTechPoints;
     m_techPointsText.SetText(std::to_string(m_techPointsLeft), int3(255, 255, 255), 0);
+    //m_techPointsText.SetPosition(float2(m_techPointsText.GetSize().x * 0.5f + 50, m_windowSize.y - 50 - m_techPointsText.GetSize().y * 0.5f));
 }
 
 void BOTechTreeManager::Handle(InputMessages p_inputMessages)
@@ -542,10 +544,10 @@ void BOTechTreeManager::HandleUpgrades(BOTechTreeNode* p_node)
         BOTechTreeEffects::PUEffects.shieldCharge++;
         break;
     case IncreasePadSpeed:
-        BOTechTreeEffects::PaddleEffects.speed += 1.20f;
+        BOTechTreeEffects::PaddleEffects.speed += 1.10f;
         break;
     case DecreaseBallSpeed:
-        BOTechTreeEffects::BallEffects.speed -= 0.25f;
+        BOTechTreeEffects::BallEffects.speed -= 0.1f;
         break;
     case DecreaseGravityPull:
         BOTechTreeEffects::BallEffects.gravity = 1;
@@ -806,5 +808,9 @@ void BOTechTreeManager::SetTechPoint(int p_numberOfLevels)
 {
     m_maxTechPoints = p_numberOfLevels * 3;
     m_techPointsLeft = m_maxTechPoints;
-    m_techPointsText.SetText(std::to_string(m_techPointsLeft), int3(255, 255, 255), 0);
+
+    std::string temp = "Tech Points: " + std::to_string(m_techPointsLeft);
+
+    m_techPointsText.SetText(temp, int3(255, 255, 255), 0);
+    //m_techPointsText.SetPosition(float2(m_techPointsText.GetSize().x * 0.5f + 50, m_windowSize.y - 50 - m_techPointsText.GetSize().y * 0.5f));
 }
