@@ -379,6 +379,7 @@ void BOSystem::HandleAction(ButtonAction p_action)
 			{
                 // Reset tech tree
                 m_techTreeManager.Reset();
+                m_techTreeManager.SetTechPoint(0);
 				m_gameState = RUNNING;
 				if (!InitializeMap(0))
 				{
@@ -417,6 +418,8 @@ void BOSystem::HandleAction(ButtonAction p_action)
 					m_gameState = MENU;
 					m_levelManager.SetLevel(0);
 				}
+                m_techTreeManager.Reset();
+                m_techTreeManager.SetTechPoint(m_levelManager.GetCurrentLevel());
                 break;
             }
 
@@ -448,14 +451,13 @@ void BOSystem::HandleAction(ButtonAction p_action)
                 // Special case for the first level, skipping the tech tree
                 if (index == 0)
                 {
-                    m_techTreeManager.Reset();
+                    
                     m_gameState = RUNNING;
 
                     if (!InitializeMap(0))
                     {
                         std::cout << "Press ENTER to quit." << std::endl;
                         std::cin.get();
-
                         m_quit = true;
                     }
                 }
@@ -463,8 +465,9 @@ void BOSystem::HandleAction(ButtonAction p_action)
 				{
 					m_gameState = TECHTREE;
 					m_levelManager.SetLevel(index);
-					
 				}
+                m_techTreeManager.Reset();
+                m_techTreeManager.SetTechPoint(index);
 				break;
 			}
             case(TECHTREEACTION) :

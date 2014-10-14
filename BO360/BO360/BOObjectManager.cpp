@@ -156,6 +156,7 @@ void BOObjectManager::Update(double p_deltaTime)
     m_blackHole.Update(p_deltaTime * 100);
 	m_paddle.Update(p_deltaTime);
     m_shockwave.Update(p_deltaTime);
+    m_shockwave.UpdateWave(p_deltaTime);
 
 	// Update blocks
 	for (unsigned int i = 0; i < m_blockList.size(); i++)
@@ -181,18 +182,18 @@ void BOObjectManager::Update(double p_deltaTime)
 			    m_ballList[i]->SetPosition(m_paddle.GetBallSpawnPosition());
 		    }
         }
+
 		else	// Ball is NOT stuck to pad
 		{
             // Check if the ball is newly launched
 			BallNewlyLaunched(m_ballList[i]);
             
-
 			BallBlockCollision(m_ballList[i]);            
 			BallPadCollision(m_ballList[i]);
 
             if (!WonGame())
             {
-                CheckBallOutOfBounds(i);
+		    CheckBallOutOfBounds(i);
             }
 
 			CheckBallToBall(i);
@@ -213,11 +214,11 @@ void BOObjectManager::Update(double p_deltaTime)
 		    m_keyManager.Update(*m_ballList[i]);
 	    }
 	}
+
 	for (unsigned int i = 0; i < m_ballList.size(); i++)
 	{
 		m_ballList[i]->SetBallCollidedWithBall(false);
 	}
-
 
 	UpdateParticles(p_deltaTime);
 }
@@ -225,6 +226,7 @@ void BOObjectManager::Update(double p_deltaTime)
 void BOObjectManager::Draw()
 {
 	m_background.Draw();
+    m_shockwave.DrawWave();
 	m_blackHole.DrawRotating();
 	m_keyManager.Draw();
 
@@ -258,7 +260,6 @@ void BOObjectManager::Draw()
 
 	m_Shield.Draw();
 	m_paddle.Draw();
-	
 }
 
 void BOObjectManager::Handle(PowerUpTypes p_type, bool p_activated)
@@ -311,9 +312,10 @@ void BOObjectManager::Handle(InputMessages p_inputMessage)
 			{
 			m_ballList[i]->SetStuckToPad(false);
 				//m_ballList[i]->SetDirection(float2(m_ballList[i]->GetPosition().x - m_blackHole.GetPosition().x, m_ballList[i]->GetPosition().y - m_blackHole.GetPosition().y));
-	        }
-        }
-    }
+	}
+}
+}
+
     if (p_inputMessage.fKey && m_shockwave.Activate())
     {
         ActivateShockwave();
@@ -562,7 +564,7 @@ void BOObjectManager::BallBlockCollision(BOBall* p_ball)
 			if (m_blockList[i]->Hit(p_ball->GetDamage()))
 			{
 				// Create explosion.
-				m_particleSystem.RegularBlockExplosion(m_blockList[i]->GetPosition());
+				m_particleSystem.BlockExplosion(m_blockList[i]->GetPosition());
 
 				// Spawn powerup if there is one
 				BOPowerUpManager::AddPowerUp(m_blockList[i]->GetPowerUp(), m_blockList[i]->GetPosition(), &m_paddle, m_blackHole.GetPosition());
@@ -677,9 +679,13 @@ void BOObjectManager::UpdateParticles(double p_deltaTime)
 
 void BOObjectManager::ActivateShockwave()
 {
+    double durationOfWave = 0.50;
+    m_shockwave.BeginDrawingWave(durationOfWave);
+
     for (unsigned int i = 0; i < m_ballList.size(); i++)
     {
         m_ballList[i]->ActivateShockwave();
+        m_particleSystem.Explosion(m_ballList[i]->GetPosition());
     }
 }
 
@@ -761,7 +767,7 @@ void BOObjectManager::PewPewPew()
         int l = rand() % (m_blockList.size() * 5);
         if (l < m_blockList.size())
         {
-            m_particleSystem.RegularBlockExplosion(m_blockList[l]->GetPosition());
+            m_particleSystem.BlockExplosion(m_blockList[l]->GetPosition());
             delete m_blockList[l];
             m_blockList.erase(m_blockList.begin() + l);
         }
