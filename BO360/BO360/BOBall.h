@@ -29,7 +29,7 @@ public:
 	void SetFuel(float p_Fuel);
 
 	bool CanColide();
-	box GetBoundingBox();
+	box GetBoundingBox() const;
 	int GetDamage();
 
 	void BouncedOnPad();

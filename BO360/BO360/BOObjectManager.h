@@ -24,6 +24,8 @@
 #include "BOTextureManager.h"
 #include "BOSlowTime.h"
 #include "BOShockwave.h"
+#include "BOBoss.h"
+#include "BOTestBoss.h"
 
 class BOObjectManager : public BOComponent, public BOPUSubscriber ,public BOSubscriber
 {
@@ -68,6 +70,7 @@ private:
 	BOKeyManager m_keyManager;
     BOSlowTime m_slowTime;
     BOShockwave m_shockwave;
+    BOBoss* m_boss;
 
 	double m_SecondsPerParticle; // Should be moved into objects that use it
 };

@@ -464,7 +464,7 @@ struct box
 
 	}
 
-	box(float2 p_pos, int2 p_size)
+	box(const float2 p_pos, const int2 p_size)
 	{
 		pos = p_pos;
 		size = p_size;

@@ -48,6 +48,8 @@ bool BOGraphicInterface::Initialize(int p_windowWidth, int p_windowHeight)
 		return false;
 	}
 
+    GetInstance().m_offset = float2(0.0f, 0.0f);
+
 	return true;
 }
 
@@ -61,6 +63,8 @@ void BOGraphicInterface::Shutdown()
 
 void BOGraphicInterface::DrawEx(SDL_Texture* p_texture, int4 p_source, int4 p_destination, double p_rotation, int2 p_rotationSource, Uint8 p_opacity)
 {
+    float2 offset = GetInstance().m_offset;
+
 	SDL_Rect source;
 	source.x = p_source.x;
 	source.y = p_source.y;
@@ -68,8 +72,8 @@ void BOGraphicInterface::DrawEx(SDL_Texture* p_texture, int4 p_source, int4 p_de
 	source.h = p_source.w;
 
 	SDL_Rect destionation;
-	destionation.x = p_destination.x;
-	destionation.y = p_destination.y;
+	destionation.x = p_destination.x + offset.x;
+    destionation.y = p_destination.y + offset.y;
 	destionation.w = p_destination.z;
 	destionation.h = p_destination.w;
 
@@ -83,9 +87,10 @@ void BOGraphicInterface::DrawEx(SDL_Texture* p_texture, int4 p_source, int4 p_de
 
 void BOGraphicInterface::Draw(SDL_Texture* p_texture, float2 p_position, int2 p_size, int4 p_source, Uint8 p_opacity)
 {
+    float2 offset = GetInstance().m_offset;
 	SDL_Rect source, target;
-	target.x = (int)p_position.x - (p_size.x / 2);
-	target.y = (int)p_position.y - (p_size.y / 2);
+	target.x = (int)p_position.x - (p_size.x / 2) + offset.x;
+	target.y = (int)p_position.y - (p_size.y / 2) + offset.y;
 	target.w = p_size.x;
 	target.h = p_size.y;
 	source.x = p_source.x;
@@ -207,3 +212,10 @@ int2 BOGraphicInterface::GetWindowSize()
 {
 	return int2(GetInstance().m_windowWidth, GetInstance().m_windowHeight);
 }
+
+void BOGraphicInterface::Offset(float2 p_offset)
+{
+    float2 currOffset = GetInstance().m_offset;
+    GetInstance().m_offset = p_offset + currOffset;
+}
+

@@ -30,6 +30,7 @@ public:
 	static SDL_Texture* LoadTexture(std::string p_path);
 	static SDL_Texture* DrawTextToTexture(std::string p_text, int3 p_textColor, int2* size, int p_fontSize, int p_maxWidth);
 	static void DestroyTexture(SDL_Texture* p_texture);
+    static void Offset(float2 p_offset);
 
 private:
 	BOGraphicInterface() {};
@@ -39,6 +40,8 @@ private:
 	static SDL_Renderer* m_renderer;
 	int m_windowWidth;
 	int m_windowHeight;
+    float2 m_offset;
+
 	//bool m_fullscreen;	// Use only when fullscreen and resolutions is supported
 };
 #endif

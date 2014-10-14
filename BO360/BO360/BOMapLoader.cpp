@@ -28,7 +28,7 @@ bool BOMapLoader::LoadMap(int p_index)
 	{
 	case(0) :
 	{
-		fileName.append("map15.bom");
+		fileName.append("Empty.bom");
 		break;
 	}
 	case(1) :

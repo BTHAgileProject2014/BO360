@@ -12,7 +12,7 @@ public:
 	virtual bool Initialize(float2 p_position, int2 p_size, int2 p_sourceSize, int p_frame, int p_maxFrames, double p_timePerFrame, bool p_hardReset, SDL_Texture* p_sprite);
     virtual void Animate(double p_deltaTime);
 	virtual void MoveFrame(int p_frames);
-	virtual void DrawAnimated();
+	virtual void Draw();
 
 	int2 GetSourceSize();
 	void SetSourceSize(int2 p_sourceSize);

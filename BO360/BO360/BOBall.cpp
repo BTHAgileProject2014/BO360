@@ -79,7 +79,7 @@ void BOBall::Update(double p_deltaTime, sphere p_blackHoleBounds)
 void BOBall::DrawBallWithTail()
 {
     m_thruster.SetRotation(m_rotation);
-    m_thruster.DrawAnimated();
+    m_thruster.Draw();
 
     int4 source = int4(0, 0, m_size.x, m_size.y);
     int4 destination = int4((int)(m_position.x - m_scale * (m_size.x / 2)), (int)(m_position.y - m_scale * (m_size.y / 2)), (int)(m_scale * m_size.x), (int)(m_scale * m_size.y));
@@ -127,7 +127,7 @@ void BOBall::BouncedOnPad()
 	m_Fuel = 1.0f;
 }
 
-box BOBall::GetBoundingBox()
+box BOBall::GetBoundingBox() const
 {
 	return box(m_position, m_size);
 }
