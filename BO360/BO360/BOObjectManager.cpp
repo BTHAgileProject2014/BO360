@@ -166,7 +166,7 @@ void BOObjectManager::Update(double p_deltaTime)
 	// Update balls
 	for (unsigned int i = 0; i < m_ballList.size(); i++)
 	{
-		m_ballList[i]->Update(p_deltaTime, m_blackHole.GetBoundingSphere());
+		m_ballList[i]->Update(p_deltaTime, m_blackHole.GetBoundingSphere(), WonGame());
 
 		if (m_ballList[i]->IsStuckToPad())
 		{
@@ -190,7 +190,10 @@ void BOObjectManager::Update(double p_deltaTime)
 			BallBlockCollision(m_ballList[i]);            
 			BallPadCollision(m_ballList[i]);
 
-		    CheckBallOutOfBounds(i);
+            if (!WonGame())
+            {
+                CheckBallOutOfBounds(i);
+            }
 
 			CheckBallToBall(i);
 
@@ -363,6 +366,10 @@ bool BOObjectManager::WonGame()
 {
     bool didWin = m_keyManager.AllKeysCatched()
         && m_continue;
+    if (didWin)
+    {
+        BOPhysics::SetTimeScale(0.25f);
+    }
 	return didWin;
 }
 
