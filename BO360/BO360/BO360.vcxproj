@@ -87,6 +87,7 @@
     </PreLinkEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="BOBlockManager.h" />
     <ClInclude Include="BOAnimatedObject.h" />
     <ClInclude Include="BOBackground.h" />
     <ClInclude Include="BOBall.h" />
@@ -94,6 +95,7 @@
     <ClInclude Include="BOBlock.h" />
     <ClInclude Include="BOBlockIron.h" />
     <ClInclude Include="BOBlockMultiTexture.h" />
+    <ClInclude Include="BOBoss.h" />
     <ClInclude Include="BOComponent.h" />
     <ClInclude Include="BODrawableText.h" />
     <ClInclude Include="BOGraphicInterface.h" />
@@ -134,6 +136,7 @@
     <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="BOBlockManager.cpp" />
     <ClCompile Include="BOAnimatedObject.cpp" />
     <ClCompile Include="BOBackground.cpp" />
     <ClCompile Include="BOBall.cpp" />
@@ -141,6 +144,7 @@
     <ClCompile Include="BOBlock.cpp" />
     <ClCompile Include="BOBlockIron.cpp" />
     <ClCompile Include="BOBlockMultiTexture.cpp" />
+    <ClCompile Include="BOBoss.cpp" />
     <ClCompile Include="BOComponent.cpp" />
     <ClCompile Include="BODrawableText.cpp" />
     <ClCompile Include="BOGraphicInterface.cpp" />

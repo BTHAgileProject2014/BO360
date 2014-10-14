@@ -40,6 +40,12 @@
     <Filter Include="Source Files\TechTree">
       <UniqueIdentifier>{5fdc1556-caab-4956-8eb7-ac4e22518945}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Boss">
+      <UniqueIdentifier>{893fb9ef-86ff-4e78-a5c8-c7bbf6be2c31}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Boss">
+      <UniqueIdentifier>{2b9fedc1-ecf1-4046-895b-7e76ba816bf1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BOSystem.cpp">
@@ -173,6 +179,12 @@
     </ClCompile>
     <ClCompile Include="BOLevelManager.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="BOBoss.cpp">
+      <Filter>Source Files\Boss</Filter>
+    </ClCompile>
+    <ClCompile Include="BOBlockManager.cpp">
+      <Filter>Source Files\Boss</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -313,6 +325,12 @@
     </ClInclude>
     <ClInclude Include="BOLevelManager.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BOBoss.h">
+      <Filter>Header Files\Boss</Filter>
+    </ClInclude>
+    <ClInclude Include="BOBlockManager.h">
+      <Filter>Header Files\Boss</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

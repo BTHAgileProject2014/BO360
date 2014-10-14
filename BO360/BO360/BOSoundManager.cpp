@@ -60,7 +60,7 @@ bool BOSoundManager::Initialize()
 		return false;
 	}
 
-	Mix_PlayMusic(GetInstance().m_music, -1);
+	//Mix_PlayMusic(GetInstance().m_music, -1);
 
 	return true;
 }
