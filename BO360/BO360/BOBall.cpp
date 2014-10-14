@@ -24,6 +24,7 @@ bool BOBall::Initialize(float2 p_position, int2 p_size, SDL_Texture* p_sprite, f
 	m_direction = p_direction.normalized();
 	m_windowSize = p_windowSize;
 	m_stuckToPad = true;
+	m_spawned = false;
 	m_onFire = false;
 	m_fireTimeElapsed = 0; // Set duration for fireball powerup in header, const variable
     m_rotation = 0;
@@ -48,6 +49,7 @@ void BOBall::Update(double p_deltaTime, sphere p_blackHoleBounds)
 	if (!m_stuckToPad && !m_mouseCheat)
 	{
 		Move(p_deltaTime, p_blackHoleBounds);
+		m_spawned = true;
 	}
 
     // Tick timer for fire powerup
@@ -81,13 +83,13 @@ void BOBall::DrawBallWithTail()
 
     int4 source = int4(0, 0, m_size.x, m_size.y);
     int4 destination = int4((int)(m_position.x - m_scale * (m_size.x / 2)), (int)(m_position.y - m_scale * (m_size.y / 2)), (int)(m_scale * m_size.x), (int)(m_scale * m_size.y));
-    BOGraphicInterface::DrawEx(m_sprite, source, destination, m_rotation, int2(7, 7));
+    BOGraphicInterface::DrawEx(m_sprite, source, destination, m_rotation, int2(7, 7), m_opacity);
 
     if (m_onFire)
     {
         source = int4(0, 0, 25, 25);
         destination = int4((int)(m_position.x - m_scale * (25 / 2)), (int)(m_position.y - m_scale * (25 / 2)), (int)(m_scale * 25), (int)(m_scale * 25));
-        BOGraphicInterface::DrawEx(m_fireBallTexture, source, destination, 0, int2(0, 0));
+        BOGraphicInterface::DrawEx(m_fireBallTexture, source, destination, 0, int2(0, 0), m_opacity);
     }
 }
 
@@ -317,4 +319,9 @@ void BOBall::SetBallCollidedWithBall(bool p_collided)
 bool BOBall::GetNewlyLaunched()
 {
 	return m_newlyLaunched;
+}
+
+bool BOBall::IsSpawned()
+{
+	return m_spawned;
 }

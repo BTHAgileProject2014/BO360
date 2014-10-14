@@ -20,11 +20,20 @@ public:
     void AddShockwave(bool p_isPowerUp);
     void Handle(PowerUpTypes p_type, bool p_activated);
     double GetTimeLeft() const;
+
+    void BeginDrawingWave(double p_duration);
+    void UpdateWave(double p_deltatime);
+    void DrawWave();
+
 private:
     bool m_hasShockwave;
     bool m_isPowerUp;
+    bool m_draw;
     double m_totalCooldownTime;
     double m_currentCooldownTime;
-};
 
+    double m_duration;
+    double m_timeLeft;
+    SDL_Texture* m_wave;
+};
 #endif

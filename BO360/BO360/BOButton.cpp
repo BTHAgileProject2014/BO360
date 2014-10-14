@@ -96,11 +96,11 @@ bool BOButton::Intersects(int2 p_mousePosition)
 
 void BOButton::Draw()
 {
-	BOGraphicInterface::Draw(m_sprite, float2(m_position.x + (m_size.x / 2), m_position.y + (m_size.y / 2)), m_size);
+	BOGraphicInterface::Draw(m_sprite, float2(m_position.x + (m_size.x / 2), m_position.y + (m_size.y / 2)), m_size, m_opacity);
 
 	if (m_action == NOACTION)
 	{
-		BOGraphicInterface::Draw(BOTextureManager::GetTexture(TEXLOCK), float2(m_position.x + (m_size.x / 2), m_position.y + (m_size.y / 2)), m_size);
+		BOGraphicInterface::Draw(BOTextureManager::GetTexture(TEXLOCK), float2(m_position.x + (m_size.x / 2), m_position.y + (m_size.y / 2)), m_size, m_opacity);
 		m_buttonText.Draw();
 	}
 	// Draw tool tip if selected.

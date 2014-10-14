@@ -59,7 +59,7 @@ void BOGraphicInterface::Shutdown()
 	TTF_Quit();
 }
 
-void BOGraphicInterface::DrawEx(SDL_Texture* p_texture, int4 p_source, int4 p_destination, double p_rotation, int2 p_rotationSource)
+void BOGraphicInterface::DrawEx(SDL_Texture* p_texture, int4 p_source, int4 p_destination, double p_rotation, int2 p_rotationSource, Uint8 p_opacity)
 {
 	SDL_Rect source;
 	source.x = p_source.x;
@@ -76,11 +76,12 @@ void BOGraphicInterface::DrawEx(SDL_Texture* p_texture, int4 p_source, int4 p_de
 	SDL_Point rotationSource;
 	rotationSource.x = p_rotationSource.x;
 	rotationSource.y = p_rotationSource.y;
-
+    SDL_SetTextureAlphaMod(p_texture, p_opacity);
 	SDL_RenderCopyEx(GetInstance().m_renderer, p_texture, &source, &destionation, p_rotation, &rotationSource, SDL_FLIP_NONE);
+    SDL_SetTextureAlphaMod(p_texture, 255);
 }
 
-void BOGraphicInterface::Draw(SDL_Texture* p_texture, float2 p_position, int2 p_size, int4 p_source)
+void BOGraphicInterface::Draw(SDL_Texture* p_texture, float2 p_position, int2 p_size, int4 p_source, Uint8 p_opacity)
 {
 	SDL_Rect source, target;
 	target.x = (int)p_position.x - (p_size.x / 2);
@@ -91,19 +92,21 @@ void BOGraphicInterface::Draw(SDL_Texture* p_texture, float2 p_position, int2 p_
 	source.y = p_source.y;
 	source.w = p_source.z;
 	source.h = p_source.w;
-
+    SDL_SetTextureAlphaMod(p_texture, p_opacity);
 	SDL_RenderCopy(GetInstance().m_renderer, p_texture, &source, &target);
+    SDL_SetTextureAlphaMod(p_texture, 255);
 }
 
-void BOGraphicInterface::Draw(SDL_Texture* p_texture, float2 p_position, int2 p_size)
+void BOGraphicInterface::Draw(SDL_Texture* p_texture, float2 p_position, int2 p_size, Uint8 p_opacity)
 {
 	int4 source;
 	source.x = 0;
 	source.y = 0;
 	source.z = p_size.x;
 	source.w = p_size.y;
-
-	Draw(p_texture, p_position, p_size, source);
+    
+	Draw(p_texture, p_position, p_size, source, p_opacity);
+    
 }
 
 void BOGraphicInterface::Clear()

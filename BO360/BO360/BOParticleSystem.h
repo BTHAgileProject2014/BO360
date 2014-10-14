@@ -14,8 +14,8 @@
 #define PARTICLEPOSITIONOFFSET 11
 #define PARTICLEROTATIONVARIATION 361
 #define PARTICLESEXPLOSIONSPEED int2(200, 100) // MAX, MIN
-#define BLOCKDEBIRSPEREXPLOSION int2(6, 2) // MAX, MIN
-#define EXPLOSIONS int2(30, 20) // MAX, MIN
+#define BLOCKDEBIRSPEREXPLOSION int2(10, 5) // MAX, MIN
+#define EXPLOSIONS int2(50, 25) // MAX, MIN
 
 class BOParticleSystem : public BOComponent
 {
@@ -25,7 +25,8 @@ public:
 
 	void BallDebugTrail(float2 p_position);
 	void BallTrail(float2 p_position);
-	void RegularBlockExplosion(float2 p_position);
+	void BlockExplosion(float2 p_position);
+    void Explosion(float2 p_position);
 
 	bool Initialize(int p_maxParticles);
 	void Shutdown();

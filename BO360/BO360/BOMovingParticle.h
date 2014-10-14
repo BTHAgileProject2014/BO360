@@ -28,5 +28,8 @@ private:
 	float m_speed;
 
 	bool m_dead;
+    Uint8 m_opacity;
+
+    double m_startFadeTime;
 };
 #endif

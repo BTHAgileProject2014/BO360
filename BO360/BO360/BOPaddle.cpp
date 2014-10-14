@@ -10,19 +10,21 @@ BOPaddle::~BOPaddle()
 
 }
 
-bool BOPaddle::Initialize(float2 p_position, int2 p_size, SDL_Texture* p_sprite)
+bool BOPaddle::Initialize(float2 p_position, int2 p_size, int2 p_sourceSize, int p_frame, int p_numberOfFrames, double p_timePerFrame, bool p_hardReset, SDL_Texture* p_sprite)
 {
     m_isSticky = false;
-	m_rotation = 0.0f;
+	m_rotation = 0.0;
 	m_totalDegrees = 21.2;
 	m_segementDegree = m_totalDegrees;
 	m_segments = 1;
-	AddSegments(2);
+	AddSegments(2); // 2 here -> Start with total 3 segments
 	m_deltaRotation = 200 * BOTechTreeEffects::PaddleEffects.speed;
 	BOPublisher::AddSubscriber(this);
 	BOPowerUpManager::AddSubscriber(this);
-	return BOObject::Initialize(p_position, p_size, p_sprite);
+
+    m_stickyGlow = BOTextureManager::GetTexture(TEXSTICKYPAD);
 	
+    return BOAnimatedObject::Initialize(p_position, p_size, p_sourceSize, p_frame, p_numberOfFrames, p_timePerFrame, p_hardReset, p_sprite);
 }
 
 void BOPaddle::Handle(InputMessages p_inputMessages)
@@ -116,16 +118,27 @@ void BOPaddle::Update(double p_deltaTime)
 			m_rotation -= 360;
 		}
 	}
+
+    BOAnimatedObject::Animate(p_deltaTime);
 }
 
 void BOPaddle::Draw()
 {
-	int4 mySource = int4(0, 0, m_size.x, m_size.y);
-	int4 myDest = int4((int)m_position.x - (m_size.x / 2), (int)m_position.y - (m_size.y / 2), m_size.x, m_size.y);
+    int4 target = int4((int)m_position.x - m_size.x / 2, (int)m_position.y - m_size.y / 2, m_size.x, m_size.y);
+    int4 source = int4(m_sourceSize.x * m_frame, 0, m_sourceSize.x, m_sourceSize.y);
 
 	for (int i = 0; i < m_segments; i++)
 	{
-		BOGraphicInterface::DrawEx(m_sprite, mySource, myDest, m_rotation + ((double)m_segementDegree * i), int2(m_size.x / 2, m_size.y / 2));
+        // If the pad is sticky, draw a glow around its edge.
+        if (m_isSticky)
+        {
+            int4 stickyTarget = int4((int)m_position.x - (m_size.x + 8) / 2, (int)m_position.y - (m_size.y + 8) / 2, m_size.x + 8, m_size.x + 8);
+            int4 stickySource = int4(0, 0, (m_size.x + 8), (m_size.y + 8));
+
+            BOGraphicInterface::DrawEx(m_stickyGlow, stickySource, stickyTarget, m_rotation + ((double)m_segementDegree * i), int2(stickySource.z / 2, stickySource.w / 2), m_opacity);
+        }
+
+        BOGraphicInterface::DrawEx(m_sprite, source, target, m_rotation + ((double)m_segementDegree * i), int2(source.z / 2, source.w / 2), m_opacity);
 	}
 }
 
@@ -170,7 +183,7 @@ double BOPaddle::GetDegrees()const
 float2 BOPaddle::GetBallSpawnPosition()
 {
     float radius = (m_size.x * 0.5f);
-	float alpha = ((-m_rotation - 21) * DEGREES_TO_RADIANS) - 1.57;
+	float alpha = (float)((-m_rotation - (21.2f + (0.5f * 21.2f * (m_segments - 3.0f)))) * DEGREES_TO_RADIANS) - 1.57f;
 	float ballPosx = -cos(alpha) * radius;
     float ballPosy = sin(alpha) * radius;
     float tempx = m_position.x + ballPosx;

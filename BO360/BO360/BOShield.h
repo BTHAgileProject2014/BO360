@@ -4,6 +4,7 @@
 #include "BOPowerUp.h"
 #include "BOPhysics.h"
 #include "BOPowerUpManager.h"
+#include "BOBall.h"
 
 class BOShield
 {
@@ -13,7 +14,7 @@ public:
 
 	bool Initialize(int2 p_ShieldSize, SDL_Texture* p_sprite, int2 p_WindowSize);
 	bool InitializePU(float2 p_POPos, int2 p_POSize, std::string p_POFN, float p_POSpeed);
-	float2 Update(double p_deltaTime, sphere p_Ball, float2 p_BallDirection);
+    void Update(double p_deltaTime, BOBall& p_ball);
 	void Draw();
 	void Shutdown();
 
@@ -30,5 +31,6 @@ private:
 	int2 m_WindowSize;
 	bool m_IsActive;
 	int m_lifes;
+    Uint8 m_opacity;
 };
 #endif

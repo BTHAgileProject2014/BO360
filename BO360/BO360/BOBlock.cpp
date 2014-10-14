@@ -92,3 +92,8 @@ void BOBlock::DrawGlow()
 {
     m_glow.DrawAnimated();
 }
+
+sphere BOBlock::GetBoundingSphere() const
+{
+	return sphere(m_position, m_radius + 10);
+}

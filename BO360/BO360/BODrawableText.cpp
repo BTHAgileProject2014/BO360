@@ -16,6 +16,7 @@ bool BODrawableText::Initialize(float2 p_position, std::string p_text, int3 p_co
 	m_text = p_text;
 	m_texture = BOGraphicInterface::DrawTextToTexture(m_text, p_color, &m_size, p_fontSize, p_maxWidth);
 	m_fontSize = p_fontSize;
+    m_opacity = 255;
 	return true;
 }
 
@@ -26,7 +27,7 @@ void BODrawableText::Shutdown()
 
 void BODrawableText::Draw()
 {
-	BOGraphicInterface::Draw(m_texture, m_position, m_size);
+	BOGraphicInterface::Draw(m_texture, m_position, m_size, m_opacity);
 }
 
 void BODrawableText::SetPosition(float2 p_position)
