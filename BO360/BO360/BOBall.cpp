@@ -16,7 +16,7 @@ bool BOBall::Initialize(float2 p_position, int2 p_size, SDL_Texture* p_sprite, f
 	{
 		return false;
 	}
-	m_damage = 1;
+	m_damage = 1 + BOTechTreeEffects::BallEffects.damage;
     m_rocketEngine = false;
 	m_Fuel = 0.0f;
 	m_canColide = true;
@@ -64,7 +64,7 @@ void BOBall::Update(double p_deltaTime, sphere p_blackHoleBounds)
 	}
     m_thruster.SetPosition(m_position);
     m_rotation = BOPhysics::AngleBetweenDeg(float2(0, 1), m_direction) + 180;
-    if (!m_stuckToPad && m_stuckToPadPrev && BOTechTreeEffects::UtilityEffects.PUGiftEnabled)
+    if (!m_stuckToPad && m_stuckToPadPrev)
     {
         m_newlyLaunched = true;
     }
@@ -124,7 +124,7 @@ bool BOBall::CanColide()
 void BOBall::BouncedOnPad()
 {
     m_rocketEngine = true;
-	m_Fuel = 1.0f;
+	m_Fuel = 1.0f + BOTechTreeEffects::UtilityEffects.extraBallFuel;
 }
 
 box BOBall::GetBoundingBox()

@@ -17,7 +17,9 @@ bool BOPaddle::Initialize(float2 p_position, int2 p_size, int2 p_sourceSize, int
 	m_totalDegrees = 21.2;
 	m_segementDegree = m_totalDegrees;
 	m_segments = 1;
-	AddSegments(2); // 2 here -> Start with total 3 segments
+	m_minSegments = 1;
+	m_maxSegments = 5 + BOTechTreeEffects::PaddleEffects.maxSize;
+	AddSegments(2 + BOTechTreeEffects::PaddleEffects.size); // 2 here -> Start with total 3 segments
 	m_deltaRotation = 200 * BOTechTreeEffects::PaddleEffects.speed;
 	BOPublisher::AddSubscriber(this);
 	BOPowerUpManager::AddSubscriber(this);
@@ -64,9 +66,15 @@ void BOPaddle::Handle(PowerUpTypes p_type, bool p_activated)
 			if (p_activated)
 			{
 				// Make the paddle bigger
-				if (m_segments < 5)
+				if (m_segments < m_maxSegments)
 				{
 					AddSegments(1);
+					int randomNr;
+					randomNr = rand() % 100 + 1; // random nr from 1-100;
+					if (randomNr <= (100 * BOTechTreeEffects::PUEffects.biggerPadEffectMultiplier))
+					{
+						AddSegments(1);
+					}
 				}
 			}
 
@@ -83,7 +91,10 @@ void BOPaddle::Handle(PowerUpTypes p_type, bool p_activated)
 			if (p_activated)
 			{
 				// Make the paddle smaller
-				RemoveSegments(1);
+				if (m_segments > m_minSegments)
+				{
+					RemoveSegments(1);
+				}
 			}
 			else
 			{
@@ -148,7 +159,7 @@ int BOPaddle::GetSegments()const
 
 void BOPaddle::AddSegments(int p_segments)
 {
-	if (m_segments < 17)
+	if ((m_segments+p_segments) <= m_maxSegments)
 	{
 		m_totalDegrees = m_totalDegrees + (m_segementDegree * p_segments);
 		m_segments += p_segments;
@@ -157,7 +168,7 @@ void BOPaddle::AddSegments(int p_segments)
 
 void BOPaddle::RemoveSegments(int p_segments)
 {
-	if (m_segments > 1)
+	if ((m_segments-p_segments) >= m_minSegments)
 	{
 		m_totalDegrees = m_totalDegrees - (m_segementDegree * p_segments);
 		m_segments -= p_segments;

@@ -623,7 +623,7 @@ enum TTEffects
     DecreaseGravityPull,
     IncreaseBallDamage,
     DoubleMultiBall2,
-    //Laer 4
+    //Lane 4
     MegaPad,
     StartWithShield,
     DecreasePowerUpFallSpeed,

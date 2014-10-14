@@ -31,6 +31,8 @@ public:
     bool m_animated;
 
 protected:
+	PowerUpTypes SetRandomPowerUp();
+
 	int m_scoreValue;
 	int m_hp;
 	bool dead;

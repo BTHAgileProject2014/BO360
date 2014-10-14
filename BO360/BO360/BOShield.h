@@ -21,6 +21,8 @@ public:
 	void SetActive(bool p_IsActive);
 	void SwitchActive();
 	bool GetActive();
+	void AddLife(unsigned int p_lifes);
+	int GetLifes();
 
 private:
 	void ChangeBallDirection(int p_BounceCorner);

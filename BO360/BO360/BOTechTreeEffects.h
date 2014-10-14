@@ -29,6 +29,7 @@ struct TechTreePUEffects
     int fireBallDamage; // 20, 35
     float slowTimeTime; // 20, 35
     bool stackableShield; // 22
+	int maxStackShield;
     //int multiBallEffectMultiplier; // 29, 31, 34//////////////////dafuq?
     float multiBallMultiplyChance; // 29, 31, 34
     float decreaseCD;
@@ -36,14 +37,15 @@ struct TechTreePUEffects
     TechTreePUEffects()
     {
         speed = 1.0f;
-        shieldCharge = 0;
+        shieldCharge = 1;
         startShield = false;
-        biggerPadEffectMultiplier = 0;
+        biggerPadEffectMultiplier = 0;		// in precent for chance to get double effect, 0.33 for 33% 
         //effectMultiplier = 0;
         fireBallDamage = 0;
         slowTimeTime = 0;
         stackableShield = false;
-        multiBallMultiplyChance = 0;
+		maxStackShield = 5;
+        multiBallMultiplyChance = 1;
         decreaseCD = 1;
     }
 };
@@ -59,7 +61,7 @@ struct TechTreePaddleEffects
     {
         speed = 1.0f;
         size = 0;
-        maxSize = 0;
+        maxSize = 0; // Nr to plus to standard maxsize // Standard is 5 atm
     }
 };
 
@@ -81,7 +83,7 @@ struct TechTreeUtilityEffects
     {
         PUGiftEnabled = false;
         ballsCollideFuel = false;
-        extraBallFuel = 0;
+        extraBallFuel = 0;					// fuel is 1 from start this is a value to add to that standard
         megaPadEnabled = false;
         extraLifePerLevel = 0;
         giantBallEnabled = false;

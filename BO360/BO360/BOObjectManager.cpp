@@ -264,13 +264,31 @@ void BOObjectManager::Handle(PowerUpTypes p_type, bool p_activated)
 	case PUShield:
 		if (p_activated)
 		{
-			m_Shield.SetActive(true);
+			if (m_Shield.GetActive())
+			{
+				if (BOTechTreeEffects::PUEffects.stackableShield)
+				{
+					if (m_Shield.GetLifes() < BOTechTreeEffects::PUEffects.maxStackShield)
+						m_Shield.AddLife(1);
+				}
+			}
+			else
+			{
+				m_Shield.SetActive(true);
+			}			
 		}
 		break;
 	case PUExtraBall:
 		if (p_activated)
 		{
 			AddNewBall();
+			int randomNr;
+			randomNr = rand() % 100 + 1; // random nr from 1-100;
+			if (randomNr <= (100 * BOTechTreeEffects::PUEffects.multiBallMultiplyChance))
+			{
+				AddNewBall();
+			}
+			
 		}
 		break;
 	case PUFireBall:
@@ -305,11 +323,12 @@ void BOObjectManager::Handle(InputMessages p_inputMessage)
 		{
 			if (m_ballList[i]->IsStuckToPad())
 			{
-			m_ballList[i]->SetStuckToPad(false);
+				m_ballList[i]->SetStuckToPad(false);
 				//m_ballList[i]->SetDirection(float2(m_ballList[i]->GetPosition().x - m_blackHole.GetPosition().x, m_ballList[i]->GetPosition().y - m_blackHole.GetPosition().y));
+			}
+		}
 	}
-}
-}
+
     if (p_inputMessage.fKey && m_shockwave.Activate())
     {
         ActivateShockwave();
@@ -681,6 +700,10 @@ void BOObjectManager::CheckBallToBall(int i)
 				{
 					BOPhysics::BallToBallCollision(*m_ballList[i], *m_ballList[j]);
 					m_ballList[j]->SetBallCollidedWithBall(true);
+					if (BOTechTreeEffects::UtilityEffects.ballsCollideFuel)
+					{
+						m_ballList[j]->BouncedOnPad();
+					}
 				}
 			}
 		}
@@ -689,57 +712,69 @@ void BOObjectManager::CheckBallToBall(int i)
 
 void BOObjectManager::BallNewlyLaunched(BOBall* p_ball)
 {
-    if (p_ball->GetNewlyLaunched() && !m_paddle.GetStickyState())
+	if (p_ball->GetNewlyLaunched())
 	{
-		int spawnPU, powerupType;
-		PowerUpTypes PUType = PUNone;
-		spawnPU = rand() % 10;
-		powerupType = rand() % 7;
-		if (spawnPU == 9)
+		if (!m_paddle.GetStickyState() && BOTechTreeEffects::UtilityEffects.PUGiftEnabled)
 		{
-			switch (powerupType)
+			int spawnPU, powerupType;
+			PowerUpTypes PUType = PUNone;
+			spawnPU = rand() % 10;
+			powerupType = rand() % 7;
+			if (spawnPU == 9)
 			{
-			case 0:
-			{
-				PUType = PUExtraBall;
-				break;
+				switch (powerupType)
+				{
+				case 0:
+				{
+					PUType = PUExtraBall;
+					break;
+				}
+				case 1:
+				{
+					PUType = PUBiggerPad;
+					break;
+				}
+				case 2:
+				{
+					PUType = PUFireBall;
+					break;
+				}
+				case 3:
+				{
+					PUType = PUShield;
+					break;
+				}
+				case 4:
+				{
+					PUType = PUShockwave;
+					break;
+				}
+				case 5:
+				{
+					PUType = PUSlowTime;
+					break;
+				}
+				case 6:
+				{
+					PUType = PUStickyPad;
+					break;
+				}
+				}
+				BOPowerUpManager::AddPowerUp(PUType, float2(BOGraphicInterface::GetWindowSize().x / 2, 50), &m_paddle, m_blackHole.GetPosition());
 			}
-			case 1:
-			{
-				PUType = PUBiggerPad;
-				break;
-			}
-			case 2:
-			{
-				PUType = PUFireBall;
-				break;
-			}
-			case 3:
-			{
-				PUType = PUShield;
-				break;
-			}
-			case 4:
-			{
-				PUType = PUShockwave;
-				break;
-			}
-			case 5:
-			{
-				PUType = PUSlowTime;
-				break;
-			}
-			case 6:
-			{
-				PUType = PUStickyPad;
-				break;
-			}
-			}
-			BOPowerUpManager::AddPowerUp(PUType, float2(BOGraphicInterface::GetWindowSize().x / 2, 50), &m_paddle, m_blackHole.GetPosition());
+			p_ball->BouncedOnPad();
 		}
-		p_ball->BouncedOnPad();
-    }
+
+		if (m_ballList.size() == 1)
+		{
+			for (int i = 0; i < BOTechTreeEffects::UtilityEffects.extraBallsFirstLaunch; i++)
+			{
+				AddNewBall();
+			}
+		}
+    }	
 }
+
 void BOObjectManager::PewPewPew()
 {
     if (m_blockList.size() > 0)
