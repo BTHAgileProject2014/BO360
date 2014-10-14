@@ -25,11 +25,11 @@ struct TechTreePUEffects
     int shieldCharge; // 2
     bool startShield; // 8
     float biggerPadEffectMultiplier; // 11, 26
-    float effectMultiplier; // 19
+    //float effectMultiplier; // 19
     int fireBallDamage; // 20, 35
     float slowTimeTime; // 20, 35
-    int shieldMaxCharges; // 22
-    int multiBallEffectMultiplier; // 29, 31, 34
+    bool stackableShield; // 22
+    //int multiBallEffectMultiplier; // 29, 31, 34//////////////////dafuq?
     float multiBallMultiplyChance; // 29, 31, 34
 
     TechTreePUEffects()
@@ -38,11 +38,11 @@ struct TechTreePUEffects
         shieldCharge = 0;
         startShield = false;
         biggerPadEffectMultiplier = 0;
-        effectMultiplier = 0;
+        //effectMultiplier = 0;
         fireBallDamage = 0;
         slowTimeTime = 0;
-        shieldMaxCharges = 0;
-        multiBallEffectMultiplier = 0;
+        stackableShield = false;
+        multiBallMultiplyChance = 0;
     }
 };
 
@@ -65,7 +65,7 @@ struct TechTreePaddleEffects
 struct TechTreeUtilityEffects
 {
     bool PUGiftEnabled; // 6
-    float ballsCollideFuel; // 13
+    bool ballsCollideFuel; // 13
     float extraBallFuel; // 14
     bool megaPadEnabled; // 21
     int extraLifePerLevel; // 24
@@ -78,7 +78,7 @@ struct TechTreeUtilityEffects
     TechTreeUtilityEffects()
     {
         PUGiftEnabled = false;
-        ballsCollideFuel = 0;
+        ballsCollideFuel = false;
         extraBallFuel = 0;
         megaPadEnabled = false;
         extraLifePerLevel = 0;
