@@ -1,6 +1,7 @@
 #ifndef BOBALL_H_
 #define BOBALL_H_
 
+#include "BOGlobals.h"
 #include "BOAnimatedObject.h"
 #include "BOSubscriber.h"
 #include "BOPhysics.h"

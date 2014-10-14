@@ -313,6 +313,12 @@ void BOObjectManager::Handle(PowerUpTypes p_type, bool p_activated)
 
 void BOObjectManager::Handle(InputMessages p_inputMessage)
 {
+    // Don't update objects if a key is pressed while paused
+    if (BOGlobals::GAME_STATE == PAUSED)
+    {
+        return;
+    }
+
 	if (p_inputMessage.spacebarKey)
 	{
 		for (unsigned int i = 0; i < m_ballList.size(); i++)
@@ -321,9 +327,9 @@ void BOObjectManager::Handle(InputMessages p_inputMessage)
 			{
 			m_ballList[i]->SetStuckToPad(false);
 				//m_ballList[i]->SetDirection(float2(m_ballList[i]->GetPosition().x - m_blackHole.GetPosition().x, m_ballList[i]->GetPosition().y - m_blackHole.GetPosition().y));
-	}
-}
-}
+	        }
+        }
+    }
 
     if (p_inputMessage.fKey && m_shockwave.Activate())
     {
@@ -377,10 +383,6 @@ bool BOObjectManager::WonGame()
 {
     bool didWin = m_keyManager.AllKeysCatched()
         && m_continue;
-    if (didWin)
-    {
-        BOPhysics::SetTimeScale(0.25f);
-    }
 	return didWin;
 }
 

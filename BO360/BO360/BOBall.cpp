@@ -144,6 +144,12 @@ box BOBall::GetBoundingBox() const
 
 void BOBall::Handle(InputMessages p_inputMessages)
 {
+    // Don't update the ball if a key is pressed while paused
+    if (BOGlobals::GAME_STATE == PAUSED)
+    {
+        return;
+    }
+
 	if (p_inputMessages.upArrow)
 	{
 		if (m_mouseCheat)
