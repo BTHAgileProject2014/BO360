@@ -127,6 +127,7 @@
     <ClInclude Include="BOTechTreeEffects.h" />
     <ClInclude Include="BOTechTreeManager.h" />
     <ClInclude Include="BOTechTreeNode.h" />
+    <ClInclude Include="BOTestBoss.h" />
     <ClInclude Include="BOTextManager.h" />
     <ClInclude Include="BOTextureManager.h" />
     <ClInclude Include="BOTimer.h" />
@@ -177,6 +178,7 @@
     <ClCompile Include="BOTechTreeEffects.cpp" />
     <ClCompile Include="BOTechTreeManager.cpp" />
     <ClCompile Include="BOTechTreeNode.cpp" />
+    <ClCompile Include="BOTestBoss.cpp" />
     <ClCompile Include="BOTextManager.cpp" />
     <ClCompile Include="BOTextureManager.cpp" />
     <ClCompile Include="BOTimer.cpp" />

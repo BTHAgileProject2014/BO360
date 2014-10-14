@@ -336,7 +336,7 @@ bool BOObjectManager::AddNewBall()
 	ballPos.x += ballDir.x * 6;
 	ballPos.y += ballDir.y * 6;
 
-	if (!ball->Initialize(ballPos, int2(15,15), BOTextureManager::GetTexture(TEXBALL), 400.0f, ballDir, windowSize))
+	if (!ball->Initialize(ballPos, int2(15,15), BOTextureManager::GetTexture(TEXBALL), 300.0f, ballDir, windowSize))
 	{
 		ThrowInitError("BOBall");
 		return false;

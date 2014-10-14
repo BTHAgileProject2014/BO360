@@ -12,7 +12,7 @@ public:
     virtual bool Initialize() = 0;
     void Shutdown();
 
-private:
+protected:
     BOBlockManager m_blockManager;
 };
 

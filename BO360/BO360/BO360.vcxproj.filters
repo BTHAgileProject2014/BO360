@@ -186,6 +186,9 @@
     <ClCompile Include="BOBlockManager.cpp">
       <Filter>Source Files\Boss</Filter>
     </ClCompile>
+    <ClCompile Include="BOTestBoss.cpp">
+      <Filter>Source Files\Boss</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BOSystem.h">
@@ -330,6 +333,9 @@
       <Filter>Header Files\Boss</Filter>
     </ClInclude>
     <ClInclude Include="BOBlockManager.h">
+      <Filter>Header Files\Boss</Filter>
+    </ClInclude>
+    <ClInclude Include="BOTestBoss.h">
       <Filter>Header Files\Boss</Filter>
     </ClInclude>
   </ItemGroup>
