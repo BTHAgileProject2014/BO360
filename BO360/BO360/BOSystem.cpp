@@ -151,7 +151,7 @@ bool BOSystem::InitializeMap()
 	BOHUDManager::SetLevel(1);
 
     // Set the time scale to 1.0
-    BOPhysics::SetTimeScale(1.0f);
+    BOPhysics::SetTimeScale(0.1f);
 
 	return true;
 }

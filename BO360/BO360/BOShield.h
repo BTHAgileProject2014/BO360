@@ -31,5 +31,6 @@ private:
 	int2 m_WindowSize;
 	bool m_IsActive;
 	int m_lifes;
+    Uint8 m_opacity;
 };
 #endif

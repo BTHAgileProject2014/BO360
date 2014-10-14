@@ -77,7 +77,7 @@ bool BOPhysics::CheckCollisionSphereToHexagon(sphere p_sphere, hexagon p_hexagon
 	// Checking if collision in one point
 	if (point1.x >= p_hexagon.pointUpRight.x && point1.x <= p_hexagon.pointRight.x && point1.y >= p_hexagon.pointUpRight.y && point1.y <= p_hexagon.pointRight.y && point2.x == -1000)
 	{
-		p_normal = float2(0.86f, 0.50f);
+		p_normal = float2(0.86f, -0.50f);
 		p_normal = p_normal.normalized();
 		return true;
 	}
@@ -85,7 +85,7 @@ bool BOPhysics::CheckCollisionSphereToHexagon(sphere p_sphere, hexagon p_hexagon
 	else if ((point1.x >= p_hexagon.pointUpRight.x && point1.x <= p_hexagon.pointRight.x && point1.y >= p_hexagon.pointUpRight.y && point1.y <= p_hexagon.pointRight.y)
 		|| (point2.x >= p_hexagon.pointUpRight.x && point2.x <= p_hexagon.pointRight.x && point2.y >= p_hexagon.pointUpRight.y && point2.y <= p_hexagon.pointRight.y))
 	{
-		p_normal = float2(0.86f, 0.50f);
+		p_normal = float2(0.86f, -0.50f);
 		p_normal = p_normal.normalized();
 		return true;
 	}
@@ -388,7 +388,7 @@ float2 BOPhysics::ApplyGravity(float2 p_position, float2 p_direction, float p_sp
 
     distance *= 0.05f;
 
-    const double GravityFactor = 400;
+    const double GravityFactor = p_deltaTime * 100000;
     double force = (GravityFactor * p_influenceFactor) / (distance * distance);
 
     float2 newDir = p_direction * p_speed + gravityDirection * force;

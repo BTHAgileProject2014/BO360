@@ -23,7 +23,7 @@ bool BOAnimatedObject::Initialize(float2 p_position, int2 p_size, int2 p_sourceS
 	m_increment = true;
 
     m_alive = true;
-
+    
 	return true;
 }
 
@@ -94,7 +94,7 @@ void BOAnimatedObject::DrawAnimated()
 	int4 l_target = int4((int)m_position.x - m_size.x / 2, (int)m_position.y - m_size.y / 2, m_size.x, m_size.y);
 	int4 l_source = int4(m_sourceSize.x * m_frame, 0, m_sourceSize.x, m_sourceSize.y);
 
-	BOGraphicInterface::DrawEx(m_sprite, l_source, l_target, m_rotation, int2(l_source.z / 2, l_source.w / 2));
+	BOGraphicInterface::DrawEx(m_sprite, l_source, l_target, m_rotation, int2(l_source.z / 2, l_source.w / 2), m_opacity);
 }
 
 // Size Get / Set functions.

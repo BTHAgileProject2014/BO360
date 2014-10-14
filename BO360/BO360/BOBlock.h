@@ -18,6 +18,7 @@ public:
 
 	box GetBoundingBox();
 	hexagon GetBoundingHexagon();
+	sphere GetBoundingSphere() const;
 
 	void SetDead();
 	bool GetDead();
