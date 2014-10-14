@@ -80,7 +80,7 @@ private:
     BOTechTreeNode* m_downLeft;
     BOTechTreeNode* m_downRight;
 
-    std::string m_toolTip;
+    std::string m_toolTipText;
     bool m_isActive;
     bool m_isAdjacentActive;
     bool m_hoveringOver;

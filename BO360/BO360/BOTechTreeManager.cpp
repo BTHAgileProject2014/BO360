@@ -61,7 +61,7 @@ bool BOTechTreeManager::Initialize(int2 p_windowDimension)
 void BOTechTreeManager::Update()
 {
     m_startNode->SetAdjacentActive(true);
-    for (int i = 0; i < m_nodeList.size(); i++)
+    for (unsigned int i = 0; i < m_nodeList.size(); i++)
     {
         m_nodeList[i]->Update();
 
@@ -116,7 +116,7 @@ void BOTechTreeManager::Update()
 }
 void BOTechTreeManager::Shutdown()
 {
-    for (int i = 0; i < m_nodeList.size(); i++)
+    for (unsigned int i = 0; i < m_nodeList.size(); i++)
     {
         m_nodeList[i]->Shutdown();
         delete m_nodeList[i];
@@ -127,7 +127,7 @@ void BOTechTreeManager::Shutdown()
 }
 void BOTechTreeManager::Draw()
 {
-    for (int i = 0; i < m_nodeList.size(); i++)
+    for (unsigned int i = 0; i < m_nodeList.size(); i++)
     {
         m_nodeList[i]->Draw();
     }
@@ -143,7 +143,7 @@ BOTechTreeNode* BOTechTreeManager::CreateNode(float2 p_pos,int2 p_size, std::str
 }
 void BOTechTreeManager::MapNodes()
 {
-    for (int i = 0; i < m_nodeList.size() - 1; i++)
+    for (unsigned int i = 0; i < m_nodeList.size() - 1; i++)
     {
         if (i != 3 && i != 8 && i != 14 && i != 21 && i != 27 && i != 32)
         {
@@ -239,7 +239,7 @@ void BOTechTreeManager::SetLPE()
     FixAdjacent();
 
     //Set Layer
-    for (int i = 0; i < m_nodeList.size(); i++)
+    for (unsigned int i = 0; i < m_nodeList.size(); i++)
     {
         if (m_nodeList[i]->GetPrice() == 1 || m_nodeList[i]->GetPrice() == 2)
         {
@@ -311,7 +311,7 @@ void BOTechTreeManager::SetNodeLPE(BOTechTreeNode* p_node, int p_layer, int p_pr
 void BOTechTreeManager::FixAdjacent()
 {
     int n1 = 0, n2 = 0, n3 = 0, n4 = 0, n5 = 0, n6 = 0;
-    for (int i = 0; i < m_nodeList.size(); i++)
+    for (unsigned int i = 0; i < m_nodeList.size(); i++)
     {
         if (m_nodeList[i]->GetPrice() == 0)
         {
@@ -507,7 +507,7 @@ void BOTechTreeManager::FixAdjacent()
 }
 void BOTechTreeManager::Reset()
 {
-    for (int i = 0; i < m_nodeList.size(); i++)
+    for (unsigned int i = 0; i < m_nodeList.size(); i++)
     {
         m_nodeList[i]->Reset();
     }

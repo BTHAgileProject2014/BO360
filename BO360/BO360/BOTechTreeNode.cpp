@@ -155,11 +155,11 @@ void BOTechTreeNode::SetPrice(int p_price)
 
 std::string BOTechTreeNode::GetToolTip()
 {
-    return m_toolTip;
+    return m_toolTipText;
 }
 void BOTechTreeNode::SetToolTip(std::string p_toolTip)
 {
-    m_toolTip = p_toolTip;
+    m_toolTipText = p_toolTip;
 }
 
 int BOTechTreeNode::GetEffect()const
