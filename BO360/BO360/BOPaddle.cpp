@@ -21,6 +21,8 @@ bool BOPaddle::Initialize(float2 p_position, int2 p_size, int2 p_sourceSize, int
 	m_deltaRotation = 200 * BOTechTreeEffects::PaddleEffects.speed;
 	BOPublisher::AddSubscriber(this);
 	BOPowerUpManager::AddSubscriber(this);
+
+    m_stickyGlow = BOTextureManager::GetTexture(TEXSTICKYPAD);
 	
     return BOAnimatedObject::Initialize(p_position, p_size, p_sourceSize, p_frame, p_numberOfFrames, p_timePerFrame, p_hardReset, p_sprite);
 }
@@ -122,12 +124,21 @@ void BOPaddle::Update(double p_deltaTime)
 
 void BOPaddle::Draw()
 {
-    int4 l_target = int4((int)m_position.x - m_size.x / 2, (int)m_position.y - m_size.y / 2, m_size.x, m_size.y);
-    int4 l_source = int4(m_sourceSize.x * m_frame, 0, m_sourceSize.x, m_sourceSize.y);
+    int4 target = int4((int)m_position.x - m_size.x / 2, (int)m_position.y - m_size.y / 2, m_size.x, m_size.y);
+    int4 source = int4(m_sourceSize.x * m_frame, 0, m_sourceSize.x, m_sourceSize.y);
 
 	for (int i = 0; i < m_segments; i++)
 	{
-        BOGraphicInterface::DrawEx(m_sprite, l_source, l_target, m_rotation + ((double)m_segementDegree * i), int2(l_source.z / 2, l_source.w / 2), m_opacity);
+        // If the pad is sticky, draw a glow around its edge.
+        if (m_isSticky)
+        {
+            int4 stickyTarget = int4((int)m_position.x - (m_size.x + 8) / 2, (int)m_position.y - (m_size.y + 8) / 2, m_size.x + 8, m_size.x + 8);
+            int4 stickySource = int4(0, 0, (m_size.x + 8), (m_size.y + 8));
+
+            BOGraphicInterface::DrawEx(m_stickyGlow, stickySource, stickyTarget, m_rotation + ((double)m_segementDegree * i), int2(stickySource.z / 2, stickySource.w / 2), m_opacity);
+        }
+
+        BOGraphicInterface::DrawEx(m_sprite, source, target, m_rotation + ((double)m_segementDegree * i), int2(source.z / 2, source.w / 2), m_opacity);
 	}
 }
 
