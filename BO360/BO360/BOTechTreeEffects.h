@@ -29,6 +29,7 @@ struct TechTreePUEffects
     int fireBallDamage; // 20, 35
     float slowTimeTime; // 20, 35
     bool stackableShield; // 22
+	int maxStackShield;
     //int multiBallEffectMultiplier; // 29, 31, 34//////////////////dafuq?
     float multiBallMultiplyChance; // 29, 31, 34
     float decreaseCD;
@@ -38,11 +39,12 @@ struct TechTreePUEffects
         speed = 1.0f;
         shieldCharge = 0;
         startShield = false;
-        biggerPadEffectMultiplier = 0;
+        biggerPadEffectMultiplier = 0;		// in precent for chance to get double effect, 0.33 for 33% 
         //effectMultiplier = 0;
         fireBallDamage = 0;
         slowTimeTime = 0;
         stackableShield = false;
+		maxStackShield = 5;
         multiBallMultiplyChance = 0;
         decreaseCD = 1;
     }
@@ -59,7 +61,7 @@ struct TechTreePaddleEffects
     {
         speed = 1.0f;
         size = 0;
-        maxSize = 0;
+        maxSize = 0; // Nr to plus to standard maxsize // Standard is 5 atm
     }
 };
 
@@ -81,7 +83,7 @@ struct TechTreeUtilityEffects
     {
         PUGiftEnabled = false;
         ballsCollideFuel = false;
-        extraBallFuel = 0;
+        extraBallFuel = 0;					// fuel is 1 from start this is a value to add to that standard
         megaPadEnabled = false;
         extraLifePerLevel = 0;
         giantBallEnabled = false;
@@ -95,16 +97,16 @@ struct TechTreeUtilityEffects
 // Techs that affects the level - powerup drops for example
 struct TechTreeLevelEffects
 {
-    bool stickyPadPUEnabled; // 9
-    bool fireBallPUEnabled; // 16
-    bool slowTimePUEnabled; // 18
+    float stickyPadPUDuration; // 9
+    float fireBallPUDuration; // 16
+    float slowTimePUDuration; // 18
     bool startNodePowerups; // Allows Shield, Multiball and Pad enlarge to be dropped
 
     TechTreeLevelEffects()
     {
-        stickyPadPUEnabled = false;
-        fireBallPUEnabled = false;
-        slowTimePUEnabled = false;
+        stickyPadPUDuration = 0.0f;
+        fireBallPUDuration = 0.0f;
+        slowTimePUDuration = 0.0f;
         startNodePowerups = false;
     }
 };

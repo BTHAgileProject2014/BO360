@@ -30,7 +30,7 @@ public:
 	SDL_Texture* GetSprite();
 	void SetSprite(Textures p_spriteIndex);
 
-	sphere GetBoundingSphere() const;
+	virtual sphere GetBoundingSphere() const;
 
     Uint8 GetOpacity()const;
     void SetOpacity(Uint8 p_opacity);

@@ -37,8 +37,12 @@ private:
 	bool m_movingLeft;
 	bool m_movingRight;
 	int m_segments;
+	int m_minSegments;
+	int m_maxSegments;
 	double m_totalDegrees;
 	double m_segementDegree;
     bool m_isSticky;
+
+    SDL_Texture* m_stickyGlow;
 };
 #endif

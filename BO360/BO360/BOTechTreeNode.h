@@ -5,6 +5,8 @@
 #include "BOPhysics.h"
 #include "BODrawableText.h"
 
+#include <string>
+
 class BOTechTreeNode: public BOObject
 {
 public:
@@ -58,6 +60,9 @@ public:
     void Reset();
     bool Intersects(int2 p_mousePosition);
 
+    void SetToolTip(std::string p_toolTip, std::string p_heading);
+    void SetTexture(SDL_Texture* p_texture);
+
 private:
     void SetEffect();
     void ResetEffect();
@@ -81,8 +86,10 @@ private:
     int m_layer;
     int m_price;
     int m_effect;
-    BODrawableText m_tooltip;
 
+    BODrawableText m_tooltipHeading;
+    BODrawableText m_tooltipText;
+    BOObject m_tooltipFrame;
 };
 
 #endif

@@ -49,7 +49,7 @@ bool BOPhysics::CheckCollisionSphereToHexagon(sphere p_sphere, hexagon p_hexagon
 	float2 point1, point2;
 
 	// Check collision with the sphere and each line in the hexagon
-	// Same code 6 times with differents points from the hexagon
+	// Same code 6 times with different points from the hexagon
 	//					   __	
 	//				      /  \
 	//					  \__/
@@ -77,7 +77,7 @@ bool BOPhysics::CheckCollisionSphereToHexagon(sphere p_sphere, hexagon p_hexagon
 	// Checking if collision in one point
 	if (point1.x >= p_hexagon.pointUpRight.x && point1.x <= p_hexagon.pointRight.x && point1.y >= p_hexagon.pointUpRight.y && point1.y <= p_hexagon.pointRight.y && point2.x == -1000)
 	{
-		p_normal = float2(0.86f, 0.50f);
+		p_normal = float2(0.86f, -0.50f);
 		p_normal = p_normal.normalized();
 		return true;
 	}
@@ -85,7 +85,7 @@ bool BOPhysics::CheckCollisionSphereToHexagon(sphere p_sphere, hexagon p_hexagon
 	else if ((point1.x >= p_hexagon.pointUpRight.x && point1.x <= p_hexagon.pointRight.x && point1.y >= p_hexagon.pointUpRight.y && point1.y <= p_hexagon.pointRight.y)
 		|| (point2.x >= p_hexagon.pointUpRight.x && point2.x <= p_hexagon.pointRight.x && point2.y >= p_hexagon.pointUpRight.y && point2.y <= p_hexagon.pointRight.y))
 	{
-		p_normal = float2(0.86f, 0.50f);
+		p_normal = float2(0.86f, -0.50f);
 		p_normal = p_normal.normalized();
 		return true;
 	}

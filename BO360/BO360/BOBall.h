@@ -12,7 +12,7 @@ public:
 	BOBall();
 	~BOBall();
 	bool Initialize(float2 p_position, int2 p_size, SDL_Texture* p_sprite, float p_speed, float2 p_direction, int2 p_windowSize);
-	void Update(double p_deltaTime, sphere p_blackHoleBounds);
+	void Update(double p_deltaTime, sphere p_blackHoleBounds, bool p_won);
     void DrawBallWithTail();
 
 	void Move(double p_deltaTime, sphere p_blackHoleBounds);

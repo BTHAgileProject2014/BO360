@@ -17,10 +17,14 @@ bool BOPaddle::Initialize(float2 p_position, int2 p_size, int2 p_sourceSize, int
 	m_totalDegrees = 21.2;
 	m_segementDegree = m_totalDegrees;
 	m_segments = 1;
-	AddSegments(2); // 2 here -> Start with total 3 segments
+	m_minSegments = 1;
+	m_maxSegments = 5 + BOTechTreeEffects::PaddleEffects.maxSize;
+	AddSegments(2 + BOTechTreeEffects::PaddleEffects.size); // 2 here -> Start with total 3 segments
 	m_deltaRotation = 200 * BOTechTreeEffects::PaddleEffects.speed;
 	BOPublisher::AddSubscriber(this);
 	BOPowerUpManager::AddSubscriber(this);
+
+    m_stickyGlow = BOTextureManager::GetTexture(TEXSTICKYPAD);
 	
     return BOAnimatedObject::Initialize(p_position, p_size, p_sourceSize, p_frame, p_numberOfFrames, p_timePerFrame, p_hardReset, p_sprite);
 }
@@ -64,9 +68,15 @@ void BOPaddle::Handle(PowerUpTypes p_type, bool p_activated)
 			if (p_activated)
 			{
 				// Make the paddle bigger
-				if (m_segments < 5)
+				if (m_segments < m_maxSegments)
 				{
 					AddSegments(1);
+					int randomNr;
+					randomNr = rand() % 100 + 1; // random nr from 1-100;
+					if (randomNr <= (100 * BOTechTreeEffects::PUEffects.biggerPadEffectMultiplier))
+					{
+						AddSegments(1);
+					}
 				}
 			}
 
@@ -83,7 +93,10 @@ void BOPaddle::Handle(PowerUpTypes p_type, bool p_activated)
 			if (p_activated)
 			{
 				// Make the paddle smaller
-				RemoveSegments(1);
+				if (m_segments > m_minSegments)
+				{
+					RemoveSegments(1);
+				}
 			}
 			else
 			{
@@ -122,12 +135,21 @@ void BOPaddle::Update(double p_deltaTime)
 
 void BOPaddle::Draw()
 {
-    int4 l_target = int4((int)m_position.x - m_size.x / 2, (int)m_position.y - m_size.y / 2, m_size.x, m_size.y);
-    int4 l_source = int4(m_sourceSize.x * m_frame, 0, m_sourceSize.x, m_sourceSize.y);
+    int4 target = int4((int)m_position.x - m_size.x / 2, (int)m_position.y - m_size.y / 2, m_size.x, m_size.y);
+    int4 source = int4(m_sourceSize.x * m_frame, 0, m_sourceSize.x, m_sourceSize.y);
 
 	for (int i = 0; i < m_segments; i++)
 	{
-        BOGraphicInterface::DrawEx(m_sprite, l_source, l_target, m_rotation + ((double)m_segementDegree * i), int2(l_source.z / 2, l_source.w / 2), m_opacity);
+        // If the pad is sticky, draw a glow around its edge.
+        if (m_isSticky)
+        {
+            int4 stickyTarget = int4((int)m_position.x - (m_size.x + 8) / 2, (int)m_position.y - (m_size.y + 8) / 2, m_size.x + 8, m_size.x + 8);
+            int4 stickySource = int4(0, 0, (m_size.x + 8), (m_size.y + 8));
+
+            BOGraphicInterface::DrawEx(m_stickyGlow, stickySource, stickyTarget, m_rotation + ((double)m_segementDegree * i), int2(stickySource.z / 2, stickySource.w / 2), m_opacity);
+        }
+
+        BOGraphicInterface::DrawEx(m_sprite, source, target, m_rotation + ((double)m_segementDegree * i), int2(source.z / 2, source.w / 2), m_opacity);
 	}
 }
 
@@ -148,7 +170,7 @@ int BOPaddle::GetSegments()const
 
 void BOPaddle::AddSegments(int p_segments)
 {
-	if (m_segments < 17)
+	if ((m_segments+p_segments) <= m_maxSegments)
 	{
 		m_totalDegrees = m_totalDegrees + (m_segementDegree * p_segments);
 		m_segments += p_segments;
@@ -157,7 +179,7 @@ void BOPaddle::AddSegments(int p_segments)
 
 void BOPaddle::RemoveSegments(int p_segments)
 {
-	if (m_segments > 1)
+	if ((m_segments-p_segments) >= m_minSegments)
 	{
 		m_totalDegrees = m_totalDegrees - (m_segementDegree * p_segments);
 		m_segments -= p_segments;

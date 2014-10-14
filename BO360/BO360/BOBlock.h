@@ -15,7 +15,7 @@ public:
     void AddGlow(float2 p_position, int2 p_size, int2 p_sourceSize, int p_frame, int p_numberOfFrames, double p_timePerFrame, bool p_hardReset, SDL_Texture* p_sprite);
     void Update(double p_deltaTime);
 
-
+    sphere GetBoundingSphere() const;
 	box GetBoundingBox() const;
 	hexagon GetBoundingHexagon() const;
     void SetPosition(float2 p_position);
@@ -32,6 +32,8 @@ public:
     void Draw();
 
 protected:
+	PowerUpTypes SetRandomPowerUp();
+
     bool m_animated;
     bool m_hasGlow;
 	int m_scoreValue;

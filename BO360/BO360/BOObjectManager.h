@@ -58,6 +58,7 @@ private:
     void PewPewPew();
 
 	int m_life;
+    bool m_continue;
 
 	BOMapLoader m_mapLoader;
 	BOBackground m_background;

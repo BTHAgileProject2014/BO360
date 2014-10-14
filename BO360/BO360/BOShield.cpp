@@ -14,6 +14,10 @@ bool BOShield::Initialize(int2 p_ShieldSize, SDL_Texture* p_sprite, int2 p_Windo
 {
 	m_WindowSize = p_WindowSize;
 	m_IsActive = false;
+	if (BOTechTreeEffects::PUEffects.startShield)
+	{
+		m_IsActive = true;
+	}
 	m_ShieldSprite = NULL;
 
 	m_ShieldSphere.pos.x = m_WindowSize.x / 2.0f;
@@ -62,6 +66,7 @@ void BOShield::Draw()
 void BOShield::SetActive(bool p_IsActive)
 {
 	m_IsActive = p_IsActive;
+	m_lifes = 1 + BOTechTreeEffects::PUEffects.shieldCharge;
 }
 
 void BOShield::SwitchActive()
@@ -80,4 +85,14 @@ void BOShield::SwitchActive()
 bool BOShield::GetActive()
 {
 	return m_IsActive;
+}
+
+void BOShield::AddLife(unsigned int p_lifes)
+{
+	m_lifes += p_lifes;
+}
+
+int BOShield::GetLifes()
+{
+	return m_lifes;
 }

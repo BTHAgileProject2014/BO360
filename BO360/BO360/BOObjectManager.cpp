@@ -14,6 +14,7 @@ bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight, int p_Le
 {
 	m_life = 4;
 	BOHUDManager::SetLives(m_life);
+    m_continue = false;
 
 	// Initialize the map loader.
 	bool result;
@@ -144,7 +145,7 @@ void BOObjectManager::Shutdown()
 void BOObjectManager::Update(double p_deltaTime)
 {
     // First, check if we've catched all the keys
-    if (m_keyManager.AllKeysCatched())
+    if (m_keyManager.AllKeysCatched() && m_continue)
     {
         // In that case, start blowing all existing blocks up!
         PewPewPew();
@@ -155,6 +156,7 @@ void BOObjectManager::Update(double p_deltaTime)
     m_blackHole.Update(p_deltaTime * 100);
 	m_paddle.Update(p_deltaTime);
     m_shockwave.Update(p_deltaTime);
+    m_shockwave.UpdateWave(p_deltaTime);
 
 	// Update blocks
 	for (unsigned int i = 0; i < m_blockList.size(); i++)
@@ -165,7 +167,7 @@ void BOObjectManager::Update(double p_deltaTime)
 	// Update balls
 	for (unsigned int i = 0; i < m_ballList.size(); i++)
 	{
-		m_ballList[i]->Update(p_deltaTime, m_blackHole.GetBoundingSphere());
+		m_ballList[i]->Update(p_deltaTime, m_blackHole.GetBoundingSphere(), WonGame());
 
 		if (m_ballList[i]->IsStuckToPad())
 		{
@@ -180,16 +182,19 @@ void BOObjectManager::Update(double p_deltaTime)
 			    m_ballList[i]->SetPosition(m_paddle.GetBallSpawnPosition());
 		    }
         }
+
 		else	// Ball is NOT stuck to pad
 		{
             // Check if the ball is newly launched
 			BallNewlyLaunched(m_ballList[i]);
             
-
 			BallBlockCollision(m_ballList[i]);            
 			BallPadCollision(m_ballList[i]);
 
+            if (!WonGame())
+            {
 		    CheckBallOutOfBounds(i);
+            }
 
 			CheckBallToBall(i);
 
@@ -209,6 +214,7 @@ void BOObjectManager::Update(double p_deltaTime)
 		    m_keyManager.Update(*m_ballList[i]);
 	    }
 	}
+
 	for (unsigned int i = 0; i < m_ballList.size(); i++)
 	{
 		m_ballList[i]->SetBallCollidedWithBall(false);
@@ -221,6 +227,7 @@ void BOObjectManager::Update(double p_deltaTime)
 void BOObjectManager::Draw()
 {
 	m_background.Draw();
+    m_shockwave.DrawWave();
 	m_blackHole.DrawRotating();
 	m_keyManager.Draw();
 
@@ -228,9 +235,9 @@ void BOObjectManager::Draw()
 	{
 		if (!m_blockList[i]->GetDead())
 		{
-            m_blockList[i]->Draw();
+			    m_blockList[i]->Draw();
+		    }
 	    }
-	}
 
 		
 	m_particleSystem.DrawParticles();
@@ -243,7 +250,6 @@ void BOObjectManager::Draw()
     m_boss->Draw();
 	m_Shield.Draw();
 	m_paddle.Draw();
-	
 }
 
 void BOObjectManager::Handle(PowerUpTypes p_type, bool p_activated)
@@ -253,13 +259,31 @@ void BOObjectManager::Handle(PowerUpTypes p_type, bool p_activated)
 	case PUShield:
 		if (p_activated)
 		{
+			if (m_Shield.GetActive())
+			{
+				if (BOTechTreeEffects::PUEffects.stackableShield)
+				{
+					if (m_Shield.GetLifes() < BOTechTreeEffects::PUEffects.maxStackShield)
+						m_Shield.AddLife(1);
+				}
+			}
+			else
+			{
 			m_Shield.SetActive(true);
+		}
 		}
 		break;
 	case PUExtraBall:
 		if (p_activated)
 		{
 			AddNewBall();
+			int randomNr;
+			randomNr = rand() % 100 + 1; // random nr from 1-100;
+			if (randomNr <= (100 * BOTechTreeEffects::PUEffects.multiBallMultiplyChance))
+			{
+				AddNewBall();
+		}
+			
 		}
 		break;
 	case PUFireBall:
@@ -299,6 +323,7 @@ void BOObjectManager::Handle(InputMessages p_inputMessage)
 	}
 }
 }
+
     if (p_inputMessage.fKey && m_shockwave.Activate())
     {
         ActivateShockwave();
@@ -309,6 +334,12 @@ void BOObjectManager::Handle(InputMessages p_inputMessage)
     {
         m_slowTime.Activate();
     }
+
+    // Check for if the player wants to continue to the next level when all keys are catched
+    if (p_inputMessage.enterKey && m_keyManager.AllKeysCatched())
+    {
+        m_continue = true;
+}
 }
 
 bool BOObjectManager::AddNewBall()
@@ -324,7 +355,7 @@ bool BOObjectManager::AddNewBall()
 	//ballPos.x += ballDir.x * 8;
 	//ballPos.y += ballDir.y * 8;
 
-	if (!ball->Initialize(ballPos, int2(15,15), BOTextureManager::GetTexture(TEXBALL), 300.0f, ballDir, windowSize))
+	if (!ball->Initialize(ballPos, int2(15,15), BOTextureManager::GetTexture(TEXBALL), 500.0f, ballDir, windowSize))
 	{
 		ThrowInitError("BOBall");
 		return false;
@@ -344,7 +375,11 @@ bool BOObjectManager::LostGame()
 bool BOObjectManager::WonGame()
 {
     bool didWin = m_keyManager.AllKeysCatched()
-        && m_blockList.size() == 0;
+        && m_continue;
+    if (didWin)
+    {
+        BOPhysics::SetTimeScale(0.25f);
+    }
 	return didWin;
 }
 
@@ -513,11 +548,8 @@ void BOObjectManager::BallBlockCollision(BOBall* p_ball)
 {
 	for (unsigned int i = 0; i < m_blockList.size(); i++)
 	{
-		box blockBounds = m_blockList[i]->GetBoundingBox();
-		box ballBounds = p_ball->GetBoundingBox();
-
 		// Cheap collision test		
-		bool result = BOPhysics::CheckCollisionBoxToBox(p_ball->GetBoundingBox(), blockBounds);
+		bool result = BOPhysics::CheckCollisionSphereToSphere(p_ball->GetBoundingSphere(), m_blockList[i]->GetBoundingSphere());
 		if (!result)
 		{
 			continue;
@@ -532,7 +564,11 @@ void BOObjectManager::BallBlockCollision(BOBall* p_ball)
 		// Make sure that we haven't already turned away from the hexagon
 		float2 ballDir = p_ball->GetDirection();
 		float2 newDir = BOPhysics::ReflectBallAroundNormal(p_ball->GetDirection(), normal);
-		if (newDir.x != ballDir.x || newDir.y != ballDir.y)
+		if (newDir.x == ballDir.x && newDir.y == ballDir.y)
+		{
+			// boll träffa från fel håll.
+		}
+		else
 		{
 			BOSoundManager::PlaySound(SOUND_POP);
 			//std::cout << "Ball bounced on [" << i << "]" << std::endl;
@@ -540,7 +576,7 @@ void BOObjectManager::BallBlockCollision(BOBall* p_ball)
 			if (m_blockList[i]->Hit(p_ball->GetDamage()))
 			{
 				// Create explosion.
-				m_particleSystem.RegularBlockExplosion(m_blockList[i]->GetPosition());
+				m_particleSystem.BlockExplosion(m_blockList[i]->GetPosition());
 
 				// Spawn powerup if there is one
 				BOPowerUpManager::AddPowerUp(m_blockList[i]->GetPowerUp(), m_blockList[i]->GetPosition(), &m_paddle, m_blackHole.GetPosition());
@@ -575,7 +611,7 @@ void BOObjectManager::BallBlockCollision(BOBall* p_ball)
         if (blockWasKilled)
         {
             // Create explosion.
-            m_particleSystem.RegularBlockExplosion(hitBlock->GetPosition() + m_boss->GetPosition());
+            m_particleSystem.BlockExplosion(hitBlock->GetPosition() + m_boss->GetPosition());
 
             // Spawn powerup if there is one
             BOPowerUpManager::AddPowerUp(hitBlock->GetPowerUp(), hitBlock->GetPosition(), &m_paddle, m_blackHole.GetPosition());
@@ -693,9 +729,13 @@ void BOObjectManager::UpdateParticles(double p_deltaTime)
 
 void BOObjectManager::ActivateShockwave()
 {
+    double durationOfWave = 0.50;
+    m_shockwave.BeginDrawingWave(durationOfWave);
+
     for (unsigned int i = 0; i < m_ballList.size(); i++)
     {
         m_ballList[i]->ActivateShockwave();
+        m_particleSystem.Explosion(m_ballList[i]->GetPosition());
     }
 }
 
@@ -711,6 +751,10 @@ void BOObjectManager::CheckBallToBall(int i)
 				{
 					BOPhysics::BallToBallCollision(*m_ballList[i], *m_ballList[j]);
 					m_ballList[j]->SetBallCollidedWithBall(true);
+					if (BOTechTreeEffects::UtilityEffects.ballsCollideFuel)
+					{
+						m_ballList[j]->BouncedOnPad();
+					}
 				}
 			}
 		}
@@ -719,7 +763,9 @@ void BOObjectManager::CheckBallToBall(int i)
 
 void BOObjectManager::BallNewlyLaunched(BOBall* p_ball)
 {
-    if (p_ball->GetNewlyLaunched() && !m_paddle.GetStickyState())
+	if (p_ball->GetNewlyLaunched())
+	{
+		if (!m_paddle.GetStickyState() && BOTechTreeEffects::UtilityEffects.PUGiftEnabled)
 	{
 		int spawnPU, powerupType;
 		PowerUpTypes PUType = PUNone;
@@ -769,7 +815,17 @@ void BOObjectManager::BallNewlyLaunched(BOBall* p_ball)
 		}
 		p_ball->BouncedOnPad();
     }
+
+		if (m_ballList.size() == 1)
+		{
+			for (int i = 0; i < BOTechTreeEffects::UtilityEffects.extraBallsFirstLaunch; i++)
+			{
+				AddNewBall();
+			}
+		}
+    }	
 }
+
 void BOObjectManager::PewPewPew()
 {
     if (m_blockList.size() > 0)
@@ -777,7 +833,7 @@ void BOObjectManager::PewPewPew()
         int l = rand() % (m_blockList.size() * 5);
         if (l < m_blockList.size())
         {
-            m_particleSystem.RegularBlockExplosion(m_blockList[l]->GetPosition());
+            m_particleSystem.BlockExplosion(m_blockList[l]->GetPosition());
             delete m_blockList[l];
             m_blockList.erase(m_blockList.begin() + l);
         }

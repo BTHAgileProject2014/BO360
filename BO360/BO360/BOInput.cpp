@@ -9,6 +9,7 @@ enum BOInputKey
 	BOInput_Left,
 	BOInput_Right,
 	BOInput_Space,
+    BOInput_Enter,
 	BOInput_M1,
 	BOInput_M2,
 	BOInput_z,
@@ -29,7 +30,7 @@ BOInput::~BOInput()
 
 bool BOInput::Initialize()
 {
-	for (int i = 0; i < 9; i++)
+	for (int i = 0; i < 11; i++)
 	{
 		m_buttonsPressed[i] = false;
 	}
@@ -133,6 +134,18 @@ bool BOInput::Update()
 #endif
 						break;
 					}
+                    case SDLK_RETURN:
+                    {
+                        if (!m_buttonsPressed[BOInput_Enter])
+                        {
+                            m_buttonsPressed[BOInput_Enter] = true;
+                            m_publisher.Notify(enterKey, true);
+                        }
+#ifdef DEBUG
+                        std::cout << "enter is pressed\n";
+#endif
+                        break;
+                    }
 					case SDLK_z:
 					{
 						if (!m_buttonsPressed[BOInput_z])
@@ -248,6 +261,15 @@ bool BOInput::Update()
 #endif
 						break;
 					}
+                    case SDLK_RETURN:
+                    {
+                        m_buttonsPressed[BOInput_Enter] = false;
+                        m_publisher.Notify(enterKey, false);
+#ifdef DEBUG
+                        std::cout << "enter is released\n";
+#endif
+                        break;
+                    }
 					case SDLK_z:
 					{
 						m_buttonsPressed[BOInput_z] = false;

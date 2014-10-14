@@ -16,7 +16,7 @@ bool BOBall::Initialize(float2 p_position, int2 p_size, SDL_Texture* p_sprite, f
 	{
 		return false;
 	}
-	m_damage = 1;
+	m_damage = 1 + BOTechTreeEffects::BallEffects.damage;
     m_rocketEngine = false;
 	m_Fuel = 0.0f;
 	m_canColide = true;
@@ -43,7 +43,7 @@ bool BOBall::Initialize(float2 p_position, int2 p_size, SDL_Texture* p_sprite, f
 	return true;
 }
 
-void BOBall::Update(double p_deltaTime, sphere p_blackHoleBounds)
+void BOBall::Update(double p_deltaTime, sphere p_blackHoleBounds, bool p_won)
 {
     // Move if the ball is not stuck
 	if (!m_stuckToPad && !m_mouseCheat)
@@ -64,7 +64,7 @@ void BOBall::Update(double p_deltaTime, sphere p_blackHoleBounds)
 	}
     m_thruster.SetPosition(m_position);
     m_rotation = BOPhysics::AngleBetweenDeg(float2(0, 1), m_direction) + 180;
-    if (!m_stuckToPad && m_stuckToPadPrev && BOTechTreeEffects::UtilityEffects.PUGiftEnabled)
+    if (!m_stuckToPad && m_stuckToPadPrev)
     {
         m_newlyLaunched = true;
     }
@@ -73,6 +73,16 @@ void BOBall::Update(double p_deltaTime, sphere p_blackHoleBounds)
         m_newlyLaunched = false;
     }
     m_stuckToPadPrev = m_stuckToPad;
+
+    // Launch the ball out in space if the game is won
+    if (p_won)
+    {
+        float2 outDir = float2(m_position.x - p_blackHoleBounds.pos.x, m_position.y - p_blackHoleBounds.pos.y);
+        outDir.normalize();
+        SetDirection(outDir);
+        SetFuel(1.0f);
+        return;
+    }
 }
 	
 
@@ -124,7 +134,7 @@ bool BOBall::CanColide()
 void BOBall::BouncedOnPad()
 {
     m_rocketEngine = true;
-	m_Fuel = 1.0f;
+	m_Fuel = 1.0f + BOTechTreeEffects::UtilityEffects.extraBallFuel;
 }
 
 box BOBall::GetBoundingBox() const
