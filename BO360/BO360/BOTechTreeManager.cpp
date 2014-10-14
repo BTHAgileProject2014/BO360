@@ -544,7 +544,7 @@ void BOTechTreeManager::HandleUpgrades(BOTechTreeNode* p_node)
         BOTechTreeEffects::PUEffects.startShield = true;
         break;
     case StickyPad:
-        BOTechTreeEffects::LevelEffects.stickyPadPUEnabled = true;
+        BOTechTreeEffects::LevelEffects.stickyPadPUDuration = 5.0f;
         break;
     case IncreaseMaxPadSize:
         BOTechTreeEffects::PaddleEffects.maxSize += 1;
@@ -565,13 +565,13 @@ void BOTechTreeManager::HandleUpgrades(BOTechTreeNode* p_node)
         BOTechTreeEffects::BallEffects.damage += 1;
         break;
     case Fireball:
-        BOTechTreeEffects::LevelEffects.fireBallPUEnabled = true;
+        BOTechTreeEffects::LevelEffects.fireBallPUDuration = 5.0f;
         break;
     case IncreaseBallDamage2:
         BOTechTreeEffects::BallEffects.damage += 1;
         break;
     case SlowTime:
-        BOTechTreeEffects::LevelEffects.slowTimePUEnabled = true;
+        BOTechTreeEffects::LevelEffects.slowTimePUDuration = 5.0f;
         break;
     case PowerUpBoost1:
         BOTechTreeEffects::PUEffects.multiBallMultiplyChance += 0.33f;
@@ -664,7 +664,7 @@ void BOTechTreeManager::HandleToolTips(BOTechTreeNode* p_node)
         p_node->SetToolTip("At the beginning of a level start with at shield.", "New Shield Battery");
         break;
     case StickyPad:
-        p_node->SetToolTip("Allows the power up Sticky Pad to be dropped.", "Sticky Pad");
+        p_node->SetToolTip("Increases the duration of Sticky Pad Power Up.", "Sticky Pad Upgrade");
         break;
     case IncreaseMaxPadSize:
         p_node->SetToolTip("Increases the maximum pad size by 1 segment.", "Increase Max Pad size");
@@ -685,13 +685,13 @@ void BOTechTreeManager::HandleToolTips(BOTechTreeNode* p_node)
         p_node->SetToolTip("Increase the ball damage by 1.", "Harder Hull");
         break;
     case Fireball:
-        p_node->SetToolTip("Allows the power up Fireball to be dropped.", "Fireball");
+        p_node->SetToolTip("Increases the duration of Fireball Power Up.", "Fireball Upgrade");
         break;
     case IncreaseBallDamage2:
         p_node->SetToolTip("Increase the ball damage by 1.", "Harder Hull");
         break;
     case SlowTime:
-        p_node->SetToolTip("Allows the power up Slow Time to be dropped.", "Slow Time");
+        p_node->SetToolTip("Increases the duration of Slow Time Power Up.", "Slow Time Upgrade");
         break;
     case PowerUpBoost1:
         p_node->SetToolTip("Gives a chance to get double effect of Bigger Pad and MultiBall power ups. Adds a 33% chance.", "More Segments And Balls");
