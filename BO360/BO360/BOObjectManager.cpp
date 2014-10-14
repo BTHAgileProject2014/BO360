@@ -171,7 +171,7 @@ void BOObjectManager::Update(double p_deltaTime)
 		{
             if (m_paddle.GetStickyState() && m_ballList[i]->IsSpawned())
             {
-                //Calculate position of ball based on position of ball             
+                //Calculate position of ball based on position of ball    
                 m_ballList[i]->SetPosition(m_paddle.GetBallStuckPosition(m_ballList[i]->GetStuckAngle()));
 				m_ballList[i]->SetDirection(float2(m_ballList[i]->GetPosition().x - m_blackHole.GetPosition().x, m_ballList[i]->GetPosition().y - m_blackHole.GetPosition().y));
             }
@@ -182,10 +182,11 @@ void BOObjectManager::Update(double p_deltaTime)
         }
 		else	// Ball is NOT stuck to pad
 		{
+            // Check if the ball is newly launched
 			BallNewlyLaunched(m_ballList[i]);
+            
 
-			BallBlockCollision(m_ballList[i]);
-
+			BallBlockCollision(m_ballList[i]);            
 			BallPadCollision(m_ballList[i]);
 
 		    CheckBallOutOfBounds(i);
@@ -340,7 +341,8 @@ bool BOObjectManager::AddNewBall()
 		ThrowInitError("BOBall");
 		return false;
 	}
-
+    
+    ball->BouncedOnPad();
 	m_ballList.push_back(ball);
 	return true;
 }
@@ -577,8 +579,8 @@ void BOObjectManager::BallPadCollision(BOBall* p_ball)
     if (BOPhysics::BallBouncedOnPad(*p_ball, m_paddle, newDir))
 	{
         p_ball->SetDirection(newDir);
-        if (m_paddle.GetStickyState() && !(p_ball->GetFuel() > 0))
-	{
+        if (m_paddle.GetStickyState())
+	    {
             p_ball->SetStuckToPad(true);
             float2 temp = { p_ball->GetPosition().x - m_blackHole.GetPosition().x, p_ball->GetPosition().y - m_blackHole.GetPosition().y };
             float tempAngle = BOPhysics::AngleBetweenDeg(float2( 0, -100 ), temp);
