@@ -240,8 +240,12 @@ bool BOSystem::Run()
 
 		// Update the input manager.
 		result = m_input.Update();
+        bool updateMap = (m_gameState == RUNNING || m_gameState == VICTORY || m_gameState == DEFEAT);
+        bool updateRest = (m_gameState != RUNNING);
+        bool renderMap = (m_gameState == RUNNING || m_gameState == VICTORY || m_gameState == DEFEAT || m_gameState == PAUSED);
+        bool renderRest = (m_gameState != RUNNING);
 
-		if (m_gameState == RUNNING)
+		if (updateMap)
 		{
 			// Update all of the objects.
 			m_objectManager.Update(m_deltaTime);
@@ -255,9 +259,6 @@ bool BOSystem::Run()
 			// Check if the player won the current game
 			if (m_objectManager.WonGame())
 			{
-				// Shutdown map
-				//ShutdownMap();
-
 				// Go to victory screen
 				m_gameState = VICTORY;
 
@@ -267,15 +268,12 @@ bool BOSystem::Run()
 			// Check if the player lost the current game
 			else if (m_objectManager.LostGame())
 			{
-				// Shutdown map
-				ShutdownMap();
-
 				// Go to defeat screen
 				m_gameState = DEFEAT;
 			}
 		}
 
-		else
+		if (updateRest)
 		{
             // Update TechTree
             if (m_gameState == TECHTREE)
@@ -297,7 +295,7 @@ bool BOSystem::Run()
 		// ========== RENDER ==========
 		BOGraphicInterface::Clear();
 
-		if (m_gameState == RUNNING)
+		if (renderMap)
 		{
 			// Render all of the objects.
 			m_objectManager.Draw();
@@ -313,7 +311,7 @@ bool BOSystem::Run()
 
 		}
 
-		else
+		if (renderRest)
 		{
 			// Draw approperiate menu.
 			m_stateManager.Draw(m_gameState);
