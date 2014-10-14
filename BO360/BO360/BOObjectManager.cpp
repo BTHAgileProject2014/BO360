@@ -41,7 +41,7 @@ bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight, int p_Le
 	}
 
 	// Initialize the pad.
-	result = m_paddle.Initialize(float2((p_windowWidth / 2.0f), (p_windowHeight / 2.0f)), int2(208, 208), BOTextureManager::GetTexture(TEXPADSEG));
+    result = m_paddle.Initialize(float2((p_windowWidth / 2.0f), (p_windowHeight / 2.0f)), int2(208, 208), int2(208, 208), 0, 4, 0.075, false, BOTextureManager::GetTexture(TEXPADSEG));
 	if (!result)
 	{
 		ThrowInitError("BOPaddle");
@@ -169,7 +169,7 @@ void BOObjectManager::Update(double p_deltaTime)
 
 		if (m_ballList[i]->IsStuckToPad())
 		{
-            if (m_paddle.GetStickyState())
+            if (m_paddle.GetStickyState() && m_ballList[i]->IsSpawned())
             {
                 //Calculate position of ball based on position of ball    
                 m_ballList[i]->SetPosition(m_paddle.GetBallStuckPosition(m_ballList[i]->GetStuckAngle()));
@@ -202,9 +202,8 @@ void BOObjectManager::Update(double p_deltaTime)
 				continue;
 		    }
 		
-		    // Bounce on shield, this should change once a new ball-ball collision has been added to the physics class.
-		    float2 newdir = m_Shield.Update(p_deltaTime, m_ballList[i]->GetBoundingSphere(), m_ballList[i]->GetDirection());
-		    m_ballList[i]->SetDirection(newdir);
+		    // Bounce on shield
+            m_Shield.Update(p_deltaTime, *m_ballList[i]);
 
 		    // Check collision between ball and keys
 		    m_keyManager.Update(*m_ballList[i]);
@@ -331,10 +330,10 @@ bool BOObjectManager::AddNewBall()
 	int2 windowSize = BOGraphicInterface::GetWindowSize();
 
 	// Set the direction outwards from the screen center
-	float2 ballDir = ballPos - float2(windowSize.x * 0.5f, windowSize.y * 0.5f);
-	ballDir.normalize();
-	ballPos.x += ballDir.x * 6;
-	ballPos.y += ballDir.y * 6;
+	float2 ballDir = float2(0, 0);
+	//ballDir.normalize();
+	//ballPos.x += ballDir.x * 8;
+	//ballPos.y += ballDir.y * 8;
 
 	if (!ball->Initialize(ballPos, int2(15,15), BOTextureManager::GetTexture(TEXBALL), 300.0f, ballDir, windowSize))
 	{

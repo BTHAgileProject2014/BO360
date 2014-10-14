@@ -46,6 +46,7 @@ public:
 	bool HasBallCollidedWithBall() const;
 	void SetBallCollidedWithBall(bool p_collided);
 	bool GetNewlyLaunched();
+	bool IsSpawned();
 
 private:
 	int m_damage;
@@ -65,6 +66,7 @@ private:
 	bool m_newlyLaunched;
 	bool m_newlyLaunchedPrev;
     bool m_rocketEngine;
+	bool m_spawned;
 
     double m_rotation;
     BOAnimatedObject m_thruster;

@@ -12,9 +12,8 @@ BOButton::~BOButton()
 
 bool BOButton::Initialize(float2 p_position, int2 p_size, SDL_Texture* p_sprite, std::string p_name, ButtonAction p_action, std::string p_tooltip)
 {
+    BOObject::Initialize(p_position, p_size, NULL);
 	m_action = p_action;
-	m_position = p_position;
-	m_size = p_size;
 	m_name = p_name;
 
 	// Load non highlighted texture.
@@ -97,11 +96,11 @@ bool BOButton::Intersects(int2 p_mousePosition)
 
 void BOButton::Draw()
 {
-	BOGraphicInterface::Draw(m_sprite, float2(m_position.x + (m_size.x / 2), m_position.y + (m_size.y / 2)), m_size);
+	BOGraphicInterface::Draw(m_sprite, float2(m_position.x + (m_size.x / 2), m_position.y + (m_size.y / 2)), m_size, m_opacity);
 
 	if (m_action == NOACTION)
 	{
-		BOGraphicInterface::Draw(BOTextureManager::GetTexture(TEXLOCK), float2(m_position.x + (m_size.x / 2), m_position.y + (m_size.y / 2)), m_size);
+		BOGraphicInterface::Draw(BOTextureManager::GetTexture(TEXLOCK), float2(m_position.x + (m_size.x / 2), m_position.y + (m_size.y / 2)), m_size, m_opacity);
 		m_buttonText.Draw();
 	}
 	// Draw tool tip if selected.

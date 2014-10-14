@@ -104,9 +104,8 @@ void BOParticleSystem::AddMovingParticle(ParticleType p_type, double p_timeS, fl
 		case(DEBUGTRAIL) : { size = m_sizes[DEBUGTRAIL];  break; }
 		}
 
-		particle.Initialize(p_type, p_timeS, p_position, size, p_rotate, p_rotation, p_angleIncrement, p_direction, p_speed);
-
 		m_movingParticleList.push_back(particle);
+        m_movingParticleList[m_movingParticleList.size() - 1].Initialize(p_type, p_timeS, p_position, size, p_rotate, p_rotation, p_angleIncrement, p_direction, p_speed);
 
 		m_currentParticles++;
 	}
@@ -131,9 +130,8 @@ void BOParticleSystem::AddStationaryParticle(ParticleType p_type, double p_timeS
 		case(DEBUGTRAIL) : { size = m_sizes[DEBUGTRAIL];  break; }
 		}
 
-		particle.Initialize(p_type, p_timeS, p_position, size, p_rotate, p_rotation, p_angleIncrement);
-
 		m_stationaryParticleList.push_back(particle);
+        m_stationaryParticleList[m_stationaryParticleList.size() - 1].Initialize(p_type, p_timeS, p_position, size, p_rotate, p_rotation, p_angleIncrement);
 
 		m_currentParticles++;
 	}

@@ -38,7 +38,7 @@ void BOPowerUp::Shutdown()
 
 void BOPowerUp::Draw()
 {
-	BOGraphicInterface::DrawEx(m_sprite, int4(0, 0, 40, 40), int4((int)m_position.x, (int)m_position.y, m_size.x, m_size.y), 0.0, int2(0, 0));
+	BOGraphicInterface::DrawEx(m_sprite, int4(0, 0, 40, 40), int4((int)m_position.x, (int)m_position.y, m_size.x, m_size.y), 0.0, int2(0, 0), m_opacity);
 }
 
 void BOPowerUp::Update(double p_deltaTime)

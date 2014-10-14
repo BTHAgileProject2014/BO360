@@ -607,8 +607,8 @@ enum TTEffects
     //List order
     //Lane 1
     ShockWave,
-    PowerUpBoost3,
-    DoubleMultiBall3,
+    MultiSpawn3,
+    DecreaseCD,
     QuantumFuel,
     //Lane 2
     PowerUpBoost1,

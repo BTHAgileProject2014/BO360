@@ -350,12 +350,35 @@ void BOPhysics::BallToBallCollision(BOBall& ball1, BOBall& ball2)
 	position1 = ball1.GetPosition();
 	position2 = ball2.GetPosition();
 
-	normal1 = float2(position2.x - position1.x, position2.y - position1.y);
+	normal1 = float2(position2.x - position1.x, position2.y - position1.y);    
 	normal2 = float2(position1.x - position2.x, position1.y - position2.y);
+    normal1.normalize();
+    normal2.normalize();
 	ball1.SetDirection(ReflectBallAroundNormal(direction1, normal2));
 	ball2.SetDirection(ReflectBallAroundNormal(direction2, normal1));
 }
 
+bool BOPhysics::BallToSphereCollision(BOBall& p_ball, sphere p_sphere)
+{
+    float2 position1, position2;
+    float radius1, radius2;
+    float2 normal;
+
+    position1 = p_ball.GetPosition();
+    position2 = p_sphere.pos;
+    radius1 = p_ball.GetBoundingSphere().radius;
+    radius2 = p_sphere.radius;
+    if (CollisionRadiusRadius(position1, radius1, position2, radius2))
+    {
+        float2 normal = float2(position1.x - position2.x, position1.y - position2.y);
+        normal.normalize();
+        p_ball.SetDirection(ReflectBallAroundNormal(p_ball.GetDirection(), normal));
+        
+        return true;
+    }
+
+    return false;
+}
 
 float2 BOPhysics::ApplyGravity(float2 p_position, float2 p_direction, float p_speed, float p_influenceFactor, float2 p_blackHolePos, double p_deltaTime)
 {
