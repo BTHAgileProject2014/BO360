@@ -341,7 +341,8 @@ bool BOObjectManager::AddNewBall()
 		ThrowInitError("BOBall");
 		return false;
 	}
-
+    
+    ball->BouncedOnPad();
 	m_ballList.push_back(ball);
 	return true;
 }
