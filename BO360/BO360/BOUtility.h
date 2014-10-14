@@ -385,7 +385,8 @@ enum ButtonAction
 	RETRY,
 	LEVELSELECT,
 	LEVEL,
-    TECHTREEACTION
+    TECHTREEACTION,
+    TECHTREERESET
 };
 
 enum ParticleType
@@ -587,6 +588,7 @@ enum Textures
     TEXTTINACTIVE,
     TEXTTTGRID,
 	TEXDEBUGDIR,
+    TEXTTTOLTIPFRAME,
 
 	/* HÄR UNDER ÄR DET BARA BANOR PLZ!!!*/
 	nrOfLevels,

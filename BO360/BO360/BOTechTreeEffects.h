@@ -95,16 +95,16 @@ struct TechTreeUtilityEffects
 // Techs that affects the level - powerup drops for example
 struct TechTreeLevelEffects
 {
-    bool stickyPadPUEnabled; // 9
-    bool fireBallPUEnabled; // 16
-    bool slowTimePUEnabled; // 18
+    float stickyPadPUDuration; // 9
+    float fireBallPUDuration; // 16
+    float slowTimePUDuration; // 18
     bool startNodePowerups; // Allows Shield, Multiball and Pad enlarge to be dropped
 
     TechTreeLevelEffects()
     {
-        stickyPadPUEnabled = false;
-        fireBallPUEnabled = false;
-        slowTimePUEnabled = false;
+        stickyPadPUDuration = 0.0f;
+        fireBallPUDuration = 0.0f;
+        slowTimePUDuration = 0.0f;
         startNodePowerups = false;
     }
 };

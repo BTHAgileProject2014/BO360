@@ -398,6 +398,8 @@ void BOTextureManager::LoadTexture(std::string p_theme)
     GetInstance().textureList.push_back(texture);
 	texture = BOGraphicInterface::LoadTexture("Sprites/PlaceHolderPNG/DEBUGDIR.png");
 	GetInstance().textureList.push_back(texture);
+    texture = BOGraphicInterface::LoadTexture("Sprites/PlaceHolderPNG/Tooltip.png");
+    GetInstance().textureList.push_back(texture);
 
 	GetInstance().textureList.push_back(NULL);// Lägg in en tom för att fixa nrOfLevels
 	texture = BOGraphicInterface::LoadTexture("Maps/button1Map.png");
@@ -414,6 +416,7 @@ void BOTextureManager::LoadTexture(std::string p_theme)
 	GetInstance().textureList.push_back(texture);
     texture = BOGraphicInterface::LoadTexture("Maps/button7Map.png");
 	GetInstance().textureList.push_back(texture);
+    
 
 
 }
