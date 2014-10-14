@@ -37,7 +37,7 @@ struct TechTreePUEffects
     TechTreePUEffects()
     {
         speed = 1.0f;
-        shieldCharge = 1;
+        shieldCharge = 0;
         startShield = false;
         biggerPadEffectMultiplier = 0;		// in precent for chance to get double effect, 0.33 for 33% 
         //effectMultiplier = 0;
@@ -45,7 +45,7 @@ struct TechTreePUEffects
         slowTimeTime = 0;
         stackableShield = false;
 		maxStackShield = 5;
-        multiBallMultiplyChance = 1;
+        multiBallMultiplyChance = 0;
         decreaseCD = 1;
     }
 };
