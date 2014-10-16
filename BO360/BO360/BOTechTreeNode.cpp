@@ -82,7 +82,14 @@ void BOTechTreeNode::Draw()
         m_tooltipHeading.Draw();
     }
 
-    //BOGraphicInterface::Draw(m_icon, m_position, m_size, 255);
+    int opacity = 255;
+
+    if (!m_isActive && !m_isAdjacentActive && !m_hoveringOver)
+    {
+        opacity = 150;
+    }
+
+    BOGraphicInterface::Draw(m_icon, m_position, m_size, opacity);
 }
 float2 BOTechTreeNode::GetPosition()const
 {
