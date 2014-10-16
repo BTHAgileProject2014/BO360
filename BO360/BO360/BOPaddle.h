@@ -1,5 +1,7 @@
 #ifndef BOPADDLE_H_
 #define BOPADDLE_H_
+
+#include "BOGlobals.h"
 #include "BOAnimatedObject.h"
 #include "BOSubscriber.h"
 #include "BOPublisher.h"

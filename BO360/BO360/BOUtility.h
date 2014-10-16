@@ -469,7 +469,7 @@ struct box
 
 	}
 
-	box(float2 p_pos, int2 p_size)
+	box(const float2 p_pos, const int2 p_size)
 	{
 		pos = p_pos;
 		size = p_size;
@@ -543,18 +543,34 @@ inline void ThrowInitError(std::string p_className)
 
 enum Textures
 {
+    // Balls.
 	TEXBALL,
     TEXBALLTAIL,
 	TEXFIREBALL,
+
+    // Blocks.
 	TEXHEXSTANDARD,
-    TEXHEXPOWERUP,
     TEXHEXDOUBLE,
-	TEXHEXARMORED,
-	TEXHEXINDES,
+    TEXHEXARMORED,
+    TEXHEXINDES,
+
+    // Blocks with power ups.
+    TEXHEXPOWERUP,
+    TEXHEXPUBIGGERPAD,
+    TEXHEXPUSHIELD,
+    TEXHEXPUADDBALL,
+    TEXHEXPUFIREBALL,
+    TEXHEXPUSHOCKWAVE,
+    TEXHEXPUSTICKYPAD,
+    TEXHEXPUSLOWTIME,
+
+    // Glows.
     TEXGLOWSTANDARD,
     TEXGLOWDOUBLE,
     TEXGLOWARMORED,
     TEXGLOWINDES,
+
+    // Power ups.
 	TEXSHIELD,
     TEXSHOCKWAVE,
     TEXSTICKYPAD,
@@ -565,6 +581,8 @@ enum Textures
     TEXPUSTICKYPAD,
     TEXPUSHOCKWAVE,
     TEXPUSLOWTIME,
+
+    // Particles.
 	TEXBALLTRAIL,
     TEXFIREBALLTRAIL,
 	TEXBALLDEBRIS,
@@ -572,9 +590,13 @@ enum Textures
 	TEXPUDEBRIS,
 	TEXEXPLOSION,
 	TEXDEBUGTRAIL,
+
+    // HUD.
 	TEXHUDALIVE,
     TEXHUDDEAD,
     TEXHUDCORE,
+
+    // Menu.
 	TEXMENUEDGE,
 	TEXMENUBAR,
 	TEXMENUBG,
@@ -582,19 +604,21 @@ enum Textures
 	TEXMENUBUTTON,
 	TEXMENUBUTTONHL,
     TEXTOOLTIP,
+
+    // Map.
 	TEXBACKGROUND,
 	TEXBLACKHOLE,
 	TEXPADSEG,
     TEXKEY,
 	TEXLOCK,
-    //Tech tree
+
+    // Tech tree.
 	TEXDEBUGDIR,
     TEXTTTOLTIPFRAME,
 
     TEXTTADJACENTACTIVE,
     TEXTTHIGHLIGHTED,
     TEXTTINACTIVE,
-
 
     //Tech Tree for realzzzzzz
     TEXTTSHOCKWAVE,
@@ -631,7 +655,6 @@ enum Textures
     TEXTTINCREASESTARTPAD,
 
     TEXTTGIANTBALL,
-
 
 	/* HÄR UNDER ÄR DET BARA BANOR PLZ!!!*/
 	nrOfLevels,

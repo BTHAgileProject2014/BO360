@@ -74,7 +74,7 @@ void BOTechTreeManager::Update()
 
     for (unsigned int i = 0; i < m_nodeList.size(); i++)
     {
-        m_nodeList[i]->Update();
+        m_nodeList[i]->Update(m_techPointsLeft);
 
         if (m_nodeList[i]->Intersects(m_mousePosition))
         {
@@ -96,7 +96,7 @@ void BOTechTreeManager::Update()
                             SetAdjacentNodes(m_nodeList[i]);
                             HandleUpgrades(m_nodeList[i]);
                             m_techPointsLeft -= m_nodeList[i]->GetPrice();
-                            m_techPointsText.SetText(std::to_string(m_techPointsLeft), int3(255, 255, 255), 0);
+                            SetTechPointText();
                         }
                     }
                 }
@@ -490,8 +490,8 @@ void BOTechTreeManager::Reset()
     BOTechTreeEffects::PUEffects = TechTreePUEffects();
     BOTechTreeEffects::UtilityEffects = TechTreeUtilityEffects();
 
-    m_techPointsLeft = m_maxTechPoints;
-    m_techPointsText.SetText(std::to_string(m_techPointsLeft), int3(255, 255, 255), 0);
+    m_techPointsLeft = m_maxTechPoints;    
+    SetTechPointText();
 }
 
 void BOTechTreeManager::Handle(InputMessages p_inputMessages)
@@ -542,10 +542,10 @@ void BOTechTreeManager::HandleUpgrades(BOTechTreeNode* p_node)
         BOTechTreeEffects::PUEffects.shieldCharge++;
         break;
     case IncreasePadSpeed:
-        BOTechTreeEffects::PaddleEffects.speed += 1.20f;
+        BOTechTreeEffects::PaddleEffects.speed = 1.20f;
         break;
     case DecreaseBallSpeed:
-        BOTechTreeEffects::BallEffects.speed -= 0.25f;
+        BOTechTreeEffects::BallEffects.speed -= 0.1f;
         break;
     case DecreaseGravityPull:
         BOTechTreeEffects::BallEffects.gravity = 1;
@@ -713,7 +713,7 @@ void BOTechTreeManager::HandleToolTips(BOTechTreeNode* p_node)
         p_node->SetTexture(BOTextureManager::GetTexture(TEXTTMOREFUELATREFILL));
         break;
     case IncreaseBallDamage:
-        p_node->SetToolTip("Increase the ball damage by 1.", "Harder Hull");
+        p_node->SetToolTip("Increases the density of the balls hull, giving it 1 extra damage.", "Harder Hull");
         p_node->SetTexture(BOTextureManager::GetTexture(TEXTTINCREASEBALLDAMAGE));
         break;
     case Fireball:
@@ -721,7 +721,7 @@ void BOTechTreeManager::HandleToolTips(BOTechTreeNode* p_node)
         p_node->SetTexture(BOTextureManager::GetTexture(TEXTTFIREBALL));
         break;
     case IncreaseBallDamage2:
-        p_node->SetToolTip("Increase the ball damage by 1.", "Harder Hull");
+        p_node->SetToolTip("Increases the density of the balls hull, giving it 1 extra damage.", "Harder Hull");
         p_node->SetTexture(BOTextureManager::GetTexture(TEXTTINCREASEBALLDAMAGE));
         break;
     case SlowTime:
@@ -806,5 +806,12 @@ void BOTechTreeManager::SetTechPoint(int p_numberOfLevels)
 {
     m_maxTechPoints = p_numberOfLevels * 3;
     m_techPointsLeft = m_maxTechPoints;
-    m_techPointsText.SetText(std::to_string(m_techPointsLeft), int3(255, 255, 255), 0);
+
+    SetTechPointText();
+}
+void BOTechTreeManager::SetTechPointText()
+{
+    std::string temp = "Tech Points: " + std::to_string(m_techPointsLeft);
+    m_techPointsText.SetText(temp, int3(255, 255, 255), 0);
+    m_techPointsText.SetPosition(float2(m_windowSize.x - m_techPointsText.GetSize().x * 0.5f - 310, m_windowSize.y - m_techPointsText.GetSize().y*2 - m_techPointsText.GetSize().y * 0.5f));
 }

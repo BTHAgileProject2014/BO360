@@ -67,15 +67,6 @@ void BOTextureManager::LoadTexture(std::string p_theme)
     }
 	GetInstance().textureList.push_back(texture);
 
-    filename = theme + "/Blocks/BlockPowerUp.png";
-    texture = BOGraphicInterface::LoadTexture(filename);
-    if (!texture)
-    {
-        std::cout << "Power up block texture failed to load!" << std::endl;
-        std::cin.get();
-    }
-    GetInstance().textureList.push_back(texture);
-
     filename = theme + "/Blocks/BlockDouble.png";
     texture = BOGraphicInterface::LoadTexture(filename);
     if (!texture)
@@ -102,6 +93,79 @@ void BOTextureManager::LoadTexture(std::string p_theme)
         std::cin.get();
     }
 	GetInstance().textureList.push_back(texture);
+
+    // Power up blocks, loaded using theme.
+    filename = theme + "/Blocks/BlockPowerUp.png";
+    texture = BOGraphicInterface::LoadTexture(filename);
+    if (!texture)
+    {
+        std::cout << "Power up block texture failed to load!" << std::endl;
+        std::cin.get();
+    }
+    GetInstance().textureList.push_back(texture);
+
+    filename = theme + "/Blocks/BlockRegularLargerPad.png";
+    texture = BOGraphicInterface::LoadTexture(filename);
+    if (!texture)
+    {
+        std::cout << "Larger pad block texture failed to load!" << std::endl;
+        std::cin.get();
+    }
+    GetInstance().textureList.push_back(texture);
+
+    filename = theme + "/Blocks/BlockRegularShield.png";
+    texture = BOGraphicInterface::LoadTexture(filename);
+    if (!texture)
+    {
+        std::cout << "Shield block texture failed to load!" << std::endl;
+        std::cin.get();
+    }
+    GetInstance().textureList.push_back(texture);
+
+    filename = theme + "/Blocks/BlockRegularAddBall.png";
+    texture = BOGraphicInterface::LoadTexture(filename);
+    if (!texture)
+    {
+        std::cout << "Add ball block texture failed to load!" << std::endl;
+        std::cin.get();
+    }
+    GetInstance().textureList.push_back(texture);
+
+    filename = theme + "/Blocks/BlockRegularFireball.png";
+    texture = BOGraphicInterface::LoadTexture(filename);
+    if (!texture)
+    {
+        std::cout << "Fireball block texture failed to load!" << std::endl;
+        std::cin.get();
+    }
+    GetInstance().textureList.push_back(texture);
+
+    filename = theme + "/Blocks/BlockRegularShockwave.png";
+    texture = BOGraphicInterface::LoadTexture(filename);
+    if (!texture)
+    {
+        std::cout << "Shockwave block texture failed to load!" << std::endl;
+        std::cin.get();
+    }
+    GetInstance().textureList.push_back(texture);
+
+    filename = theme + "/Blocks/BlockRegularStickyPad.png";
+    texture = BOGraphicInterface::LoadTexture(filename);
+    if (!texture)
+    {
+        std::cout << "Sticky pad block texture failed to load!" << std::endl;
+        std::cin.get();
+    }
+    GetInstance().textureList.push_back(texture);
+
+    filename = theme + "/Blocks/BlockRegularSlowTime.png";
+    texture = BOGraphicInterface::LoadTexture(filename);
+    if (!texture)
+    {
+        std::cout << "Slowtime block texture failed to load!" << std::endl;
+        std::cin.get();
+    }
+    GetInstance().textureList.push_back(texture);
 
     // Glows, loaded using the theme.
     filename = theme + "/Glows/GlowRegular.png";
@@ -140,7 +204,7 @@ void BOTextureManager::LoadTexture(std::string p_theme)
     }
 	GetInstance().textureList.push_back(texture);
 
-	// Powerups.
+	// Power ups.
 	texture = BOGraphicInterface::LoadTexture("Sprites/Power Ups/Shield.png");
     if (!texture)
     {

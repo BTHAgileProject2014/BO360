@@ -1,6 +1,7 @@
 #ifndef BOBALL_H_
 #define BOBALL_H_
 
+#include "BOGlobals.h"
 #include "BOAnimatedObject.h"
 #include "BOSubscriber.h"
 #include "BOPhysics.h"
@@ -29,7 +30,7 @@ public:
 	void SetFuel(float p_Fuel);
 
 	bool CanColide();
-	box GetBoundingBox();
+	box GetBoundingBox() const;
 	int GetDamage();
 
 	void BouncedOnPad();

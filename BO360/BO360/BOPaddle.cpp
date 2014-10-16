@@ -34,6 +34,12 @@ bool BOPaddle::Initialize(float2 p_position, int2 p_size, int2 p_sourceSize, int
 
 void BOPaddle::Handle(InputMessages p_inputMessages)
 {
+    // Don't update paddle if a key is pressed while paused
+    if (BOGlobals::GAME_STATE == PAUSED)
+    {
+        return;
+    }
+
 	if (p_inputMessages.leftArrow)
 	{
 		m_movingLeft = true;

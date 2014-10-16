@@ -36,6 +36,8 @@ private:
     
     void SetAdjacentNodes(BOTechTreeNode* p_node);
 
+    void SetTechPointText();
+
 
     int2 m_windowSize;
     BOButton m_resetButton;

@@ -90,7 +90,7 @@ void BOBall::Update(double p_deltaTime, sphere p_blackHoleBounds, bool p_won)
 void BOBall::DrawBallWithTail()
 {
     m_thruster.SetRotation(m_rotation);
-    m_thruster.DrawAnimated();
+    m_thruster.Draw();
 
     int4 source = int4(0, 0, m_size.x, m_size.y);
     int4 destination = int4((int)(m_position.x - m_scale * (m_size.x / 2)), (int)(m_position.y - m_scale * (m_size.y / 2)), (int)(m_scale * m_size.x), (int)(m_scale * m_size.y));
@@ -138,13 +138,19 @@ void BOBall::BouncedOnPad()
 	m_Fuel = 1.0f + BOTechTreeEffects::UtilityEffects.extraBallFuel;
 }
 
-box BOBall::GetBoundingBox()
+box BOBall::GetBoundingBox() const
 {
 	return box(m_position, m_size);
 }
 
 void BOBall::Handle(InputMessages p_inputMessages)
 {
+    // Don't update the ball if a key is pressed while paused
+    if (BOGlobals::GAME_STATE == PAUSED)
+    {
+        return;
+    }
+
 	if (p_inputMessages.upArrow)
 	{
 		if (m_mouseCheat)

@@ -2,6 +2,7 @@
 #define BOOBJECTMANGAGER_H_
 
 #include <vector>
+#include "BOGlobals.h"
 #include "BOComponent.h"
 #include "BOBackground.h"
 #include "BOObject.h"
@@ -24,6 +25,8 @@
 #include "BOTextureManager.h"
 #include "BOSlowTime.h"
 #include "BOShockwave.h"
+#include "BOBoss.h"
+#include "BOTestBoss.h"
 
 class BOObjectManager : public BOComponent, public BOPUSubscriber ,public BOSubscriber
 {
@@ -55,6 +58,7 @@ private:
 	void BallNewlyLaunched(BOBall* ball);
     void PewPewPew();
 	void ActivateMegaPad();
+    Textures GetTexture(PowerUpTypes p_type);
 
 	int m_life;
     bool m_continue;
@@ -70,6 +74,7 @@ private:
 	BOKeyManager m_keyManager;
     BOSlowTime m_slowTime;
     BOShockwave m_shockwave;
+    BOBoss* m_boss;
 
 	double m_SecondsPerParticle; // Should be moved into objects that use it
 };

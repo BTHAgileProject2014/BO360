@@ -220,6 +220,8 @@ void BOObjectManager::Update(double p_deltaTime)
 		m_ballList[i]->SetBallCollidedWithBall(false);
 	}
 
+    // m_boss->Update(p_deltaTime);
+
 	UpdateParticles(p_deltaTime);
 }
 
@@ -234,22 +236,10 @@ void BOObjectManager::Draw()
 	{
 		if (!m_blockList[i]->GetDead())
 		{
-            // Draw the glow behind the block.
-            m_blockList[i]->DrawGlow();
-
-            // Draw the block animated if it is an animated object.
-            if (m_blockList[i]->m_animated)
-            {
-                m_blockList[i]->DrawAnimated();
-            }
-
-            // Else we draw it normally.
-            else
-            {
 			    m_blockList[i]->Draw();
 		    }
 	    }
-	}
+		
 		
 	m_particleSystem.DrawParticles();
 
@@ -258,6 +248,7 @@ void BOObjectManager::Draw()
         m_ballList[i]->DrawBallWithTail();
 	}
 
+    //m_boss->Draw();
 	m_Shield.Draw();
 	m_paddle.Draw();
 }
@@ -276,13 +267,13 @@ void BOObjectManager::Handle(PowerUpTypes p_type, bool p_activated)
 					if (m_Shield.GetLifes() < BOTechTreeEffects::PUEffects.maxStackShield)
 					{
 						m_Shield.AddLife(1);
-					}
 				}
+			}
 			}
 			else
 			{
-				m_Shield.SetActive(true);
-			}
+			m_Shield.SetActive(true);
+		}
 		}
 		break;
 	case PUExtraBall:
@@ -294,7 +285,7 @@ void BOObjectManager::Handle(PowerUpTypes p_type, bool p_activated)
 			if (randomNr <= (100 * BOTechTreeEffects::PUEffects.multiBallMultiplyChance))
 			{
 				AddNewBall();
-			}			
+		}
 		}
 		break;
 	case PUFireBall:
@@ -323,6 +314,12 @@ void BOObjectManager::Handle(PowerUpTypes p_type, bool p_activated)
 
 void BOObjectManager::Handle(InputMessages p_inputMessage)
 {
+    // Don't update objects if a key is pressed while paused
+    if (BOGlobals::GAME_STATE == PAUSED)
+    {
+        return;
+    }
+
 	if (p_inputMessage.spacebarKey)
 	{
 		for (unsigned int i = 0; i < m_ballList.size(); i++)
@@ -366,11 +363,8 @@ bool BOObjectManager::AddNewBall()
 
 	// Set the direction outwards from the screen center
 	float2 ballDir = float2(0, 0);
-	//ballDir.normalize();
-	//ballPos.x += ballDir.x * 8;
-	//ballPos.y += ballDir.y * 8;
 
-	if (!ball->Initialize(ballPos, int2(15,15), BOTextureManager::GetTexture(TEXBALL), 300.0f, ballDir, windowSize))
+	if (!ball->Initialize(ballPos, int2(15,15), BOTextureManager::GetTexture(TEXBALL), 500.0f, ballDir, windowSize))
 	{
 		ThrowInitError("BOBall");
 		return false;
@@ -391,10 +385,6 @@ bool BOObjectManager::WonGame()
 {
     bool didWin = m_keyManager.AllKeysCatched()
         && m_continue;
-    if (didWin)
-    {
-        BOPhysics::SetTimeScale(0.25f);
-    }
 	return didWin;
 }
 
@@ -474,7 +464,7 @@ bool BOObjectManager::LoadBlocksFromMap(int p_index)
 
 				else
 				{
-                    result = block->Initialize(float2(x, y), int2(46, 42), BOTextureManager::GetTexture(TEXHEXPOWERUP), blockDescriptions[i].m_powerUpType, score);
+                    result = block->Initialize(float2(x, y), int2(46, 42), BOTextureManager::GetTexture(GetTexture(blockDescriptions[i].m_powerUpType)), blockDescriptions[i].m_powerUpType, score);
                     block->AddGlow(float2(x, y), int2(46, 42), int2(46, 42), 1, 5, 0.12, false, BOTextureManager::GetTexture(TEXGLOWSTANDARD));
 				}
 
@@ -552,6 +542,10 @@ bool BOObjectManager::LoadBlocksFromMap(int p_index)
 		}
 	}
 
+
+    m_boss = new BOTestBoss();
+    m_boss->Initialize();
+
 	return true;
 }
 
@@ -610,6 +604,47 @@ void BOObjectManager::BallBlockCollision(BOBall* p_ball)
 			//p_ball->SetFuel(0.0f);
 		}
 	}
+
+    float2 newDir;
+    BOBlock* hitBlock = NULL;
+
+    // Please leave this block of commented code!
+    // It handles collision against boss blocks, but the boss is currently not feeling so well. :(
+    //if (m_boss->CheckCollisions(p_ball, newDir, hitBlock))
+    //{
+    //    BOSoundManager::PlaySound(SOUND_POP);
+    //    //std::cout << "Ball bounced on [" << i << "]" << std::endl;
+
+    //    bool blockWasKilled = hitBlock->Hit(p_ball->GetDamage());
+    //    if (blockWasKilled)
+    //    {
+    //        // Create explosion.
+    //        m_particleSystem.BlockExplosion(hitBlock->GetPosition() + m_boss->GetPosition());
+
+    //        // Spawn powerup if there is one
+    //        BOPowerUpManager::AddPowerUp(hitBlock->GetPowerUp(), hitBlock->GetPosition(), &m_paddle, m_blackHole.GetPosition());
+
+    //        // Add score
+    //        BOScore::AddScore(hitBlock->GetScore());
+
+    //        // Delete the block
+    //        if (!m_boss->KillBlock(hitBlock))
+    //        {
+    //            std::cout << "Warning! Failed to kill a block" << std::endl;
+    //        }
+    //    }
+
+    //    // This if probably looks a bit ugly, so I guess I'll have to explain the logic
+    //    // If a block is killed while the ball is on fire, we don't want to change the direction
+    //    // Thus we only change the direction if the above statement is false
+    //    if (!(blockWasKilled && p_ball->IsOnFire()))
+    //    {
+    //        p_ball->SetDirection(newDir);
+    //    }
+    //    p_ball->BouncedOnHexagon();
+    //    //p_ball->SetFuel(0.0f);
+    //}
+
 }
 
 void BOObjectManager::BallPadCollision(BOBall* p_ball)
@@ -816,4 +851,50 @@ void BOObjectManager::PewPewPew()
 void BOObjectManager::ActivateMegaPad()
 {
 	m_paddle.ActivateMegaPad();
+}
+
+Textures BOObjectManager::GetTexture(PowerUpTypes p_type)
+{
+    switch (p_type)
+    {
+    case(PUBiggerPad) :
+        {
+            return TEXHEXPUBIGGERPAD;
+        }
+
+        case(PUShield) :
+        {
+            return TEXHEXPUSHIELD;
+        }
+
+        case(PUExtraBall) :
+        {
+            return TEXHEXPUADDBALL;
+        }
+
+        case(PUFireBall) :
+        {
+            return TEXHEXPUFIREBALL;
+        }
+
+        case(PUShockwave) :
+        {
+            return TEXHEXPUSHOCKWAVE;
+        }
+
+        case(PUStickyPad) :
+        {
+            return TEXHEXPUSTICKYPAD;
+        }
+
+        case(PUSlowTime) :
+        {
+            return TEXHEXPUSLOWTIME;
+        }
+
+        default:
+        {
+            std::cout << "Error in power up block texture resolver!" << std::endl;
+        }
+    }
 }

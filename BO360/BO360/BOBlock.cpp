@@ -29,6 +29,7 @@ bool BOBlock::Initialize(float2 p_position, int2 p_size, SDL_Texture* p_sprite, 
 		m_powerup = SetRandomPowerUp();
 	}
 	m_scoreValue = p_scoreValue;
+    m_hasGlow = false;
 	return true;
 }
 
@@ -47,6 +48,7 @@ bool BOBlock::InitializeAnimated(float2 p_position, int2 p_size, int2 p_sourceSi
 	}
     m_scoreValue = p_scoreValue;
     m_animated = true;
+    m_hasGlow = false;
     return true;
 }
 
@@ -55,12 +57,12 @@ void BOBlock::Update(double p_deltaTime)
     m_glow.Animate(p_deltaTime);
 }
 
-box BOBlock::GetBoundingBox()
+box BOBlock::GetBoundingBox() const
 {
 	return box(m_position, m_size);
 }
 
-hexagon BOBlock::GetBoundingHexagon()
+hexagon BOBlock::GetBoundingHexagon() const
 {
 	return hexagon(m_position, m_size);
 }
@@ -94,11 +96,30 @@ bool BOBlock::Hit(int p_damage)
 void BOBlock::AddGlow(float2 p_position, int2 p_size, int2 p_sourceSize, int p_frame, int p_numberOfFrames, double p_timePerFrame, bool p_hardReset, SDL_Texture* p_sprite)
 {
     m_glow.Initialize(p_position, p_size, p_sourceSize, p_frame, p_numberOfFrames, p_timePerFrame, p_hardReset, p_sprite);
+    m_hasGlow = true;
 }
 
-void BOBlock::DrawGlow()
+bool BOBlock::IsAnimated() const
 {
-    m_glow.DrawAnimated();
+    return m_animated;
+}
+
+void BOBlock::Draw()
+{
+    if (m_hasGlow)
+    {
+        m_glow.Draw();
+    }
+    m_animated ? BOAnimatedObject::Draw() : BOObject::Draw();
+}
+
+void BOBlock::SetPosition(float2 p_position)
+{
+    if (m_hasGlow)
+{
+        m_glow.SetPosition(p_position);
+    }
+    BOObject::SetPosition(p_position);
 }
 
 sphere BOBlock::GetBoundingSphere() const

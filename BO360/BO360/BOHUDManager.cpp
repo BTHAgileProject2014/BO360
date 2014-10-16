@@ -222,6 +222,10 @@ void BOHUDManager::SetKeys(int p_keys, int p_maxKeys)
 	tempString.append(std::to_string(p_keys));
 	tempString.append(" / ");
 	tempString.append(std::to_string(p_maxKeys));
+    if (p_keys >= p_maxKeys && p_keys != 0)
+    {
+        tempString.append("        HyperDrive is ready (Press Enter to use!)");
+    }
 	m_keyText.SetText(tempString, int3(255, 255, 255), 0);
 	int2 tempTextSize = m_keyText.GetSize();
 	int2 tempSizeSprite = m_keySprite.GetSize();
