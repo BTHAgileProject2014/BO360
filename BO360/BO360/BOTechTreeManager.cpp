@@ -580,7 +580,7 @@ void BOTechTreeManager::HandleUpgrades(BOTechTreeNode* p_node)
         BOTechTreeEffects::BallEffects.damage += 1;
         break;
     case Fireball:
-        BOTechTreeEffects::LevelEffects.fireBallPUDuration = 5.0f;
+        BOTechTreeEffects::LevelEffects.fireBallPUDuration += 5.0f;
         break;
     case IncreaseBallDamage2:
         BOTechTreeEffects::BallEffects.damage += 1;
@@ -593,8 +593,8 @@ void BOTechTreeManager::HandleUpgrades(BOTechTreeNode* p_node)
         BOTechTreeEffects::PUEffects.biggerPadEffectMultiplier += 0.33f;
         break;
     case PowerUpBoost2:
-        BOTechTreeEffects::PUEffects.slowTimeTime += 3;
-        BOTechTreeEffects::PUEffects.fireBallDamage += 3;
+        BOTechTreeEffects::LevelEffects.slowTimePUDuration += 3.0f;
+        BOTechTreeEffects::LevelEffects.fireBallPUDuration += 3.0f;
         break;
     case MegaPad:
         BOTechTreeEffects::UtilityEffects.megaPadEnabled = true;
