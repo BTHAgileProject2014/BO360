@@ -74,7 +74,7 @@ void BOTechTreeManager::Update()
 
     for (unsigned int i = 0; i < m_nodeList.size(); i++)
     {
-        m_nodeList[i]->Update();
+        m_nodeList[i]->Update(m_techPointsLeft);
 
         if (m_nodeList[i]->Intersects(m_mousePosition))
         {
@@ -542,7 +542,7 @@ void BOTechTreeManager::HandleUpgrades(BOTechTreeNode* p_node)
         BOTechTreeEffects::PUEffects.shieldCharge++;
         break;
     case IncreasePadSpeed:
-        BOTechTreeEffects::PaddleEffects.speed += 1.10f;
+        BOTechTreeEffects::PaddleEffects.speed = 1.20f;
         break;
     case DecreaseBallSpeed:
         BOTechTreeEffects::BallEffects.speed -= 0.1f;

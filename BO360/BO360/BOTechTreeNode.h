@@ -14,7 +14,7 @@ public:
     ~BOTechTreeNode();
 
     bool Initialize(float2 p_pos, int2 p_size, std::string p_toolTip);
-    void Update();
+    void Update(int p_techPoints);
     void Shutdown();
     void Draw();
 
@@ -89,6 +89,7 @@ private:
 
     BODrawableText m_tooltipHeading;
     BODrawableText m_tooltipText;
+    BODrawableText m_priceText;
     BOObject m_tooltipFrame;
 };
 
