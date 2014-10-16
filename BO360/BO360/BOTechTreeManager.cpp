@@ -713,7 +713,7 @@ void BOTechTreeManager::HandleToolTips(BOTechTreeNode* p_node)
         p_node->SetTexture(BOTextureManager::GetTexture(TEXTTMOREFUELATREFILL));
         break;
     case IncreaseBallDamage:
-        p_node->SetToolTip("Increase the ball damage by 1.", "Harder Hull");
+        p_node->SetToolTip("Increases the density of the balls hull, giving it 1 extra damage.", "Harder Hull");
         p_node->SetTexture(BOTextureManager::GetTexture(TEXTTINCREASEBALLDAMAGE));
         break;
     case Fireball:
@@ -721,7 +721,7 @@ void BOTechTreeManager::HandleToolTips(BOTechTreeNode* p_node)
         p_node->SetTexture(BOTextureManager::GetTexture(TEXTTFIREBALL));
         break;
     case IncreaseBallDamage2:
-        p_node->SetToolTip("Increase the ball damage by 1.", "Harder Hull");
+        p_node->SetToolTip("Increases the density of the balls hull, giving it 1 extra damage.", "Harder Hull");
         p_node->SetTexture(BOTextureManager::GetTexture(TEXTTINCREASEBALLDAMAGE));
         break;
     case SlowTime:
