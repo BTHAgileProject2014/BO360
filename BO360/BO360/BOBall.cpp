@@ -172,6 +172,10 @@ void BOBall::BouncedOnHexagon()
 {
     m_rocketEngine = false;
 	m_canColide = true;
+    if (BOTechTreeEffects::UtilityEffects.superBouncy)
+    {
+        m_Fuel = 1.0f;
+    }
 }
 
 float BOBall::GetFuel()
