@@ -21,6 +21,8 @@ bool BOPaddle::Initialize(float2 p_position, int2 p_size, int2 p_sourceSize, int
 	m_maxSegments = 5 + BOTechTreeEffects::PaddleEffects.maxSize;
 	AddSegments(2 + BOTechTreeEffects::PaddleEffects.size); // 2 here -> Start with total 3 segments
 	m_deltaRotation = 200 * BOTechTreeEffects::PaddleEffects.speed;
+    m_stickyMaxTimer = 20;
+    m_stickyCurrentTimer = 0;
 	BOPublisher::AddSubscriber(this);
 	BOPowerUpManager::AddSubscriber(this);
 
@@ -116,6 +118,7 @@ void BOPaddle::Handle(PowerUpTypes p_type, bool p_activated)
 
 void BOPaddle::Update(double p_deltaTime)
 {
+    // Move the pad left or right
 	if (m_movingLeft)
 	{
 		m_rotation -= m_deltaRotation * p_deltaTime;
@@ -136,6 +139,17 @@ void BOPaddle::Update(double p_deltaTime)
 		}
 	}
 
+    // Set a timeout for the sticky thing that sometimes is on the pad
+    if (GetStickyState())
+    {
+        m_stickyCurrentTimer -= p_deltaTime;
+        if (m_stickyCurrentTimer <= 0)
+        {
+            SetStickyState(false);
+        }
+    }
+
+    // Animate the fire 
     BOAnimatedObject::Animate(p_deltaTime);
 }
 
@@ -230,4 +244,15 @@ bool BOPaddle::GetStickyState()const
 void BOPaddle::SetStickyState(bool p_active)
 {
     m_isSticky = p_active;
+    m_stickyCurrentTimer = m_stickyMaxTimer;
+}
+
+void BOPaddle::SetStickyTimer(double p_time)
+{
+    m_stickyMaxTimer = p_time;
+}
+
+double BOPaddle::GetStickyTimer() const
+{
+    return m_stickyMaxTimer;
 }
