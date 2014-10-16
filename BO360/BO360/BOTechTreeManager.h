@@ -27,6 +27,7 @@ public:
 private:
     void HandleUpgrades(BOTechTreeNode* p_node);
     void HandleToolTips(BOTechTreeNode* p_node);
+    //void HandleTexture(BOTechTreeNode* p_node);
     BOTechTreeNode* CreateNode(float2 p_pos,int2 p_size, std::string p_tooltip);
     void MapNodes();
     void SetLPE();//Set layer, price and effect
@@ -34,6 +35,8 @@ private:
     void FixAdjacent();
     
     void SetAdjacentNodes(BOTechTreeNode* p_node);
+
+    void SetTechPointText();
 
 
     int2 m_windowSize;

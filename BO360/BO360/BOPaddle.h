@@ -1,5 +1,7 @@
 #ifndef BOPADDLE_H_
 #define BOPADDLE_H_
+
+#include "BOGlobals.h"
 #include "BOAnimatedObject.h"
 #include "BOSubscriber.h"
 #include "BOPublisher.h"
@@ -37,6 +39,8 @@ private:
 	bool m_movingLeft;
 	bool m_movingRight;
 	int m_segments;
+	int m_minSegments;
+	int m_maxSegments;
 	double m_totalDegrees;
 	double m_segementDegree;
     bool m_isSticky;

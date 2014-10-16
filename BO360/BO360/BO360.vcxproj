@@ -98,6 +98,7 @@
     <ClInclude Include="BOBoss.h" />
     <ClInclude Include="BOComponent.h" />
     <ClInclude Include="BODrawableText.h" />
+    <ClInclude Include="BOGlobals.h" />
     <ClInclude Include="BOGraphicInterface.h" />
     <ClInclude Include="BOHUDManager.h" />
     <ClInclude Include="BOInput.h" />
@@ -148,6 +149,7 @@
     <ClCompile Include="BOBoss.cpp" />
     <ClCompile Include="BOComponent.cpp" />
     <ClCompile Include="BODrawableText.cpp" />
+    <ClCompile Include="BOGlobals.cpp" />
     <ClCompile Include="BOGraphicInterface.cpp" />
     <ClCompile Include="BOHUDManager.cpp" />
     <ClCompile Include="BOInput.cpp" />

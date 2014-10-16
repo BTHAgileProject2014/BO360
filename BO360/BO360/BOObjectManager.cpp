@@ -14,6 +14,7 @@ bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight, int p_Le
 {
 	m_life = 4;
 	BOHUDManager::SetLives(m_life);
+    m_continue = false;
 
 	// Initialize the map loader.
 	bool result;
@@ -144,7 +145,7 @@ void BOObjectManager::Shutdown()
 void BOObjectManager::Update(double p_deltaTime)
 {
     // First, check if we've catched all the keys
-    if (m_keyManager.AllKeysCatched())
+    if (m_keyManager.AllKeysCatched() && m_continue)
     {
         // In that case, start blowing all existing blocks up!
         PewPewPew();
@@ -166,7 +167,7 @@ void BOObjectManager::Update(double p_deltaTime)
 	// Update balls
 	for (unsigned int i = 0; i < m_ballList.size(); i++)
 	{
-		m_ballList[i]->Update(p_deltaTime, m_blackHole.GetBoundingSphere());
+		m_ballList[i]->Update(p_deltaTime, m_blackHole.GetBoundingSphere(), WonGame());
 
 		if (m_ballList[i]->IsStuckToPad())
 		{
@@ -190,7 +191,10 @@ void BOObjectManager::Update(double p_deltaTime)
 			BallBlockCollision(m_ballList[i]);            
 			BallPadCollision(m_ballList[i]);
 
+            if (!WonGame())
+            {
 		    CheckBallOutOfBounds(i);
+            }
 
 			CheckBallToBall(i);
 
@@ -216,6 +220,8 @@ void BOObjectManager::Update(double p_deltaTime)
 		m_ballList[i]->SetBallCollidedWithBall(false);
 	}
 
+    // m_boss->Update(p_deltaTime);
+
 	UpdateParticles(p_deltaTime);
 }
 
@@ -230,22 +236,10 @@ void BOObjectManager::Draw()
 	{
 		if (!m_blockList[i]->GetDead())
 		{
-            // Draw the glow behind the block.
-            m_blockList[i]->DrawGlow();
-
-            // Draw the block animated if it is an animated object.
-            if (m_blockList[i]->m_animated)
-            {
-                m_blockList[i]->DrawAnimated();
-            }
-
-            // Else we draw it normally.
-            else
-            {
 			    m_blockList[i]->Draw();
 		    }
 	    }
-	}
+
 		
 	m_particleSystem.DrawParticles();
 
@@ -254,6 +248,7 @@ void BOObjectManager::Draw()
         m_ballList[i]->DrawBallWithTail();
 	}
 
+    //m_boss->Draw();
 	m_Shield.Draw();
 	m_paddle.Draw();
 }
@@ -265,13 +260,31 @@ void BOObjectManager::Handle(PowerUpTypes p_type, bool p_activated)
 	case PUShield:
 		if (p_activated)
 		{
+			if (m_Shield.GetActive())
+			{
+				if (BOTechTreeEffects::PUEffects.stackableShield)
+				{
+					if (m_Shield.GetLifes() < BOTechTreeEffects::PUEffects.maxStackShield)
+						m_Shield.AddLife(1);
+				}
+			}
+			else
+			{
 			m_Shield.SetActive(true);
+		}
 		}
 		break;
 	case PUExtraBall:
 		if (p_activated)
 		{
 			AddNewBall();
+			int randomNr;
+			randomNr = rand() % 100 + 1; // random nr from 1-100;
+			if (randomNr <= (100 * BOTechTreeEffects::PUEffects.multiBallMultiplyChance))
+			{
+				AddNewBall();
+		}
+			
 		}
 		break;
 	case PUFireBall:
@@ -300,13 +313,19 @@ void BOObjectManager::Handle(PowerUpTypes p_type, bool p_activated)
 
 void BOObjectManager::Handle(InputMessages p_inputMessage)
 {
+    // Don't update objects if a key is pressed while paused
+    if (BOGlobals::GAME_STATE == PAUSED)
+    {
+        return;
+    }
+
 	if (p_inputMessage.spacebarKey)
 	{
 		for (unsigned int i = 0; i < m_ballList.size(); i++)
 		{
 			if (m_ballList[i]->IsStuckToPad())
 			{
-			    m_ballList[i]->SetStuckToPad(false);
+			m_ballList[i]->SetStuckToPad(false);
 				//m_ballList[i]->SetDirection(float2(m_ballList[i]->GetPosition().x - m_blackHole.GetPosition().x, m_ballList[i]->GetPosition().y - m_blackHole.GetPosition().y));
 	        }
         }
@@ -322,6 +341,12 @@ void BOObjectManager::Handle(InputMessages p_inputMessage)
     {
         m_slowTime.Activate();
     }
+
+    // Check for if the player wants to continue to the next level when all keys are catched
+    if (p_inputMessage.enterKey && m_keyManager.AllKeysCatched())
+    {
+        m_continue = true;
+}
 }
 
 bool BOObjectManager::AddNewBall()
@@ -334,7 +359,7 @@ bool BOObjectManager::AddNewBall()
 	// Set the direction outwards from the screen center
 	float2 ballDir = float2(0, 0);
 
-	if (!ball->Initialize(ballPos, int2(15,15), BOTextureManager::GetTexture(TEXBALL), 300.0f, ballDir, windowSize))
+	if (!ball->Initialize(ballPos, int2(15,15), BOTextureManager::GetTexture(TEXBALL), 500.0f, ballDir, windowSize))
 	{
 		ThrowInitError("BOBall");
 		return false;
@@ -354,7 +379,7 @@ bool BOObjectManager::LostGame()
 bool BOObjectManager::WonGame()
 {
     bool didWin = m_keyManager.AllKeysCatched()
-        && m_blockList.size() == 0;
+        && m_continue;
 	return didWin;
 }
 
@@ -512,6 +537,10 @@ bool BOObjectManager::LoadBlocksFromMap(int p_index)
 		}
 	}
 
+
+    m_boss = new BOTestBoss();
+    m_boss->Initialize();
+
 	return true;
 }
 
@@ -570,6 +599,47 @@ void BOObjectManager::BallBlockCollision(BOBall* p_ball)
 			//p_ball->SetFuel(0.0f);
 		}
 	}
+
+    float2 newDir;
+    BOBlock* hitBlock = NULL;
+
+    // Please leave this block of commented code!
+    // It handles collision against boss blocks, but the boss is currently not feeling so well. :(
+    //if (m_boss->CheckCollisions(p_ball, newDir, hitBlock))
+    //{
+    //    BOSoundManager::PlaySound(SOUND_POP);
+    //    //std::cout << "Ball bounced on [" << i << "]" << std::endl;
+
+    //    bool blockWasKilled = hitBlock->Hit(p_ball->GetDamage());
+    //    if (blockWasKilled)
+    //    {
+    //        // Create explosion.
+    //        m_particleSystem.BlockExplosion(hitBlock->GetPosition() + m_boss->GetPosition());
+
+    //        // Spawn powerup if there is one
+    //        BOPowerUpManager::AddPowerUp(hitBlock->GetPowerUp(), hitBlock->GetPosition(), &m_paddle, m_blackHole.GetPosition());
+
+    //        // Add score
+    //        BOScore::AddScore(hitBlock->GetScore());
+
+    //        // Delete the block
+    //        if (!m_boss->KillBlock(hitBlock))
+    //        {
+    //            std::cout << "Warning! Failed to kill a block" << std::endl;
+    //        }
+    //    }
+
+    //    // This if probably looks a bit ugly, so I guess I'll have to explain the logic
+    //    // If a block is killed while the ball is on fire, we don't want to change the direction
+    //    // Thus we only change the direction if the above statement is false
+    //    if (!(blockWasKilled && p_ball->IsOnFire()))
+    //    {
+    //        p_ball->SetDirection(newDir);
+    //    }
+    //    p_ball->BouncedOnHexagon();
+    //    //p_ball->SetFuel(0.0f);
+    //}
+
 }
 
 void BOObjectManager::BallPadCollision(BOBall* p_ball)
@@ -684,6 +754,10 @@ void BOObjectManager::CheckBallToBall(int i)
 				{
 					BOPhysics::BallToBallCollision(*m_ballList[i], *m_ballList[j]);
 					m_ballList[j]->SetBallCollidedWithBall(true);
+					if (BOTechTreeEffects::UtilityEffects.ballsCollideFuel)
+					{
+						m_ballList[j]->BouncedOnPad();
+					}
 				}
 			}
 		}
@@ -692,7 +766,9 @@ void BOObjectManager::CheckBallToBall(int i)
 
 void BOObjectManager::BallNewlyLaunched(BOBall* p_ball)
 {
-    if (p_ball->GetNewlyLaunched() && !m_paddle.GetStickyState())
+	if (p_ball->GetNewlyLaunched())
+	{
+		if (!m_paddle.GetStickyState() && BOTechTreeEffects::UtilityEffects.PUGiftEnabled)
 	{
 		int spawnPU, powerupType;
 		PowerUpTypes PUType = PUNone;
@@ -742,7 +818,17 @@ void BOObjectManager::BallNewlyLaunched(BOBall* p_ball)
 		}
 		p_ball->BouncedOnPad();
     }
+
+		if (m_ballList.size() == 1)
+		{
+			for (int i = 0; i < BOTechTreeEffects::UtilityEffects.extraBallsFirstLaunch; i++)
+			{
+				AddNewBall();
+			}
+		}
+    }	
 }
+
 void BOObjectManager::PewPewPew()
 {
     if (m_blockList.size() > 0)

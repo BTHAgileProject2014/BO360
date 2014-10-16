@@ -33,6 +33,7 @@ bool BOPublisher::Initialize()
     m_inputMessage.fKey = false;
     m_inputMessage.tKey = false;
 	m_inputMessage.escKey = false;
+    m_inputMessage.enterKey = false;
 
 	return true;
 }
@@ -95,6 +96,9 @@ void BOPublisher::Notify(KeyMessages p_keyMessage, bool p_value)
 	case escKey:
 		m_inputMessage.escKey = p_value;
 		break;
+    case enterKey:
+        m_inputMessage.enterKey = p_value;
+        break;
 	}
 
 	Notify();

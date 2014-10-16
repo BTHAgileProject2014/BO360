@@ -16,7 +16,7 @@ bool BOBall::Initialize(float2 p_position, int2 p_size, SDL_Texture* p_sprite, f
 	{
 		return false;
 	}
-	m_damage = 1;
+	m_damage = 1 + BOTechTreeEffects::BallEffects.damage;
     m_rocketEngine = false;
 	m_Fuel = 0.0f;
 	m_canColide = true;
@@ -43,7 +43,7 @@ bool BOBall::Initialize(float2 p_position, int2 p_size, SDL_Texture* p_sprite, f
 	return true;
 }
 
-void BOBall::Update(double p_deltaTime, sphere p_blackHoleBounds)
+void BOBall::Update(double p_deltaTime, sphere p_blackHoleBounds, bool p_won)
 {
     // Move if the ball is not stuck
 	if (!m_stuckToPad && !m_mouseCheat)
@@ -64,7 +64,7 @@ void BOBall::Update(double p_deltaTime, sphere p_blackHoleBounds)
 	}
     m_thruster.SetPosition(m_position);
     m_rotation = BOPhysics::AngleBetweenDeg(float2(0, 1), m_direction) + 180;
-    if (!m_stuckToPad && m_stuckToPadPrev && BOTechTreeEffects::UtilityEffects.PUGiftEnabled)
+    if (!m_stuckToPad && m_stuckToPadPrev)
     {
         m_newlyLaunched = true;
     }
@@ -73,13 +73,23 @@ void BOBall::Update(double p_deltaTime, sphere p_blackHoleBounds)
         m_newlyLaunched = false;
     }
     m_stuckToPadPrev = m_stuckToPad;
+
+    // Launch the ball out in space if the game is won
+    if (p_won)
+    {
+        float2 outDir = float2(m_position.x - p_blackHoleBounds.pos.x, m_position.y - p_blackHoleBounds.pos.y);
+        outDir.normalize();
+        SetDirection(outDir);
+        SetFuel(1.0f);
+        return;
+    }
 }
 	
 
 void BOBall::DrawBallWithTail()
 {
     m_thruster.SetRotation(m_rotation);
-    m_thruster.DrawAnimated();
+    m_thruster.Draw();
 
     int4 source = int4(0, 0, m_size.x, m_size.y);
     int4 destination = int4((int)(m_position.x - m_scale * (m_size.x / 2)), (int)(m_position.y - m_scale * (m_size.y / 2)), (int)(m_scale * m_size.x), (int)(m_scale * m_size.y));
@@ -124,16 +134,22 @@ bool BOBall::CanColide()
 void BOBall::BouncedOnPad()
 {
     m_rocketEngine = true;
-	m_Fuel = 1.0f;
+	m_Fuel = 1.0f + BOTechTreeEffects::UtilityEffects.extraBallFuel;
 }
 
-box BOBall::GetBoundingBox()
+box BOBall::GetBoundingBox() const
 {
 	return box(m_position, m_size);
 }
 
 void BOBall::Handle(InputMessages p_inputMessages)
 {
+    // Don't update the ball if a key is pressed while paused
+    if (BOGlobals::GAME_STATE == PAUSED)
+    {
+        return;
+    }
+
 	if (p_inputMessages.upArrow)
 	{
 		if (m_mouseCheat)

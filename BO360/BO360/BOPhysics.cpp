@@ -49,7 +49,7 @@ bool BOPhysics::CheckCollisionSphereToHexagon(sphere p_sphere, hexagon p_hexagon
 	float2 point1, point2;
 
 	// Check collision with the sphere and each line in the hexagon
-	// Same code 6 times with differents points from the hexagon
+	// Same code 6 times with different points from the hexagon
 	//					   __	
 	//				      /  \
 	//					  \__/

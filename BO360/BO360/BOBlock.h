@@ -14,12 +14,11 @@ public:
     bool InitializeAnimated(float2 p_position, int2 p_size, int2 p_sourceSize, int p_frame, int p_maxFrames, double p_timePerFrame, bool p_hardReset, SDL_Texture* p_sprite, int p_hp, PowerUpTypes p_powerup, int p_scoreValue);
     void AddGlow(float2 p_position, int2 p_size, int2 p_sourceSize, int p_frame, int p_numberOfFrames, double p_timePerFrame, bool p_hardReset, SDL_Texture* p_sprite);
     void Update(double p_deltaTime);
-    void DrawGlow();
 
-	box GetBoundingBox();
-	hexagon GetBoundingHexagon();
-	sphere GetBoundingSphere() const;
-
+    sphere GetBoundingSphere() const;
+	box GetBoundingBox() const;
+	hexagon GetBoundingHexagon() const;
+    void SetPosition(float2 p_position);
 	void SetDead();
 	bool GetDead();
 
@@ -28,9 +27,15 @@ public:
 	PowerUpTypes GetPowerUp();
 
 	int GetScore();
-    bool m_animated;
+    bool IsAnimated() const;
+
+    void Draw();
 
 protected:
+	PowerUpTypes SetRandomPowerUp();
+
+    bool m_animated;
+    bool m_hasGlow;
 	int m_scoreValue;
 	int m_hp;
 	bool dead;

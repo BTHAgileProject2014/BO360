@@ -82,7 +82,7 @@ bool BOSystem::Initialize()
 	}
 
 	// Initialize the state handler.
-	m_gameState = MENU;
+	BOGlobals::GAME_STATE = MENU;
 	if (!m_stateManager.Initialize(int2(m_windowWidth, m_windowHeight)))
 	{
 		std::cout << "Initialize state manager failed!" << std::endl;
@@ -151,7 +151,7 @@ bool BOSystem::InitializeMap()
 	BOHUDManager::SetLevel(1);
 
     // Set the time scale to 1.0
-    BOPhysics::SetTimeScale(0.1f);
+    BOPhysics::SetTimeScale(1.0f);
 
 	return true;
 }
@@ -240,8 +240,12 @@ bool BOSystem::Run()
 
 		// Update the input manager.
 		result = m_input.Update();
+        bool updateMap = (BOGlobals::GAME_STATE == RUNNING || BOGlobals::GAME_STATE == VICTORY || BOGlobals::GAME_STATE == DEFEAT);
+        bool updateRest = (BOGlobals::GAME_STATE != RUNNING);
+        bool renderMap = (BOGlobals::GAME_STATE == RUNNING || BOGlobals::GAME_STATE == VICTORY || BOGlobals::GAME_STATE == DEFEAT || BOGlobals::GAME_STATE == PAUSED);
+        bool renderRest = (BOGlobals::GAME_STATE != RUNNING);
 
-		if (m_gameState == RUNNING)
+		if (updateMap)
 		{
 			// Update all of the objects.
 			m_objectManager.Update(m_deltaTime);
@@ -255,11 +259,8 @@ bool BOSystem::Run()
 			// Check if the player won the current game
 			if (m_objectManager.WonGame())
 			{
-				// Shutdown map
-				ShutdownMap();
-
 				// Go to victory screen
-				m_gameState = VICTORY;
+				BOGlobals::GAME_STATE = VICTORY;
 
 				// Unlock new map
 				m_stateManager.SetButtonActionLevel(m_levelManager.GetCurrentLevel() + 1, LEVEL);
@@ -267,24 +268,21 @@ bool BOSystem::Run()
 			// Check if the player lost the current game
 			else if (m_objectManager.LostGame())
 			{
-				// Shutdown map
-				ShutdownMap();
-
 				// Go to defeat screen
-				m_gameState = DEFEAT;
+				BOGlobals::GAME_STATE = DEFEAT;
 			}
 		}
 
-		else
+		if (updateRest)
 		{
             // Update TechTree
-            if (m_gameState == TECHTREE)
+            if (BOGlobals::GAME_STATE == TECHTREE)
             {
                 m_techTreeManager.Update();
             }
 
 			// Update approperiate menu and handle the actions.
-			HandleAction(m_stateManager.Update(m_gameState));
+			HandleAction(m_stateManager.Update(BOGlobals::GAME_STATE));
 
 			if (m_quit)
 			{
@@ -297,7 +295,7 @@ bool BOSystem::Run()
 		// ========== RENDER ==========
 		BOGraphicInterface::Clear();
 
-		if (m_gameState == RUNNING)
+		if (renderMap)
 		{
 			// Render all of the objects.
 			m_objectManager.Draw();
@@ -313,13 +311,13 @@ bool BOSystem::Run()
 
 		}
 
-		else
+		if (renderRest)
 		{
 			// Draw approperiate menu.
-			m_stateManager.Draw(m_gameState);
+			m_stateManager.Draw(BOGlobals::GAME_STATE);
 
             // Draw TechTree
-            if (m_gameState == TECHTREE)
+            if (BOGlobals::GAME_STATE == TECHTREE)
             {
                 m_techTreeManager.Draw();
 
@@ -338,6 +336,7 @@ bool BOSystem::Run()
 
 void BOSystem::Shutdown()
 {
+    ShutdownMap();
     m_techTreeManager.Shutdown();
 	BOPublisher::Unsubscribe(this);
 	m_input.Shutdown();
@@ -361,7 +360,7 @@ void BOSystem::HandleAction(ButtonAction p_action)
 			case(QUIT) :
 			{
 				ShutdownMap();
-				m_gameState = MENU;
+				BOGlobals::GAME_STATE = MENU;
 				m_levelManager.SetLevel(0);
 
 				break;
@@ -381,7 +380,7 @@ void BOSystem::HandleAction(ButtonAction p_action)
                 // Reset tech tree
                 m_techTreeManager.Reset();
                 m_techTreeManager.SetTechPoint(0);
-				m_gameState = RUNNING;
+				BOGlobals::GAME_STATE = RUNNING;
 				if (!InitializeMap(0))
 				{
 					std::cout << "Press ENTER to quit." << std::endl;
@@ -402,7 +401,7 @@ void BOSystem::HandleAction(ButtonAction p_action)
 			// RESUME, return to running.
 			case(RESUME) :
 			{
-				m_gameState = RUNNING;
+				BOGlobals::GAME_STATE = RUNNING;
 
 				break;
 			}
@@ -410,12 +409,13 @@ void BOSystem::HandleAction(ButtonAction p_action)
 			// NEXT, load next map.
 			case(NEXT) :
 			{
-                m_gameState = TECHTREE;
+                ShutdownMap();
+                BOGlobals::GAME_STATE = TECHTREE;
 				int currentLevel = m_levelManager.GetCurrentLevel();
 				int nextLevel = m_levelManager.GetNextLevel();
 				if (currentLevel == nextLevel)	// Same if last map
 				{
-					m_gameState = MENU;
+					BOGlobals::GAME_STATE = MENU;
 					m_levelManager.SetLevel(0);
 				}
                 m_techTreeManager.Reset();
@@ -426,7 +426,8 @@ void BOSystem::HandleAction(ButtonAction p_action)
 			// RETRY, reload the map.
 			case(RETRY) :
 			{
-				m_gameState = RUNNING;
+                ShutdownMap();
+				BOGlobals::GAME_STATE = RUNNING;
 				if (!InitializeMap(m_levelManager.GetCurrentLevel()))
 				{
 					std::cout << "Press ENTER to quit." << std::endl;
@@ -440,7 +441,7 @@ void BOSystem::HandleAction(ButtonAction p_action)
 			case (LEVELSELECT) :
 			{
 				// Kolla index och ladda bana.
-				m_gameState = LEVELSELECTOR;
+				BOGlobals::GAME_STATE = LEVELSELECTOR;
 				break;
 			}
 			case (LEVEL) :
@@ -451,7 +452,7 @@ void BOSystem::HandleAction(ButtonAction p_action)
                 if (index == 0)
                 {
                     
-                    m_gameState = RUNNING;
+                    BOGlobals::GAME_STATE = RUNNING;
 
                     if (!InitializeMap(0))
                     {
@@ -462,7 +463,7 @@ void BOSystem::HandleAction(ButtonAction p_action)
                 }
                 else if (index != -1)
 				{
-					m_gameState = TECHTREE;
+					BOGlobals::GAME_STATE = TECHTREE;
 					m_levelManager.SetLevel(index);
 				}
                 m_techTreeManager.Reset();
@@ -479,7 +480,7 @@ void BOSystem::HandleAction(ButtonAction p_action)
 
                     m_quit = true;
                 }
-                m_gameState = RUNNING;
+                BOGlobals::GAME_STATE = RUNNING;
                 break;
             }
 		}
@@ -488,17 +489,17 @@ void BOSystem::HandleAction(ButtonAction p_action)
 
 void BOSystem::Handle(InputMessages p_inputMessages)
 {
-	if (m_gameState == RUNNING && p_inputMessages.escKey)
+	if (BOGlobals::GAME_STATE == RUNNING && p_inputMessages.escKey)
 	{
-		m_gameState = PAUSED;
+		BOGlobals::GAME_STATE = PAUSED;
 	}
 
-	if (m_gameState == LEVELSELECTOR && p_inputMessages.escKey)
+	if (BOGlobals::GAME_STATE == LEVELSELECTOR && p_inputMessages.escKey)
 	{
-		m_gameState = MENU;
+		BOGlobals::GAME_STATE = MENU;
 	}
 
-    if (m_gameState == RUNNING && p_inputMessages.tKey)
+    if (BOGlobals::GAME_STATE == RUNNING && p_inputMessages.tKey)
     {
 
     }

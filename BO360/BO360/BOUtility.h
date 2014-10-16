@@ -359,6 +359,7 @@ struct InputMessages
     bool fKey;
     bool tKey;
 	bool escKey;
+    bool enterKey;
 };
 
 enum GameState
@@ -420,6 +421,7 @@ enum KeyMessages
 	rightMouseKey,
 	middleMouseKey,
 	spacebarKey,
+    enterKey,
 	zKey,
 	xKey,
     fKey,
@@ -465,7 +467,7 @@ struct box
 
 	}
 
-	box(float2 p_pos, int2 p_size)
+	box(const float2 p_pos, const int2 p_size)
 	{
 		pos = p_pos;
 		size = p_size;
@@ -574,6 +576,7 @@ enum Textures
 	TEXMENUEDGE,
 	TEXMENUBAR,
 	TEXMENUBG,
+    TEXMENUGRAY,
 	TEXMENUBUTTON,
 	TEXMENUBUTTONHL,
     TEXTOOLTIP,
@@ -583,13 +586,50 @@ enum Textures
     TEXKEY,
 	TEXLOCK,
     //Tech tree
-    TEXTTACTIVE,
+	TEXDEBUGDIR,
+    TEXTTTOLTIPFRAME,
+
     TEXTTADJACENTACTIVE,
     TEXTTHIGHLIGHTED,
     TEXTTINACTIVE,
-    TEXTTTGRID,
-	TEXDEBUGDIR,
-    TEXTTTOLTIPFRAME,
+
+
+    //Tech Tree for realzzzzzz
+    TEXTTSHOCKWAVE,
+    TEXTTMULTISPAWN,
+    TEXTTDECREASECD,
+    TEXTTQUANTUMFUEL,
+    TEXTTPOWERUPBOOST1,
+    TEXTTSLOWTIME,
+    TEXTTINCREASEBALLDAMAGE,
+    TEXTTFIREBALL,
+    TEXTTPOWERUPBOOST2,
+    TEXTTDECREASEPOWERUPFALLSPEED,
+
+    TEXTTPOWERUPGIFT,
+    TEXTTDECREASEGRAVITYPULL,    
+    TEXTTMULTIBALL,
+    TEXTTMEGAPAD,
+    TEXTTSTARTWITHSHIELD,
+    TEXTTDROPBASICPOWERUP,
+    TEXTTDECREASEBALLSPEED,
+    TEXTTMOREFUELATREFILL,
+    TEXTTSUPERTANK,
+    TEXTTSTACKABLESHIELD,
+
+    TEXTTSTICKYPAD,
+    TEXTTADDBOUNCETOSHIELD,
+    TEXTTINCREASEPADSPEED,
+    TEXTTBALLSGETFUELWHENTHEYCOLLIDE,
+    TEXTTDOUBLEMULTIBALL,
+    TEXTTINCREASESTARTPADSIZE,
+    TEXTTINCREASEMAXPADSIZE,
+    TEXTTCHANCETODOUBLEPADSIZEINCREASE,
+    TEXTTREGENERATE,
+    TEXTTINCREASESTARTPAD,
+
+    TEXTTGIANTBALL,
+
 
 	/* HÄR UNDER ÄR DET BARA BANOR PLZ!!!*/
 	nrOfLevels,
@@ -627,7 +667,7 @@ enum TTEffects
     DecreaseGravityPull,
     IncreaseBallDamage,
     DoubleMultiBall2,
-    //Laer 4
+    //Lane 4
     MegaPad,
     StartWithShield,
     DecreasePowerUpFallSpeed,
