@@ -346,7 +346,7 @@ void BOObjectManager::Handle(InputMessages p_inputMessage)
     if (p_inputMessage.enterKey && m_keyManager.AllKeysCatched())
     {
         m_continue = true;
-}
+    }
 }
 
 bool BOObjectManager::AddNewBall()
