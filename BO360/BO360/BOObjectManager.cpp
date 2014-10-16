@@ -764,6 +764,7 @@ void BOObjectManager::CheckBallToBall(int i)
 					if (BOTechTreeEffects::UtilityEffects.ballsCollideFuel)
 					{
 						m_ballList[j]->BouncedOnPad();
+						m_ballList[i]->BouncedOnPad();
 					}
 				}
 			}
