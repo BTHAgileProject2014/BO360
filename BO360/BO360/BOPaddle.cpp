@@ -148,6 +148,7 @@ void BOPaddle::Update(double p_deltaTime)
         m_stickyCurrentTimer -= p_deltaTime;
         if (m_stickyCurrentTimer <= 0)
         {
+            m_stickyCurrentTimer = 0;
             SetStickyState(false);            
         }
     }
@@ -258,6 +259,11 @@ void BOPaddle::SetStickyTimer(double p_time)
 double BOPaddle::GetStickyTimer() const
 {
     return m_stickyMaxTimer;
+}
+
+double BOPaddle::GetStickyTimeLeft() const
+{
+    return m_stickyCurrentTimer;
 }
 
 bool BOPaddle::StickyGotRemoved() const

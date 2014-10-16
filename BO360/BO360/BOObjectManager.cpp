@@ -657,7 +657,7 @@ void BOObjectManager::BallPadCollision(BOBall* p_ball)
 	    {
             p_ball->SetStuckToPad(true);
             float2 temp = { p_ball->GetPosition().x - m_blackHole.GetPosition().x, p_ball->GetPosition().y - m_blackHole.GetPosition().y };
-            float tempAngle = BOPhysics::AngleBetweenDeg(float2( 0, -100 ), temp);
+            double tempAngle = BOPhysics::AngleBetweenDeg(float2( 0, -100 ), temp);
             p_ball->SetStuckAngle((float)(tempAngle - m_paddle.GetRotation()));
 
         }
@@ -818,7 +818,7 @@ void BOObjectManager::BallNewlyLaunched(BOBall* p_ball)
 				    break;
 			    }
 			    }
-			    BOPowerUpManager::AddPowerUp(PUType, float2(BOGraphicInterface::GetWindowSize().x / 2, 50), &m_paddle, m_blackHole.GetPosition());
+			    BOPowerUpManager::AddPowerUp(PUType, float2(BOGraphicInterface::GetWindowSize().x / 2.0f, 50), &m_paddle, m_blackHole.GetPosition());
 		    }
 		    p_ball->BouncedOnPad();
         }
@@ -837,7 +837,7 @@ void BOObjectManager::PewPewPew()
 {
     if (m_blockList.size() > 0)
     {
-        int l = rand() % (m_blockList.size() * 5);
+        unsigned int l = rand() % (m_blockList.size() * 5);
         if (l < m_blockList.size())
         {
             m_particleSystem.BlockExplosion(m_blockList[l]->GetPosition());
@@ -889,6 +889,7 @@ Textures BOObjectManager::GetTexture(PowerUpTypes p_type)
         default:
         {
             std::cout << "Error in power up block texture resolver!" << std::endl;
+            return TEXHEXPOWERUP;
         }
     }
 }

@@ -228,7 +228,7 @@ void BOBall::Move(double p_deltaTime, sphere p_blackHoleBounds)
 
     float2 newDir = BOPhysics::ApplyGravity(m_position, m_direction, m_speed, 1.0f - m_Fuel, p_blackHoleBounds.pos, p_deltaTime * timescale);
     m_direction = newDir;
-    m_position = m_position + (m_direction * m_speed * p_deltaTime * timescale);
+    m_position = m_position + (m_direction * m_speed * (float)p_deltaTime * timescale);
     /*
     if (m_rocketEngine)
     {
