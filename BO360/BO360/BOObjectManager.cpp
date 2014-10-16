@@ -459,7 +459,7 @@ bool BOObjectManager::LoadBlocksFromMap(int p_index)
 
 				else
 				{
-                    result = block->Initialize(float2(x, y), int2(46, 42), BOTextureManager::GetTexture(TEXHEXPOWERUP), blockDescriptions[i].m_powerUpType, score);
+                    result = block->Initialize(float2(x, y), int2(46, 42), BOTextureManager::GetTexture(GetTexture(blockDescriptions[i].m_powerUpType)), blockDescriptions[i].m_powerUpType, score);
                     block->AddGlow(float2(x, y), int2(46, 42), int2(46, 42), 1, 5, 0.12, false, BOTextureManager::GetTexture(TEXGLOWSTANDARD));
 				}
 
@@ -841,4 +841,50 @@ void BOObjectManager::PewPewPew()
             m_blockList.erase(m_blockList.begin() + l);
         }
 	}
+}
+
+Textures BOObjectManager::GetTexture(PowerUpTypes p_type)
+{
+    switch (p_type)
+    {
+    case(PUBiggerPad) :
+        {
+            return TEXHEXPUBIGGERPAD;
+        }
+
+        case(PUShield) :
+        {
+            return TEXHEXPUSHIELD;
+        }
+
+        case(PUExtraBall) :
+        {
+            return TEXHEXPUADDBALL;
+        }
+
+        case(PUFireBall) :
+        {
+            return TEXHEXPUFIREBALL;
+        }
+
+        case(PUShockwave) :
+        {
+            return TEXHEXPUSHOCKWAVE;
+        }
+
+        case(PUStickyPad) :
+        {
+            return TEXHEXPUSTICKYPAD;
+        }
+
+        case(PUSlowTime) :
+        {
+            return TEXHEXPUSLOWTIME;
+        }
+
+        default:
+        {
+            std::cout << "Error in power up block texture resolver!" << std::endl;
+        }
+    }
 }

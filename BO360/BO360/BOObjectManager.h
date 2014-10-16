@@ -57,6 +57,7 @@ private:
 	void CheckBallToBall(int i);
 	void BallNewlyLaunched(BOBall* ball);
     void PewPewPew();
+    Textures GetTexture(PowerUpTypes p_type);
 
 	int m_life;
     bool m_continue;
