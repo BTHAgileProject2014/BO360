@@ -69,8 +69,8 @@ bool BOTechTreeManager::Initialize(int2 p_windowDimension)
 }
 void BOTechTreeManager::Update()
 {
-    m_startNode->SetActive(true);
-    SetAdjacentNodes(m_startNode);
+    m_startNode->SetAdjacentActive(true);
+    //SetAdjacentNodes(m_startNode);
 
     for (unsigned int i = 0; i < m_nodeList.size(); i++)
     {
@@ -236,7 +236,7 @@ void BOTechTreeManager::SetLPE()
 {
     //Set Price
     //Sets start node
-    SetNodeLPE(m_startNode, 0, 0, 0);
+    SetNodeLPE(m_startNode, 0, 3, 0);
 
     //Set Price for layer 1
     m_startNode->GetUpNode()->SetPrice(1);
