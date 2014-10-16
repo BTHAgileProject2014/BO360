@@ -801,11 +801,18 @@ void BOTechTreeManager::HandleToolTips(BOTechTreeNode* p_node)
         break;
     }
 }
-void BOTechTreeManager::SetTechPoint(int p_numberOfLevels)
+void BOTechTreeManager::SetTechPoint(int p_numberOfLevels, bool p_fromSelect)
 {
     m_maxTechPoints = p_numberOfLevels * 3;
 
-    m_techPointsLeft += 3;
+    if (p_fromSelect == true)
+    {
+        m_techPointsLeft = m_maxTechPoints;
+    }
+    else
+    {
+        m_techPointsLeft += 3;
+    }
 
     SetTechPointText();
 }
