@@ -418,7 +418,7 @@ void BOSystem::HandleAction(ButtonAction p_action)
 					BOGlobals::GAME_STATE = MENU;
 					m_levelManager.SetLevel(0);
 				}
-                m_techTreeManager.Reset();
+                //m_techTreeManager.Reset();
                 m_techTreeManager.SetTechPoint(m_levelManager.GetCurrentLevel());
                 break;
             }

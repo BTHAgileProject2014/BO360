@@ -206,7 +206,7 @@ void BOTechTreeNode::Reset()
 bool BOTechTreeNode::Intersects(int2 p_mousePosition)
 {
     // Intersection test.
-    if (BOPhysics::CheckCollisionSphereToSphere(sphere(float2((float)p_mousePosition.x, (float)p_mousePosition.y), 1), sphere(m_position, m_size.x / 2)))
+    if (BOPhysics::CheckCollisionSphereToSphere(sphere(float2((float)p_mousePosition.x, (float)p_mousePosition.y), 1), sphere(m_position, (m_size.x / 2) - 3)))
     {
         return true;
     }
