@@ -12,7 +12,7 @@ BOObjectManager::~BOObjectManager()
 
 bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight, int p_LevelIndex)
 {
-	m_life = 4;
+	m_life = 4 + BOTechTreeEffects::UtilityEffects.extraLifePerLevel;
 	BOHUDManager::SetLives(m_life);
     m_continue = false;
 
@@ -326,11 +326,12 @@ void BOObjectManager::Handle(InputMessages p_inputMessage)
 		{
 			if (m_ballList[i]->IsStuckToPad())
 			{
-			m_ballList[i]->SetStuckToPad(false);
+				m_ballList[i]->SetStuckToPad(false);
+				
 				//m_ballList[i]->SetDirection(float2(m_ballList[i]->GetPosition().x - m_blackHole.GetPosition().x, m_ballList[i]->GetPosition().y - m_blackHole.GetPosition().y));
+			}
+		}
 	}
-}
-}
 
     if (p_inputMessage.fKey && m_shockwave.Activate())
     {
@@ -340,6 +341,7 @@ void BOObjectManager::Handle(InputMessages p_inputMessage)
 	if (p_inputMessage.gKey)
 	{
 		ActivateMegaPad();
+		m_ballList[0]->SetScale(4.0f);
 	}
     // Activate Slow time
     if (p_inputMessage.downArrow)

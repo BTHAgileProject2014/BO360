@@ -105,3 +105,8 @@ void BOObject::SetOpacity(Uint8 p_opacity)
 {
     m_opacity = p_opacity;
 }
+
+void BOObject::SetScale(float p_scale)
+{
+	m_scale = p_scale;
+}

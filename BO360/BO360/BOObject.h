@@ -35,6 +35,8 @@ public:
     Uint8 GetOpacity()const;
     void SetOpacity(Uint8 p_opacity);
 
+	void SetScale(float p_scale);
+
 protected:
 	float2 m_position;
 	int2 m_size;

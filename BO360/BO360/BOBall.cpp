@@ -27,7 +27,7 @@ bool BOBall::Initialize(float2 p_position, int2 p_size, SDL_Texture* p_sprite, f
 	m_spawned = false;
 	m_onFire = false;
 	m_fireTimeElapsed = 0; // Set duration for fireball powerup in header, const variable
-	m_fireTimeDuration = 2 + BOTechTreeEffects::LevelEffects.fireBallPUDuration;
+	m_fireTimeDuration = 5 + BOTechTreeEffects::LevelEffects.fireBallPUDuration;
     m_rotation = 0;
 
 	// Load texture.
