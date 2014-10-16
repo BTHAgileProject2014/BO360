@@ -498,11 +498,11 @@ void BOTextureManager::LoadTexture(std::string p_theme)
     GetInstance().textureList.push_back(texture);
     texture = BOGraphicInterface::LoadTexture("Sprites/Tech Tree/Icons/Empty.png");//TEXTTPOWERUPBOOST2
     GetInstance().textureList.push_back(texture);
-    texture = BOGraphicInterface::LoadTexture("Sprites/Tech Tree/Icons/Empty.png");//TEXTTDECREASEPOWERUPFALLSPEED2
+    texture = BOGraphicInterface::LoadTexture("Sprites/Tech Tree/Icons/PowerUpSpeedMinus.png");//TEXTTDECREASEPOWERUPFALLSPEED2
     GetInstance().textureList.push_back(texture);
-    texture = BOGraphicInterface::LoadTexture("Sprites/Tech Tree/Icons/Empty.png");//TEXTTPOWERUPGIFT
+    texture = BOGraphicInterface::LoadTexture("Sprites/Tech Tree/Icons/PowerUpGift.png");//TEXTTPOWERUPGIFT
     GetInstance().textureList.push_back(texture);
-    texture = BOGraphicInterface::LoadTexture("Sprites/Tech Tree/Icons/Empty.png");//TEXTTDECREASEGRAVITYPULL
+    texture = BOGraphicInterface::LoadTexture("Sprites/Tech Tree/Icons/LessGravity.png");//TEXTTDECREASEGRAVITYPULL
     GetInstance().textureList.push_back(texture);
     texture = BOGraphicInterface::LoadTexture("Sprites/Tech Tree/Icons/Empty.png");//TEXTTMULTIBALL
     GetInstance().textureList.push_back(texture);
@@ -512,7 +512,7 @@ void BOTextureManager::LoadTexture(std::string p_theme)
     GetInstance().textureList.push_back(texture);
     texture = BOGraphicInterface::LoadTexture("Sprites/Tech Tree/Icons/Start.png");//TEXTTDROPBASICPOWERUP
     GetInstance().textureList.push_back(texture);
-    texture = BOGraphicInterface::LoadTexture("Sprites/Tech Tree/Icons/PowerUpSpeedMinus.png");//TEXTTDECREASEBALLSPEED 
+    texture = BOGraphicInterface::LoadTexture("Sprites/Tech Tree/Icons/SlowerBall.png");//TEXTTDECREASEBALLSPEED 
     GetInstance().textureList.push_back(texture);
     texture = BOGraphicInterface::LoadTexture("Sprites/Tech Tree/Icons/Empty.png");//TEXTTMOREFUELATREFILL
     GetInstance().textureList.push_back(texture);
@@ -520,7 +520,7 @@ void BOTextureManager::LoadTexture(std::string p_theme)
     GetInstance().textureList.push_back(texture);
     texture = BOGraphicInterface::LoadTexture("Sprites/Tech Tree/Icons/Empty.png");//TEXTTSTACKABLESHIELD
     GetInstance().textureList.push_back(texture);
-    texture = BOGraphicInterface::LoadTexture("Sprites/Tech Tree/Icons/Empty.png");//TEXTTSTICKYPAd
+    texture = BOGraphicInterface::LoadTexture("Sprites/Tech Tree/Icons/Empty.png");//TEXTTSTICKYPAD
     GetInstance().textureList.push_back(texture);
     texture = BOGraphicInterface::LoadTexture("Sprites/Tech Tree/Icons/ExtraShield.png");//TEXTTADDBOUNCETOSHIELD
     GetInstance().textureList.push_back(texture);
