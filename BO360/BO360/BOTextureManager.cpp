@@ -466,83 +466,85 @@ void BOTextureManager::LoadTexture(std::string p_theme)
 	GetInstance().textureList.push_back(texture);
 
     // Tech Tree
-	texture = BOGraphicInterface::LoadTexture("Sprites/PlaceHolderPNG/DEBUGDIR.png");
+	texture = BOGraphicInterface::LoadTexture("Sprites/Map/DebugDirection.png");
 	GetInstance().textureList.push_back(texture);
-    texture = BOGraphicInterface::LoadTexture("Sprites/PlaceHolderPNG/Tooltip.png");
+    texture = BOGraphicInterface::LoadTexture("Sprites/Tech Tree/Tooltip.png");
     GetInstance().textureList.push_back(texture);
 
-    texture = BOGraphicInterface::LoadTexture("Sprites/PlaceHolderPNG/Techs/canChooseTech.png");
+    texture = BOGraphicInterface::LoadTexture("Sprites/Tech Tree/HexagonAvailable.png");
     GetInstance().textureList.push_back(texture);
-    texture = BOGraphicInterface::LoadTexture("Sprites/PlaceHolderPNG/Techs/highlightTech.png");
+    texture = BOGraphicInterface::LoadTexture("Sprites/Tech Tree/HexagonChosen.png");
     GetInstance().textureList.push_back(texture);
-    texture = BOGraphicInterface::LoadTexture("Sprites/PlaceHolderPNG/Techs/disabledTech.png");
+    texture = BOGraphicInterface::LoadTexture("Sprites/Tech Tree/HexagonHighlighted.png");
     GetInstance().textureList.push_back(texture);
-
-    texture = BOGraphicInterface::LoadTexture("Sprites/PlaceHolderPNG/Techs/activeTech.png");//TEXTTSHOCKWAVE
-    GetInstance().textureList.push_back(texture);
-    texture = BOGraphicInterface::LoadTexture("Sprites/PlaceHolderPNG/Techs/activeTech.png");//TEXTTMULTISPAWN
-    GetInstance().textureList.push_back(texture);
-    texture = BOGraphicInterface::LoadTexture("Sprites/PlaceHolderPNG/Techs/activeTech.png");//TEXTTDECREASECD
-    GetInstance().textureList.push_back(texture);
-    texture = BOGraphicInterface::LoadTexture("Sprites/PlaceHolderPNG/Techs/activeTech.png");//TEXTTQUANTUMFUEL
-    GetInstance().textureList.push_back(texture);
-    texture = BOGraphicInterface::LoadTexture("Sprites/PlaceHolderPNG/Techs/activeTech.png");//TEXTTPOWERUPBOOST1
-    GetInstance().textureList.push_back(texture);
-    texture = BOGraphicInterface::LoadTexture("Sprites/PlaceHolderPNG/Techs/activeTech.png");//TEXTTSLOWTIME
-    GetInstance().textureList.push_back(texture);
-    texture = BOGraphicInterface::LoadTexture("Sprites/PlaceHolderPNG/Techs/activeTech.png");//7 TEXTTINCREASEBALLDAMAGE
+    texture = BOGraphicInterface::LoadTexture("Sprites/Tech Tree/HexagonLocked.png");
     GetInstance().textureList.push_back(texture);
 
-    texture = BOGraphicInterface::LoadTexture("Sprites/PlaceHolderPNG/Techs/activeTech.png");//TEXTTFIREBALL
+    texture = BOGraphicInterface::LoadTexture("Sprites/Tech Tree/HexagonLocked.png");//TEXTTSHOCKWAVE
     GetInstance().textureList.push_back(texture);
-    texture = BOGraphicInterface::LoadTexture("Sprites/PlaceHolderPNG/Techs/activeTech.png");//TEXTTPOWERUPBOOST2
+    texture = BOGraphicInterface::LoadTexture("Sprites/Tech Tree/HexagonLocked.png");//TEXTTMULTISPAWN
     GetInstance().textureList.push_back(texture);
-    texture = BOGraphicInterface::LoadTexture("Sprites/PlaceHolderPNG/Techs/activeTech.png");//TEXTTDECREASEPOWERUPFALLSPEED2
+    texture = BOGraphicInterface::LoadTexture("Sprites/Tech Tree/HexagonLocked.png");//TEXTTDECREASECD
     GetInstance().textureList.push_back(texture);
-    texture = BOGraphicInterface::LoadTexture("Sprites/PlaceHolderPNG/Techs/activeTech.png");//TEXTTPOWERUPGIFT
+    texture = BOGraphicInterface::LoadTexture("Sprites/Tech Tree/HexagonLocked.png");//TEXTTQUANTUMFUEL
     GetInstance().textureList.push_back(texture);
-    texture = BOGraphicInterface::LoadTexture("Sprites/PlaceHolderPNG/Techs/activeTech.png");//TEXTTDECREASEGRAVITYPULL
+    texture = BOGraphicInterface::LoadTexture("Sprites/Tech Tree/HexagonLocked.png");//TEXTTPOWERUPBOOST1
     GetInstance().textureList.push_back(texture);
-    texture = BOGraphicInterface::LoadTexture("Sprites/PlaceHolderPNG/Techs/activeTech.png");//TEXTTMULTIBALL
+    texture = BOGraphicInterface::LoadTexture("Sprites/Tech Tree/HexagonLocked.png");//TEXTTSLOWTIME
     GetInstance().textureList.push_back(texture);
-    texture = BOGraphicInterface::LoadTexture("Sprites/PlaceHolderPNG/Techs/activeTech.png");//7 TEXTTMEGAPAD
-    GetInstance().textureList.push_back(texture);
-
-    texture = BOGraphicInterface::LoadTexture("Sprites/PlaceHolderPNG/Techs/activeTech.png");//TEXTTSTARTWITHSHIELD
-    GetInstance().textureList.push_back(texture);
-    texture = BOGraphicInterface::LoadTexture("Sprites/PlaceHolderPNG/Techs/activeTech.png");//TEXTTDECREASEPOWERUPFALLSPEED
-    GetInstance().textureList.push_back(texture);
-    texture = BOGraphicInterface::LoadTexture("Sprites/PlaceHolderPNG/Techs/activeTech.png");//TEXTTDROPBASICPOWERUP
-    GetInstance().textureList.push_back(texture);
-    texture = BOGraphicInterface::LoadTexture("Sprites/PlaceHolderPNG/Techs/activeTech.png");//TEXTTDECREASEBALLSPEED
-    GetInstance().textureList.push_back(texture);
-    texture = BOGraphicInterface::LoadTexture("Sprites/PlaceHolderPNG/Techs/activeTech.png");//TEXTTMOREFUELATREFILL
-    GetInstance().textureList.push_back(texture);
-    texture = BOGraphicInterface::LoadTexture("Sprites/PlaceHolderPNG/Techs/activeTech.png");//TEXTTSUPERTANK
-    GetInstance().textureList.push_back(texture);
-    texture = BOGraphicInterface::LoadTexture("Sprites/PlaceHolderPNG/Techs/activeTech.png");//7TEXTTSTACKABLESHIELD
+    texture = BOGraphicInterface::LoadTexture("Sprites/Tech Tree/HexagonLocked.png");//7 TEXTTINCREASEBALLDAMAGE
     GetInstance().textureList.push_back(texture);
 
-    texture = BOGraphicInterface::LoadTexture("Sprites/PlaceHolderPNG/Techs/activeTech.png");//TEXTTSTICKYPAD
+    texture = BOGraphicInterface::LoadTexture("Sprites/Tech Tree/HexagonLocked.png");//TEXTTFIREBALL
     GetInstance().textureList.push_back(texture);
-    texture = BOGraphicInterface::LoadTexture("Sprites/PlaceHolderPNG/Techs/activeTech.png");//TEXTTADDBOUNCETOSHIELD
+    texture = BOGraphicInterface::LoadTexture("Sprites/Tech Tree/HexagonLocked.png");//TEXTTPOWERUPBOOST2
     GetInstance().textureList.push_back(texture);
-    texture = BOGraphicInterface::LoadTexture("Sprites/PlaceHolderPNG/Techs/activeTech.png");//TEXTTINCREASEPADSPEED
+    texture = BOGraphicInterface::LoadTexture("Sprites/Tech Tree/HexagonLocked.png");//TEXTTDECREASEPOWERUPFALLSPEED2
     GetInstance().textureList.push_back(texture);
-    texture = BOGraphicInterface::LoadTexture("Sprites/PlaceHolderPNG/Techs/activeTech.png");//TEXTTBALLSGETFUELWHENTHEYCOLLIDE
+    texture = BOGraphicInterface::LoadTexture("Sprites/Tech Tree/HexagonLocked.png");//TEXTTPOWERUPGIFT
     GetInstance().textureList.push_back(texture);
-    texture = BOGraphicInterface::LoadTexture("Sprites/PlaceHolderPNG/Techs/activeTech.png");//TEXTTDOUBLEMULTIBALL
+    texture = BOGraphicInterface::LoadTexture("Sprites/Tech Tree/HexagonLocked.png");//TEXTTDECREASEGRAVITYPULL
     GetInstance().textureList.push_back(texture);
-    texture = BOGraphicInterface::LoadTexture("Sprites/PlaceHolderPNG/Techs/activeTech.png");//TEXTTINCREASESTARTPADSIZE
+    texture = BOGraphicInterface::LoadTexture("Sprites/Tech Tree/HexagonLocked.png");//TEXTTMULTIBALL
     GetInstance().textureList.push_back(texture);
-    texture = BOGraphicInterface::LoadTexture("Sprites/PlaceHolderPNG/Techs/activeTech.png");//7 TEXTTINCREASEMAXPADSIZE
+    texture = BOGraphicInterface::LoadTexture("Sprites/Tech Tree/HexagonLocked.png");//7 TEXTTMEGAPAD
     GetInstance().textureList.push_back(texture);
 
-    texture = BOGraphicInterface::LoadTexture("Sprites/PlaceHolderPNG/Techs/activeTech.png");//TEXTTCHANCETODOUBLEPADSIZEINCREASE
+    texture = BOGraphicInterface::LoadTexture("Sprites/Tech Tree/HexagonLocked.png");//TEXTTSTARTWITHSHIELD
     GetInstance().textureList.push_back(texture);
-    texture = BOGraphicInterface::LoadTexture("Sprites/PlaceHolderPNG/Techs/activeTech.png");//TEXTTREGENERATE
+    texture = BOGraphicInterface::LoadTexture("Sprites/Tech Tree/HexagonLocked.png");//TEXTTDECREASEPOWERUPFALLSPEED
     GetInstance().textureList.push_back(texture);
-    texture = BOGraphicInterface::LoadTexture("Sprites/PlaceHolderPNG/Techs/activeTech.png");//TEXTTINCREASESTARTPAD
+    texture = BOGraphicInterface::LoadTexture("Sprites/Tech Tree/HexagonLocked.png");//TEXTTDROPBASICPOWERUP
+    GetInstance().textureList.push_back(texture);
+    texture = BOGraphicInterface::LoadTexture("Sprites/Tech Tree/HexagonLocked.png");//TEXTTDECREASEBALLSPEED
+    GetInstance().textureList.push_back(texture);
+    texture = BOGraphicInterface::LoadTexture("Sprites/Tech Tree/HexagonLocked.png");//TEXTTMOREFUELATREFILL
+    GetInstance().textureList.push_back(texture);
+    texture = BOGraphicInterface::LoadTexture("Sprites/Tech Tree/HexagonLocked.png");//TEXTTSUPERTANK
+    GetInstance().textureList.push_back(texture);
+    texture = BOGraphicInterface::LoadTexture("Sprites/Tech Tree/HexagonLocked.png");//7TEXTTSTACKABLESHIELD
+    GetInstance().textureList.push_back(texture);
+
+    texture = BOGraphicInterface::LoadTexture("Sprites/Tech Tree/HexagonLocked.png");//TEXTTSTICKYPAD
+    GetInstance().textureList.push_back(texture);
+    texture = BOGraphicInterface::LoadTexture("Sprites/Tech Tree/HexagonLocked.png");//TEXTTADDBOUNCETOSHIELD
+    GetInstance().textureList.push_back(texture);
+    texture = BOGraphicInterface::LoadTexture("Sprites/Tech Tree/HexagonLocked.png");//TEXTTINCREASEPADSPEED
+    GetInstance().textureList.push_back(texture);
+    texture = BOGraphicInterface::LoadTexture("Sprites/Tech Tree/HexagonLocked.png");//TEXTTBALLSGETFUELWHENTHEYCOLLIDE
+    GetInstance().textureList.push_back(texture);
+    texture = BOGraphicInterface::LoadTexture("Sprites/Tech Tree/HexagonLocked.png");//TEXTTDOUBLEMULTIBALL
+    GetInstance().textureList.push_back(texture);
+    texture = BOGraphicInterface::LoadTexture("Sprites/Tech Tree/HexagonLocked.png");//TEXTTINCREASESTARTPADSIZE
+    GetInstance().textureList.push_back(texture);
+    texture = BOGraphicInterface::LoadTexture("Sprites/Tech Tree/HexagonLocked.png");//7 TEXTTINCREASEMAXPADSIZE
+    GetInstance().textureList.push_back(texture);
+
+    texture = BOGraphicInterface::LoadTexture("Sprites/Tech Tree/HexagonLocked.png");//TEXTTCHANCETODOUBLEPADSIZEINCREASE
+    GetInstance().textureList.push_back(texture);
+    texture = BOGraphicInterface::LoadTexture("Sprites/Tech Tree/HexagonLocked.png");//TEXTTREGENERATE
+    GetInstance().textureList.push_back(texture);
+    texture = BOGraphicInterface::LoadTexture("Sprites/Tech Tree/HexagonLocked.png");//TEXTTINCREASESTARTPAD
     GetInstance().textureList.push_back(texture);
 
 	GetInstance().textureList.push_back(NULL);// Lägg in en tom för att fixa nrOfLevels
