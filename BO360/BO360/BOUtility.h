@@ -359,6 +359,8 @@ struct InputMessages
     bool fKey;
     bool tKey;
 	bool gKey;
+	bool hKey;
+	bool jKey;
 	bool escKey;
     bool enterKey;
 };
@@ -428,6 +430,8 @@ enum KeyMessages
     fKey,
     tKey,
 	gKey,
+	hKey,
+	jKey,
 	escKey
 };
 

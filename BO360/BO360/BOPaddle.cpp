@@ -21,7 +21,8 @@ bool BOPaddle::Initialize(float2 p_position, int2 p_size, int2 p_sourceSize, int
 	m_maxSegments = 5 + BOTechTreeEffects::PaddleEffects.maxSize;
 	AddSegments(2 + BOTechTreeEffects::PaddleEffects.size); // 2 here -> Start with total 3 segments
 	m_deltaRotation = 200 * BOTechTreeEffects::PaddleEffects.speed;
-    m_stickyMaxTimer = 20;
+    m_stickyMaxTimer = 0;
+	SetStickyTimer(20);
     m_stickyCurrentTimer = 0;
 	m_megaPadActive = false;
 	m_megaPadTimeElapsed = 0;
@@ -154,7 +155,7 @@ void BOPaddle::Update(double p_deltaTime)
 
     // Animate the fire 
 	m_megaPadTimeElapsed += p_deltaTime * BOPhysics::GetTimeScale();
-	if (m_megaPadTimeElapsed >= m_megaPadTimeDuration)
+	if (m_megaPadTimeElapsed >= m_megaPadTimeDuration && m_megaPadActive)
 	{
 		DeactivateMegaPad();
 		m_megaPadTimeElapsed = 0;
@@ -259,7 +260,7 @@ void BOPaddle::SetStickyState(bool p_active)
 
 void BOPaddle::SetStickyTimer(double p_time)
 {
-    m_stickyMaxTimer = p_time;
+    m_stickyMaxTimer = p_time + BOTechTreeEffects::LevelEffects.stickyPadPUDuration;
 }
 
 double BOPaddle::GetStickyTimer() const
@@ -280,8 +281,12 @@ void BOPaddle::ActivateMegaPad()
 
 void BOPaddle::DeactivateMegaPad()
 {
-	m_totalDegrees = (m_segementDegree * m_preMegaSegments);
-	m_segments = m_preMegaSegments;
+	if (m_preMegaSegments != 0)
+	{
+		m_totalDegrees = (m_segementDegree * m_preMegaSegments);
+		m_segments = m_preMegaSegments;
 
-	m_megaPadActive = false;
+		m_megaPadActive = false;
+	}
+	
 }

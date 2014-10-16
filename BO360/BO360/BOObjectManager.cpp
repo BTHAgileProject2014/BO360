@@ -337,12 +337,31 @@ void BOObjectManager::Handle(InputMessages p_inputMessage)
     {
         ActivateShockwave();
     }
-
-	if (p_inputMessage.gKey)
+	// Activate Mega pad with G
+	if (p_inputMessage.gKey) // Lägg till activate mega pad koll om man har speccen
 	{
 		ActivateMegaPad();
 		m_ballList[0]->SetScale(4.0f);
 	}
+
+	// Activate Giant ball with h
+	if (p_inputMessage.hKey) // Lägg till activate giant ball koll om man har speccen
+	{
+		for (unsigned int i = 0; i < m_ballList.size(); i++)
+		{
+			m_ballList[i]->SetScale(2.0f);
+		}
+	}
+
+	// Activate Quantum fuel
+	if (p_inputMessage.jKey) // lägg till koll om man har abilityn
+	{
+		for (unsigned int i = 0; i < m_ballList.size(); i++)
+		{
+			m_ballList[i]->SetFuel(1.0f);
+		}
+	}
+
     // Activate Slow time
     if (p_inputMessage.downArrow)
     {
