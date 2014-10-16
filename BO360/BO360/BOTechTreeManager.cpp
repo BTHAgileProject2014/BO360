@@ -18,7 +18,6 @@ bool BOTechTreeManager::Initialize(int2 p_windowDimension)
     int2 m_Size = int2(100, 100);
     float2 midScreen = float2(m_windowSize.x * 0.5, m_windowSize.y * 0.5 + 150); // To save computation
     int diameter = 7; // Original is 7
-    int tempx = 0;
 
     for (int y = diameter - 3, x = 0; y != 0; y--, x++)
     {
@@ -52,7 +51,7 @@ bool BOTechTreeManager::Initialize(int2 p_windowDimension)
     MapNodes();
     SetLPE();
 
-    m_resetButton.Initialize(float2(m_windowSize.x-50.0f-250.0f, m_windowSize.y-50.0f-75.0f), int2(250, 75), BOTextureManager::GetTexture(TEXMENUBUTTON), "RESET", TECHTREERESET, "");
+    m_resetButton.Initialize(float2(m_windowSize.x-300.0f, m_windowSize.y-125.0f), int2(250, 75), BOTextureManager::GetTexture(TEXMENUBUTTON), "RESET", TECHTREERESET, "");
 
     // Tech Points
     m_techPointsText.Initialize(float2(0,0), "ERROR", int3(255, 255, 255), 50, 0);
@@ -69,8 +68,8 @@ bool BOTechTreeManager::Initialize(int2 p_windowDimension)
 }
 void BOTechTreeManager::Update()
 {
-    m_startNode->SetActive(true);
-    SetAdjacentNodes(m_startNode);
+    m_startNode->SetAdjacentActive(true);
+    //SetAdjacentNodes(m_startNode);
 
     for (unsigned int i = 0; i < m_nodeList.size(); i++)
     {
@@ -236,7 +235,7 @@ void BOTechTreeManager::SetLPE()
 {
     //Set Price
     //Sets start node
-    SetNodeLPE(m_startNode, 0, 0, 0);
+    SetNodeLPE(m_startNode, 0, 3, 0);
 
     //Set Price for layer 1
     m_startNode->GetUpNode()->SetPrice(1);
@@ -673,7 +672,7 @@ void BOTechTreeManager::HandleToolTips(BOTechTreeNode* p_node)
         p_node->SetTexture(BOTextureManager::GetTexture(TEXTTDECREASEBALLSPEED));
         break;
     case DecreaseGravityPull:
-        p_node->SetToolTip("Lowers the gravitational pull of the ball.", "Improved Alloy");//////////////////////////////////////////////////////
+        p_node->SetToolTip("Lowers the gravitational pull of the ball.", "Improved Alloy");
         p_node->SetTexture(BOTextureManager::GetTexture(TEXTTDECREASEGRAVITYPULL));
         break;
     case PowerUpGift:
@@ -749,7 +748,7 @@ void BOTechTreeManager::HandleToolTips(BOTechTreeNode* p_node)
         p_node->SetTexture(BOTextureManager::GetTexture(TEXTTINCREASESTARTPADSIZE));
         break;
     case Regenerate:
-        p_node->SetToolTip("Whenever you complete a level you gain 1 extra ball.", "Regenerate");
+        p_node->SetToolTip("Start a level with an extra life, 5 instead of 4.", "Extra life");
         p_node->SetTexture(BOTextureManager::GetTexture(TEXTTREGENERATE));
         break;
     case IncreaseStartPadSize2:
@@ -802,10 +801,18 @@ void BOTechTreeManager::HandleToolTips(BOTechTreeNode* p_node)
         break;
     }
 }
-void BOTechTreeManager::SetTechPoint(int p_numberOfLevels)
+void BOTechTreeManager::SetTechPoint(int p_numberOfLevels, bool p_fromSelect)
 {
     m_maxTechPoints = p_numberOfLevels * 3;
-    m_techPointsLeft = m_maxTechPoints;
+
+    if (p_fromSelect == true)
+    {
+        m_techPointsLeft = m_maxTechPoints;
+    }
+    else
+    {
+        m_techPointsLeft += 3;
+    }
 
     SetTechPointText();
 }

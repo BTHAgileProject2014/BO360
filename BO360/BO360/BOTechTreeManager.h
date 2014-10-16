@@ -22,7 +22,7 @@ public:
     void Handle(InputMessages p_inputMessages);
     void Reset();
 
-    void SetTechPoint(int p_numberOfLevels);
+    void SetTechPoint(int p_numberOfLevels, bool p_fromSelect);
 
 private:
     void HandleUpgrades(BOTechTreeNode* p_node);
