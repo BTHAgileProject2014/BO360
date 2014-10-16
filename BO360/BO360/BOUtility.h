@@ -523,7 +523,8 @@ enum PowerUpTypes
 	PUFireBall,
     PUShockwave,
     PUStickyPad,
-    PUSlowTime
+    PUSlowTime,
+    PURandom
 };
 
 struct Block

@@ -457,6 +457,12 @@ bool BOObjectManager::LoadBlocksFromMap(int p_index)
                     block->AddGlow(float2(x, y), int2(46, 42), int2(46, 42), 0, 5, 0.12f, false, BOTextureManager::GetTexture(TEXGLOWSTANDARD));
                 }
 
+                else if (blockDescriptions[i].m_powerUpType == PURandom)
+                {
+                    result = block->Initialize(float2(x, y), int2(46, 42), BOTextureManager::GetTexture(TEXHEXPOWERUP), PURandom, score);
+                    block->AddGlow(float2(x, y), int2(46, 42), int2(46, 42), 0, 5, 0.12f, false, BOTextureManager::GetTexture(TEXGLOWSTANDARD));
+                }
+
 				else
 				{
                     result = block->Initialize(float2(x, y), int2(46, 42), BOTextureManager::GetTexture(GetTexture(blockDescriptions[i].m_powerUpType)), blockDescriptions[i].m_powerUpType, score);
