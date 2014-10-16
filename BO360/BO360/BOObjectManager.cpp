@@ -177,6 +177,10 @@ void BOObjectManager::Update(double p_deltaTime)
                 m_ballList[i]->SetPosition(m_paddle.GetBallStuckPosition(m_ballList[i]->GetStuckAngle()));
 				m_ballList[i]->SetDirection(float2(m_ballList[i]->GetPosition().x - m_blackHole.GetPosition().x, m_ballList[i]->GetPosition().y - m_blackHole.GetPosition().y));
             }
+            else if (m_paddle.StickyGotRemoved())
+            {
+                m_ballList[i]->SetStuckToPad(false);
+            }
             else
             {
 			    m_ballList[i]->SetPosition(m_paddle.GetBallSpawnPosition());
@@ -769,55 +773,55 @@ void BOObjectManager::BallNewlyLaunched(BOBall* p_ball)
 	if (p_ball->GetNewlyLaunched())
 	{
 		if (!m_paddle.GetStickyState() && BOTechTreeEffects::UtilityEffects.PUGiftEnabled)
-	{
-		int spawnPU, powerupType;
-		PowerUpTypes PUType = PUNone;
-		spawnPU = rand() % 10;
-		powerupType = rand() % 7;
-		if (spawnPU == 9)
-		{
-			switch (powerupType)
-			{
-			case 0:
-			{
-				PUType = PUExtraBall;
-				break;
-			}
-			case 1:
-			{
-				PUType = PUBiggerPad;
-				break;
-			}
-			case 2:
-			{
-				PUType = PUFireBall;
-				break;
-			}
-			case 3:
-			{
-				PUType = PUShield;
-				break;
-			}
-			case 4:
-			{
-				PUType = PUShockwave;
-				break;
-			}
-			case 5:
-			{
-				PUType = PUSlowTime;
-				break;
-			}
-			case 6:
-			{
-				PUType = PUStickyPad;
-				break;
-			}
-			}
-			BOPowerUpManager::AddPowerUp(PUType, float2(BOGraphicInterface::GetWindowSize().x / 2, 50), &m_paddle, m_blackHole.GetPosition());
-		}
-		p_ball->BouncedOnPad();
-    }
+	    {
+		    int spawnPU, powerupType;
+		    PowerUpTypes PUType = PUNone;
+		    spawnPU = rand() % 10;
+		    powerupType = rand() % 7;
+		    if (spawnPU == 9)
+		    {
+			    switch (powerupType)
+			    {
+			    case 0:
+			    {
+				    PUType = PUExtraBall;
+				    break;
+			    }
+			    case 1:
+			    {
+				    PUType = PUBiggerPad;
+				    break;
+			    }
+			    case 2:
+			    {
+				    PUType = PUFireBall;
+				    break;
+			    }
+			    case 3:
+			    {
+				    PUType = PUShield;
+				    break;
+			    }
+			    case 4:
+			    {
+				    PUType = PUShockwave;
+				    break;
+			    }
+			    case 5:
+			    {
+				    PUType = PUSlowTime;
+				    break;
+			    }
+			    case 6:
+			    {
+				    PUType = PUStickyPad;
+				    break;
+			    }
+			    }
+			    BOPowerUpManager::AddPowerUp(PUType, float2(BOGraphicInterface::GetWindowSize().x / 2, 50), &m_paddle, m_blackHole.GetPosition());
+		    }
+		    p_ball->BouncedOnPad();
+        }
 
 		if (m_ballList.size() == 1)
 		{
