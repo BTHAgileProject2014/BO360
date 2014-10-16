@@ -480,53 +480,51 @@ void BOTextureManager::LoadTexture(std::string p_theme)
     texture = BOGraphicInterface::LoadTexture("Sprites/Tech Tree/HexagonLocked.png");
     GetInstance().textureList.push_back(texture);
 
-    texture = BOGraphicInterface::LoadTexture("Sprites/Tech Tree/Icons/Empty.png");//TEXTTSHOCKWAVE
+    texture = BOGraphicInterface::LoadTexture("Sprites/Tech Tree/Icons/Empty.png");//TEXTTSHOCKWAVE 
     GetInstance().textureList.push_back(texture);
-    texture = BOGraphicInterface::LoadTexture("Sprites/Tech Tree/Icons/Empty.png");//TEXTTMULTISPAWN
+    texture = BOGraphicInterface::LoadTexture("Sprites/Tech Tree/Icons/Empty.png");//TEXTTMULTISPAWN 
     GetInstance().textureList.push_back(texture);
     texture = BOGraphicInterface::LoadTexture("Sprites/Tech Tree/Icons/Empty.png");//TEXTTDECREASECD
     GetInstance().textureList.push_back(texture);
-    texture = BOGraphicInterface::LoadTexture("Sprites/Tech Tree/Icons/Empty.png");//TEXTTQUANTUMFUEL
+    texture = BOGraphicInterface::LoadTexture("Sprites/Tech Tree/Icons/Empty.png");//TEXTTQUANTUMFUEL 
     GetInstance().textureList.push_back(texture);
     texture = BOGraphicInterface::LoadTexture("Sprites/Tech Tree/Icons/Empty.png");//TEXTTPOWERUPBOOST1
     GetInstance().textureList.push_back(texture);
     texture = BOGraphicInterface::LoadTexture("Sprites/Tech Tree/Icons/Empty.png");//TEXTTSLOWTIME
     GetInstance().textureList.push_back(texture);
-    texture = BOGraphicInterface::LoadTexture("Sprites/Tech Tree/Icons/Empty.png");//7 TEXTTINCREASEBALLDAMAGE
+    texture = BOGraphicInterface::LoadTexture("Sprites/Tech Tree/Icons/Empty.png");//TEXTTINCREASEBALLDAMAGE  
     GetInstance().textureList.push_back(texture);
     texture = BOGraphicInterface::LoadTexture("Sprites/Tech Tree/Icons/Empty.png");//TEXTTFIREBALL
     GetInstance().textureList.push_back(texture);
     texture = BOGraphicInterface::LoadTexture("Sprites/Tech Tree/Icons/Empty.png");//TEXTTPOWERUPBOOST2
     GetInstance().textureList.push_back(texture);
-    texture = BOGraphicInterface::LoadTexture("Sprites/Tech Tree/Icons/Empty.png");//TEXTTDECREASEPOWERUPFALLSPEED2
+    texture = BOGraphicInterface::LoadTexture("Sprites/Tech Tree/Icons/Empty.png");//TEXTTDECREASEPOWERUPFALLSPEED2 
     GetInstance().textureList.push_back(texture);
     texture = BOGraphicInterface::LoadTexture("Sprites/Tech Tree/Icons/Empty.png");//TEXTTPOWERUPGIFT
     GetInstance().textureList.push_back(texture);
-    texture = BOGraphicInterface::LoadTexture("Sprites/Tech Tree/Icons/Empty.png");//TEXTTDECREASEGRAVITYPULL
+    texture = BOGraphicInterface::LoadTexture("Sprites/Tech Tree/Icons/Empty.png");//TEXTTDECREASEGRAVITYPULL 
     GetInstance().textureList.push_back(texture);
-    texture = BOGraphicInterface::LoadTexture("Sprites/Tech Tree/Icons/Empty.png");//TEXTTMULTIBALL
+    texture = BOGraphicInterface::LoadTexture("Sprites/Tech Tree/Icons/Empty.png");//TEXTTMULTIBALL 
     GetInstance().textureList.push_back(texture);
-    texture = BOGraphicInterface::LoadTexture("Sprites/Tech Tree/Icons/Empty.png");//TEXTTMEGAPAD
+    texture = BOGraphicInterface::LoadTexture("Sprites/Tech Tree/Icons/Empty.png");//TEXTTMEGAPAD 
     GetInstance().textureList.push_back(texture);
     texture = BOGraphicInterface::LoadTexture("Sprites/Tech Tree/Icons/Empty.png");//TEXTTSTARTWITHSHIELD
     GetInstance().textureList.push_back(texture);
-    texture = BOGraphicInterface::LoadTexture("Sprites/Tech Tree/Icons/PowerUpSpeedMinus.png");//TEXTTDECREASEPOWERUPFALLSPEED
+    texture = BOGraphicInterface::LoadTexture("Sprites/Tech Tree/Icons/Start.png");//TEXTTDROPBASICPOWERUP 
     GetInstance().textureList.push_back(texture);
-    texture = BOGraphicInterface::LoadTexture("Sprites/Tech Tree/Icons/Start.png");//TEXTTDROPBASICPOWERUP
-    GetInstance().textureList.push_back(texture);
-    texture = BOGraphicInterface::LoadTexture("Sprites/Tech Tree/Icons/Empty.png");//TEXTTDECREASEBALLSPEED
+    texture = BOGraphicInterface::LoadTexture("Sprites/Tech Tree/Icons/PowerUpSpeedMinus.png");//TEXTTDECREASEBALLSPEED 
     GetInstance().textureList.push_back(texture);
     texture = BOGraphicInterface::LoadTexture("Sprites/Tech Tree/Icons/Empty.png");//TEXTTMOREFUELATREFILL
     GetInstance().textureList.push_back(texture);
     texture = BOGraphicInterface::LoadTexture("Sprites/Tech Tree/Icons/Empty.png");//TEXTTSUPERTANK
     GetInstance().textureList.push_back(texture);
-    texture = BOGraphicInterface::LoadTexture("Sprites/Tech Tree/Icons/Empty.png");//TEXTTSTACKABLESHIELD
+    texture = BOGraphicInterface::LoadTexture("Sprites/Tech Tree/Icons/Empty.png");//TEXTTSTACKABLESHIELD 
     GetInstance().textureList.push_back(texture);
-    texture = BOGraphicInterface::LoadTexture("Sprites/Tech Tree/Icons/Empty.png");//TEXTTSTICKYPAD
+    texture = BOGraphicInterface::LoadTexture("Sprites/Tech Tree/Icons/Empty.png");//TEXTTSTICKYPAd
     GetInstance().textureList.push_back(texture);
     texture = BOGraphicInterface::LoadTexture("Sprites/Tech Tree/Icons/ExtraShield.png");//TEXTTADDBOUNCETOSHIELD
     GetInstance().textureList.push_back(texture);
-    texture = BOGraphicInterface::LoadTexture("Sprites/Tech Tree/Icons/Empty.png");//TEXTTINCREASEPADSPEED
+    texture = BOGraphicInterface::LoadTexture("Sprites/Tech Tree/Icons/Empty.png");//TEXTTINCREASEPADSPEED 
     GetInstance().textureList.push_back(texture);
     texture = BOGraphicInterface::LoadTexture("Sprites/Tech Tree/Icons/Empty.png");//TEXTTBALLSGETFUELWHENTHEYCOLLIDE
     GetInstance().textureList.push_back(texture);
@@ -534,13 +532,15 @@ void BOTextureManager::LoadTexture(std::string p_theme)
     GetInstance().textureList.push_back(texture);
     texture = BOGraphicInterface::LoadTexture("Sprites/Tech Tree/Icons/Empty.png");//TEXTTINCREASESTARTPADSIZE
     GetInstance().textureList.push_back(texture);
-    texture = BOGraphicInterface::LoadTexture("Sprites/Tech Tree/Icons/Empty.png");//7 TEXTTINCREASEMAXPADSIZE
+    texture = BOGraphicInterface::LoadTexture("Sprites/Tech Tree/Icons/Empty.png");//TEXTTINCREASEMAXPADSIZE
     GetInstance().textureList.push_back(texture);
     texture = BOGraphicInterface::LoadTexture("Sprites/Tech Tree/Icons/Empty.png");//TEXTTCHANCETODOUBLEPADSIZEINCREASE
     GetInstance().textureList.push_back(texture);
     texture = BOGraphicInterface::LoadTexture("Sprites/Tech Tree/Icons/Empty.png");//TEXTTREGENERATE
     GetInstance().textureList.push_back(texture);
     texture = BOGraphicInterface::LoadTexture("Sprites/Tech Tree/Icons/Empty.png");//TEXTTINCREASESTARTPAD
+    GetInstance().textureList.push_back(texture);
+    texture = BOGraphicInterface::LoadTexture("Sprites/Tech Tree/Icons/Empty.png");//TEXTTGIANTBALL
     GetInstance().textureList.push_back(texture);
 
 	GetInstance().textureList.push_back(NULL);// Lägg in en tom för att fixa nrOfLevels
