@@ -333,9 +333,6 @@ bool BOObjectManager::AddNewBall()
 
 	// Set the direction outwards from the screen center
 	float2 ballDir = float2(0, 0);
-	//ballDir.normalize();
-	//ballPos.x += ballDir.x * 8;
-	//ballPos.y += ballDir.y * 8;
 
 	if (!ball->Initialize(ballPos, int2(15,15), BOTextureManager::GetTexture(TEXBALL), 300.0f, ballDir, windowSize))
 	{
