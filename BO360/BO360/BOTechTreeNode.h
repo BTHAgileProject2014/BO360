@@ -67,7 +67,7 @@ private:
     void SetEffect();
     void ResetEffect();
 
-
+    SDL_Texture* m_icon;
     SDL_Texture* m_active;
     SDL_Texture* m_inactive;
     SDL_Texture* m_adjacentActive;

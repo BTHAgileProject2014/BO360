@@ -12,7 +12,7 @@ BOObjectManager::~BOObjectManager()
 
 bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight, int p_LevelIndex)
 {
-	m_life = 4;
+	m_life = 4 + BOTechTreeEffects::UtilityEffects.extraLifePerLevel;
 	BOHUDManager::SetLives(m_life);
     m_continue = false;
 
@@ -69,6 +69,9 @@ bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight, int p_Le
 
 	// Add an initial ball
 	AddNewBall();
+	m_giantBallCoolDown = 0;
+	m_giantBallActive = false;
+	m_quantumFuelCoolDown = 0;
 
 	// The first ball is a subscriber for debug purposes (space to control ball)
 	BOPublisher::AddSubscriber(m_ballList[0]); 
@@ -218,6 +221,20 @@ void BOObjectManager::Update(double p_deltaTime)
 		    m_keyManager.Update(*m_ballList[i]);
 	    }
 	}
+	//Count down cooldown for giantball after activated
+	if (m_giantBallCoolDown > 0.0)
+	{
+		m_giantBallCoolDown -= p_deltaTime * BOPhysics::GetTimeScale();
+		if (m_giantBallCoolDown < (20 - 8) && m_giantBallActive) // 20 - 8 cooldown minus 8 = duration. 
+		{
+			m_giantBallActive = false;
+			GiantBall(); // Deactivate after 8 seconds
+		}
+	}
+	if (m_quantumFuelCoolDown > 0.0)
+	{
+		m_quantumFuelCoolDown -= p_deltaTime * BOPhysics::GetTimeScale();
+	}
 
 	for (unsigned int i = 0; i < m_ballList.size(); i++)
 	{
@@ -243,7 +260,7 @@ void BOObjectManager::Draw()
 			    m_blockList[i]->Draw();
 		    }
 	    }
-
+		
 		
 	m_particleSystem.DrawParticles();
 
@@ -269,13 +286,15 @@ void BOObjectManager::Handle(PowerUpTypes p_type, bool p_activated)
 				if (BOTechTreeEffects::PUEffects.stackableShield)
 				{
 					if (m_Shield.GetLifes() < BOTechTreeEffects::PUEffects.maxStackShield)
+					{
 						m_Shield.AddLife(1);
+					}
 				}
 			}
 			else
 			{
-			m_Shield.SetActive(true);
-		}
+				m_Shield.SetActive(true);
+			}
 		}
 		break;
 	case PUExtraBall:
@@ -287,8 +306,7 @@ void BOObjectManager::Handle(PowerUpTypes p_type, bool p_activated)
 			if (randomNr <= (100 * BOTechTreeEffects::PUEffects.multiBallMultiplyChance))
 			{
 				AddNewBall();
-		}
-			
+			}
 		}
 		break;
 	case PUFireBall:
@@ -329,16 +347,43 @@ void BOObjectManager::Handle(InputMessages p_inputMessage)
 		{
 			if (m_ballList[i]->IsStuckToPad())
 			{
-			m_ballList[i]->SetStuckToPad(false);
+				m_ballList[i]->SetStuckToPad(false);
+				
 				//m_ballList[i]->SetDirection(float2(m_ballList[i]->GetPosition().x - m_blackHole.GetPosition().x, m_ballList[i]->GetPosition().y - m_blackHole.GetPosition().y));
-	        }
-        }
-    }
+			}
+		}
+	}
 
     if (p_inputMessage.fKey && m_shockwave.Activate())
     {
         ActivateShockwave();
     }
+	// Activate Mega pad with G
+	if (p_inputMessage.gKey) // Lägg till activate mega pad koll om man har speccen
+	{
+		ActivateMegaPad();
+	}
+
+	// Activate Giant ball with h
+	if (p_inputMessage.hKey) // Lägg till activate giant ball koll om man har speccen
+	{
+		if (m_giantBallCoolDown <= 0)
+		{
+			m_giantBallActive = true; // Activate giantball;
+			GiantBall();
+			m_giantBallCoolDown = 20 * BOTechTreeEffects::PUEffects.decreaseCD;
+		}
+	}
+
+	// Activate Quantum fuel
+	if (p_inputMessage.jKey) // lägg till koll om man har abilityn
+	{
+		if (m_quantumFuelCoolDown <= 0)
+		{
+			QuantumFuelActivate();
+			m_quantumFuelCoolDown = 20 * BOTechTreeEffects::PUEffects.decreaseCD;
+		}		
+	}
 
     // Activate Slow time
     if (p_inputMessage.downArrow)
@@ -458,6 +503,12 @@ bool BOObjectManager::LoadBlocksFromMap(int p_index)
                 if (blockDescriptions[i].m_powerUpType == PUNone)
                 {
                     result = block->Initialize(float2(x, y), int2(46, 42), BOTextureManager::GetTexture(TEXHEXSTANDARD), PUNone, score);
+                    block->AddGlow(float2(x, y), int2(46, 42), int2(46, 42), 0, 5, 0.12f, false, BOTextureManager::GetTexture(TEXGLOWSTANDARD));
+                }
+
+                else if (blockDescriptions[i].m_powerUpType == PURandom)
+                {
+                    result = block->Initialize(float2(x, y), int2(46, 42), BOTextureManager::GetTexture(TEXHEXPOWERUP), PURandom, score);
                     block->AddGlow(float2(x, y), int2(46, 42), int2(46, 42), 0, 5, 0.12f, false, BOTextureManager::GetTexture(TEXGLOWSTANDARD));
                 }
 
@@ -761,6 +812,7 @@ void BOObjectManager::CheckBallToBall(int i)
 					if (BOTechTreeEffects::UtilityEffects.ballsCollideFuel)
 					{
 						m_ballList[j]->BouncedOnPad();
+						m_ballList[i]->BouncedOnPad();
 					}
 				}
 			}
@@ -847,6 +899,11 @@ void BOObjectManager::PewPewPew()
 	}
 }
 
+void BOObjectManager::ActivateMegaPad()
+{
+	m_paddle.ActivateMegaPad();
+}
+
 Textures BOObjectManager::GetTexture(PowerUpTypes p_type)
 {
     switch (p_type)
@@ -892,4 +949,30 @@ Textures BOObjectManager::GetTexture(PowerUpTypes p_type)
             return TEXHEXPOWERUP;
         }
     }
+}
+
+void BOObjectManager::GiantBall()
+{
+	if (m_giantBallActive)
+	{
+		for (unsigned int i = 0; i < m_ballList.size(); i++)
+		{
+			m_ballList[i]->SetScale(2.0f);
+		}
+	}
+	else
+	{
+		for (unsigned int i = 0; i < m_ballList.size(); i++)
+		{
+			m_ballList[i]->SetScale(1.0f);
+		}
+	}
+}
+
+void BOObjectManager::QuantumFuelActivate()
+{
+	for (unsigned int i = 0; i < m_ballList.size(); i++)
+	{
+		m_ballList[i]->SetFuel(1.0f);
+	}
 }

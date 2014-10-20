@@ -358,6 +358,9 @@ struct InputMessages
 	bool xKey;
     bool fKey;
     bool tKey;
+	bool gKey;
+	bool hKey;
+	bool jKey;
 	bool escKey;
     bool enterKey;
 };
@@ -426,6 +429,9 @@ enum KeyMessages
 	xKey,
     fKey,
     tKey,
+	gKey,
+	hKey,
+	jKey,
 	escKey
 };
 
@@ -523,7 +529,8 @@ enum PowerUpTypes
 	PUFireBall,
     PUShockwave,
     PUStickyPad,
-    PUSlowTime
+    PUSlowTime,
+    PURandom
 };
 
 struct Block
@@ -615,10 +622,10 @@ enum Textures
     TEXTTTOLTIPFRAME,
 
     TEXTTADJACENTACTIVE,
+    TEXTTCHOSEN,
     TEXTTHIGHLIGHTED,
     TEXTTINACTIVE,
 
-    //Tech Tree for realzzzzzz
     TEXTTSHOCKWAVE,
     TEXTTMULTISPAWN,
     TEXTTDECREASECD,
@@ -654,7 +661,7 @@ enum Textures
 
     TEXTTGIANTBALL,
 
-	/* HÄR UNDER ÄR DET BARA BANOR PLZ!!!*/
+	// Only maps from here on.
 	nrOfLevels,
 	TEXBUTTON1MAP,
 	TEXBUTTON2MAP,
@@ -675,8 +682,8 @@ enum Textures
 	
 	texNR
 
-
 };
+
 enum TTEffects
 {
 

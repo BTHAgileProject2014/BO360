@@ -24,10 +24,17 @@ bool BOBlock::Initialize(float2 p_position, int2 p_size, SDL_Texture* p_sprite, 
 	}
 	m_hp = p_hp;
 	m_powerup = p_powerup;
-	if (m_powerup == PUNone)
-	{
-		m_powerup = SetRandomPowerUp();
-	}
+
+    if (m_powerup == PUNone)
+    {
+        m_powerup = SetRandomPowerUpRandom();
+    }
+
+    else if (m_powerup == PURandom)
+    {
+        m_powerup = SetRandomPowerUpGuaranteed();
+    }
+
 	m_scoreValue = p_scoreValue;
     m_hasGlow = false;
 	return true;
@@ -42,10 +49,17 @@ bool BOBlock::InitializeAnimated(float2 p_position, int2 p_size, int2 p_sourceSi
 
     m_hp = p_hp;
     m_powerup = p_powerup;
+
 	if (m_powerup == PUNone)
 	{
-		m_powerup = SetRandomPowerUp();
+		m_powerup = SetRandomPowerUpRandom();
 	}
+
+    else if (m_powerup == PURandom)
+    {
+        m_powerup = SetRandomPowerUpGuaranteed();
+    }
+
     m_scoreValue = p_scoreValue;
     m_animated = true;
     m_hasGlow = false;
@@ -127,7 +141,7 @@ sphere BOBlock::GetBoundingSphere() const
 	return sphere(m_position, m_radius + 10);
 }
 
-PowerUpTypes BOBlock::SetRandomPowerUp()
+PowerUpTypes BOBlock::SetRandomPowerUpRandom()
 {
 	int spawnPU, powerupType;
 	PowerUpTypes PUType = PUNone;
@@ -175,4 +189,57 @@ PowerUpTypes BOBlock::SetRandomPowerUp()
 		}
 	}
 	return PUType;
+}
+
+PowerUpTypes BOBlock::SetRandomPowerUpGuaranteed()
+{
+    int powerupType;
+    PowerUpTypes PUType = PUNone;
+    powerupType = rand() % 7;
+    switch (powerupType)
+    {
+        case 0:
+        {
+            PUType = PUExtraBall;
+            break;
+        }
+
+        case 1:
+        {
+            PUType = PUBiggerPad;
+            break;
+        }
+
+        case 2:
+        {
+            PUType = PUFireBall;
+            break;
+        }
+
+        case 3:
+        {
+            PUType = PUShield;
+            break;
+        }
+
+        case 4:
+        {
+            PUType = PUShockwave;
+            break;
+        }
+
+        case 5:
+        {
+            PUType = PUSlowTime;
+            break;
+        }
+
+        case 6:
+        {
+            PUType = PUStickyPad;
+            break;
+        }
+    }
+
+    return PUType;
 }
