@@ -28,6 +28,7 @@ bool BOPaddle::Initialize(float2 p_position, int2 p_size, int2 p_sourceSize, int
 	m_megaPadActive = false;
 	m_megaPadTimeElapsed = 0;
 	m_megaPadTimeDuration = 8.0;
+	m_megaPadCoolDown = 0;
 	BOPublisher::AddSubscriber(this);
 	BOPowerUpManager::AddSubscriber(this);
 
@@ -156,15 +157,22 @@ void BOPaddle::Update(double p_deltaTime)
             SetStickyState(false);
         }
     }
-
-    // Animate the fire 
-	m_megaPadTimeElapsed += p_deltaTime * BOPhysics::GetTimeScale();
-	if (m_megaPadTimeElapsed >= m_megaPadTimeDuration && m_megaPadActive)
+    
+	if (m_megaPadActive)
 	{
-		DeactivateMegaPad();
-		m_megaPadTimeElapsed = 0;
+		m_megaPadTimeElapsed += p_deltaTime * BOPhysics::GetTimeScale();
+		if (m_megaPadTimeElapsed >= m_megaPadTimeDuration)
+		{
+			DeactivateMegaPad();
+			m_megaPadTimeElapsed = 0;
+		}
 	}
-
+	if (m_megaPadCoolDown > 0.0)
+	{
+		m_megaPadCoolDown -= p_deltaTime * BOPhysics::GetTimeScale();
+	}
+	
+	// Animate the fire 
     BOAnimatedObject::Animate(p_deltaTime);
 }
 
@@ -274,13 +282,17 @@ double BOPaddle::GetStickyTimer() const
 
 void BOPaddle::ActivateMegaPad()
 {
-	int megapad = 20;
-	m_preMegaSegments = m_segments;
-	m_totalDegrees = (m_segementDegree * megapad);
-	m_segments = megapad;
+	if (m_megaPadCoolDown <= 0)
+	{
+		int megapad = 20;
+		m_preMegaSegments = m_segments;
+		m_totalDegrees = (m_segementDegree * megapad);
+		m_segments = megapad;
 
 
-	m_megaPadActive = true;
+		m_megaPadActive = true;
+		m_megaPadCoolDown = 20 * BOTechTreeEffects::PUEffects.decreaseCD;
+	}	
 }
 
 void BOPaddle::DeactivateMegaPad()

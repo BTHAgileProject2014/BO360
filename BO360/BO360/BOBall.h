@@ -54,6 +54,7 @@ private:
 	bool m_canColide;
 	float m_speed;
 	float2 m_direction;
+	float m_originalRadius;
 	bool m_mouseCheat;
 	int2 m_windowSize;
 	float m_Fuel;

@@ -69,6 +69,9 @@ bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight, int p_Le
 
 	// Add an initial ball
 	AddNewBall();
+	m_giantBallCoolDown = 0;
+	m_giantBallActive = false;
+	m_quantumFuelCoolDown = 0;
 
 	// The first ball is a subscriber for debug purposes (space to control ball)
 	BOPublisher::AddSubscriber(m_ballList[0]); 
@@ -218,6 +221,20 @@ void BOObjectManager::Update(double p_deltaTime)
 		    m_keyManager.Update(*m_ballList[i]);
 	    }
 	}
+	//Count down cooldown for giantball after activated
+	if (m_giantBallCoolDown > 0.0)
+	{
+		m_giantBallCoolDown -= p_deltaTime * BOPhysics::GetTimeScale();
+		if (m_giantBallCoolDown < (20 - 8) && m_giantBallActive) // 20 - 8 cooldown minus 8 = duration. 
+		{
+			m_giantBallActive = false;
+			GiantBall(); // Deactivate after 8 seconds
+		}
+	}
+	if (m_quantumFuelCoolDown > 0.0)
+	{
+		m_quantumFuelCoolDown -= p_deltaTime * BOPhysics::GetTimeScale();
+	}
 
 	for (unsigned int i = 0; i < m_ballList.size(); i++)
 	{
@@ -271,13 +288,13 @@ void BOObjectManager::Handle(PowerUpTypes p_type, bool p_activated)
 					if (m_Shield.GetLifes() < BOTechTreeEffects::PUEffects.maxStackShield)
 					{
 						m_Shield.AddLife(1);
+					}
 				}
-			}
 			}
 			else
 			{
-			m_Shield.SetActive(true);
-		}
+				m_Shield.SetActive(true);
+			}
 		}
 		break;
 	case PUExtraBall:
@@ -289,7 +306,7 @@ void BOObjectManager::Handle(PowerUpTypes p_type, bool p_activated)
 			if (randomNr <= (100 * BOTechTreeEffects::PUEffects.multiBallMultiplyChance))
 			{
 				AddNewBall();
-		}
+			}
 		}
 		break;
 	case PUFireBall:
@@ -345,25 +362,27 @@ void BOObjectManager::Handle(InputMessages p_inputMessage)
 	if (p_inputMessage.gKey) // Lägg till activate mega pad koll om man har speccen
 	{
 		ActivateMegaPad();
-		m_ballList[0]->SetScale(4.0f);
 	}
 
 	// Activate Giant ball with h
 	if (p_inputMessage.hKey) // Lägg till activate giant ball koll om man har speccen
 	{
-		for (unsigned int i = 0; i < m_ballList.size(); i++)
+		if (m_giantBallCoolDown <= 0)
 		{
-			m_ballList[i]->SetScale(2.0f);
+			m_giantBallActive = true; // Activate giantball;
+			GiantBall();
+			m_giantBallCoolDown = 20 * BOTechTreeEffects::PUEffects.decreaseCD;
 		}
 	}
 
 	// Activate Quantum fuel
 	if (p_inputMessage.jKey) // lägg till koll om man har abilityn
 	{
-		for (unsigned int i = 0; i < m_ballList.size(); i++)
+		if (m_quantumFuelCoolDown <= 0)
 		{
-			m_ballList[i]->SetFuel(1.0f);
-		}
+			QuantumFuelActivate();
+			m_quantumFuelCoolDown = 20 * BOTechTreeEffects::PUEffects.decreaseCD;
+		}		
 	}
 
     // Activate Slow time
@@ -924,4 +943,30 @@ Textures BOObjectManager::GetTexture(PowerUpTypes p_type)
             return TEXHEXPOWERUP;
         }
     }
+}
+
+void BOObjectManager::GiantBall()
+{
+	if (m_giantBallActive)
+	{
+		for (unsigned int i = 0; i < m_ballList.size(); i++)
+		{
+			m_ballList[i]->SetScale(2.0f);
+		}
+	}
+	else
+	{
+		for (unsigned int i = 0; i < m_ballList.size(); i++)
+		{
+			m_ballList[i]->SetScale(1.0f);
+		}
+	}
+}
+
+void BOObjectManager::QuantumFuelActivate()
+{
+	for (unsigned int i = 0; i < m_ballList.size(); i++)
+	{
+		m_ballList[i]->SetFuel(1.0f);
+	}
 }

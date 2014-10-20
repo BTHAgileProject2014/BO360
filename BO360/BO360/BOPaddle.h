@@ -58,6 +58,7 @@ private:
 	bool m_megaPadActive;
 	double m_megaPadTimeElapsed;
 	double m_megaPadTimeDuration;
+	double m_megaPadCoolDown;
 
     SDL_Texture* m_stickyGlow;
 };

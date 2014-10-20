@@ -58,10 +58,13 @@ private:
 	void BallNewlyLaunched(BOBall* ball);
     void PewPewPew();
 	void ActivateMegaPad();
+	void GiantBall();
+	void QuantumFuelActivate();
     Textures GetTexture(PowerUpTypes p_type);
 
 	int m_life;
     bool m_continue;
+	bool m_giantBallActive;
 
 	BOMapLoader m_mapLoader;
 	BOBackground m_background;
@@ -75,6 +78,9 @@ private:
     BOSlowTime m_slowTime;
     BOShockwave m_shockwave;
     BOBoss* m_boss;
+
+	double m_giantBallCoolDown;
+	double m_quantumFuelCoolDown;
 
 	double m_SecondsPerParticle; // Should be moved into objects that use it
 };

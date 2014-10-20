@@ -43,6 +43,7 @@ protected:
     double m_rotation;
 	SDL_Texture* m_sprite;
 	float m_radius;
+	float m_originalRadius;
 	float m_scale;
     Uint8 m_opacity;
 };

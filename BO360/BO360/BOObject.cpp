@@ -19,6 +19,7 @@ bool BOObject::Initialize(float2 p_position, int2 p_size, float p_scale, SDL_Tex
     m_rotation = 0.0;
 	SetSize(p_size);
     m_opacity = 255;
+	m_originalRadius = m_radius;
 
 	// Load texture.
 	m_sprite = p_sprite;
@@ -109,5 +110,5 @@ void BOObject::SetOpacity(Uint8 p_opacity)
 void BOObject::SetScale(float p_scale)
 {
 	m_scale = p_scale;
-	m_radius = m_radius * (m_scale / 2);
+	m_radius = m_originalRadius * m_scale;
 }
