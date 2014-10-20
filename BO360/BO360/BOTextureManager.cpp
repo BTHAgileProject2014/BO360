@@ -375,6 +375,30 @@ void BOTextureManager::LoadTexture(std::string p_theme)
     }
     GetInstance().textureList.push_back(texture);
 
+    texture = BOGraphicInterface::LoadTexture("Sprites/HUD/MegaPad.png");
+    if (!texture)
+    {
+        std::cout << "Mega pad bar texture failed to load!" << std::endl;
+        std::cin.get();
+    }
+    GetInstance().textureList.push_back(texture);
+
+    texture = BOGraphicInterface::LoadTexture("Sprites/HUD/QuantumFuel.png");
+    if (!texture)
+    {
+        std::cout << "Quantum fuel bar texture failed to load!" << std::endl;
+        std::cin.get();
+    }
+    GetInstance().textureList.push_back(texture);
+
+    texture = BOGraphicInterface::LoadTexture("Sprites/HUD/GiantBall.png");
+    if (!texture)
+    {
+        std::cout << "Giant ball bar texture failed to load!" << std::endl;
+        std::cin.get();
+    }
+    GetInstance().textureList.push_back(texture);
+
 	// Menu.
 	texture = BOGraphicInterface::LoadTexture("Sprites/Menu/MenuEdge.png");
     if (!texture)
