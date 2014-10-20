@@ -600,6 +600,7 @@ enum Textures
 	TEXHUDALIVE,
     TEXHUDDEAD,
     TEXHUDCORE,
+    TEXHUDBAR,
 
     // Menu.
 	TEXMENUEDGE,
