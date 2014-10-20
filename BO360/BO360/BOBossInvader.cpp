@@ -18,7 +18,7 @@ void BOBossInvader::BuildBoss()
 
     m_mainSegment.LoadSegmentFromFile("Bosses/testboss.bom");
     std::vector<BOBlock*> underlyingBlockList = m_mainSegment.GetBlockManagerRef().GetUnderlyingBlockList();
-    for (int i = 0; i < underlyingBlockList.size(); i++)
+    for (unsigned int i = 0; i < underlyingBlockList.size(); i++)
     {
         if (underlyingBlockList[i]->GetHp() == 2)
         {
@@ -60,11 +60,11 @@ void BOBossInvader::Update(double p_dt)
         }
 
         // Move
-        m_position.y = -40 + 10 * sin(m_deg);
+        m_position.y = -40 + 10 * sinf((float)m_deg);
 
 
         // Update blocks to respawn
-        for (int i = 0; i < m_blocksToRespawn.size(); i++)
+        for (unsigned int i = 0; i < m_blocksToRespawn.size(); i++)
         {
             m_blocksToRespawn[i].timeLeft -= p_dt;
             if (m_blocksToRespawn[i].timeLeft < 0)
@@ -109,7 +109,7 @@ bool BOBossInvader::KillBlock(BOBlock* p_block)
         }
     }
 
-    for (int i = 0; i < m_drones.size(); i++)
+    for (unsigned int i = 0; i < m_drones.size(); i++)
     {
         result = KillBlockInSegment(p_block, &m_drones[i]);
         if (result)
@@ -140,7 +140,7 @@ void BOBossInvader::Draw()
 
     BOGraphicInterface::Offset(m_position);
 
-    for (int i = 0; i < m_drones.size(); i++)
+    for (unsigned int i = 0; i < m_drones.size(); i++)
     {
         m_drones[i].Draw();
     }
@@ -155,7 +155,7 @@ bool BOBossInvader::CheckCollisions(BOBall* const p_ball, float2& p_newDirOut, B
         return true;
     }
 
-    for (int i = 0; i < m_drones.size(); i++)
+    for (unsigned int i = 0; i < m_drones.size(); i++)
     {
         if (m_drones[i].CheckCollisions(p_ball, m_position, p_newDirOut, p_hitBlockOut))
         {
@@ -178,7 +178,7 @@ void BOBossInvader::BuildDrones()
         droneBlocks.push_back(core);
         BOBossSegment segment;
         segment.InitializeWithBlocklist(droneBlocks);
-        float2 segmentPos = float2(i * 100, 500);
+        float2 segmentPos = float2((float)i * 100, 500);
         segment.SetPosition(segmentPos);
         m_drones.push_back(segment);
         droneBlocks.clear();
@@ -198,12 +198,12 @@ void BOBossInvader::UpdateDrones(double p_dt)
     }
     else
     {
-        float2 basePos = float2(BOGraphicInterface::GetWindowSize().x / 2, BOGraphicInterface::GetWindowSize().y / 2);
+        float2 basePos = float2((float)BOGraphicInterface::GetWindowSize().x / 2, (float)BOGraphicInterface::GetWindowSize().y / 2);
         double offset = (2 * PI) / droneSize;
         for (int i = 0; i < droneSize; i++)
         {
             double myRotation = (i * offset) + m_deg / 10;
-            float2 pos = basePos + float2(500 * cos(myRotation), 400 * sin(myRotation)) - m_position;
+            float2 pos = basePos + float2(500 * cosf((float)myRotation), 400 * sinf((float)myRotation)) - m_position;
             m_drones[i].SetPosition(pos);
             m_drones[i].Update(p_dt);
         }
@@ -213,7 +213,7 @@ void BOBossInvader::UpdateDrones(double p_dt)
 bool BOBossInvader::BlockIsKeyBlock(BOBlock* p_block)
 {
     bool result = false;
-    for (int i = 0; i < m_keyBlocks.size(); i++)
+    for (unsigned int i = 0; i < m_keyBlocks.size(); i++)
     {
         if (m_keyBlocks[i] == p_block)
         {
@@ -226,7 +226,7 @@ bool BOBossInvader::BlockIsKeyBlock(BOBlock* p_block)
 
 bool BOBossInvader::IsDead() const
 {
-    for (int i = 0; i < m_keyBlocks.size(); i++)
+    for (unsigned int i = 0; i < m_keyBlocks.size(); i++)
     {
         // If any live key blocks are found, return false
         if (!m_keyBlocks[i]->GetDead())
