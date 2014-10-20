@@ -251,7 +251,7 @@ void BOObjectManager::Update(double p_deltaTime)
 
 void BOObjectManager::Draw()
 {
-	m_background.Draw();
+	m_background.DrawEntireSprite();
     m_shockwave.DrawWave();
 	m_blackHole.DrawRotating();
 	m_keyManager.Draw();
