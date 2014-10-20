@@ -696,7 +696,7 @@ void BOTechTreeManager::HandleToolTips(BOTechTreeNode* p_node)
         p_node->SetTexture(BOTextureManager::GetTexture(TEXTTINCREASEMAXPADSIZE));
         break;
     case ChanceDoublePadSizeIncrease:
-        p_node->SetToolTip("Gives a chance to get double effect of Bigger Pad power up. Adds a 33% chance.", "Chance To Get More Balls");
+        p_node->SetToolTip("Gives a chance to get double effect of Bigger Pad power up. Adds a 33% chance.", "Extra Segments Chance");
         p_node->SetTexture(BOTextureManager::GetTexture(TEXTTCHANCETODOUBLEPADSIZEINCREASE));
         break;
     case IncreaseMaxPadSize2:
@@ -756,7 +756,7 @@ void BOTechTreeManager::HandleToolTips(BOTechTreeNode* p_node)
         p_node->SetTexture(BOTextureManager::GetTexture(TEXTTINCREASESTARTPADSIZE));
         break;
     case ChanceDoublePadSizeIncrease2:
-        p_node->SetToolTip("Gives a chance to get double effect of Bigger Pad power up. Adds a 33% chance.", "Extra Segments");
+        p_node->SetToolTip("Gives a chance to get double effect of Bigger Pad power up. Adds a 33% chance.", "Extra Segments Chance");
         p_node->SetTexture(BOTextureManager::GetTexture(TEXTTCHANCETODOUBLEPADSIZEINCREASE));
         break;
     case GiantBall:

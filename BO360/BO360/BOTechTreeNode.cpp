@@ -27,7 +27,8 @@ bool BOTechTreeNode::Initialize(float2 p_pos, int2 p_size, std::string p_tooltip
     m_price = 0;
     m_effect = 0;
 
-    m_active = BOTextureManager::GetTexture(TEXTTSHOCKWAVE);
+    m_icon = BOTextureManager::GetTexture(TEXTTINACTIVE);
+    m_active = BOTextureManager::GetTexture(TEXTTCHOSEN);
     m_inactive = BOTextureManager::GetTexture(TEXTTINACTIVE);
     m_adjacentActive = BOTextureManager::GetTexture(TEXTTADJACENTACTIVE);
     m_highlighted = BOTextureManager::GetTexture(TEXTTHIGHLIGHTED);
@@ -85,6 +86,16 @@ void BOTechTreeNode::Draw()
         m_tooltipText.Draw();
         m_tooltipHeading.Draw();
     }
+
+    int opacity = 255;
+
+    if (!m_isActive && !m_isAdjacentActive && !m_hoveringOver)
+    {
+        opacity = 150;
+    }
+
+    BOGraphicInterface::Draw(m_icon, m_position, m_size, opacity);
+
     m_priceText.Draw();
 }
 float2 BOTechTreeNode::GetPosition()const
@@ -228,5 +239,5 @@ void BOTechTreeNode::SetHover(bool p_active)
 
 void BOTechTreeNode::SetTexture(SDL_Texture* p_texture)
 {
-    m_active = p_texture;
+    m_icon = p_texture;
 }

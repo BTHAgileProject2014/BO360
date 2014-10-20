@@ -32,7 +32,8 @@ public:
     void Draw();
 
 protected:
-	PowerUpTypes SetRandomPowerUp();
+	PowerUpTypes SetRandomPowerUpRandom();
+    PowerUpTypes SetRandomPowerUpGuaranteed();
 
     bool m_animated;
     bool m_hasGlow;
