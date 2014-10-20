@@ -30,6 +30,10 @@ public:
 
     bool GetStickyState()const;
     void SetStickyState(bool p_active);
+    void SetStickyTimer(double p_time);
+    double GetStickyTimer() const;
+    double GetStickyTimeLeft() const;
+    bool StickyGotRemoved() const;    
 
 	float2 GetBallSpawnPosition();
     float2 GetBallStuckPosition(float angle);
@@ -44,6 +48,9 @@ private:
 	double m_totalDegrees;
 	double m_segementDegree;
     bool m_isSticky;
+    bool m_isPrevSticky;
+    double m_stickyMaxTimer;
+    double m_stickyCurrentTimer;
 
     SDL_Texture* m_stickyGlow;
 };

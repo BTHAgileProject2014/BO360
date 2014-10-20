@@ -147,7 +147,7 @@ PowerUpTypes BOBlock::SetRandomPowerUpRandom()
 	PowerUpTypes PUType = PUNone;
 	spawnPU = rand() % 100;		// Random from 0 to 99
 	powerupType = rand() % 7;
-	if (spawnPU <= 1) // If u get 0 as random block get a random powerup
+	if (spawnPU <= 1) // If u get 0 or 1, get a random powerup
 	{
 		switch (powerupType)
 		{
