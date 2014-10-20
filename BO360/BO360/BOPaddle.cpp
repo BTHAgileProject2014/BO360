@@ -13,6 +13,7 @@ BOPaddle::~BOPaddle()
 bool BOPaddle::Initialize(float2 p_position, int2 p_size, int2 p_sourceSize, int p_frame, int p_numberOfFrames, double p_timePerFrame, bool p_hardReset, SDL_Texture* p_sprite)
 {
     m_isSticky = false;
+    m_isPrevSticky = false;
 	m_rotation = 0.0;
 	m_totalDegrees = 21.2;
 	m_segementDegree = m_totalDegrees;
@@ -122,6 +123,8 @@ void BOPaddle::Handle(PowerUpTypes p_type, bool p_activated)
 
 void BOPaddle::Update(double p_deltaTime)
 {
+    m_isPrevSticky = m_isSticky;
+
     // Move the pad left or right
 	if (m_movingLeft)
 	{
@@ -149,6 +152,7 @@ void BOPaddle::Update(double p_deltaTime)
         m_stickyCurrentTimer -= p_deltaTime;
         if (m_stickyCurrentTimer <= 0)
         {
+            m_stickyCurrentTimer = 0;
             SetStickyState(false);
         }
     }
@@ -289,4 +293,14 @@ void BOPaddle::DeactivateMegaPad()
 		m_megaPadActive = false;
 	}
 	
+}
+
+double BOPaddle::GetStickyTimeLeft() const
+{
+    return m_stickyCurrentTimer;
+}
+
+bool BOPaddle::StickyGotRemoved() const
+{
+    return (!m_isSticky && m_isPrevSticky);
 }
