@@ -728,11 +728,11 @@ void BOTechTreeManager::HandleToolTips(BOTechTreeNode* p_node)
         p_node->SetTexture(BOTextureManager::GetTexture(TEXTTSLOWTIME));
         break;
     case PowerUpBoost1:
-        p_node->SetToolTip("Gives a chance to get double effect of Bigger Pad and MultiBall power ups. Adds a 33% chance.", "More Segments And Balls");
+        p_node->SetToolTip("Gives a chance to get double effect of Bigger Pad and MultiBall power ups. Adds a 33% chance.", "Power Up Boost 1");
         p_node->SetTexture(BOTextureManager::GetTexture(TEXTTPOWERUPBOOST1));
         break;
     case PowerUpBoost2:
-        p_node->SetToolTip("Increases the slow duration of Slow Time by 3 and increases the damage of Fireball by 3.", "Power Up Upgrade");
+        p_node->SetToolTip("Increases the slow duration of Slow Time by 3 and increases the damage of Fireball by 3.", "Power Up Boost 2");
         p_node->SetTexture(BOTextureManager::GetTexture(TEXTTPOWERUPBOOST2));
         break;
     case MegaPad:
@@ -772,7 +772,7 @@ void BOTechTreeManager::HandleToolTips(BOTechTreeNode* p_node)
         p_node->SetTexture(BOTextureManager::GetTexture(TEXTTMULTIBALL));
         break;
     case SuperTank:
-        p_node->SetToolTip("Makes it so that balls doesn't lose fuel when bouncing on a block.", "Resistant Tank");
+        p_node->SetToolTip("Bouncing on blocks refills a balls fuel tanks", "Bouncy Surfaces");
         p_node->SetTexture(BOTextureManager::GetTexture(TEXTTSUPERTANK));
         break;
     case DoubleMultiBall2:
