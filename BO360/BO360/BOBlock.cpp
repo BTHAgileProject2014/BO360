@@ -2,7 +2,7 @@
 
 BOBlock::BOBlock()
 {
-	dead = false;
+	m_dead = false;
     m_animated = false;
 }
 
@@ -23,10 +23,11 @@ bool BOBlock::Initialize(float2 p_position, int2 p_size, SDL_Texture* p_sprite, 
 		return false;
 	}
 	m_hp = p_hp;
+    m_originalHp = p_hp;
 	m_powerup = p_powerup;
 	if (m_powerup == PUNone)
 	{
-		m_powerup = SetRandomPowerUp();
+	    SetRandomPowerUp();
 	}
 	m_scoreValue = p_scoreValue;
     m_hasGlow = false;
@@ -41,10 +42,11 @@ bool BOBlock::InitializeAnimated(float2 p_position, int2 p_size, int2 p_sourceSi
     }
 
     m_hp = p_hp;
+    m_originalHp = p_hp;
     m_powerup = p_powerup;
 	if (m_powerup == PUNone)
 	{
-		m_powerup = SetRandomPowerUp();
+		SetRandomPowerUp();
 	}
     m_scoreValue = p_scoreValue;
     m_animated = true;
@@ -69,12 +71,20 @@ hexagon BOBlock::GetBoundingHexagon() const
 
 void BOBlock::SetDead()
 {
-	dead = true;
+    m_dead = true;
 }
 
 bool BOBlock::GetDead()
 {
-	return dead;
+    return m_dead;
+}
+
+void BOBlock::Revive()
+{
+    m_hp = m_originalHp;
+    m_dead = false;
+    m_powerup = PUNone;
+    SetRandomPowerUp();
 }
 
 PowerUpTypes BOBlock::GetPowerUp()
@@ -106,11 +116,14 @@ bool BOBlock::IsAnimated() const
 
 void BOBlock::Draw()
 {
-    if (m_hasGlow)
+    if (!m_dead)
     {
-        m_glow.Draw();
+        if (m_hasGlow)
+        {
+            m_glow.Draw();
+        }
+        m_animated ? BOAnimatedObject::Draw() : BOObject::Draw();
     }
-    m_animated ? BOAnimatedObject::Draw() : BOObject::Draw();
 }
 
 void BOBlock::SetPosition(float2 p_position)
@@ -127,7 +140,7 @@ sphere BOBlock::GetBoundingSphere() const
 	return sphere(m_position, m_radius + 10);
 }
 
-PowerUpTypes BOBlock::SetRandomPowerUp()
+void BOBlock::SetRandomPowerUp()
 {
 	int spawnPU, powerupType;
 	PowerUpTypes PUType = PUNone;
@@ -174,5 +187,10 @@ PowerUpTypes BOBlock::SetRandomPowerUp()
 		}
 		}
 	}
-	return PUType;
+	m_powerup = PUType;
+}
+
+int BOBlock::GetHp() const
+{
+    return m_hp;
 }

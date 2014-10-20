@@ -26,7 +26,7 @@
 #include "BOSlowTime.h"
 #include "BOShockwave.h"
 #include "BOBoss.h"
-#include "BOTestBoss.h"
+#include "BOBossInvader.h"
 
 class BOObjectManager : public BOComponent, public BOPUSubscriber ,public BOSubscriber
 {

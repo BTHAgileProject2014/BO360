@@ -21,6 +21,7 @@ public:
     void SetPosition(float2 p_position);
 	void SetDead();
 	bool GetDead();
+    virtual void Revive();
 
 	virtual bool Hit(int p_damage); // Returns true if dead
 
@@ -28,17 +29,19 @@ public:
 
 	int GetScore();
     bool IsAnimated() const;
+    int GetHp() const;
 
     void Draw();
+    void SetRandomPowerUp();
 
 protected:
-	PowerUpTypes SetRandomPowerUp();
 
     bool m_animated;
     bool m_hasGlow;
 	int m_scoreValue;
 	int m_hp;
-	bool dead;
+    int m_originalHp;
+	bool m_dead;
 	PowerUpTypes m_powerup;
     BOAnimatedObject m_glow;
 };

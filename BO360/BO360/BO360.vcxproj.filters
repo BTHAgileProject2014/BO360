@@ -186,11 +186,14 @@
     <ClCompile Include="BOBlockManager.cpp">
       <Filter>Source Files\Boss</Filter>
     </ClCompile>
-    <ClCompile Include="BOTestBoss.cpp">
-      <Filter>Source Files\Boss</Filter>
-    </ClCompile>
     <ClCompile Include="BOGlobals.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="BOBossSegment.cpp">
+      <Filter>Source Files\Boss</Filter>
+    </ClCompile>
+    <ClCompile Include="BOBossInvader.cpp">
+      <Filter>Source Files\Boss</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -338,11 +341,14 @@
     <ClInclude Include="BOBlockManager.h">
       <Filter>Header Files\Boss</Filter>
     </ClInclude>
-    <ClInclude Include="BOTestBoss.h">
-      <Filter>Header Files\Boss</Filter>
-    </ClInclude>
     <ClInclude Include="BOGlobals.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BOBossSegment.h">
+      <Filter>Header Files\Boss</Filter>
+    </ClInclude>
+    <ClInclude Include="BOBossInvader.h">
+      <Filter>Header Files\Boss</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -31,6 +31,7 @@ public:
 	static SDL_Texture* DrawTextToTexture(std::string p_text, int3 p_textColor, int2* size, int p_fontSize, int p_maxWidth);
 	static void DestroyTexture(SDL_Texture* p_texture);
     static void Offset(float2 p_offset);
+    static void SetOffset(float2 p_offset);
 
 private:
 	BOGraphicInterface() {};

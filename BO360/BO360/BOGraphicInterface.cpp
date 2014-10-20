@@ -218,4 +218,8 @@ void BOGraphicInterface::Offset(float2 p_offset)
     float2 currOffset = GetInstance().m_offset;
     GetInstance().m_offset = p_offset + currOffset;
 }
+void BOGraphicInterface::SetOffset(float2 p_offset)
+{
+    GetInstance().m_offset = p_offset;
+}
 
