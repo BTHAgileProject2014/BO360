@@ -199,10 +199,10 @@ void BOStateManager::Shutdown()
 
 int BOStateManager::GetLevelIndex()
 {
-	return m_levelSelect.GetLevelIndex();
+	return m_levelSelect.GetLevelIndex() - 2;
 }
 
 void BOStateManager::SetButtonActionLevel(int p_buttonIndex, ButtonAction p_action)
 {
-	m_levelSelect.SetButtonAction(p_buttonIndex, p_action);
+	m_levelSelect.SetButtonAction(p_buttonIndex + 2, p_action);
 }
