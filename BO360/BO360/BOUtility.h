@@ -632,6 +632,7 @@ enum Textures
 	TEXLOCK,
 
     // Tech tree.
+	TEXTTBG,
 	TEXDEBUGDIR,
     TEXTTTOLTIPFRAME,
 

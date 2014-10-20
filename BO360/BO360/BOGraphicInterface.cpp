@@ -114,6 +114,24 @@ void BOGraphicInterface::Draw(SDL_Texture* p_texture, float2 p_position, int2 p_
     
 }
 
+void BOGraphicInterface::DrawExEntireSprite(SDL_Texture* p_texture, int4 p_destination, double p_rotation, int2 p_rotationSource, Uint8 p_opacity)
+{
+	float2 offset = GetInstance().m_offset;
+
+	SDL_Rect destionation;
+	destionation.x = (int)(p_destination.x + offset.x);
+	destionation.y = (int)(p_destination.y + offset.y);
+	destionation.w = p_destination.z;
+	destionation.h = p_destination.w;
+
+	SDL_Point rotationSource;
+	rotationSource.x = p_rotationSource.x;
+	rotationSource.y = p_rotationSource.y;
+	SDL_SetTextureAlphaMod(p_texture, p_opacity);
+	SDL_RenderCopyEx(GetInstance().m_renderer, p_texture, NULL, &destionation, p_rotation, &rotationSource, SDL_FLIP_NONE);
+	SDL_SetTextureAlphaMod(p_texture, 255);
+}
+
 void BOGraphicInterface::Clear()
 {
 	SDL_RenderClear(GetInstance().m_renderer);
