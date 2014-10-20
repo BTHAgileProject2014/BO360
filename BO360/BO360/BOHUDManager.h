@@ -5,6 +5,7 @@
 #include "BOObject.h"
 #include "BOGraphicInterface.h"
 #include "BOTextManager.h"
+#include "BOHUDActionBar.h"
 
 class BOHUDManager
 {
@@ -53,6 +54,8 @@ private:
     static BOObject m_slowtimeSprite;
     static bool m_slowtimeEnabled;
     static BODrawableText m_slowtimeText;
+
+    static BOHUDActionBar m_actionBar;
 
 };
 #endif

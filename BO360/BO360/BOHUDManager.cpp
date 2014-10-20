@@ -27,6 +27,8 @@ BOObject BOHUDManager::m_slowtimeSprite;
 bool BOHUDManager::m_slowtimeEnabled;
 BODrawableText BOHUDManager::m_slowtimeText;
 
+BOHUDActionBar BOHUDManager::m_actionBar;
+
 
 BOHUDManager::BOHUDManager()
 {
@@ -103,6 +105,9 @@ bool BOHUDManager::Initialize()
     m_slowtimeSprite.SetPosition(float2(m_slowtimeAnchor.x + tempSize.x / 2.0f + 20, m_slowtimeAnchor.y - tempSize.y / 2.0f));
     m_slowtimeText.SetPosition(float2(m_slowtimeAnchor.x + tempSize.x / 2.0f + 20, m_slowtimeAnchor.y - tempSize.y - tempSizeSprite.y/2.0f));
 
+    // Initialize Action Bar
+    m_actionBar.Initialize(float2(bounds.x / 2, bounds.y / 2));
+
 	return true;
 }
 
@@ -121,6 +126,8 @@ void BOHUDManager::Shutdown()
     m_slowtimeSprite.Shutdown();
     m_shockwaveText.Shutdown();
     m_slowtimeText.Shutdown();
+
+    m_actionBar.Shutdown();
 }
 
 void BOHUDManager::Draw()
@@ -165,6 +172,8 @@ void BOHUDManager::Draw()
         m_slowtimeSprite.Draw();
         m_slowtimeText.Draw();
     }
+
+    m_actionBar.Draw();
 }
 
 void BOHUDManager::ModifyState(bool p_lives, bool p_score, bool p_level, bool p_keys, bool p_shockwave, bool p_slowtime)

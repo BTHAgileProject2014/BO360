@@ -401,6 +401,10 @@ void BOTextureManager::LoadTexture(std::string p_theme)
     }
 	GetInstance().textureList.push_back(texture);
 
+    // Action bar
+    texture = BOGraphicInterface::LoadTexture("Sprites/PlaceHolderPNG/ABBackground.png");//ACTIONBARBG
+    GetInstance().textureList.push_back(texture);
+
     // Tech Tree
 	texture = BOGraphicInterface::LoadTexture("Sprites/PlaceHolderPNG/DEBUGDIR.png");
 	GetInstance().textureList.push_back(texture);

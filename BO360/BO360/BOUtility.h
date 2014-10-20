@@ -585,6 +585,10 @@ enum Textures
 	TEXPADSEG,
     TEXKEY,
 	TEXLOCK,
+
+    // ActionBar
+    TEXACTIONBARBUTTONBG,
+
     //Tech tree
 	TEXDEBUGDIR,
     TEXTTTOLTIPFRAME,
@@ -629,7 +633,6 @@ enum Textures
     TEXTTINCREASESTARTPAD,
 
     TEXTTGIANTBALL,
-
 
 	/* HÄR UNDER ÄR DET BARA BANOR PLZ!!!*/
 	nrOfLevels,

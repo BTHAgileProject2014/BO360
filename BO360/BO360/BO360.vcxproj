@@ -100,7 +100,11 @@
     <ClInclude Include="BODrawableText.h" />
     <ClInclude Include="BOGlobals.h" />
     <ClInclude Include="BOGraphicInterface.h" />
+    <ClInclude Include="BOHUDActionBar.h" />
+    <ClInclude Include="BOHUDActionBarButton.h" />
     <ClInclude Include="BOHUDManager.h" />
+    <ClInclude Include="BOHUDSprite.h" />
+    <ClInclude Include="BOHUDText.h" />
     <ClInclude Include="BOInput.h" />
     <ClInclude Include="BOKeyManager.h" />
     <ClInclude Include="BOLevelManager.h" />
@@ -135,6 +139,7 @@
     <ClInclude Include="BOUtility.h" />
     <ClInclude Include="BOWindow.h" />
     <ClInclude Include="BOButton.h" />
+    <ClInclude Include="BOHUDElement.h" />
     <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>
@@ -151,7 +156,11 @@
     <ClCompile Include="BODrawableText.cpp" />
     <ClCompile Include="BOGlobals.cpp" />
     <ClCompile Include="BOGraphicInterface.cpp" />
+    <ClCompile Include="BOHUDActionBar.cpp" />
+    <ClCompile Include="BOHUDActionBarButton.cpp" />
     <ClCompile Include="BOHUDManager.cpp" />
+    <ClCompile Include="BOHUDSprite.cpp" />
+    <ClCompile Include="BOHUDText.cpp" />
     <ClCompile Include="BOInput.cpp" />
     <ClCompile Include="BOKeyManager.cpp" />
     <ClCompile Include="BOLevelManager.cpp" />
@@ -186,6 +195,7 @@
     <ClCompile Include="BOTimer.cpp" />
     <ClCompile Include="BOWindow.cpp" />
     <ClCompile Include="BOButton.cpp" />
+    <ClCompile Include="BOHUDElement.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Maps\Demo.bom" />
