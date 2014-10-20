@@ -195,6 +195,9 @@
     <ClCompile Include="BOBossInvader.cpp">
       <Filter>Source Files\Boss</Filter>
     </ClCompile>
+    <ClCompile Include="BOGlobals.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BOSystem.h">
@@ -349,6 +352,9 @@
     </ClInclude>
     <ClInclude Include="BOBossInvader.h">
       <Filter>Header Files\Boss</Filter>
+    </ClInclude>
+    <ClInclude Include="BOGlobals.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

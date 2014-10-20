@@ -32,7 +32,8 @@ public:
     int GetHp() const;
 
     void Draw();
-    void SetRandomPowerUp();
+    void SetRandomPowerUpRandom();
+    void SetRandomPowerUpGuaranteed();
 
 protected:
 

@@ -72,8 +72,8 @@ void BOGraphicInterface::DrawEx(SDL_Texture* p_texture, int4 p_source, int4 p_de
 	source.h = p_source.w;
 
 	SDL_Rect destionation;
-	destionation.x = p_destination.x + offset.x;
-    destionation.y = p_destination.y + offset.y;
+	destionation.x = (int)(p_destination.x + offset.x);
+    destionation.y = (int)(p_destination.y + offset.y);
 	destionation.w = p_destination.z;
 	destionation.h = p_destination.w;
 
@@ -89,8 +89,8 @@ void BOGraphicInterface::Draw(SDL_Texture* p_texture, float2 p_position, int2 p_
 {
     float2 offset = GetInstance().m_offset;
 	SDL_Rect source, target;
-	target.x = (int)p_position.x - (p_size.x / 2) + offset.x;
-	target.y = (int)p_position.y - (p_size.y / 2) + offset.y;
+	target.x = (int)(p_position.x - (p_size.x / 2) + offset.x);
+	target.y = (int)(p_position.y - (p_size.y / 2) + offset.y);
 	target.w = p_size.x;
 	target.h = p_size.y;
 	source.x = p_source.x;

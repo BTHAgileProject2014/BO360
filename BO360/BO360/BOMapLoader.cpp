@@ -80,7 +80,7 @@ bool BOMapLoader::LoadMap(int p_index)
 	{
 	case(0) :
 	{
-		fileName.append("map15.bom");
+		fileName.append("map1.bom");
 		break;
 	}
 	case(1) :
@@ -320,7 +320,7 @@ std::vector<BOBlock*> BOMapLoader::GetLoadedBOBlocks()
                 boBlocks.push_back(block);
 
 				break;
-			}
+	}
 
             case(ARMORED) :
             {

@@ -25,10 +25,17 @@ bool BOBlock::Initialize(float2 p_position, int2 p_size, SDL_Texture* p_sprite, 
 	m_hp = p_hp;
     m_originalHp = p_hp;
 	m_powerup = p_powerup;
+
 	if (m_powerup == PUNone)
 	{
-	    SetRandomPowerUp();
+        SetRandomPowerUpRandom();
 	}
+
+    else if (m_powerup == PURandom)
+    {
+        SetRandomPowerUpGuaranteed();
+    }
+
 	m_scoreValue = p_scoreValue;
     m_hasGlow = false;
 	return true;
@@ -44,10 +51,17 @@ bool BOBlock::InitializeAnimated(float2 p_position, int2 p_size, int2 p_sourceSi
     m_hp = p_hp;
     m_originalHp = p_hp;
     m_powerup = p_powerup;
+
 	if (m_powerup == PUNone)
 	{
-		SetRandomPowerUp();
+		SetRandomPowerUpRandom();
 	}
+
+    else if (m_powerup == PURandom)
+    {
+        SetRandomPowerUpGuaranteed();
+    }
+
     m_scoreValue = p_scoreValue;
     m_animated = true;
     m_hasGlow = false;
@@ -84,7 +98,7 @@ void BOBlock::Revive()
     m_hp = m_originalHp;
     m_dead = false;
     m_powerup = PUNone;
-    SetRandomPowerUp();
+    SetRandomPowerUpRandom();
 }
 
 PowerUpTypes BOBlock::GetPowerUp()
@@ -118,12 +132,12 @@ void BOBlock::Draw()
 {
     if (!m_dead)
     {
-        if (m_hasGlow)
-        {
-            m_glow.Draw();
-        }
-        m_animated ? BOAnimatedObject::Draw() : BOObject::Draw();
+    if (m_hasGlow)
+    {
+        m_glow.Draw();
     }
+    m_animated ? BOAnimatedObject::Draw() : BOObject::Draw();
+}
 }
 
 void BOBlock::SetPosition(float2 p_position)
@@ -140,13 +154,13 @@ sphere BOBlock::GetBoundingSphere() const
 	return sphere(m_position, m_radius + 10);
 }
 
-void BOBlock::SetRandomPowerUp()
+void BOBlock::SetRandomPowerUpRandom()
 {
 	int spawnPU, powerupType;
 	PowerUpTypes PUType = PUNone;
 	spawnPU = rand() % 100;		// Random from 0 to 99
 	powerupType = rand() % 7;
-	if (spawnPU <= 1) // If u get 0 as random block get a random powerup
+	if (spawnPU <= 1) // If u get 0 or 1, get a random powerup
 	{
 		switch (powerupType)
 		{
@@ -188,6 +202,59 @@ void BOBlock::SetRandomPowerUp()
 		}
 	}
 	m_powerup = PUType;
+		}
+
+void BOBlock::SetRandomPowerUpGuaranteed()
+{
+    int powerupType;
+    PowerUpTypes PUType = PUNone;
+    powerupType = rand() % 7;
+    switch (powerupType)
+    {
+        case 0:
+        {
+            PUType = PUExtraBall;
+            break;
+	}
+
+        case 1:
+        {
+            PUType = PUBiggerPad;
+            break;
+        }
+
+        case 2:
+        {
+            PUType = PUFireBall;
+            break;
+        }
+
+        case 3:
+        {
+            PUType = PUShield;
+            break;
+        }
+
+        case 4:
+        {
+            PUType = PUShockwave;
+            break;
+        }
+
+        case 5:
+        {
+            PUType = PUSlowTime;
+            break;
+        }
+
+        case 6:
+        {
+            PUType = PUStickyPad;
+            break;
+        }
+    }
+
+    m_powerup =  PUType;
 }
 
 int BOBlock::GetHp() const

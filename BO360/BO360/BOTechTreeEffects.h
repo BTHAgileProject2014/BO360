@@ -26,8 +26,6 @@ struct TechTreePUEffects
     bool startShield; // 8
     float biggerPadEffectMultiplier; // 11, 26
     //float effectMultiplier; // 19
-    int fireBallDamage; // 20, 35
-    float slowTimeTime; // 20, 35
     bool stackableShield; // 22
 	int maxStackShield;
     //int multiBallEffectMultiplier; // 29, 31, 34//////////////////dafuq?
@@ -41,8 +39,6 @@ struct TechTreePUEffects
         startShield = false;
         biggerPadEffectMultiplier = 0;		// in precent for chance to get double effect, 0.33 for 33% 
         //effectMultiplier = 0;
-        fireBallDamage = 0;
-        slowTimeTime = 0;
         stackableShield = false;
 		maxStackShield = 5;
         multiBallMultiplyChance = 0;

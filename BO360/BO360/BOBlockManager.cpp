@@ -22,7 +22,7 @@ bool BOBlockManager::Initialize(std::vector<BOBlock*> p_blockList)
 
 void BOBlockManager::Shutdown()
 {
-    for (int i = 0; i < m_blockList.size(); i++)
+    for (unsigned int i = 0; i < m_blockList.size(); i++)
     {
         m_blockList[i]->Shutdown();
         delete m_blockList[i];
@@ -37,7 +37,7 @@ void BOBlockManager::AddBlock(BOBlock* p_blockPtr)
 
 void BOBlockManager::Update(float p_dt)
 {
-    for (int i = 0; i < m_blockList.size(); i++)
+    for (unsigned int i = 0; i < m_blockList.size(); i++)
     {
         m_blockList[i]->Update(p_dt);
     }
@@ -95,7 +95,7 @@ bool BOBlockManager::CheckCollisions(const BOBall* const p_ball, const float2 p_
 
 void BOBlockManager::Draw()
 {
-    for (int i = 0; i < m_blockList.size(); i++)
+    for (unsigned int i = 0; i < m_blockList.size(); i++)
     {
         m_blockList[i]->Draw();
     }
@@ -104,7 +104,7 @@ void BOBlockManager::Draw()
 bool BOBlockManager::RemoveBlock(BOBlock* p_block)
 {
     bool result = false;
-    for (int i = 0; i < m_blockList.size(); i++)
+    for (unsigned int i = 0; i < m_blockList.size(); i++)
     {
         if (m_blockList[i] == p_block)
         {
