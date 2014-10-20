@@ -13,6 +13,7 @@ BOPaddle::~BOPaddle()
 bool BOPaddle::Initialize(float2 p_position, int2 p_size, int2 p_sourceSize, int p_frame, int p_numberOfFrames, double p_timePerFrame, bool p_hardReset, SDL_Texture* p_sprite)
 {
     m_isSticky = false;
+    m_isPrevSticky = false;
 	m_rotation = 0.0;
 	m_totalDegrees = 21.2;
 	m_segementDegree = m_totalDegrees;
@@ -21,6 +22,13 @@ bool BOPaddle::Initialize(float2 p_position, int2 p_size, int2 p_sourceSize, int
 	m_maxSegments = 5 + BOTechTreeEffects::PaddleEffects.maxSize;
 	AddSegments(2 + BOTechTreeEffects::PaddleEffects.size); // 2 here -> Start with total 3 segments
 	m_deltaRotation = 200 * BOTechTreeEffects::PaddleEffects.speed;
+    m_stickyMaxTimer = 0;
+	SetStickyTimer(20);
+    m_stickyCurrentTimer = 0;
+	m_megaPadActive = false;
+	m_megaPadTimeElapsed = 0;
+	m_megaPadTimeDuration = 8.0;
+	m_megaPadCoolDown = 0;
 	BOPublisher::AddSubscriber(this);
 	BOPowerUpManager::AddSubscriber(this);
 
@@ -116,6 +124,9 @@ void BOPaddle::Handle(PowerUpTypes p_type, bool p_activated)
 
 void BOPaddle::Update(double p_deltaTime)
 {
+    m_isPrevSticky = m_isSticky;
+
+    // Move the pad left or right
 	if (m_movingLeft)
 	{
 		m_rotation -= m_deltaRotation * p_deltaTime;
@@ -136,6 +147,32 @@ void BOPaddle::Update(double p_deltaTime)
 		}
 	}
 
+    // Set a timeout for the sticky thing that sometimes is on the pad
+    if (GetStickyState())
+    {
+        m_stickyCurrentTimer -= p_deltaTime;
+        if (m_stickyCurrentTimer <= 0)
+        {
+            m_stickyCurrentTimer = 0;
+            SetStickyState(false);
+        }
+    }
+    
+	if (m_megaPadActive)
+	{
+		m_megaPadTimeElapsed += p_deltaTime * BOPhysics::GetTimeScale();
+		if (m_megaPadTimeElapsed >= m_megaPadTimeDuration)
+		{
+			DeactivateMegaPad();
+			m_megaPadTimeElapsed = 0;
+		}
+	}
+	if (m_megaPadCoolDown > 0.0)
+	{
+		m_megaPadCoolDown -= p_deltaTime * BOPhysics::GetTimeScale();
+	}
+	
+	// Animate the fire 
     BOAnimatedObject::Animate(p_deltaTime);
 }
 
@@ -230,4 +267,52 @@ bool BOPaddle::GetStickyState()const
 void BOPaddle::SetStickyState(bool p_active)
 {
     m_isSticky = p_active;
+    m_stickyCurrentTimer = m_stickyMaxTimer;
+}
+
+void BOPaddle::SetStickyTimer(double p_time)
+{
+    m_stickyMaxTimer = p_time + BOTechTreeEffects::LevelEffects.stickyPadPUDuration;
+}
+
+double BOPaddle::GetStickyTimer() const
+{
+    return m_stickyMaxTimer;
+}
+
+void BOPaddle::ActivateMegaPad()
+{
+	if (m_megaPadCoolDown <= 0)
+	{
+		int megapad = 20;
+		m_preMegaSegments = m_segments;
+		m_totalDegrees = (m_segementDegree * megapad);
+		m_segments = megapad;
+
+
+		m_megaPadActive = true;
+		m_megaPadCoolDown = 20 * BOTechTreeEffects::PUEffects.decreaseCD;
+	}	
+}
+
+void BOPaddle::DeactivateMegaPad()
+{
+	if (m_preMegaSegments != 0)
+	{
+		m_totalDegrees = (m_segementDegree * m_preMegaSegments);
+		m_segments = m_preMegaSegments;
+
+		m_megaPadActive = false;
+	}
+	
+}
+
+double BOPaddle::GetStickyTimeLeft() const
+{
+    return m_stickyCurrentTimer;
+}
+
+bool BOPaddle::StickyGotRemoved() const
+{
+    return (!m_isSticky && m_isPrevSticky);
 }

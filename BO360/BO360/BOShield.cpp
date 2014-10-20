@@ -66,7 +66,7 @@ void BOShield::Draw()
 void BOShield::SetActive(bool p_IsActive)
 {
 	m_IsActive = p_IsActive;
-	m_lifes = 1 + BOTechTreeEffects::PUEffects.shieldCharge;
+	m_lifes += 1 + BOTechTreeEffects::PUEffects.shieldCharge;
 }
 
 void BOShield::SwitchActive()

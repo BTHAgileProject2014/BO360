@@ -379,7 +379,7 @@ void BOSystem::HandleAction(ButtonAction p_action)
 			{
                 // Reset tech tree
                 m_techTreeManager.Reset();
-                m_techTreeManager.SetTechPoint(0);
+                m_techTreeManager.SetTechPoint(0, false);
 				BOGlobals::GAME_STATE = RUNNING;
 				if (!InitializeMap(0))
 				{
@@ -418,8 +418,8 @@ void BOSystem::HandleAction(ButtonAction p_action)
 					BOGlobals::GAME_STATE = MENU;
 					m_levelManager.SetLevel(0);
 				}
-                m_techTreeManager.Reset();
-                m_techTreeManager.SetTechPoint(m_levelManager.GetCurrentLevel());
+                //m_techTreeManager.Reset();
+                m_techTreeManager.SetTechPoint(m_levelManager.GetCurrentLevel(), false);
                 break;
             }
 
@@ -467,7 +467,7 @@ void BOSystem::HandleAction(ButtonAction p_action)
 					m_levelManager.SetLevel(index);
 				}
                 m_techTreeManager.Reset();
-                m_techTreeManager.SetTechPoint(index);
+                m_techTreeManager.SetTechPoint(index, true);
 				break;
 			}
             case(TECHTREEACTION) :

@@ -106,7 +106,7 @@ bool BOHUDManager::Initialize()
     m_slowtimeText.SetPosition(float2(m_slowtimeAnchor.x + tempSize.x / 2.0f + 20, m_slowtimeAnchor.y - tempSize.y - tempSizeSprite.y/2.0f));
 
     // Initialize Action Bar
-    m_actionBar.Initialize(float2(bounds.x / 2, bounds.y / 2));
+    m_actionBar.Initialize(float2(bounds.x / 2, bounds.y-30));
 
 	return true;
 }
@@ -231,7 +231,7 @@ void BOHUDManager::SetKeys(int p_keys, int p_maxKeys)
 	tempString.append(std::to_string(p_keys));
 	tempString.append(" / ");
 	tempString.append(std::to_string(p_maxKeys));
-    if (p_keys >= p_maxKeys)
+    if (p_keys >= p_maxKeys && p_keys != 0)
     {
         tempString.append("        HyperDrive is ready (Press Enter to use!)");
     }

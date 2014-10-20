@@ -358,6 +358,9 @@ struct InputMessages
 	bool xKey;
     bool fKey;
     bool tKey;
+	bool gKey;
+	bool hKey;
+	bool jKey;
 	bool escKey;
     bool enterKey;
 };
@@ -426,6 +429,9 @@ enum KeyMessages
 	xKey,
     fKey,
     tKey,
+	gKey,
+	hKey,
+	jKey,
 	escKey
 };
 
@@ -523,7 +529,8 @@ enum PowerUpTypes
 	PUFireBall,
     PUShockwave,
     PUStickyPad,
-    PUSlowTime
+    PUSlowTime,
+    PURandom
 };
 
 struct Block
@@ -541,18 +548,34 @@ inline void ThrowInitError(std::string p_className)
 
 enum Textures
 {
+    // Balls.
 	TEXBALL,
     TEXBALLTAIL,
 	TEXFIREBALL,
+
+    // Blocks.
 	TEXHEXSTANDARD,
-    TEXHEXPOWERUP,
     TEXHEXDOUBLE,
 	TEXHEXARMORED,
 	TEXHEXINDES,
+
+    // Blocks with power ups.
+    TEXHEXPOWERUP,
+    TEXHEXPUBIGGERPAD,
+    TEXHEXPUSHIELD,
+    TEXHEXPUADDBALL,
+    TEXHEXPUFIREBALL,
+    TEXHEXPUSHOCKWAVE,
+    TEXHEXPUSTICKYPAD,
+    TEXHEXPUSLOWTIME,
+
+    // Glows.
     TEXGLOWSTANDARD,
     TEXGLOWDOUBLE,
     TEXGLOWARMORED,
     TEXGLOWINDES,
+
+    // Power ups.
 	TEXSHIELD,
     TEXSHOCKWAVE,
     TEXSTICKYPAD,
@@ -563,6 +586,8 @@ enum Textures
     TEXPUSTICKYPAD,
     TEXPUSHOCKWAVE,
     TEXPUSLOWTIME,
+
+    // Particles.
 	TEXBALLTRAIL,
     TEXFIREBALLTRAIL,
 	TEXBALLDEBRIS,
@@ -570,9 +595,14 @@ enum Textures
 	TEXPUDEBRIS,
 	TEXEXPLOSION,
 	TEXDEBUGTRAIL,
+
+    // HUD.
 	TEXHUDALIVE,
     TEXHUDDEAD,
     TEXHUDCORE,
+    TEXHUDBAR,
+
+    // Menu.
 	TEXMENUEDGE,
 	TEXMENUBAR,
 	TEXMENUBG,
@@ -580,25 +610,23 @@ enum Textures
 	TEXMENUBUTTON,
 	TEXMENUBUTTONHL,
     TEXTOOLTIP,
+
+    // Map.
 	TEXBACKGROUND,
 	TEXBLACKHOLE,
 	TEXPADSEG,
     TEXKEY,
 	TEXLOCK,
 
-    // ActionBar
-    TEXACTIONBARBUTTONBG,
-
-    //Tech tree
+    // Tech tree.
 	TEXDEBUGDIR,
     TEXTTTOLTIPFRAME,
 
     TEXTTADJACENTACTIVE,
+    TEXTTCHOSEN,
     TEXTTHIGHLIGHTED,
     TEXTTINACTIVE,
 
-
-    //Tech Tree for realzzzzzz
     TEXTTSHOCKWAVE,
     TEXTTMULTISPAWN,
     TEXTTDECREASECD,
@@ -634,7 +662,7 @@ enum Textures
 
     TEXTTGIANTBALL,
 
-	/* HÄR UNDER ÄR DET BARA BANOR PLZ!!!*/
+	// Only maps from here on.
 	nrOfLevels,
 	TEXBUTTON1MAP,
 	TEXBUTTON2MAP,
@@ -646,8 +674,8 @@ enum Textures
 	
 	texNR
 
-
 };
+
 enum TTEffects
 {
 

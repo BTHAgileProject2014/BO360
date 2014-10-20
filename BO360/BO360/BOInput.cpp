@@ -1,23 +1,6 @@
 #include "BOInput.h"
 #include <iostream>
 
-// To keep track of key indexes in a reasonable way
-enum BOInputKey
-{
-	BOInput_Up,
-	BOInput_Down,
-	BOInput_Left,
-	BOInput_Right,
-	BOInput_Space,
-    BOInput_Enter,
-	BOInput_M1,
-	BOInput_M2,
-	BOInput_z,
-	BOInput_x,
-    BOInput_f,
-    BOInput_t
-};
-
 BOInput::BOInput()
 {
 
@@ -30,7 +13,7 @@ BOInput::~BOInput()
 
 bool BOInput::Initialize()
 {
-	for (int i = 0; i < 11; i++)
+	for (int i = 0; i < LAST_OF_BOINPUT; i++)
 	{
 		m_buttonsPressed[i] = false;
 	}
@@ -195,6 +178,42 @@ bool BOInput::Update()
                         }
                         break;
                     }
+					case SDLK_g:
+					{
+						if (!m_buttonsPressed[BOInput_g])
+						{
+							m_buttonsPressed[BOInput_g] = true;
+							m_publisher.Notify(gKey, true);
+#ifdef DEBUG
+							std::cout << "g is pressed\n";
+#endif
+						}
+						break;
+					}
+					case SDLK_h:
+					{
+						if (!m_buttonsPressed[BOInput_h])
+						{
+							m_buttonsPressed[BOInput_h] = true;
+							m_publisher.Notify(hKey, true);
+#ifdef DEBUG
+							std::cout << "g is pressed\n";
+#endif
+						}
+						break;
+					}
+					case SDLK_j:
+					{
+						if (!m_buttonsPressed[BOInput_j])
+						{
+							m_buttonsPressed[BOInput_j] = true;
+							m_publisher.Notify(jKey, true);
+#ifdef DEBUG
+							std::cout << "g is pressed\n";
+#endif
+						}
+						break;
+					}
 				}
 				break;
 			}
@@ -307,6 +326,33 @@ bool BOInput::Update()
 #endif
                         break;
                     }
+					case SDLK_g:
+					{
+						m_buttonsPressed[BOInput_g] = false;
+						m_publisher.Notify(gKey, false);
+#ifdef DEBUG
+						std::cout << "g is released\n";
+#endif
+						break;
+					}
+					case SDLK_h:
+					{
+						m_buttonsPressed[BOInput_h] = false;
+						m_publisher.Notify(hKey, false);
+#ifdef DEBUG
+						std::cout << "g is released\n";
+#endif
+						break;
+					}
+					case SDLK_j:
+					{
+						m_buttonsPressed[BOInput_j] = false;
+						m_publisher.Notify(jKey, false);
+#ifdef DEBUG
+						std::cout << "g is released\n";
+#endif
+						break;
+					}
 				}
 				break;
 			}

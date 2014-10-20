@@ -16,12 +16,14 @@ public:
     void Draw();
 
     void SetEnabled(bool p_enabled);
+    void CanUse(bool p_canUse);
 
 private:
     BOObject m_button;
     BOObject m_background;
     BODrawableText m_buttonText;
     bool m_enabled;
+    bool m_canUse;
 };
 
 #endif // !BOHUDACTIONBARBUTTON_H_
