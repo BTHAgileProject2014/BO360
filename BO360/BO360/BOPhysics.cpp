@@ -391,7 +391,7 @@ float2 BOPhysics::ApplyGravity(float2 p_position, float2 p_direction, float p_sp
     const double GravityFactor = p_deltaTime * 100000;
     double force = (GravityFactor * p_influenceFactor) / (distance * distance);
 
-    float2 newDir = p_direction * p_speed + gravityDirection * force;
+    float2 newDir = p_direction * p_speed + gravityDirection * (float)force;
     return newDir.normalized();
 }
 
@@ -408,7 +408,7 @@ float2 BOPhysics::BlackHoleGravity(sphere p_ball, float2 p_ballDirection, float 
 	double force = ((G * p_ballSpeed) / (distanceAdjustment*distanceAdjustment)); // F = G*M/R^2  -> Gravitations formel		//5000000000000
 
 	center = center.normalized();//Normaliserar vektorn mot hålet 
-	center = center * (float)force * p_deltaTime * 2000;//Multiplicerar vektorn mot hålet med kraften
+	center = center * (float)force * (float)p_deltaTime * 2000;//Multiplicerar vektorn mot hålet med kraften
 	
 	newDirection = float2(newDirection.x * (p_ballSpeed * (float)p_deltaTime) + center.x, newDirection.y * (p_ballSpeed * (float)p_deltaTime) + center.y);//Beräknar längden av bollens riktningsvektor
 
@@ -505,8 +505,6 @@ bool BOPhysics::BallBouncedOnPad(const BOBall &p_ball, const BOPaddle &p_paddle,
 	p_newDirection = Reflect(ballDirection, centerToBall);
 
 	// Apply bias (?)
-    float biasValue; // Should range from -1 to 1
-    double paddleCenter;
     float2 bias = ApplyBias(padStartRad, padEndRad, ballAngleRad);
     p_newDirection = p_newDirection + bias;
     p_newDirection.normalize();
@@ -625,15 +623,15 @@ float2 BOPhysics::ApplyBias(double p_start, double p_end, double p_ball)
 
     // Scale worst case bias with paddle size
     // The constant can be scaled for more extreme angles
-    float worstCaseBias = maxDistance * 3;
+    float worstCaseBias = (float)(maxDistance * 3);
 
     // Calculate the bias angle for this bounce
     double biasAngle = center + ballBias * worstCaseBias;
 
     // Turn into vector
     float2 biasVector;
-    biasVector.x = sin(biasAngle);
-    biasVector.y = -cos(biasAngle);
+    biasVector.x = (float)sin(biasAngle);
+    biasVector.y = (float)-cos(biasAngle);
     biasVector.normalize();
 
     // Scale with an influence factor
