@@ -740,7 +740,7 @@ void BOTechTreeManager::HandleToolTips(BOTechTreeNode* p_node)
         p_node->SetTexture(BOTextureManager::GetTexture(TEXTTMEGAPAD));
         break;
     case StackableShield:
-        p_node->SetToolTip("Makes it possible to stack number of shields. If there already is a shield active then that shield gains the new shields life increase the amount of bounces on the shield.", "Parallel Shield");
+        p_node->SetToolTip("Makes it possible to stack shields. I.e if you have a shield and get a new shield powerup the life of the new shield is added to the old shield", "Parallel Shield");
         p_node->SetTexture(BOTextureManager::GetTexture(TEXTTSTACKABLESHIELD));
         break;
     case IncreaseStartPadSize:
