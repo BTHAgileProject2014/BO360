@@ -567,6 +567,7 @@ enum Textures
     TEXHEXDOUBLE,
     TEXHEXARMORED,
     TEXHEXINDES,
+    TEXHEXBOSSCORE,
 
     // Blocks with power ups.
     TEXHEXPOWERUP,
@@ -631,6 +632,7 @@ enum Textures
 	TEXLOCK,
 
     // Tech tree.
+	TEXTTBG,
 	TEXDEBUGDIR,
     TEXTTTOLTIPFRAME,
 

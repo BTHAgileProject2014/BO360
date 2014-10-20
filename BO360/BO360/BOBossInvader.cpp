@@ -173,7 +173,7 @@ void BOBossInvader::BuildDrones()
     {
         std::vector<BOBlock*> droneBlocks;
         BOBlock* core = new BOBlock();
-        core->Initialize(float2(0, 0), int2(46, 42), BOTextureManager::GetTexture(TEXHEXSTANDARD), PUNone, 0);
+        core->Initialize(float2(0, 0), int2(46, 42), BOTextureManager::GetTexture(TEXHEXBOSSCORE), PUNone, 0);
         core->AddGlow(float2(0, 0), int2(46, 42), int2(46, 42), 3, 5, 0.12, false, BOTextureManager::GetTexture(TEXGLOWINDES));
         droneBlocks.push_back(core);
         BOBossSegment segment;

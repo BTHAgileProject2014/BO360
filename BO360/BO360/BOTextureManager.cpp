@@ -94,6 +94,15 @@ void BOTextureManager::LoadTexture(std::string p_theme)
     }
 	GetInstance().textureList.push_back(texture);
 
+    filename = theme + "/Blocks/BlockBossCore.png";
+    texture = BOGraphicInterface::LoadTexture(filename);
+    if (!texture)
+    {
+        std::cout << "Boss core block texture failed to load!" << std::endl;
+        std::cin.get();
+    }
+    GetInstance().textureList.push_back(texture);
+
     // Power up blocks, loaded using theme.
     filename = theme + "/Blocks/BlockPowerUp.png";
     texture = BOGraphicInterface::LoadTexture(filename);
@@ -498,6 +507,14 @@ void BOTextureManager::LoadTexture(std::string p_theme)
 	GetInstance().textureList.push_back(texture);
 
     // Tech Tree
+	texture = BOGraphicInterface::LoadTexture("Sprites/Menu/TechTreeBG.png");
+	if (!texture)
+	{
+		std::cout << "Tech tree background texture failed to load!" << std::endl;
+		std::cin.get();
+	}
+
+	GetInstance().textureList.push_back(texture);
 	texture = BOGraphicInterface::LoadTexture("Sprites/Map/DebugDirection.png");
 	GetInstance().textureList.push_back(texture);
     texture = BOGraphicInterface::LoadTexture("Sprites/Tech Tree/Tooltip.png");
