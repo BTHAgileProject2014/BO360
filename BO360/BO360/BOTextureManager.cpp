@@ -94,6 +94,15 @@ void BOTextureManager::LoadTexture(std::string p_theme)
     }
 	GetInstance().textureList.push_back(texture);
 
+    filename = theme + "/Blocks/BlockBossCore.png";
+    texture = BOGraphicInterface::LoadTexture(filename);
+    if (!texture)
+    {
+        std::cout << "Boss core block texture failed to load!" << std::endl;
+        std::cin.get();
+    }
+    GetInstance().textureList.push_back(texture);
+
     // Power up blocks, loaded using theme.
     filename = theme + "/Blocks/BlockPowerUp.png";
     texture = BOGraphicInterface::LoadTexture(filename);
