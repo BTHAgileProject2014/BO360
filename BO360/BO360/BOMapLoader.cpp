@@ -58,7 +58,52 @@ bool BOMapLoader::LoadMap(int p_index)
     }
     case(6) :
     {
-        fileName.append("map7.bom");
+        fileName.append("ap1.bom");
+        break;
+    }
+    case(7) :
+    {
+        fileName.append("ap2.bom");
+        break;
+    }
+    case(8) :
+    {
+        fileName.append("ap3.bom");
+        break;
+    }
+    case(9) :
+    {
+        fileName.append("ap4.bom");
+        break;
+    }
+    case(10) :
+    {
+        fileName.append("ap5.bom");
+        break;
+    }
+    case(11) :
+    {
+        fileName.append("ap6.bom");
+        break;
+    }
+    case(12) :
+    {
+        fileName.append("ap7.bom");
+        break;
+    }
+    case(13) :
+    {
+        fileName.append("ap8.bom");
+        break;
+    }
+    case(14) :
+    {
+        fileName.append("ap9.bom");
+        break;
+    }
+    case(15) :
+    {
+        fileName.append("ap10.bom");
         break;
     }
 	default:

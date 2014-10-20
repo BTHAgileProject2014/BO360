@@ -168,9 +168,6 @@
     <ClCompile Include="BOShockwave.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="BOTechTreeNode.cpp">
-      <Filter>Source Files\TechTree</Filter>
-    </ClCompile>
     <ClCompile Include="BOTechTreeManager.cpp">
       <Filter>Source Files\TechTree</Filter>
     </ClCompile>
@@ -190,6 +187,9 @@
       <Filter>Source Files\Boss</Filter>
     </ClCompile>
     <ClCompile Include="BOGlobals.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="BOTechTreeNode.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
