@@ -40,10 +40,14 @@ bool BOTechTreeNode::Initialize(float2 p_pos, int2 p_size, std::string p_tooltip
     m_tooltipFrame.Initialize(float2(0,0), int2(310,210), BOTextureManager::GetTexture(TEXTTTOLTIPFRAME));
     int2 framesSize = m_tooltipFrame.GetSize();
     m_tooltipFrame.SetPosition(float2(windowBounds.x - 50 - framesSize.x*0.5f, framesSize.y*0.5f +50));
+
+    //priceText
+    m_priceText.Initialize(float2(0, 0), " ", int3(255, 255, 255), 25, 0);
+
     return BOObject::Initialize(p_pos, p_size, m_inactive);
 }
 
-void BOTechTreeNode::Update()
+void BOTechTreeNode::Update(int p_techPoints)
 {
     if (m_isActive)
     {
@@ -54,7 +58,7 @@ void BOTechTreeNode::Update()
     {
         m_sprite = m_highlighted;
     }
-    else if (m_isAdjacentActive)
+    else if (m_isAdjacentActive && m_price <= p_techPoints)
     {
         m_sprite = m_adjacentActive;
     }
@@ -69,6 +73,7 @@ void BOTechTreeNode::Shutdown()
     m_tooltipText.Shutdown();
     m_tooltipFrame.Shutdown();
     m_tooltipHeading.Shutdown();
+    m_priceText.Shutdown();
     BOObject::Shutdown();
 }
 
@@ -90,6 +95,8 @@ void BOTechTreeNode::Draw()
     }
 
     BOGraphicInterface::Draw(m_icon, m_position, m_size, opacity);
+
+    m_priceText.Draw();
 }
 float2 BOTechTreeNode::GetPosition()const
 {
@@ -175,17 +182,8 @@ void BOTechTreeNode::SetToolTip(std::string p_toolTip, std::string p_heading)
 {
     int2 windowBounds = BOGraphicInterface::GetWindowSize();
     float2 tooltipPos = m_tooltipFrame.GetPosition();
-    std::string temp;
-    if (m_price == 1)
-    {
-        temp = p_heading + "\n                  {Price: " + std::to_string(m_price) + "   }";
-    }
-    else
-    {
-        temp = p_heading + "\n                  {Price: " + std::to_string(m_price) + " }";
-    }
     
-    m_tooltipHeading.SetText(temp, int3(255, 255, 255), 300);
+    m_tooltipHeading.SetText(p_heading, int3(255, 255, 255), 0);
 
     int2 headingSize = m_tooltipHeading.GetSize();
     m_tooltipHeading.SetPosition(float2(tooltipPos.x, headingSize.y*0.5f + 60.0f));
@@ -194,6 +192,9 @@ void BOTechTreeNode::SetToolTip(std::string p_toolTip, std::string p_heading)
 
     int2 textSize = m_tooltipText.GetSize();
     m_tooltipText.SetPosition(float2(windowBounds.x - textSize.x*0.5f -60.0f, textSize.y*0.5f + 60.0f + headingSize.y));
+
+    m_priceText.SetText(std::to_string(m_price), int3(255, 255, 255), 290);
+    m_priceText.SetPosition(float2(m_position.x + 25,m_position.y + 25));
 }
 
 int BOTechTreeNode::GetEffect()const
@@ -216,7 +217,7 @@ void BOTechTreeNode::Reset()
 bool BOTechTreeNode::Intersects(int2 p_mousePosition)
 {
     // Intersection test.
-    if (BOPhysics::CheckCollisionSphereToSphere(sphere(float2((float)p_mousePosition.x, (float)p_mousePosition.y), 1), sphere(m_position, m_size.x / 2)))
+    if (BOPhysics::CheckCollisionSphereToSphere(sphere(float2((float)p_mousePosition.x, (float)p_mousePosition.y), 1), sphere(m_position, (m_size.x / 2) - 3)))
     {
         return true;
     }
