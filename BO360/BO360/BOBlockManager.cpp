@@ -13,7 +13,7 @@ BOBlockManager::~BOBlockManager()
 bool BOBlockManager::Initialize(std::vector<BOBlock*> p_blockList)
 {
     m_blockList.clear();
-    for (int i = 0; i < p_blockList.size(); i++)
+    for (unsigned int i = 0; i < p_blockList.size(); i++)
     {
         m_blockList.push_back(p_blockList[i]);
     }
@@ -121,7 +121,7 @@ bool BOBlockManager::RemoveBlock(BOBlock* p_block)
 bool BOBlockManager::HideBlock(BOBlock* p_block)
 {
     bool result = false;
-    for (int i = 0; i < m_blockList.size(); i++)
+    for (unsigned int i = 0; i < m_blockList.size(); i++)
     {
         if (m_blockList[i] == p_block)
         {
