@@ -26,7 +26,7 @@ bool BOBlock::Initialize(float2 p_position, int2 p_size, SDL_Texture* p_sprite, 
     m_originalHp = p_hp;
 	m_powerup = p_powerup;
 
-	if (m_powerup == PUNone)
+    if (m_powerup == PUNone && BOTechTreeEffects::LevelEffects.startNodePowerups)
 	{
         SetRandomPowerUpRandom();
 	}

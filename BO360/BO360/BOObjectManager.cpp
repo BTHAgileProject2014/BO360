@@ -105,6 +105,27 @@ bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight, int p_Le
         return false;
     }
 
+    // Enable Active abilities
+    if (BOTechTreeEffects::UtilityEffects.quantumFuelEnabled)
+    {
+        BOHUDManager::ActionBarButtonEnabled(ABB_QUANTUMFUEL, true);
+
+    }
+
+    if (BOTechTreeEffects::UtilityEffects.megaPadEnabled)
+    {
+        BOHUDManager::ActionBarButtonEnabled(ABB_MEGAPAD, true);
+
+    }
+
+    if (BOTechTreeEffects::UtilityEffects.giantBallEnabled)
+    {
+        BOHUDManager::ActionBarButtonEnabled(ABB_GIANTBALL, true);
+    }
+
+    BOHUDManager::ActionBarButtonEnabled(ABB_SHOCKWAVE, true);
+    BOHUDManager::ActionBarButtonEnabled(ABB_SLOWTIME, true);
+
 	return true;
 }
 
@@ -231,10 +252,19 @@ void BOObjectManager::Update(double p_deltaTime)
 			GiantBall(); // Deactivate after 8 seconds
 		}
 	}
+    else
+    {
+        BOHUDManager::ActionBarButtonCanUse(ABB_GIANTBALL, true);
+	}
+
 	if (m_quantumFuelCoolDown > 0.0)
 	{
 		m_quantumFuelCoolDown -= p_deltaTime * BOPhysics::GetTimeScale();
 	}
+    else
+    {
+        BOHUDManager::ActionBarButtonCanUse(ABB_QUANTUMFUEL, true);
+    }
 
 	for (unsigned int i = 0; i < m_ballList.size(); i++)
 	{
@@ -263,7 +293,7 @@ void BOObjectManager::Draw()
 			    m_blockList[i]->Draw();
 		    }
 	    }
-
+		
 		
 	m_particleSystem.DrawParticles();
 
@@ -299,13 +329,13 @@ void BOObjectManager::Handle(PowerUpTypes p_type, bool p_activated)
 					if (m_Shield.GetLifes() < BOTechTreeEffects::PUEffects.maxStackShield)
 					{
 						m_Shield.AddLife(1);
+					}
 				}
-			}
 			}
 			else
 			{
-			m_Shield.SetActive(true);
-		}
+				m_Shield.SetActive(true);
+			}
 		}
 		break;
 	case PUExtraBall:
@@ -317,7 +347,7 @@ void BOObjectManager::Handle(PowerUpTypes p_type, bool p_activated)
 			if (randomNr <= (100 * BOTechTreeEffects::PUEffects.multiBallMultiplyChance))
 			{
 				AddNewBall();
-		}
+			}
 		}
 		break;
 	case PUFireBall:
@@ -358,12 +388,12 @@ void BOObjectManager::Handle(InputMessages p_inputMessage)
 		{
 			if (m_ballList[i]->IsStuckToPad())
 			{
-			m_ballList[i]->SetStuckToPad(false);
+				m_ballList[i]->SetStuckToPad(false);
 				
 				//m_ballList[i]->SetDirection(float2(m_ballList[i]->GetPosition().x - m_blackHole.GetPosition().x, m_ballList[i]->GetPosition().y - m_blackHole.GetPosition().y));
+			}
+		}
 	}
-}
-}
 
     if (p_inputMessage.fKey && m_shockwave.Activate())
     {
@@ -373,26 +403,37 @@ void BOObjectManager::Handle(InputMessages p_inputMessage)
 	if (p_inputMessage.gKey) // Lägg till activate mega pad koll om man har speccen
 	{
 		ActivateMegaPad();
+        BOHUDManager::ActionBarButtonCanUse(ABB_MEGAPAD, false);
 	}
 
 	// Activate Giant ball with h
 	if (p_inputMessage.hKey) // Lägg till activate giant ball koll om man har speccen
 	{
+        if (BOTechTreeEffects::UtilityEffects.giantBallEnabled)
+        {
+
+
 		if (m_giantBallCoolDown <= 0)
 		{
 			m_giantBallActive = true; // Activate giantball;
 			GiantBall();
 			m_giantBallCoolDown = 20 * BOTechTreeEffects::PUEffects.decreaseCD;
+                BOHUDManager::ActionBarButtonCanUse(ABB_GIANTBALL, false);
+            }
 		}
 	}
 
 	// Activate Quantum fuel
 	if (p_inputMessage.jKey) // lägg till koll om man har abilityn
 	{
+        if (BOTechTreeEffects::UtilityEffects.quantumFuelEnabled)
+        {
 		if (m_quantumFuelCoolDown <= 0)
 		{
 			QuantumFuelActivate();
 			m_quantumFuelCoolDown = 20 * BOTechTreeEffects::PUEffects.decreaseCD;
+                BOHUDManager::ActionBarButtonCanUse(ABB_QUANTUMFUEL, false);
+            }
 		}		
 	}
 
@@ -406,7 +447,7 @@ void BOObjectManager::Handle(InputMessages p_inputMessage)
     if (p_inputMessage.enterKey && m_keyManager.AllKeysCatched())
     {
         m_continue = true;
-}
+    }
 }
 
 bool BOObjectManager::AddNewBall()
@@ -449,7 +490,7 @@ bool BOObjectManager::WonGame()
     else
     {
         gameWon = m_keyManager.AllKeysCatched()
-            && m_continue;
+        && m_continue;
 }
     return gameWon;
 }
@@ -856,55 +897,55 @@ void BOObjectManager::BallNewlyLaunched(BOBall* p_ball)
 	if (p_ball->GetNewlyLaunched())
 	{
 		if (!m_paddle.GetStickyState() && BOTechTreeEffects::UtilityEffects.PUGiftEnabled)
-	{
-		int spawnPU, powerupType;
-		PowerUpTypes PUType = PUNone;
-		spawnPU = rand() % 10;
-		powerupType = rand() % 7;
-		if (spawnPU == 9)
-		{
-			switch (powerupType)
-			{
-			case 0:
-			{
-				PUType = PUExtraBall;
-				break;
-			}
-			case 1:
-			{
-				PUType = PUBiggerPad;
-				break;
-			}
-			case 2:
-			{
-				PUType = PUFireBall;
-				break;
-			}
-			case 3:
-			{
-				PUType = PUShield;
-				break;
-			}
-			case 4:
-			{
-				PUType = PUShockwave;
-				break;
-			}
-			case 5:
-			{
-				PUType = PUSlowTime;
-				break;
-			}
-			case 6:
-			{
-				PUType = PUStickyPad;
-				break;
-			}
-			}
+	    {
+		    int spawnPU, powerupType;
+		    PowerUpTypes PUType = PUNone;
+		    spawnPU = rand() % 10;
+		    powerupType = rand() % 7;
+		    if (spawnPU == 9)
+		    {
+			    switch (powerupType)
+			    {
+			    case 0:
+			    {
+				    PUType = PUExtraBall;
+				    break;
+			    }
+			    case 1:
+			    {
+				    PUType = PUBiggerPad;
+				    break;
+			    }
+			    case 2:
+			    {
+				    PUType = PUFireBall;
+				    break;
+			    }
+			    case 3:
+			    {
+				    PUType = PUShield;
+				    break;
+			    }
+			    case 4:
+			    {
+				    PUType = PUShockwave;
+				    break;
+			    }
+			    case 5:
+			    {
+				    PUType = PUSlowTime;
+				    break;
+			    }
+			    case 6:
+			    {
+				    PUType = PUStickyPad;
+				    break;
+			    }
+			    }
 			    BOPowerUpManager::AddPowerUp(PUType, float2(BOGraphicInterface::GetWindowSize().x / 2.0f, 50), &m_paddle, m_blackHole.GetPosition());
-		}
-		p_ball->BouncedOnPad();
-    }
+		    }
+		    p_ball->BouncedOnPad();
+        }
 
 		if (m_ballList.size() == 1)
 		{
