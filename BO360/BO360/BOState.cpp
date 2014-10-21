@@ -89,6 +89,23 @@ void BOState::AddButton(float2 p_position, int2 p_size, float2 p_menuPosition, S
 	}
 }
 
+void BOState::AddButtonModified(float2 p_position, int2 p_size, float2 p_menuPosition, SDL_Texture* p_sprite, std::string p_name, ButtonAction p_action, std::string p_tooltip)
+{
+	BOButton button;
+	if (!button.Initialize(float2(p_position.x + (250 * m_buttonList.size()), p_position.y), p_size, p_sprite, p_name, p_action, p_tooltip))
+	{
+		std::cout << "Failed to load button for texture " << p_sprite << "!" << std::endl;
+	}
+	m_buttonList.push_back(button);
+
+	// Change position and size of the menu bar
+	if (m_buttonList.size() < 3)
+	{
+		m_menuBar[1].SetSize(int2(240 * m_buttonList.size() + 10 * (m_buttonList.size() - 1), 70));
+		m_menuBar[1].SetPosition(float2((p_menuPosition.x + 125) + 120 * (m_buttonList.size() - 1) + 5 * (m_buttonList.size() - 1), p_menuPosition.y + 35));
+		m_menuBar[2].SetPosition(float2((p_menuPosition.x + 7.5f) + m_menuBar[1].GetSize().x, p_menuPosition.y + 35));
+	}
+}
 void BOState::Handle(InputMessages p_inputMessages)
 {
 	m_mousePosition = int2(p_inputMessages.mouseX, p_inputMessages.mouseY);
@@ -136,7 +153,7 @@ int BOState::GetLevelIndex()
 void BOState::Draw()
 {
 	// Draw background.
-	m_background.Draw();
+	m_background.DrawEntireSprite();
 
 	// Draw menu bar.
 	for (unsigned int i = 0; i < m_menuBar.size(); i++)
@@ -149,6 +166,31 @@ void BOState::Draw()
 	{
 		m_buttonList[i].Draw();
 	}
+	
+
+	m_menuText.Draw();
+}
+
+void BOState::DrawModified()
+{
+	// Draw background.
+	m_background.DrawEntireSprite();
+
+	// Draw menu bar.
+	for (unsigned int i = 0; i < m_menuBar.size(); i++)
+	{
+		m_menuBar[i].Draw();
+	}
+
+	// Draw Buttons.
+	if (m_buttonList.size() > 0)
+	{
+		for (int i = m_buttonList.size() - 1; i >= 0; i--)
+		{
+			m_buttonList[i].Draw();
+		}
+	}
+
 
 	m_menuText.Draw();
 }

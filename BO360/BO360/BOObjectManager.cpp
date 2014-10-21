@@ -2,7 +2,7 @@
 
 BOObjectManager::BOObjectManager()
 {
-
+    m_boss = 0;
 }
 
 BOObjectManager::~BOObjectManager()
@@ -147,7 +147,7 @@ void BOObjectManager::Shutdown()
 
 void BOObjectManager::Update(double p_deltaTime)
 {
-    // First, check if we've catched all the keys
+    // First, check if we've found all the keys
     if (m_keyManager.AllKeysCatched() && m_continue)
     {
         // In that case, start blowing all existing blocks up!
@@ -241,14 +241,17 @@ void BOObjectManager::Update(double p_deltaTime)
 		m_ballList[i]->SetBallCollidedWithBall(false);
 	}
 
-    // m_boss->Update(p_deltaTime);
+    if (m_boss)
+    {
+        m_boss->Update(p_deltaTime);
+    }
 
 	UpdateParticles(p_deltaTime);
 }
 
 void BOObjectManager::Draw()
 {
-	m_background.Draw();
+	m_background.DrawEntireSprite();
     m_shockwave.DrawWave();
 	m_blackHole.DrawRotating();
 	m_keyManager.Draw();
@@ -260,7 +263,7 @@ void BOObjectManager::Draw()
 			    m_blockList[i]->Draw();
 		    }
 	    }
-		
+
 		
 	m_particleSystem.DrawParticles();
 
@@ -269,9 +272,17 @@ void BOObjectManager::Draw()
         m_ballList[i]->DrawBallWithTail();
 	}
 
-    //m_boss->Draw();
+    if (m_boss)
+    {
+        m_boss->Draw();
+        // The boss will sometimes leave decimal errors in the offset, causing other things to "shake"
+        // The offset thus needs to be set to 0 after the boss is done drawing
+        BOGraphicInterface::SetOffset(float2(0, 0));
+    }
+
 	m_Shield.Draw();
 	m_paddle.Draw();
+
 }
 
 void BOObjectManager::Handle(PowerUpTypes p_type, bool p_activated)
@@ -288,13 +299,13 @@ void BOObjectManager::Handle(PowerUpTypes p_type, bool p_activated)
 					if (m_Shield.GetLifes() < BOTechTreeEffects::PUEffects.maxStackShield)
 					{
 						m_Shield.AddLife(1);
-					}
 				}
+			}
 			}
 			else
 			{
-				m_Shield.SetActive(true);
-			}
+			m_Shield.SetActive(true);
+		}
 		}
 		break;
 	case PUExtraBall:
@@ -306,7 +317,7 @@ void BOObjectManager::Handle(PowerUpTypes p_type, bool p_activated)
 			if (randomNr <= (100 * BOTechTreeEffects::PUEffects.multiBallMultiplyChance))
 			{
 				AddNewBall();
-			}
+		}
 		}
 		break;
 	case PUFireBall:
@@ -347,12 +358,12 @@ void BOObjectManager::Handle(InputMessages p_inputMessage)
 		{
 			if (m_ballList[i]->IsStuckToPad())
 			{
-				m_ballList[i]->SetStuckToPad(false);
+			m_ballList[i]->SetStuckToPad(false);
 				
 				//m_ballList[i]->SetDirection(float2(m_ballList[i]->GetPosition().x - m_blackHole.GetPosition().x, m_ballList[i]->GetPosition().y - m_blackHole.GetPosition().y));
-			}
-		}
 	}
+}
+}
 
     if (p_inputMessage.fKey && m_shockwave.Activate())
     {
@@ -395,7 +406,7 @@ void BOObjectManager::Handle(InputMessages p_inputMessage)
     if (p_inputMessage.enterKey && m_keyManager.AllKeysCatched())
     {
         m_continue = true;
-    }
+}
 }
 
 bool BOObjectManager::AddNewBall()
@@ -408,7 +419,7 @@ bool BOObjectManager::AddNewBall()
 	// Set the direction outwards from the screen center
 	float2 ballDir = float2(0, 0);
 
-	if (!ball->Initialize(ballPos, int2(15,15), BOTextureManager::GetTexture(TEXBALL), 500.0f, ballDir, windowSize))
+	if (!ball->Initialize(ballPos, int2(15,15), BOTextureManager::GetTexture(TEXBALL), 300.0f, ballDir, windowSize))
 	{
 		ThrowInitError("BOBall");
 		return false;
@@ -427,9 +438,20 @@ bool BOObjectManager::LostGame()
 
 bool BOObjectManager::WonGame()
 {
-    bool didWin = m_keyManager.AllKeysCatched()
-        && m_continue;
-	return didWin;
+    bool gameWon = false;
+    
+    // If there is a boss, check if it has been defeated
+    if (m_boss)
+    {
+        gameWon = m_boss->IsDead();
+    }
+    // Otherwise, check if we have all keys and want to move on
+    else
+    {
+        gameWon = m_keyManager.AllKeysCatched()
+            && m_continue;
+}
+    return gameWon;
 }
 
 void BOObjectManager::CheckBallOutOfBounds(int p_index)
@@ -592,10 +614,14 @@ bool BOObjectManager::LoadBlocksFromMap(int p_index)
 		}
 	}
 
-
-    m_boss = new BOTestBoss();
-    m_boss->Initialize();
-
+    if (p_index == 5)
+    {
+        m_boss = new BOBossInvader();
+        if (!m_boss->Initialize())
+        {
+            ThrowInitError("BOBossInvader");
+        }
+    }
 	return true;
 }
 
@@ -658,42 +684,38 @@ void BOObjectManager::BallBlockCollision(BOBall* p_ball)
     float2 newDir;
     BOBlock* hitBlock = NULL;
 
-    // Please leave this block of commented code!
-    // It handles collision against boss blocks, but the boss is currently not feeling so well. :(
-    //if (m_boss->CheckCollisions(p_ball, newDir, hitBlock))
-    //{
-    //    BOSoundManager::PlaySound(SOUND_POP);
-    //    //std::cout << "Ball bounced on [" << i << "]" << std::endl;
 
-    //    bool blockWasKilled = hitBlock->Hit(p_ball->GetDamage());
-    //    if (blockWasKilled)
-    //    {
-    //        // Create explosion.
-    //        m_particleSystem.BlockExplosion(hitBlock->GetPosition() + m_boss->GetPosition());
+    if (m_boss && m_boss->CheckCollisions(p_ball, newDir, hitBlock))
+    {
+        BOSoundManager::PlaySound(SOUND_POP);
+        //std::cout << "Ball bounced on [" << i << "]" << std::endl;
 
-    //        // Spawn powerup if there is one
-    //        BOPowerUpManager::AddPowerUp(hitBlock->GetPowerUp(), hitBlock->GetPosition(), &m_paddle, m_blackHole.GetPosition());
+        bool blockWasKilled = hitBlock->Hit(p_ball->GetDamage());
+        if (blockWasKilled)
+        {
+            // Create explosion.
+            m_particleSystem.BlockExplosion(hitBlock->GetPosition() + m_boss->GetLatestHitOffset());
 
-    //        // Add score
-    //        BOScore::AddScore(hitBlock->GetScore());
+            // Spawn powerup if there is one
+            BOPowerUpManager::AddPowerUp(hitBlock->GetPowerUp(), hitBlock->GetPosition() + m_boss->GetLatestHitOffset(), &m_paddle, m_blackHole.GetPosition());
 
-    //        // Delete the block
-    //        if (!m_boss->KillBlock(hitBlock))
-    //        {
-    //            std::cout << "Warning! Failed to kill a block" << std::endl;
-    //        }
-    //    }
+            // Add score
+            BOScore::AddScore(hitBlock->GetScore());
 
-    //    // This if probably looks a bit ugly, so I guess I'll have to explain the logic
-    //    // If a block is killed while the ball is on fire, we don't want to change the direction
-    //    // Thus we only change the direction if the above statement is false
-    //    if (!(blockWasKilled && p_ball->IsOnFire()))
-    //    {
-    //        p_ball->SetDirection(newDir);
-    //    }
-    //    p_ball->BouncedOnHexagon();
-    //    //p_ball->SetFuel(0.0f);
-    //}
+            // Kill block
+            m_boss->KillBlock(hitBlock);
+        }
+
+        // This if probably looks a bit ugly, so I guess I'll have to explain the logic
+        // If a block is killed while the ball is on fire, we don't want to change the direction
+        // Thus we only change the direction if the above statement is false
+        if (!(blockWasKilled && p_ball->IsOnFire()))
+        {
+            p_ball->SetDirection(newDir);
+        }
+        p_ball->BouncedOnHexagon();
+        //p_ball->SetFuel(0.0f);
+    }
 
 }
 
@@ -825,55 +847,55 @@ void BOObjectManager::BallNewlyLaunched(BOBall* p_ball)
 	if (p_ball->GetNewlyLaunched())
 	{
 		if (!m_paddle.GetStickyState() && BOTechTreeEffects::UtilityEffects.PUGiftEnabled)
-	    {
-		    int spawnPU, powerupType;
-		    PowerUpTypes PUType = PUNone;
-		    spawnPU = rand() % 10;
-		    powerupType = rand() % 7;
-		    if (spawnPU == 9)
-		    {
-			    switch (powerupType)
-			    {
-			    case 0:
-			    {
-				    PUType = PUExtraBall;
-				    break;
-			    }
-			    case 1:
-			    {
-				    PUType = PUBiggerPad;
-				    break;
-			    }
-			    case 2:
-			    {
-				    PUType = PUFireBall;
-				    break;
-			    }
-			    case 3:
-			    {
-				    PUType = PUShield;
-				    break;
-			    }
-			    case 4:
-			    {
-				    PUType = PUShockwave;
-				    break;
-			    }
-			    case 5:
-			    {
-				    PUType = PUSlowTime;
-				    break;
-			    }
-			    case 6:
-			    {
-				    PUType = PUStickyPad;
-				    break;
-			    }
-			    }
+	{
+		int spawnPU, powerupType;
+		PowerUpTypes PUType = PUNone;
+		spawnPU = rand() % 10;
+		powerupType = rand() % 7;
+		if (spawnPU == 9)
+		{
+			switch (powerupType)
+			{
+			case 0:
+			{
+				PUType = PUExtraBall;
+				break;
+			}
+			case 1:
+			{
+				PUType = PUBiggerPad;
+				break;
+			}
+			case 2:
+			{
+				PUType = PUFireBall;
+				break;
+			}
+			case 3:
+			{
+				PUType = PUShield;
+				break;
+			}
+			case 4:
+			{
+				PUType = PUShockwave;
+				break;
+			}
+			case 5:
+			{
+				PUType = PUSlowTime;
+				break;
+			}
+			case 6:
+			{
+				PUType = PUStickyPad;
+				break;
+			}
+			}
 			    BOPowerUpManager::AddPowerUp(PUType, float2(BOGraphicInterface::GetWindowSize().x / 2.0f, 50), &m_paddle, m_blackHole.GetPosition());
-		    }
-		    p_ball->BouncedOnPad();
-        }
+		}
+		p_ball->BouncedOnPad();
+    }
 
 		if (m_ballList.size() == 1)
 		{

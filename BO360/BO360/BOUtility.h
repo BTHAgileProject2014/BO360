@@ -61,6 +61,15 @@ struct float2
 		return temp;
 	}
 
+    float2 operator-()
+    {
+        float2 temp;
+        temp.x = -x;
+        temp.y = -y;
+
+        return temp;
+    }
+
 	float2 operator-(const float2 p_input)
 	{
 		float2 temp;
@@ -558,6 +567,7 @@ enum Textures
     TEXHEXDOUBLE,
     TEXHEXARMORED,
     TEXHEXINDES,
+    TEXHEXBOSSCORE,
 
     // Blocks with power ups.
     TEXHEXPOWERUP,
@@ -600,6 +610,10 @@ enum Textures
 	TEXHUDALIVE,
     TEXHUDDEAD,
     TEXHUDCORE,
+    TEXHUDBAR,
+    TEXHUDMEGAPAD,
+    TEXHUDQUANTUMFUEL,
+    TEXHUDGIANTBALL,
 
     // Menu.
 	TEXMENUEDGE,
@@ -618,6 +632,7 @@ enum Textures
 	TEXLOCK,
 
     // Tech tree.
+	TEXTTBG,
 	TEXDEBUGDIR,
     TEXTTTOLTIPFRAME,
 

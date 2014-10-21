@@ -94,6 +94,15 @@ void BOTextureManager::LoadTexture(std::string p_theme)
     }
 	GetInstance().textureList.push_back(texture);
 
+    filename = theme + "/Blocks/BlockBossCore.png";
+    texture = BOGraphicInterface::LoadTexture(filename);
+    if (!texture)
+    {
+        std::cout << "Boss core block texture failed to load!" << std::endl;
+        std::cin.get();
+    }
+    GetInstance().textureList.push_back(texture);
+
     // Power up blocks, loaded using theme.
     filename = theme + "/Blocks/BlockPowerUp.png";
     texture = BOGraphicInterface::LoadTexture(filename);
@@ -346,7 +355,7 @@ void BOTextureManager::LoadTexture(std::string p_theme)
 	texture = BOGraphicInterface::LoadTexture("Sprites/HUD/Alive.png");
     if (!texture)
     {
-        std::cout << "Fireball trail particle texture failed to load!" << std::endl;
+        std::cout << "Alive HUD texture failed to load!" << std::endl;
         std::cin.get();
     }
 	GetInstance().textureList.push_back(texture);
@@ -354,7 +363,7 @@ void BOTextureManager::LoadTexture(std::string p_theme)
     texture = BOGraphicInterface::LoadTexture("Sprites/HUD/Dead.png");
     if (!texture)
     {
-        std::cout << "Fireball trail particle texture failed to load!" << std::endl;
+        std::cout << "Dead HUD texture failed to load!" << std::endl;
         std::cin.get();
     }
     GetInstance().textureList.push_back(texture);
@@ -362,10 +371,42 @@ void BOTextureManager::LoadTexture(std::string p_theme)
     texture = BOGraphicInterface::LoadTexture("Sprites/HUD/Core.png");
     if (!texture)
     {
-        std::cout << "Fireball trail particle texture failed to load!" << std::endl;
+        std::cout << "HUD Core texture failed to load!" << std::endl;
         std::cin.get();
     }
 	GetInstance().textureList.push_back(texture);
+
+    texture = BOGraphicInterface::LoadTexture("Sprites/HUD/HUD.png");
+    if (!texture)
+    {
+        std::cout << "HUD bar texture failed to load!" << std::endl;
+        std::cin.get();
+    }
+    GetInstance().textureList.push_back(texture);
+
+    texture = BOGraphicInterface::LoadTexture("Sprites/HUD/MegaPad.png");
+    if (!texture)
+    {
+        std::cout << "Mega pad bar texture failed to load!" << std::endl;
+        std::cin.get();
+    }
+    GetInstance().textureList.push_back(texture);
+
+    texture = BOGraphicInterface::LoadTexture("Sprites/HUD/QuantumFuel.png");
+    if (!texture)
+    {
+        std::cout << "Quantum fuel bar texture failed to load!" << std::endl;
+        std::cin.get();
+    }
+    GetInstance().textureList.push_back(texture);
+
+    texture = BOGraphicInterface::LoadTexture("Sprites/HUD/GiantBall.png");
+    if (!texture)
+    {
+        std::cout << "Giant ball bar texture failed to load!" << std::endl;
+        std::cin.get();
+    }
+    GetInstance().textureList.push_back(texture);
 
 	// Menu.
 	texture = BOGraphicInterface::LoadTexture("Sprites/Menu/MenuEdge.png");
@@ -466,6 +507,14 @@ void BOTextureManager::LoadTexture(std::string p_theme)
 	GetInstance().textureList.push_back(texture);
 
     // Tech Tree
+	texture = BOGraphicInterface::LoadTexture("Sprites/Menu/TechTreeBG.png");
+	if (!texture)
+	{
+		std::cout << "Tech tree background texture failed to load!" << std::endl;
+		std::cin.get();
+	}
+
+	GetInstance().textureList.push_back(texture);
 	texture = BOGraphicInterface::LoadTexture("Sprites/Map/DebugDirection.png");
 	GetInstance().textureList.push_back(texture);
     texture = BOGraphicInterface::LoadTexture("Sprites/Tech Tree/Tooltip.png");
