@@ -12,6 +12,7 @@ BOHUDActionBar::~BOHUDActionBar()
 
 bool BOHUDActionBar::Initialize(float2 p_position)
 {
+    // Initialize Buttons with their respective texture and hotkey
     m_actionBarButtons[ABB_SLOWTIME].Initialize(p_position - float2(120, 0), BOTextureManager::GetTexture(TEXPUSLOWTIME), int2(40, 40), "DOWN");
     m_actionBarButtons[ABB_SHOCKWAVE].Initialize(p_position - float2(60, 0), BOTextureManager::GetTexture(TEXPUSHOCKWAVE), int2(40, 40), "F");
     m_actionBarButtons[ABB_MEGAPAD].Initialize(p_position - float2(0, 0), BOTextureManager::GetTexture(TEXHUDMEGAPAD), int2(40, 40), "G");
