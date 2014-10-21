@@ -623,7 +623,7 @@ float2 BOPhysics::ApplyBias(double p_start, double p_end, double p_ball)
 
     // Scale worst case bias with paddle size
     // The constant can be scaled for more extreme angles
-    float worstCaseBias = (float)(1.57f);
+    float worstCaseBias = 0.5 + maxDistance;//1.2f;
 
     // Calculate the bias angle for this bounce
     double biasAngle = center + ballBias * worstCaseBias;
