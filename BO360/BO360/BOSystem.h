@@ -20,7 +20,7 @@
 #include "BOTechTreeManager.h"
 #include "BOLevelManager.h"
 #include <iostream>
-//#include <vld.h>
+#include <vld.h>
 
 class BOSystem : BOComponent, public BOSubscriber
 {

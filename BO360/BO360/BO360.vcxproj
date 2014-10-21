@@ -124,6 +124,7 @@
     <ClInclude Include="BOSlowTime.h" />
     <ClInclude Include="BOShockwave.h" />
     <ClInclude Include="BOSoundManager.h" />
+    <ClInclude Include="BOBossSegment.h" />
     <ClInclude Include="BOState.h" />
     <ClInclude Include="BOStateManager.h" />
     <ClInclude Include="BOStationaryParticle.h" />
@@ -132,7 +133,7 @@
     <ClInclude Include="BOTechTreeEffects.h" />
     <ClInclude Include="BOTechTreeManager.h" />
     <ClInclude Include="BOTechTreeNode.h" />
-    <ClInclude Include="BOTestBoss.h" />
+    <ClInclude Include="BOBossInvader.h" />
     <ClInclude Include="BOTextManager.h" />
     <ClInclude Include="BOTextureManager.h" />
     <ClInclude Include="BOTimer.h" />
@@ -181,6 +182,7 @@
     <ClCompile Include="BOSlowTime.cpp" />
     <ClCompile Include="BOShockwave.cpp" />
     <ClCompile Include="BOSoundManager.cpp" />
+    <ClCompile Include="BOBossSegment.cpp" />
     <ClCompile Include="BOState.cpp" />
     <ClCompile Include="BOStateManager.cpp" />
     <ClCompile Include="BOStationaryParticle.cpp" />
@@ -189,7 +191,7 @@
     <ClCompile Include="BOTechTreeEffects.cpp" />
     <ClCompile Include="BOTechTreeManager.cpp" />
     <ClCompile Include="BOTechTreeNode.cpp" />
-    <ClCompile Include="BOTestBoss.cpp" />
+    <ClCompile Include="BOBossInvader.cpp" />
     <ClCompile Include="BOTextManager.cpp" />
     <ClCompile Include="BOTextureManager.cpp" />
     <ClCompile Include="BOTimer.cpp" />

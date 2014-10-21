@@ -489,7 +489,7 @@ void BOTechTreeManager::Reset()
     BOTechTreeEffects::PUEffects = TechTreePUEffects();
     BOTechTreeEffects::UtilityEffects = TechTreeUtilityEffects();
 
-    m_techPointsLeft = m_maxTechPoints;    
+    m_techPointsLeft = m_maxTechPoints;
     SetTechPointText();
 }
 
@@ -807,7 +807,7 @@ void BOTechTreeManager::SetTechPoint(int p_numberOfLevels, bool p_fromSelect)
 
     if (p_fromSelect == true)
     {
-        m_techPointsLeft = m_maxTechPoints;
+    m_techPointsLeft = m_maxTechPoints;
     }
     else
     {

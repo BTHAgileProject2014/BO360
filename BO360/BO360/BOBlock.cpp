@@ -2,7 +2,7 @@
 
 BOBlock::BOBlock()
 {
-	dead = false;
+	m_dead = false;
     m_animated = false;
 }
 
@@ -23,16 +23,17 @@ bool BOBlock::Initialize(float2 p_position, int2 p_size, SDL_Texture* p_sprite, 
 		return false;
 	}
 	m_hp = p_hp;
+    m_originalHp = p_hp;
 	m_powerup = p_powerup;
 
-    if (m_powerup == PUNone)
-    {
-        m_powerup = SetRandomPowerUpRandom();
-    }
+	if (m_powerup == PUNone)
+	{
+        SetRandomPowerUpRandom();
+	}
 
     else if (m_powerup == PURandom)
     {
-        m_powerup = SetRandomPowerUpGuaranteed();
+        SetRandomPowerUpGuaranteed();
     }
 
 	m_scoreValue = p_scoreValue;
@@ -48,16 +49,17 @@ bool BOBlock::InitializeAnimated(float2 p_position, int2 p_size, int2 p_sourceSi
     }
 
     m_hp = p_hp;
+    m_originalHp = p_hp;
     m_powerup = p_powerup;
 
 	if (m_powerup == PUNone)
 	{
-		m_powerup = SetRandomPowerUpRandom();
+		SetRandomPowerUpRandom();
 	}
 
     else if (m_powerup == PURandom)
     {
-        m_powerup = SetRandomPowerUpGuaranteed();
+        SetRandomPowerUpGuaranteed();
     }
 
     m_scoreValue = p_scoreValue;
@@ -83,12 +85,20 @@ hexagon BOBlock::GetBoundingHexagon() const
 
 void BOBlock::SetDead()
 {
-	dead = true;
+    m_dead = true;
 }
 
 bool BOBlock::GetDead()
 {
-	return dead;
+    return m_dead;
+}
+
+void BOBlock::Revive()
+{
+    m_hp = m_originalHp;
+    m_dead = false;
+    m_powerup = PUNone;
+    SetRandomPowerUpRandom();
 }
 
 PowerUpTypes BOBlock::GetPowerUp()
@@ -120,11 +130,14 @@ bool BOBlock::IsAnimated() const
 
 void BOBlock::Draw()
 {
+    if (!m_dead)
+    {
     if (m_hasGlow)
     {
         m_glow.Draw();
     }
     m_animated ? BOAnimatedObject::Draw() : BOObject::Draw();
+}
 }
 
 void BOBlock::SetPosition(float2 p_position)
@@ -141,7 +154,7 @@ sphere BOBlock::GetBoundingSphere() const
 	return sphere(m_position, m_radius + 10);
 }
 
-PowerUpTypes BOBlock::SetRandomPowerUpRandom()
+void BOBlock::SetRandomPowerUpRandom()
 {
 	int spawnPU, powerupType;
 	PowerUpTypes PUType = PUNone;
@@ -188,10 +201,10 @@ PowerUpTypes BOBlock::SetRandomPowerUpRandom()
 		}
 		}
 	}
-	return PUType;
-}
+	m_powerup = PUType;
+		}
 
-PowerUpTypes BOBlock::SetRandomPowerUpGuaranteed()
+void BOBlock::SetRandomPowerUpGuaranteed()
 {
     int powerupType;
     PowerUpTypes PUType = PUNone;
@@ -202,7 +215,7 @@ PowerUpTypes BOBlock::SetRandomPowerUpGuaranteed()
         {
             PUType = PUExtraBall;
             break;
-        }
+	}
 
         case 1:
         {
@@ -241,5 +254,10 @@ PowerUpTypes BOBlock::SetRandomPowerUpGuaranteed()
         }
     }
 
-    return PUType;
+    m_powerup =  PUType;
+}
+
+int BOBlock::GetHp() const
+{
+    return m_hp;
 }

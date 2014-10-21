@@ -17,6 +17,7 @@ public:
     virtual bool Initialize(float2 p_position, int2 p_size, float scale, SDL_Texture* p_sprite);
 	virtual void Shutdown();
 	virtual void Draw();
+	virtual void DrawEntireSprite();
 
 	float2 GetPosition() const;
 	virtual void SetPosition(float2 p_position);
