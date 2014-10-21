@@ -168,9 +168,6 @@
     <ClCompile Include="BOShockwave.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="BOTechTreeNode.cpp">
-      <Filter>Source Files\TechTree</Filter>
-    </ClCompile>
     <ClCompile Include="BOTechTreeManager.cpp">
       <Filter>Source Files\TechTree</Filter>
     </ClCompile>
@@ -186,11 +183,35 @@
     <ClCompile Include="BOBlockManager.cpp">
       <Filter>Source Files\Boss</Filter>
     </ClCompile>
-    <ClCompile Include="BOTestBoss.cpp">
+    <ClCompile Include="BOGlobals.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="BOBossSegment.cpp">
+      <Filter>Source Files\Boss</Filter>
+    </ClCompile>
+    <ClCompile Include="BOBossInvader.cpp">
       <Filter>Source Files\Boss</Filter>
     </ClCompile>
     <ClCompile Include="BOGlobals.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="BOHUDElement.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="BOHUDText.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="BOHUDSprite.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="BOHUDActionBar.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="BOHUDActionBarButton.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="BOTechTreeNode.cpp">
+      <Filter>Source Files\TechTree</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -338,10 +359,31 @@
     <ClInclude Include="BOBlockManager.h">
       <Filter>Header Files\Boss</Filter>
     </ClInclude>
-    <ClInclude Include="BOTestBoss.h">
+    <ClInclude Include="BOGlobals.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BOBossSegment.h">
+      <Filter>Header Files\Boss</Filter>
+    </ClInclude>
+    <ClInclude Include="BOBossInvader.h">
       <Filter>Header Files\Boss</Filter>
     </ClInclude>
     <ClInclude Include="BOGlobals.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BOHUDElement.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BOHUDText.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BOHUDSprite.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BOHUDActionBar.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BOHUDActionBarButton.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

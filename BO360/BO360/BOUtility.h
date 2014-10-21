@@ -61,6 +61,15 @@ struct float2
 		return temp;
 	}
 
+    float2 operator-()
+    {
+        float2 temp;
+        temp.x = -x;
+        temp.y = -y;
+
+        return temp;
+    }
+
 	float2 operator-(const float2 p_input)
 	{
 		float2 temp;
@@ -358,6 +367,9 @@ struct InputMessages
 	bool xKey;
     bool fKey;
     bool tKey;
+	bool gKey;
+	bool hKey;
+	bool jKey;
 	bool escKey;
     bool enterKey;
 };
@@ -426,6 +438,9 @@ enum KeyMessages
 	xKey,
     fKey,
     tKey,
+	gKey,
+	hKey,
+	jKey,
 	escKey
 };
 
@@ -530,7 +545,8 @@ enum PowerUpTypes
 	PUFireBall,
     PUShockwave,
     PUStickyPad,
-    PUSlowTime
+    PUSlowTime,
+    PURandom
 };
 
 struct Block
@@ -558,6 +574,7 @@ enum Textures
     TEXHEXDOUBLE,
     TEXHEXARMORED,
     TEXHEXINDES,
+    TEXHEXBOSSCORE,
 
     // Blocks with power ups.
     TEXHEXPOWERUP,
@@ -600,6 +617,10 @@ enum Textures
 	TEXHUDALIVE,
     TEXHUDDEAD,
     TEXHUDCORE,
+    TEXHUDBAR,
+    TEXHUDMEGAPAD,
+    TEXHUDQUANTUMFUEL,
+    TEXHUDGIANTBALL,
 
     // Menu.
 	TEXMENUEDGE,
@@ -618,14 +639,15 @@ enum Textures
 	TEXLOCK,
 
     // Tech tree.
+	TEXTTBG,
 	TEXDEBUGDIR,
     TEXTTTOLTIPFRAME,
 
     TEXTTADJACENTACTIVE,
+    TEXTTCHOSEN,
     TEXTTHIGHLIGHTED,
     TEXTTINACTIVE,
 
-    //Tech Tree for realzzzzzz
     TEXTTSHOCKWAVE,
     TEXTTMULTISPAWN,
     TEXTTDECREASECD,
@@ -661,7 +683,7 @@ enum Textures
 
     TEXTTGIANTBALL,
 
-	/* HÄR UNDER ÄR DET BARA BANOR PLZ!!!*/
+	// Only maps from here on.
 	nrOfLevels,
 	TEXBUTTON1MAP,
 	TEXBUTTON2MAP,
@@ -670,11 +692,20 @@ enum Textures
     TEXBUTTON5MAP,
     TEXBUTTON6MAP,
     TEXBUTTON7MAP,
+    TEXBUTTON8MAP,
+    TEXBUTTON9MAP,
+    TEXBUTTON10MAP,
+    TEXBUTTON11MAP,
+    TEXBUTTON12MAP,
+    TEXBUTTON13MAP,
+    TEXBUTTON14MAP,
+    TEXBUTTON15MAP,
+    TEXBUTTON16MAP,
 	
 	texNR
 
-
 };
+
 enum TTEffects
 {
 

@@ -7,6 +7,7 @@
 #include "BOPublisher.h"
 #include "BOPUSubscriber.h"
 #include "BOPowerUpManager.h"
+#include "BOHUDManager.h"
 
 class BOPaddle : public BOAnimatedObject, public BOSubscriber, public BOPUSubscriber
 {
@@ -38,6 +39,9 @@ public:
 	float2 GetBallSpawnPosition();
     float2 GetBallStuckPosition(float angle);
 
+	void ActivateMegaPad();
+	void DeactivateMegaPad();
+
 private:
 	double m_deltaRotation;
 	bool m_movingLeft;
@@ -45,12 +49,17 @@ private:
 	int m_segments;
 	int m_minSegments;
 	int m_maxSegments;
+	int m_preMegaSegments;
 	double m_totalDegrees;
 	double m_segementDegree;
     bool m_isSticky;
     bool m_isPrevSticky;
     double m_stickyMaxTimer;
     double m_stickyCurrentTimer;
+	bool m_megaPadActive;
+	double m_megaPadTimeElapsed;
+	double m_megaPadTimeDuration;
+	double m_megaPadCoolDown;
 
     SDL_Texture* m_stickyGlow;
 };

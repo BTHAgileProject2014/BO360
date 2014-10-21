@@ -489,7 +489,7 @@ void BOTechTreeManager::Reset()
     BOTechTreeEffects::PUEffects = TechTreePUEffects();
     BOTechTreeEffects::UtilityEffects = TechTreeUtilityEffects();
 
-    m_techPointsLeft = m_maxTechPoints;    
+    m_techPointsLeft = m_maxTechPoints;
     SetTechPointText();
 }
 
@@ -652,7 +652,7 @@ void BOTechTreeManager::HandleToolTips(BOTechTreeNode* p_node)
     switch (upgradeIdentifier)
     {
     case DropBasicPowerUp:
-        p_node->SetToolTip("Makes it possible for 3 different power ups to drop. BiggerPad, Shield and Multiball.", "Start");
+        p_node->SetToolTip("Enables different power ups to be dropped.", "Start");
         p_node->SetTexture(BOTextureManager::GetTexture(TEXTTDROPBASICPOWERUP));
         break;
     case DecreasePowerUpFallSpeed:
@@ -668,7 +668,7 @@ void BOTechTreeManager::HandleToolTips(BOTechTreeNode* p_node)
         p_node->SetTexture(BOTextureManager::GetTexture(TEXTTINCREASEPADSPEED));
         break;
     case DecreaseBallSpeed:
-        p_node->SetToolTip("Decrease the speed on the ball by 15%.", "Decrease Ball Speed");
+        p_node->SetToolTip("Decrease the speed on the ball by 10%.", "Decrease Ball Speed");
         p_node->SetTexture(BOTextureManager::GetTexture(TEXTTDECREASEBALLSPEED));
         break;
     case DecreaseGravityPull:
@@ -696,7 +696,7 @@ void BOTechTreeManager::HandleToolTips(BOTechTreeNode* p_node)
         p_node->SetTexture(BOTextureManager::GetTexture(TEXTTINCREASEMAXPADSIZE));
         break;
     case ChanceDoublePadSizeIncrease:
-        p_node->SetToolTip("Gives a chance to get double effect of Bigger Pad power up. Adds a 33% chance.", "Chance To Get More Balls");
+        p_node->SetToolTip("Gives a chance to get double effect of Bigger Pad power up. Adds a 33% chance.", "Extra Segments Chance");
         p_node->SetTexture(BOTextureManager::GetTexture(TEXTTCHANCETODOUBLEPADSIZEINCREASE));
         break;
     case IncreaseMaxPadSize2:
@@ -728,19 +728,19 @@ void BOTechTreeManager::HandleToolTips(BOTechTreeNode* p_node)
         p_node->SetTexture(BOTextureManager::GetTexture(TEXTTSLOWTIME));
         break;
     case PowerUpBoost1:
-        p_node->SetToolTip("Gives a chance to get double effect of Bigger Pad and MultiBall power ups. Adds a 33% chance.", "More Segments And Balls");
+        p_node->SetToolTip("Gives a chance to get double effect of Bigger Pad and MultiBall power ups. Adds a 33% chance.", "Power Up Boost 1");
         p_node->SetTexture(BOTextureManager::GetTexture(TEXTTPOWERUPBOOST1));
         break;
     case PowerUpBoost2:
-        p_node->SetToolTip("Increases the slow duration of Slow Time by 3 and increases the damage of Fireball by 3.", "Power Up Upgrade");
+        p_node->SetToolTip("Increases the duration of Fireball and Slow Time.", "Power Up Boost 2");
         p_node->SetTexture(BOTextureManager::GetTexture(TEXTTPOWERUPBOOST2));
         break;
     case MegaPad:
-        p_node->SetToolTip("Enabled the use of Mega Pad ability. Mega Pad is an ability that the player can activate by pressing . It will increase the size to (number?) segments for 5 seconds. ", "Mega Pad");///////////////////Key press mega pad, number of segments, time?
+        p_node->SetToolTip("Enabled the use of Mega Pad ability. It will double the size of the pad for 8 seconds. There is a cooldown of [seconds]", "Mega Pad");///////////////////Key press mega pad, number of segments, time?
         p_node->SetTexture(BOTextureManager::GetTexture(TEXTTMEGAPAD));
         break;
     case StackableShield:
-        p_node->SetToolTip("Makes it possible to stack number of shields. If there already is a shield active then that shield gains the new shields life increase the amount of bounces on the shield.", "Parallel Shield");
+        p_node->SetToolTip("Makes it possible to stack shields. I.e if you have a shield and get a new shield power up the life of the new shield is added to the old shield", "Parallel Shield");
         p_node->SetTexture(BOTextureManager::GetTexture(TEXTTSTACKABLESHIELD));
         break;
     case IncreaseStartPadSize:
@@ -756,11 +756,11 @@ void BOTechTreeManager::HandleToolTips(BOTechTreeNode* p_node)
         p_node->SetTexture(BOTextureManager::GetTexture(TEXTTINCREASESTARTPADSIZE));
         break;
     case ChanceDoublePadSizeIncrease2:
-        p_node->SetToolTip("Gives a chance to get double effect of Bigger Pad power up. Adds a 33% chance.", "Extra Segments");
+        p_node->SetToolTip("Gives a chance to get double effect of Bigger Pad power up. Adds a 33% chance.", "Extra Segments Chance");
         p_node->SetTexture(BOTextureManager::GetTexture(TEXTTCHANCETODOUBLEPADSIZEINCREASE));
         break;
     case GiantBall:
-        p_node->SetToolTip("This is an activational ability that increases the ball size 4 times when pressing (button). It will last (time) seconds and has a cooldown of (cd time) seconds.", "Giant Ball");/////button, time and cd time
+        p_node->SetToolTip("This is an activational ability that increases the ball size by 2. It will last 8 seconds and has a cooldown of (cd time) seconds.", "Giant Ball");/////button, time and cd time
         p_node->SetTexture(BOTextureManager::GetTexture(TEXTTGIANTBALL));
         break;
     case MuliSpawn:
@@ -772,7 +772,7 @@ void BOTechTreeManager::HandleToolTips(BOTechTreeNode* p_node)
         p_node->SetTexture(BOTextureManager::GetTexture(TEXTTMULTIBALL));
         break;
     case SuperTank:
-        p_node->SetToolTip("Makes it so that balls doesn't lose fuel when bouncing on a block.", "Resistant Tank");
+        p_node->SetToolTip("Bouncing on blocks refills a balls fuel tanks", "Bouncy Surfaces");
         p_node->SetTexture(BOTextureManager::GetTexture(TEXTTSUPERTANK));
         break;
     case DoubleMultiBall2:
@@ -807,7 +807,7 @@ void BOTechTreeManager::SetTechPoint(int p_numberOfLevels, bool p_fromSelect)
 
     if (p_fromSelect == true)
     {
-        m_techPointsLeft = m_maxTechPoints;
+    m_techPointsLeft = m_maxTechPoints;
     }
     else
     {

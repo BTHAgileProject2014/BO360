@@ -11,6 +11,7 @@ public:
 	~BOBlockMultiTexture();
 
 	bool Hit(int p_damage);
+    void Revive();
 
 private:
 	std::vector<SDL_Texture*> m_textures;

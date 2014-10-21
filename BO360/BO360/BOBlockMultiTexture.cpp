@@ -24,3 +24,10 @@ bool BOBlockMultiTexture::Hit(int p_damage)
 
 	return result;
 }
+
+void BOBlockMultiTexture::Revive()
+{
+    BOBlock::Revive();
+    m_damage = 0;
+    SetFrame(m_damage);
+}

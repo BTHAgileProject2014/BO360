@@ -54,13 +54,14 @@ private:
 	bool m_canColide;
 	float m_speed;
 	float2 m_direction;
+	float m_originalRadius;
 	bool m_mouseCheat;
 	int2 m_windowSize;
 	float m_Fuel;
 	bool m_onFire;
 	bool m_hasCollidedWithBall;
 	double m_fireTimeElapsed;
-	const double m_fireTimeDuration = 10; // 5 seconds for fireball duration
+	double m_fireTimeDuration; // 10 seconds for fireball duration
     bool m_stuckToPad;
 	bool m_stuckToPadPrev;
     float m_stuckAngle;

@@ -12,6 +12,7 @@ BOBlockManager::~BOBlockManager()
 
 bool BOBlockManager::Initialize(std::vector<BOBlock*> p_blockList)
 {
+    m_blockList.clear();
     for (unsigned int i = 0; i < p_blockList.size(); i++)
     {
         m_blockList.push_back(p_blockList[i]);
@@ -58,7 +59,7 @@ bool BOBlockManager::CheckCollisionAgainstBlock(const BOBall* const p_ball, cons
         return false;
     }
 
-    // Normal collision text
+    // Normal collision test
     sphere ballSphere = p_ball->GetBoundingSphere();
     ballSphere.pos = ballSphere.pos - p_offset;
     float2 normal;
@@ -83,7 +84,7 @@ bool BOBlockManager::CheckCollisions(const BOBall* const p_ball, const float2 p_
     // Loop over all blocks
     for (unsigned int i = 0; i < m_blockList.size(); i++)
     {
-        if (CheckCollisionAgainstBlock(p_ball, p_offset, m_blockList[i], p_newDirOut))
+        if (!m_blockList[i]->GetDead() && CheckCollisionAgainstBlock(p_ball, p_offset, m_blockList[i], p_newDirOut))
         {
             p_hitBlockOut = m_blockList[i];
             return true;
@@ -115,4 +116,29 @@ bool BOBlockManager::RemoveBlock(BOBlock* p_block)
         }
     }
     return result;
+}
+
+bool BOBlockManager::HideBlock(BOBlock* p_block)
+{
+    bool result = false;
+    for (unsigned int i = 0; i < m_blockList.size(); i++)
+    {
+        if (m_blockList[i] == p_block)
+        {
+            m_blockList[i]->SetDead();
+            result = true;
+            break;
+        }
+    }
+    return result;
+}
+
+std::vector<BOBlock*> BOBlockManager::GetUnderlyingBlockList()
+{
+    return m_blockList;
+}
+
+bool BOBlockManager::IsEmpty() const
+{
+    return m_blockList.size() < 1;
 }

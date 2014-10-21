@@ -17,6 +17,7 @@ public:
     virtual bool Initialize(float2 p_position, int2 p_size, float scale, SDL_Texture* p_sprite);
 	virtual void Shutdown();
 	virtual void Draw();
+	virtual void DrawEntireSprite();
 
 	float2 GetPosition() const;
 	virtual void SetPosition(float2 p_position);
@@ -35,12 +36,15 @@ public:
     Uint8 GetOpacity()const;
     void SetOpacity(Uint8 p_opacity);
 
+	void SetScale(float p_scale);
+
 protected:
 	float2 m_position;
 	int2 m_size;
     double m_rotation;
 	SDL_Texture* m_sprite;
 	float m_radius;
+	float m_originalRadius;
 	float m_scale;
     Uint8 m_opacity;
 };

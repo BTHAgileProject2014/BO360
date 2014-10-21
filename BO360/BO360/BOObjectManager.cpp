@@ -2,7 +2,7 @@
 
 BOObjectManager::BOObjectManager()
 {
-
+    m_boss = 0;
 }
 
 BOObjectManager::~BOObjectManager()
@@ -12,7 +12,7 @@ BOObjectManager::~BOObjectManager()
 
 bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight, int p_LevelIndex)
 {
-	m_life = 4;
+	m_life = 4 + BOTechTreeEffects::UtilityEffects.extraLifePerLevel;
 	BOHUDManager::SetLives(m_life);
     m_continue = false;
 
@@ -69,6 +69,9 @@ bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight, int p_Le
 
 	// Add an initial ball
 	AddNewBall();
+	m_giantBallCoolDown = 0;
+	m_giantBallActive = false;
+	m_quantumFuelCoolDown = 0;
 
 	// The first ball is a subscriber for debug purposes (space to control ball)
 	BOPublisher::AddSubscriber(m_ballList[0]); 
@@ -101,6 +104,27 @@ bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight, int p_Le
 
         return false;
     }
+
+    // Enable Active abilities
+    if (BOTechTreeEffects::UtilityEffects.quantumFuelEnabled)
+    {
+        BOHUDManager::ActionBarButtonEnabled(ABB_QUANTUMFUEL, true);
+
+    }
+
+    if (BOTechTreeEffects::UtilityEffects.megaPadEnabled)
+    {
+        BOHUDManager::ActionBarButtonEnabled(ABB_MEGAPAD, true);
+
+    }
+
+    if (BOTechTreeEffects::UtilityEffects.giantBallEnabled)
+    {
+        BOHUDManager::ActionBarButtonEnabled(ABB_GIANTBALL, true);
+    }
+
+    BOHUDManager::ActionBarButtonEnabled(ABB_SHOCKWAVE, true);
+    BOHUDManager::ActionBarButtonEnabled(ABB_SLOWTIME, true);
 
 	return true;
 }
@@ -144,7 +168,7 @@ void BOObjectManager::Shutdown()
 
 void BOObjectManager::Update(double p_deltaTime)
 {
-    // First, check if we've catched all the keys
+    // First, check if we've found all the keys
     if (m_keyManager.AllKeysCatched() && m_continue)
     {
         // In that case, start blowing all existing blocks up!
@@ -218,6 +242,20 @@ void BOObjectManager::Update(double p_deltaTime)
 		    m_keyManager.Update(*m_ballList[i]);
 	    }
 	}
+	//Count down cooldown for giantball after activated
+	if (m_giantBallCoolDown > 0.0)
+	{
+		m_giantBallCoolDown -= p_deltaTime * BOPhysics::GetTimeScale();
+		if (m_giantBallCoolDown < (20 - 8) && m_giantBallActive) // 20 - 8 cooldown minus 8 = duration. 
+		{
+			m_giantBallActive = false;
+			GiantBall(); // Deactivate after 8 seconds
+	}
+	}
+    else
+    {
+        BOHUDManager::ActionBarButtonCanUse(ABB_GIANTBALL, true);
+	}
     // Check if the ball is on fire and then play sound
     if (m_ballList.size() >= 1)
     {
@@ -227,19 +265,31 @@ void BOObjectManager::Update(double p_deltaTime)
         }
     }
 
+	if (m_quantumFuelCoolDown > 0.0)
+	{
+		m_quantumFuelCoolDown -= p_deltaTime * BOPhysics::GetTimeScale();
+	}
+    else
+    {
+        BOHUDManager::ActionBarButtonCanUse(ABB_QUANTUMFUEL, true);
+    }
+
 	for (unsigned int i = 0; i < m_ballList.size(); i++)
 	{
 		m_ballList[i]->SetBallCollidedWithBall(false);
 	}
 
-    // m_boss->Update(p_deltaTime);
+    if (m_boss)
+    {
+        m_boss->Update(p_deltaTime);
+    }
 
 	UpdateParticles(p_deltaTime);
 }
 
 void BOObjectManager::Draw()
 {
-	m_background.Draw();
+	m_background.DrawEntireSprite();
     m_shockwave.DrawWave();
 	m_blackHole.DrawRotating();
 	m_keyManager.Draw();
@@ -260,9 +310,17 @@ void BOObjectManager::Draw()
         m_ballList[i]->DrawBallWithTail();
 	}
 
-    //m_boss->Draw();
+    if (m_boss)
+    {
+        m_boss->Draw();
+        // The boss will sometimes leave decimal errors in the offset, causing other things to "shake"
+        // The offset thus needs to be set to 0 after the boss is done drawing
+        BOGraphicInterface::SetOffset(float2(0, 0));
+    }
+
 	m_Shield.Draw();
 	m_paddle.Draw();
+
 }
 
 void BOObjectManager::Handle(PowerUpTypes p_type, bool p_activated)
@@ -277,8 +335,10 @@ void BOObjectManager::Handle(PowerUpTypes p_type, bool p_activated)
 				if (BOTechTreeEffects::PUEffects.stackableShield)
 				{
 					if (m_Shield.GetLifes() < BOTechTreeEffects::PUEffects.maxStackShield)
+					{
 						m_Shield.AddLife(1);
 				}
+			}
 			}
 			else
 			{
@@ -296,7 +356,6 @@ void BOObjectManager::Handle(PowerUpTypes p_type, bool p_activated)
 			{
 				AddNewBall();
 		}
-			
 		}
 		break;
 	case PUFireBall:
@@ -337,7 +396,7 @@ void BOObjectManager::Handle(InputMessages p_inputMessage)
 		{
 			if (m_ballList[i]->IsStuckToPad())
 			{
-			    m_ballList[i]->SetStuckToPad(false);
+			m_ballList[i]->SetStuckToPad(false);
                 BOSoundManager::PlaySound(SOUND_BOUNCEONPAD);
 				//m_ballList[i]->SetDirection(float2(m_ballList[i]->GetPosition().x - m_blackHole.GetPosition().x, m_ballList[i]->GetPosition().y - m_blackHole.GetPosition().y));
 	        }
@@ -348,6 +407,43 @@ void BOObjectManager::Handle(InputMessages p_inputMessage)
     {
         ActivateShockwave();
     }
+	// Activate Mega pad with G
+	if (p_inputMessage.gKey) // Lägg till activate mega pad koll om man har speccen
+	{
+		ActivateMegaPad();
+        BOHUDManager::ActionBarButtonCanUse(ABB_MEGAPAD, false);
+	}
+
+	// Activate Giant ball with h
+	if (p_inputMessage.hKey) // Lägg till activate giant ball koll om man har speccen
+	{
+        if (BOTechTreeEffects::UtilityEffects.giantBallEnabled)
+        {
+
+
+		if (m_giantBallCoolDown <= 0)
+		{
+			m_giantBallActive = true; // Activate giantball;
+			GiantBall();
+			m_giantBallCoolDown = 20 * BOTechTreeEffects::PUEffects.decreaseCD;
+                BOHUDManager::ActionBarButtonCanUse(ABB_GIANTBALL, false);
+            }
+		}
+	}
+
+	// Activate Quantum fuel
+	if (p_inputMessage.jKey) // lägg till koll om man har abilityn
+	{
+        if (BOTechTreeEffects::UtilityEffects.quantumFuelEnabled)
+        {
+		if (m_quantumFuelCoolDown <= 0)
+		{
+			QuantumFuelActivate();
+			m_quantumFuelCoolDown = 20 * BOTechTreeEffects::PUEffects.decreaseCD;
+                BOHUDManager::ActionBarButtonCanUse(ABB_QUANTUMFUEL, false);
+            }
+		}		
+	}
 
     // Activate Slow time
     if (p_inputMessage.downArrow)
@@ -372,7 +468,7 @@ bool BOObjectManager::AddNewBall()
 	// Set the direction outwards from the screen center
 	float2 ballDir = float2(0, 0);
 
-	if (!ball->Initialize(ballPos, int2(15,15), BOTextureManager::GetTexture(TEXBALL), 500.0f, ballDir, windowSize))
+	if (!ball->Initialize(ballPos, int2(15,15), BOTextureManager::GetTexture(TEXBALL), 300.0f, ballDir, windowSize))
 	{
 		ThrowInitError("BOBall");
 		return false;
@@ -391,9 +487,20 @@ bool BOObjectManager::LostGame()
 
 bool BOObjectManager::WonGame()
 {
-    bool didWin = m_keyManager.AllKeysCatched()
+    bool gameWon = false;
+    
+    // If there is a boss, check if it has been defeated
+    if (m_boss)
+    {
+        gameWon = m_boss->IsDead();
+    }
+    // Otherwise, check if we have all keys and want to move on
+    else
+    {
+        gameWon = m_keyManager.AllKeysCatched()
         && m_continue;
-	return didWin;
+}
+    return gameWon;
 }
 
 void BOObjectManager::CheckBallOutOfBounds(int p_index)
@@ -443,6 +550,15 @@ bool BOObjectManager::LoadBlocksFromMap(int p_index)
 	static const int marginX = 40;
 	static const int marginY = 50;
 
+
+    if (!BOTechTreeEffects::LevelEffects.startNodePowerups)
+    {
+	for (unsigned int i = 0; i < blockDescriptions.size(); i++)
+	{
+            blockDescriptions[i].m_powerUpType = PUNone;
+        }
+    }
+
 	for (unsigned int i = 0; i < blockDescriptions.size(); i++)
 	{
 		BOBlock* block;
@@ -467,6 +583,12 @@ bool BOObjectManager::LoadBlocksFromMap(int p_index)
                 if (blockDescriptions[i].m_powerUpType == PUNone)
                 {
                     result = block->Initialize(float2(x, y), int2(46, 42), BOTextureManager::GetTexture(TEXHEXSTANDARD), PUNone, score);
+                    block->AddGlow(float2(x, y), int2(46, 42), int2(46, 42), 0, 5, 0.12f, false, BOTextureManager::GetTexture(TEXGLOWSTANDARD));
+                }
+
+                else if (blockDescriptions[i].m_powerUpType == PURandom)
+                {
+                    result = block->Initialize(float2(x, y), int2(46, 42), BOTextureManager::GetTexture(TEXHEXPOWERUP), PURandom, score);
                     block->AddGlow(float2(x, y), int2(46, 42), int2(46, 42), 0, 5, 0.12f, false, BOTextureManager::GetTexture(TEXGLOWSTANDARD));
                 }
 
@@ -550,10 +672,14 @@ bool BOObjectManager::LoadBlocksFromMap(int p_index)
 		}
 	}
 
-
-    m_boss = new BOTestBoss();
-    m_boss->Initialize();
-
+    if (p_index == 15)
+    {
+        m_boss = new BOBossInvader();
+        if (!m_boss->Initialize())
+        {
+            ThrowInitError("BOBossInvader");
+        }
+    }
 	return true;
 }
 
@@ -616,42 +742,38 @@ void BOObjectManager::BallBlockCollision(BOBall* p_ball)
     float2 newDir;
     BOBlock* hitBlock = NULL;
 
-    // Please leave this block of commented code!
-    // It handles collision against boss blocks, but the boss is currently not feeling so well. :(
-    //if (m_boss->CheckCollisions(p_ball, newDir, hitBlock))
-    //{
-    //    BOSoundManager::PlaySound(SOUND_POP);
-    //    //std::cout << "Ball bounced on [" << i << "]" << std::endl;
 
-    //    bool blockWasKilled = hitBlock->Hit(p_ball->GetDamage());
-    //    if (blockWasKilled)
-    //    {
-    //        // Create explosion.
-    //        m_particleSystem.BlockExplosion(hitBlock->GetPosition() + m_boss->GetPosition());
+    if (m_boss && m_boss->CheckCollisions(p_ball, newDir, hitBlock))
+    {
+        BOSoundManager::PlaySound(SOUND_POP);
+        //std::cout << "Ball bounced on [" << i << "]" << std::endl;
 
-    //        // Spawn powerup if there is one
-    //        BOPowerUpManager::AddPowerUp(hitBlock->GetPowerUp(), hitBlock->GetPosition(), &m_paddle, m_blackHole.GetPosition());
+        bool blockWasKilled = hitBlock->Hit(p_ball->GetDamage());
+        if (blockWasKilled)
+        {
+            // Create explosion.
+            m_particleSystem.BlockExplosion(hitBlock->GetPosition() + m_boss->GetLatestHitOffset());
 
-    //        // Add score
-    //        BOScore::AddScore(hitBlock->GetScore());
+            // Spawn powerup if there is one
+            BOPowerUpManager::AddPowerUp(hitBlock->GetPowerUp(), hitBlock->GetPosition() + m_boss->GetLatestHitOffset(), &m_paddle, m_blackHole.GetPosition());
 
-    //        // Delete the block
-    //        if (!m_boss->KillBlock(hitBlock))
-    //        {
-    //            std::cout << "Warning! Failed to kill a block" << std::endl;
-    //        }
-    //    }
+            // Add score
+            BOScore::AddScore(hitBlock->GetScore());
 
-    //    // This if probably looks a bit ugly, so I guess I'll have to explain the logic
-    //    // If a block is killed while the ball is on fire, we don't want to change the direction
-    //    // Thus we only change the direction if the above statement is false
-    //    if (!(blockWasKilled && p_ball->IsOnFire()))
-    //    {
-    //        p_ball->SetDirection(newDir);
-    //    }
-    //    p_ball->BouncedOnHexagon();
-    //    //p_ball->SetFuel(0.0f);
-    //}
+            // Kill block
+            m_boss->KillBlock(hitBlock);
+        }
+
+        // This if probably looks a bit ugly, so I guess I'll have to explain the logic
+        // If a block is killed while the ball is on fire, we don't want to change the direction
+        // Thus we only change the direction if the above statement is false
+        if (!(blockWasKilled && p_ball->IsOnFire()))
+        {
+            p_ball->SetDirection(newDir);
+        }
+        p_ball->BouncedOnHexagon();
+        //p_ball->SetFuel(0.0f);
+    }
 
 }
 
@@ -771,6 +893,7 @@ void BOObjectManager::CheckBallToBall(int i)
 					if (BOTechTreeEffects::UtilityEffects.ballsCollideFuel)
 					{
 						m_ballList[j]->BouncedOnPad();
+						m_ballList[i]->BouncedOnPad();
 					}
 				}
 			}
@@ -857,6 +980,11 @@ void BOObjectManager::PewPewPew()
 	}
 }
 
+void BOObjectManager::ActivateMegaPad()
+{
+	m_paddle.ActivateMegaPad();
+}
+
 Textures BOObjectManager::GetTexture(PowerUpTypes p_type)
 {
     switch (p_type)
@@ -901,5 +1029,31 @@ Textures BOObjectManager::GetTexture(PowerUpTypes p_type)
             std::cout << "Error in power up block texture resolver!" << std::endl;
             return TEXHEXPOWERUP;
         }
+    }
+}
+
+void BOObjectManager::GiantBall()
+{
+	if (m_giantBallActive)
+	{
+		for (unsigned int i = 0; i < m_ballList.size(); i++)
+		{
+			m_ballList[i]->SetScale(2.0f);
+		}
+	}
+	else
+	{
+		for (unsigned int i = 0; i < m_ballList.size(); i++)
+		{
+			m_ballList[i]->SetScale(1.0f);
+		}
+	}
+}
+
+void BOObjectManager::QuantumFuelActivate()
+{
+	for (unsigned int i = 0; i < m_ballList.size(); i++)
+	{
+		m_ballList[i]->SetFuel(1.0f);
     }
 }

@@ -12,7 +12,7 @@ BOBall::~BOBall()
 
 bool BOBall::Initialize(float2 p_position, int2 p_size, SDL_Texture* p_sprite, float p_speed, float2 p_direction, int2 p_windowSize)
 {
-    if (!BOObject::Initialize(p_position, p_size, p_sprite))
+    if (!BOObject::Initialize(p_position, p_size,p_sprite))
 	{
 		return false;
 	}
@@ -27,6 +27,7 @@ bool BOBall::Initialize(float2 p_position, int2 p_size, SDL_Texture* p_sprite, f
 	m_spawned = false;
 	m_onFire = false;
 	m_fireTimeElapsed = 0; // Set duration for fireball powerup in header, const variable
+	m_fireTimeDuration = 5 + BOTechTreeEffects::LevelEffects.fireBallPUDuration;
     m_rotation = 0;
 
 	// Load texture.
@@ -93,7 +94,7 @@ void BOBall::DrawBallWithTail()
 
     int4 source = int4(0, 0, m_size.x, m_size.y);
     int4 destination = int4((int)(m_position.x - m_scale * (m_size.x / 2)), (int)(m_position.y - m_scale * (m_size.y / 2)), (int)(m_scale * m_size.x), (int)(m_scale * m_size.y));
-    BOGraphicInterface::DrawEx(m_sprite, source, destination, m_rotation, int2(7, 7), m_opacity);
+	BOGraphicInterface::DrawEx(m_sprite, source, destination, m_rotation, int2(m_scale * m_size.x/2, m_scale * m_size.y/2), m_opacity);
 
     if (m_onFire)
     {

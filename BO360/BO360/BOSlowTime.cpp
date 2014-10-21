@@ -101,11 +101,11 @@ void BOSlowTime::Activate()
         }
         if (m_charges == 0)
         {
-            BOHUDManager::SetSlowtime(false);
+            BOHUDManager::ActionBarButtonCanUse(ABB_SLOWTIME, false);
         }
         else
         {
-            BOHUDManager::SetSlowtime(true);
+            BOHUDManager::ActionBarButtonCanUse(ABB_SLOWTIME, true);
         }
     }
 }
@@ -115,7 +115,7 @@ void BOSlowTime::AddCharges(int p_charges)
     m_charges += p_charges;
     if (m_charges != 0)
     {
-        BOHUDManager::SetSlowtime(true);
+        BOHUDManager::ActionBarButtonCanUse(ABB_SLOWTIME, true);
         
     }
 }
