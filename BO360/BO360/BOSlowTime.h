@@ -3,6 +3,7 @@
 #include "BOComponent.h"
 #include "BOPhysics.h"
 #include "BOHUDManager.h"
+#include "BOSoundManager.h"
 
 class BOSlowTime: public BOComponent
 {

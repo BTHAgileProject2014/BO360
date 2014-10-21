@@ -218,6 +218,14 @@ void BOObjectManager::Update(double p_deltaTime)
 		    m_keyManager.Update(*m_ballList[i]);
 	    }
 	}
+    // Check if the ball is on fire and then play sound
+    if (m_ballList.size() >= 1)
+    {
+        if (m_ballList[0]->IsOnFire())
+        {
+            BOSoundManager::PlaySound(SOUND_THRUSTER);
+        }
+    }
 
 	for (unsigned int i = 0; i < m_ballList.size(); i++)
 	{
@@ -329,7 +337,8 @@ void BOObjectManager::Handle(InputMessages p_inputMessage)
 		{
 			if (m_ballList[i]->IsStuckToPad())
 			{
-			m_ballList[i]->SetStuckToPad(false);
+			    m_ballList[i]->SetStuckToPad(false);
+                BOSoundManager::PlaySound(SOUND_BOUNCEONPAD);
 				//m_ballList[i]->SetDirection(float2(m_ballList[i]->GetPosition().x - m_blackHole.GetPosition().x, m_ballList[i]->GetPosition().y - m_blackHole.GetPosition().y));
 	        }
         }
@@ -738,6 +747,7 @@ void BOObjectManager::ActivateShockwave()
 {
     double durationOfWave = 0.50;
     m_shockwave.BeginDrawingWave(durationOfWave);
+    BOSoundManager::PlaySound(SOUND_SHOCKWAVE);
 
     for (unsigned int i = 0; i < m_ballList.size(); i++)
     {

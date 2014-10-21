@@ -45,6 +45,7 @@ void BOShield::Update(double p_deltaTime, BOBall& p_ball)
         {
             // Set fuel when the ball have bounced on the pad
             p_ball.BouncedOnPad();
+            BOSoundManager::PlaySound(SOUND_BOUNCEONPAD);
 
             m_lifes--;
             if (m_lifes <= 0)
