@@ -35,6 +35,7 @@ public:
     double GetStickyTimer() const;
     double GetStickyTimeLeft() const;
     bool StickyGotRemoved() const;    
+    void UnsetStickyGotRemovedFlag();
 
 	float2 GetBallSpawnPosition();
     float2 GetBallStuckPosition(float angle);

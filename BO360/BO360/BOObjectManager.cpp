@@ -458,7 +458,7 @@ bool BOObjectManager::AddNewBall()
 	int2 windowSize = BOGraphicInterface::GetWindowSize();
 
 	// Set the direction outwards from the screen center
-	float2 ballDir = float2(0, 0);
+	float2 ballDir = float2(1, 0);
 
 	if (!ball->Initialize(ballPos, int2(15,15), BOTextureManager::GetTexture(TEXBALL), 300.0f, ballDir, windowSize))
 	{
@@ -467,6 +467,7 @@ bool BOObjectManager::AddNewBall()
 	}
     
     ball->BouncedOnPad();
+    ball->SetStuckToPad(true);
 
 	m_ballList.push_back(ball);
 	return true;
@@ -664,7 +665,7 @@ bool BOObjectManager::LoadBlocksFromMap(int p_index)
 		}
 	}
 
-    if (p_index == 5)
+    if (p_index == 15)
     {
         m_boss = new BOBossInvader();
         if (!m_boss->Initialize())
@@ -807,14 +808,15 @@ bool BOObjectManager::BallDied(BOBall* p_ball)
 		
 		// If no more ball in list then loose a life
 		if (m_ballList.size() == 1)
-		{
+        {
+            m_paddle.SetStickyState(false);
+            m_paddle.UnsetStickyGotRemovedFlag();
 			m_life--;
 			BOHUDManager::SetLives(m_life);
-            m_paddle.SetStickyState(false);
 			if (m_life > 0)
 			{
 				AddNewBall();
-			}
+            }
 		}
 		return true;
 	}

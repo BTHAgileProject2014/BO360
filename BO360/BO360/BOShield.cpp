@@ -42,7 +42,7 @@ void BOShield::Update(double p_deltaTime, BOBall& p_ball)
     if (m_IsActive)
     {
         if (BOPhysics::BallToSphereCollision(p_ball, m_ShieldSphere))
-        {
+        {   
             // Set fuel when the ball have bounced on the pad
             p_ball.BouncedOnPad();
 

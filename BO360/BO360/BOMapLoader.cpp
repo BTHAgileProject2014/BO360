@@ -105,7 +105,7 @@ bool BOMapLoader::LoadMap(int p_index)
     }
     case(5) :
     {
-        fileName.append("Empty.bom");
+        fileName.append("map6.bom");
         break;
     }
     case(6) :
@@ -155,7 +155,7 @@ bool BOMapLoader::LoadMap(int p_index)
     }
     case(15) :
     {
-        fileName.append("map16.bom");
+        fileName.append("Empty.bom");
         break;
     }
 	default:

@@ -323,3 +323,11 @@ bool BOPaddle::StickyGotRemoved() const
 {
     return (!m_isSticky && m_isPrevSticky);
 }
+
+void BOPaddle::UnsetStickyGotRemovedFlag()
+{
+    // This is bad bad bad
+    // Do I care? No!
+    // But seriously... This is a biproduct of the whole StickyGotRemoved() idea, so don't blame me!
+    m_isPrevSticky = m_isSticky;
+}
