@@ -593,39 +593,48 @@ void BOTextureManager::LoadTexture(std::string p_theme)
     GetInstance().textureList.push_back(texture);
 
 	GetInstance().textureList.push_back(NULL);// Lägg in en tom för att fixa nrOfLevels
-	texture = BOGraphicInterface::LoadTexture("Maps/button1Map.png");
-	GetInstance().textureList.push_back(texture);
-	texture = BOGraphicInterface::LoadTexture("Maps/button2Map.png");
-	GetInstance().textureList.push_back(texture);
+
+
+
     texture = BOGraphicInterface::LoadTexture("Maps/button3Map.png");
     GetInstance().textureList.push_back(texture);
     texture = BOGraphicInterface::LoadTexture("Maps/button4Map.png");
     GetInstance().textureList.push_back(texture);
     texture = BOGraphicInterface::LoadTexture("Maps/button5Map.png");
 	GetInstance().textureList.push_back(texture);
+
+    texture = BOGraphicInterface::LoadTexture("Maps/button1Map.png");
+    GetInstance().textureList.push_back(texture);
+    texture = BOGraphicInterface::LoadTexture("Maps/button2Map.png");
+    GetInstance().textureList.push_back(texture);
     texture = BOGraphicInterface::LoadTexture("Maps/button6Map.png");
     GetInstance().textureList.push_back(texture);
     texture = BOGraphicInterface::LoadTexture("Maps/button7Map.png");
     GetInstance().textureList.push_back(texture);
-
+    //7
 
     texture = BOGraphicInterface::LoadTexture("Maps/button16Map.png");
     GetInstance().textureList.push_back(texture);
-    texture = BOGraphicInterface::LoadTexture("Maps/button8Map.png");
-    GetInstance().textureList.push_back(texture);
+
+
+    texture = BOGraphicInterface::LoadTexture("Maps/button12Map.png");
+    GetInstance().textureList.push_back(texture);   
     texture = BOGraphicInterface::LoadTexture("Maps/button9Map.png");
     GetInstance().textureList.push_back(texture);
-    texture = BOGraphicInterface::LoadTexture("Maps/button10Map.png");
-    GetInstance().textureList.push_back(texture);
+    texture = BOGraphicInterface::LoadTexture("Maps/button14Map.png");
+    GetInstance().textureList.push_back(texture); 
     texture = BOGraphicInterface::LoadTexture("Maps/button11Map.png");
     GetInstance().textureList.push_back(texture);
-    texture = BOGraphicInterface::LoadTexture("Maps/button12Map.png");
-    GetInstance().textureList.push_back(texture);
+
     texture = BOGraphicInterface::LoadTexture("Maps/button13Map.png");
     GetInstance().textureList.push_back(texture);
-    texture = BOGraphicInterface::LoadTexture("Maps/button14Map.png");
+
+
+    texture = BOGraphicInterface::LoadTexture("Maps/button8Map.png");
     GetInstance().textureList.push_back(texture);
     texture = BOGraphicInterface::LoadTexture("Maps/button15Map.png");
+    GetInstance().textureList.push_back(texture);
+    texture = BOGraphicInterface::LoadTexture("Maps/Boss1mini.png");
     GetInstance().textureList.push_back(texture);
     
 

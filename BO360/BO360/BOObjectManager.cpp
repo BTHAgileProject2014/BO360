@@ -664,7 +664,7 @@ bool BOObjectManager::LoadBlocksFromMap(int p_index)
 		}
 	}
 
-    if (p_index == 5)
+    if (p_index == 15)
     {
         m_boss = new BOBossInvader();
         if (!m_boss->Initialize())
