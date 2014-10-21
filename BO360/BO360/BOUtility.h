@@ -383,23 +383,30 @@ enum GameState
 	DEFEAT,
     HIGHSCORESTATE,
 	LEVELSELECTOR,
-    TECHTREE
+    TECHTREE,
+    CUTSCENE
 };
 
 enum ButtonAction
 {
 	NOACTION,
+
 	QUIT,
 	EXIT,
 	STORY,
     HIGHSCORE,
+
 	RESUME,
 	NEXT,
 	RETRY,
+
 	LEVELSELECT,
 	LEVEL,
+
     TECHTREEACTION,
-    TECHTREERESET
+    TECHTREERESET,
+
+    CUTSCENEPLAY
 };
 
 enum ParticleType
@@ -675,6 +682,9 @@ enum Textures
     TEXTTINCREASESTARTPAD,
 
     TEXTTGIANTBALL,
+
+    // Cutscenes.
+    TEXCUTSCENETEXTBACKGROUND,
 
 	// Only maps from here on.
 	nrOfLevels,

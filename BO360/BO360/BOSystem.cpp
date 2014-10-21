@@ -444,6 +444,7 @@ void BOSystem::HandleAction(ButtonAction p_action)
 				BOGlobals::GAME_STATE = LEVELSELECTOR;
 				break;
 			}
+
 			case (LEVEL) :
 			{
 				int index =	m_stateManager.GetLevelIndex();
@@ -470,6 +471,7 @@ void BOSystem::HandleAction(ButtonAction p_action)
                 m_techTreeManager.SetTechPoint(index, true);
 				break;
 			}
+
             case(TECHTREEACTION) :
             {
                 // Initialize the new map

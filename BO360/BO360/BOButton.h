@@ -20,6 +20,8 @@ public:
 	ButtonAction GetAction();
 	void SetAction(ButtonAction p_action);
 
+    void UseToolTip(bool p_use);
+
 private:
 	ButtonAction m_action;
 	bool m_lit;
@@ -29,6 +31,7 @@ private:
 	SDL_Texture* m_highlighted;
 
 	BOObject m_toolTip;
+    bool m_useToolTip;
 
 	BODrawableText m_buttonText;
 	BODrawableText m_buttonTextLit;
