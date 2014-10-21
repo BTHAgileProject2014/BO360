@@ -501,6 +501,15 @@ bool BOObjectManager::LoadBlocksFromMap(int p_index)
 	static const int marginX = 40;
 	static const int marginY = 50;
 
+
+    if (!BOTechTreeEffects::LevelEffects.startNodePowerups)
+    {
+        for (unsigned int i = 0; i < blockDescriptions.size(); i++)
+        {
+            blockDescriptions[i].m_powerUpType = PUNone;
+        }
+    }
+
 	for (unsigned int i = 0; i < blockDescriptions.size(); i++)
 	{
 		BOBlock* block;

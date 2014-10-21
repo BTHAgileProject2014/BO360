@@ -2,6 +2,7 @@
 #define BOBLOCK_H_
 
 #include "BOAnimatedObject.h"
+#include "BOTechTreeEffects.h"
 
 class BOBlock : public BOAnimatedObject
 {
