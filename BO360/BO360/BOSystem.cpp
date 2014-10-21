@@ -56,10 +56,10 @@ bool BOSystem::Initialize()
 		return false;
 	}
 
-	// Initialize the texturemanager
+	// Initialize the texture manager
 	if (!BOTextureManager::Initialize("Neon"))
 	{
-		std::cout << "Initialize texturemanager failed!" << std::endl;
+		std::cout << "Initialize texture manager failed!" << std::endl;
 
 		return false;
 	}
@@ -123,7 +123,7 @@ bool BOSystem::InitializeMap()
 		return false;
 	}
 
-	// Initilialize the object manager.
+	// Initialize the object manager.
 	result = m_objectManager.Initialize(m_windowWidth, m_windowHeight, -1);
 	if (!result)
 	{
@@ -177,7 +177,7 @@ bool BOSystem::InitializeMap(int p_levelIndex)
 		return false;
 	}
 
-	// Initilialize the object manager.
+	// Initialize the object manager.
 	result = m_objectManager.Initialize(m_windowWidth, m_windowHeight, p_levelIndex);
 	if (!result)
 	{
@@ -281,7 +281,7 @@ bool BOSystem::Run()
                 m_techTreeManager.Update();
             }
 
-			// Update approperiate menu and handle the actions.
+			// Update appropriate menu and handle the actions.
 			HandleAction(m_stateManager.Update(BOGlobals::GAME_STATE));
 
 			if (m_quit)
@@ -313,7 +313,7 @@ bool BOSystem::Run()
 
 		if (renderRest)
 		{
-			// Draw approperiate menu.
+			// Draw appropriate menu.
 			m_stateManager.Draw(BOGlobals::GAME_STATE);
 
             // Draw TechTree
