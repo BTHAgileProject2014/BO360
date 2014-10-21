@@ -195,7 +195,6 @@
     <ClCompile Include="BOGlobals.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="BOTechTreeNode.cpp">
     <ClCompile Include="BOHUDElement.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -210,6 +209,9 @@
     </ClCompile>
     <ClCompile Include="BOHUDActionBarButton.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="BOTechTreeNode.cpp">
+      <Filter>Source Files\TechTree</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
