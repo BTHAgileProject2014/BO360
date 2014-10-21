@@ -44,6 +44,7 @@ void BOHUDActionBarButton::Draw()
 void BOHUDActionBarButton::SetEnabled(bool p_enabled)
 {
     m_enabled = p_enabled;
+    m_canUse = p_enabled;
 }
 
 void BOHUDActionBarButton::CanUse(bool p_canUse)

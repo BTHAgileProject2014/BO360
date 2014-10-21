@@ -105,6 +105,27 @@ bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight, int p_Le
         return false;
     }
 
+    // Enable Active abilities
+    if (BOTechTreeEffects::UtilityEffects.quantumFuelEnabled)
+    {
+        BOHUDManager::ActionBarButtonEnabled(ABB_QUANTUMFUEL, true);
+
+    }
+
+    if (BOTechTreeEffects::UtilityEffects.megaPadEnabled)
+    {
+        BOHUDManager::ActionBarButtonEnabled(ABB_MEGAPAD, true);
+
+    }
+
+    if (BOTechTreeEffects::UtilityEffects.giantBallEnabled)
+    {
+        BOHUDManager::ActionBarButtonEnabled(ABB_GIANTBALL, true);
+    }
+
+    BOHUDManager::ActionBarButtonEnabled(ABB_SHOCKWAVE, true);
+    BOHUDManager::ActionBarButtonEnabled(ABB_SLOWTIME, true);
+
 	return true;
 }
 
@@ -231,10 +252,19 @@ void BOObjectManager::Update(double p_deltaTime)
 			GiantBall(); // Deactivate after 8 seconds
 		}
 	}
+    else
+    {
+        BOHUDManager::ActionBarButtonCanUse(ABB_GIANTBALL, true);
+    }
+
 	if (m_quantumFuelCoolDown > 0.0)
 	{
 		m_quantumFuelCoolDown -= p_deltaTime * BOPhysics::GetTimeScale();
 	}
+    else
+    {
+        BOHUDManager::ActionBarButtonCanUse(ABB_QUANTUMFUEL, true);
+    }
 
 	for (unsigned int i = 0; i < m_ballList.size(); i++)
 	{
@@ -341,49 +371,60 @@ void BOObjectManager::Handle(InputMessages p_inputMessage)
         return;
     }
 
-	if (p_inputMessage.spacebarKey)
-	{
-		for (unsigned int i = 0; i < m_ballList.size(); i++)
-		{
-			if (m_ballList[i]->IsStuckToPad())
-			{
-				m_ballList[i]->SetStuckToPad(false);
-				
-				//m_ballList[i]->SetDirection(float2(m_ballList[i]->GetPosition().x - m_blackHole.GetPosition().x, m_ballList[i]->GetPosition().y - m_blackHole.GetPosition().y));
-			}
-		}
-	}
+    if (p_inputMessage.spacebarKey)
+    {
+        for (unsigned int i = 0; i < m_ballList.size(); i++)
+        {
+            if (m_ballList[i]->IsStuckToPad())
+            {
+                m_ballList[i]->SetStuckToPad(false);
+
+                //m_ballList[i]->SetDirection(float2(m_ballList[i]->GetPosition().x - m_blackHole.GetPosition().x, m_ballList[i]->GetPosition().y - m_blackHole.GetPosition().y));
+            }
+        }
+    }
 
     if (p_inputMessage.fKey && m_shockwave.Activate())
     {
         ActivateShockwave();
     }
-	// Activate Mega pad with G
-	if (p_inputMessage.gKey) // Lägg till activate mega pad koll om man har speccen
-	{
-		ActivateMegaPad();
-	}
+    // Activate Mega pad with G
+    if (p_inputMessage.gKey) // Lägg till activate mega pad koll om man har speccen
+    {
+        ActivateMegaPad();
+        BOHUDManager::ActionBarButtonCanUse(ABB_MEGAPAD, false);
+    }
 
-	// Activate Giant ball with h
-	if (p_inputMessage.hKey) // Lägg till activate giant ball koll om man har speccen
-	{
-		if (m_giantBallCoolDown <= 0)
-		{
-			m_giantBallActive = true; // Activate giantball;
-			GiantBall();
-			m_giantBallCoolDown = 20 * BOTechTreeEffects::PUEffects.decreaseCD;
-		}
-	}
+    // Activate Giant ball with h
+    if (p_inputMessage.hKey) // Lägg till activate giant ball koll om man har speccen
+    {
+        if (BOTechTreeEffects::UtilityEffects.giantBallEnabled)
+        {
 
-	// Activate Quantum fuel
-	if (p_inputMessage.jKey) // lägg till koll om man har abilityn
-	{
-		if (m_quantumFuelCoolDown <= 0)
-		{
-			QuantumFuelActivate();
-			m_quantumFuelCoolDown = 20 * BOTechTreeEffects::PUEffects.decreaseCD;
-		}		
-	}
+
+            if (m_giantBallCoolDown <= 0)
+            {
+                m_giantBallActive = true; // Activate giantball;
+                GiantBall();
+                m_giantBallCoolDown = 20 * BOTechTreeEffects::PUEffects.decreaseCD;
+                BOHUDManager::ActionBarButtonCanUse(ABB_GIANTBALL, false);
+            }
+        }
+    }
+
+    // Activate Quantum fuel
+    if (p_inputMessage.jKey) // lägg till koll om man har abilityn
+    {
+        if (BOTechTreeEffects::UtilityEffects.quantumFuelEnabled)
+        {
+            if (m_quantumFuelCoolDown <= 0)
+            {
+                QuantumFuelActivate();
+                m_quantumFuelCoolDown = 20 * BOTechTreeEffects::PUEffects.decreaseCD;
+                BOHUDManager::ActionBarButtonCanUse(ABB_QUANTUMFUEL, false);
+            }
+        }
+    }
 
     // Activate Slow time
     if (p_inputMessage.downArrow)

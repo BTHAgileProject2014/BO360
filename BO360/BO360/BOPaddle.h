@@ -7,6 +7,7 @@
 #include "BOPublisher.h"
 #include "BOPUSubscriber.h"
 #include "BOPowerUpManager.h"
+#include "BOHUDManager.h"
 
 class BOPaddle : public BOAnimatedObject, public BOSubscriber, public BOPUSubscriber
 {

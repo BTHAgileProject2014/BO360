@@ -171,6 +171,10 @@ void BOPaddle::Update(double p_deltaTime)
 	{
 		m_megaPadCoolDown -= p_deltaTime * BOPhysics::GetTimeScale();
 	}
+    else
+    {
+        BOHUDManager::ActionBarButtonCanUse(ABB_MEGAPAD, true);
+    }
 	
 	// Animate the fire 
     BOAnimatedObject::Animate(p_deltaTime);
@@ -282,17 +286,20 @@ double BOPaddle::GetStickyTimer() const
 
 void BOPaddle::ActivateMegaPad()
 {
-	if (m_megaPadCoolDown <= 0)
-	{
-		int megapad = 20;
-		m_preMegaSegments = m_segments;
-		m_totalDegrees = (m_segementDegree * megapad);
-		m_segments = megapad;
+    if (BOTechTreeEffects::UtilityEffects.megaPadEnabled)
+    {
+        if (m_megaPadCoolDown <= 0)
+        {
+            int megapad = 20;
+            m_preMegaSegments = m_segments;
+            m_totalDegrees = (m_segementDegree * megapad);
+            m_segments = megapad;
 
 
-		m_megaPadActive = true;
-		m_megaPadCoolDown = 20 * BOTechTreeEffects::PUEffects.decreaseCD;
-	}	
+            m_megaPadActive = true;
+            m_megaPadCoolDown = 20 * BOTechTreeEffects::PUEffects.decreaseCD;
+        }
+    }
 }
 
 void BOPaddle::DeactivateMegaPad()

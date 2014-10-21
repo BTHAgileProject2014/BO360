@@ -49,7 +49,7 @@ bool BOShockwave::Activate()
         if (m_isPowerUp)
         {
             m_hasShockwave = false;
-            BOHUDManager::SetShockwave(m_hasShockwave);
+            BOHUDManager::ActionBarButtonCanUse(ABB_SHOCKWAVE, false);
             return true;
         }
         else if(m_currentCooldownTime >= m_totalCooldownTime)
@@ -63,7 +63,7 @@ bool BOShockwave::Activate()
 void BOShockwave::AddShockwave(bool p_isPowerUp)
 {
     m_hasShockwave = true;
-    BOHUDManager::SetShockwave(m_hasShockwave);
+    BOHUDManager::ActionBarButtonCanUse(ABB_SHOCKWAVE, true);
     if (m_isPowerUp)
     {
         m_isPowerUp = p_isPowerUp;
