@@ -250,12 +250,20 @@ void BOObjectManager::Update(double p_deltaTime)
 		{
 			m_giantBallActive = false;
 			GiantBall(); // Deactivate after 8 seconds
-		}
+	}
 	}
     else
     {
         BOHUDManager::ActionBarButtonCanUse(ABB_GIANTBALL, true);
 	}
+    // Check if the ball is on fire and then play sound
+    if (m_ballList.size() >= 1)
+    {
+        if (m_ballList[0]->IsOnFire())
+        {
+            BOSoundManager::PlaySound(SOUND_THRUSTER);
+        }
+    }
 
 	if (m_quantumFuelCoolDown > 0.0)
 	{
@@ -293,7 +301,7 @@ void BOObjectManager::Draw()
 			    m_blockList[i]->Draw();
 		    }
 	    }
-		
+
 		
 	m_particleSystem.DrawParticles();
 
@@ -329,13 +337,13 @@ void BOObjectManager::Handle(PowerUpTypes p_type, bool p_activated)
 					if (m_Shield.GetLifes() < BOTechTreeEffects::PUEffects.maxStackShield)
 					{
 						m_Shield.AddLife(1);
-					}
 				}
+			}
 			}
 			else
 			{
-				m_Shield.SetActive(true);
-			}
+			m_Shield.SetActive(true);
+		}
 		}
 		break;
 	case PUExtraBall:
@@ -347,7 +355,7 @@ void BOObjectManager::Handle(PowerUpTypes p_type, bool p_activated)
 			if (randomNr <= (100 * BOTechTreeEffects::PUEffects.multiBallMultiplyChance))
 			{
 				AddNewBall();
-			}
+		}
 		}
 		break;
 	case PUFireBall:
@@ -388,12 +396,12 @@ void BOObjectManager::Handle(InputMessages p_inputMessage)
 		{
 			if (m_ballList[i]->IsStuckToPad())
 			{
-				m_ballList[i]->SetStuckToPad(false);
-				
+			m_ballList[i]->SetStuckToPad(false);
+                BOSoundManager::PlaySound(SOUND_BOUNCEONPAD);
 				//m_ballList[i]->SetDirection(float2(m_ballList[i]->GetPosition().x - m_blackHole.GetPosition().x, m_ballList[i]->GetPosition().y - m_blackHole.GetPosition().y));
-			}
-		}
-	}
+	        }
+        }
+    }
 
     if (p_inputMessage.fKey && m_shockwave.Activate())
     {
@@ -546,8 +554,8 @@ bool BOObjectManager::LoadBlocksFromMap(int p_index)
 
     if (!BOTechTreeEffects::LevelEffects.startNodePowerups)
     {
-        for (unsigned int i = 0; i < blockDescriptions.size(); i++)
-        {
+	for (unsigned int i = 0; i < blockDescriptions.size(); i++)
+	{
             blockDescriptions[i].m_powerUpType = PUNone;
         }
     }
@@ -863,6 +871,7 @@ void BOObjectManager::ActivateShockwave()
 {
     double durationOfWave = 0.50;
     m_shockwave.BeginDrawingWave(durationOfWave);
+    BOSoundManager::PlaySound(SOUND_SHOCKWAVE);
 
     for (unsigned int i = 0; i < m_ballList.size(); i++)
     {
@@ -1048,5 +1057,5 @@ void BOObjectManager::QuantumFuelActivate()
 	for (unsigned int i = 0; i < m_ballList.size(); i++)
 	{
 		m_ballList[i]->SetFuel(1.0f);
-	}
+    }
 }

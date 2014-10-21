@@ -99,6 +99,15 @@ bool BOSystem::Initialize()
         return false;
     }
 
+    // Initialize the sound engine.
+    if (!BOSoundManager::Initialize())
+    {
+        std::cout << "Initialize sound manager failed!" << std::endl;
+
+        return false;
+    }
+    BOSoundManager::PlaySound(SOUND_MUSIC2);
+
 	return true;
 }
 
@@ -132,14 +141,6 @@ bool BOSystem::InitializeMap()
 		return false;
 	}
 
-	// Initialize the sound engine.
-	if(!BOSoundManager::Initialize())
-	{
-		std::cout << "Initialize sound manager failed!" << std::endl;
-
-		return false;
-	}
-
 	// Initialize score
 	if (!BOScore::Initialize())
 	{
@@ -152,6 +153,9 @@ bool BOSystem::InitializeMap()
 
     // Set the time scale to 1.0
     BOPhysics::SetTimeScale(1.0f);
+
+    // play first song
+    BOSoundManager::PlaySound(SOUND_MUSIC);
 
 	return true;
 }
@@ -206,6 +210,9 @@ bool BOSystem::InitializeMap(int p_levelIndex)
 
 	// Set the time scale to 1.0
 	BOPhysics::SetTimeScale(1.0f);
+
+    // play first song
+    BOSoundManager::PlaySound(SOUND_MUSIC);
 
 	return true;
 }
@@ -520,4 +527,6 @@ void BOSystem::ShutdownMap()
 	m_powerUpManager.Shutdown();
 	BOHUDManager::Shutdown();
 	BOScore::Shutdown();
+    // Go back to menu music
+    BOSoundManager::PlaySound(SOUND_MUSIC2);
 }

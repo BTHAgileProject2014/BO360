@@ -22,12 +22,18 @@ private:
 	void operator=(BOSoundManager const&);
 	static BOSoundManager& GetInstance();
 
-	Mix_Music *m_music;
+	Mix_Music *m_runningMusic;
+    Mix_Music *m_menuMusic;
 	Mix_Chunk *m_popHex;
 	Mix_Chunk *m_dying;
 	Mix_Chunk *m_powerup;
 	Mix_Chunk *m_teleport;
-	Mix_Chunk* m_bounceOnPad;
+	Mix_Chunk *m_bounceOnPad;
+    Mix_Chunk *m_charge;
+    Mix_Chunk *m_shockwave;
+    Mix_Chunk *m_slowDown;
+    Mix_Chunk *m_slowUp;
+    Mix_Chunk *m_thruster;
 };
 
 #endif 

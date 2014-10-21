@@ -6,6 +6,7 @@
 #include "BOGraphicInterface.h"
 #include "BOTextManager.h"
 #include "BOHUDActionBar.h"
+#include "BOSoundManager.h"
 
 class BOHUDManager
 {
