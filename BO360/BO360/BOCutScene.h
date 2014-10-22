@@ -36,13 +36,14 @@ private:
     void Next();
     void Previous();
     void LoadPortraits();
+    void LoadDescriptions();
 
     int m_textIndex;
     int m_totalNumberOfTexts;
 
     std::vector<CutSceneText> m_texts;
     std::vector<SDL_Texture*> m_portraits;
-    std::vector<SDL_Texture*> m_discriptions;
+    std::vector<SDL_Texture*> m_descriptions;
 
     std::vector<BOButton> m_buttonList;
 
