@@ -58,6 +58,7 @@ private:
 	bool m_mouseCheat;
 	int2 m_windowSize;
 	float m_Fuel;
+    float m_maxFuel;
 	bool m_onFire;
 	bool m_hasCollidedWithBall;
 	double m_fireTimeElapsed;
