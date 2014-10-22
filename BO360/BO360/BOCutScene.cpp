@@ -38,7 +38,7 @@ void BOCutScene::Initialize(int2 p_size)
     m_mapDescription.Initialize(float2(10.0f, 270.0f), int2(p_size.x - 280, p_size.y - 280), BOTextureManager::GetTexture(TEXCUTSCENETEXTFRAME));
    
     m_textPosition = float2(m_textBackground.GetPosition().x + 10, m_textBackground.GetPosition().y + 10);
-    m_text.Initialize(m_textPosition, " ", int3(255, 255, 255), 50, m_textBackground.GetSize().x - 10);
+    m_text.Initialize(m_textPosition, " ", int3(255, 255, 255), 60, m_textBackground.GetSize().x - 10);
 
     m_background.SetPosition(float2(m_background.GetPosition().x + m_background.GetSize().x / 2, m_background.GetPosition().y + m_background.GetSize().y / 2));
     m_speakerPortrait.SetPosition(float2(m_speakerPortrait.GetPosition().x + m_speakerPortrait.GetSize().x / 2, m_speakerPortrait.GetPosition().y + m_speakerPortrait.GetSize().y / 2));
@@ -167,7 +167,7 @@ void BOCutScene::LoadCutscene(int p_mapIndex)
 
     if (p_mapIndex < 4)
     {
-        m_mapDescription.SetSpritePointer(m_descriptions[p_mapIndex]);
+        m_description = m_descriptions[p_mapIndex];
     }
 
     m_text.SetText(m_texts[m_textIndex].m_text, int3(255, 255, 255), m_textBackground.GetSize().x - 10);
@@ -181,6 +181,11 @@ void BOCutScene::Next()
     if (m_textIndex < m_totalNumberOfTexts - 1)
     {
         m_textIndex++;
+
+        if (m_textIndex == m_totalNumberOfTexts - 1)
+        {
+            m_mapDescription.SetSpritePointer(m_description);
+        }
 
         m_text.SetText(m_texts[m_textIndex].m_text, int3(255, 255, 255), m_textBackground.GetSize().x - 10);
         m_speakerPortrait.SetSpritePointer(m_portraits[m_texts[m_textIndex].m_portraitIndex]); 

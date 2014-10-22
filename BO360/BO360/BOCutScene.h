@@ -50,6 +50,8 @@ private:
     BOObject m_background;
     BOObject m_speakerPortrait;
     BOObject m_textBackground;
+
+    SDL_Texture* m_description;
     BOObject m_mapDescription;
 
     float2 m_textPosition;
