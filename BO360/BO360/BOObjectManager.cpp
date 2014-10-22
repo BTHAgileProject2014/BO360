@@ -975,6 +975,7 @@ void BOObjectManager::PewPewPew()
         unsigned int l = rand() % (m_blockList.size() * 5);
         if (l < m_blockList.size())
         {
+            BOSoundManager::PlaySound(SOUND_POP);
             m_particleSystem.BlockExplosion(m_blockList[l]->GetPosition());
             delete m_blockList[l];
             m_blockList.erase(m_blockList.begin() + l);
