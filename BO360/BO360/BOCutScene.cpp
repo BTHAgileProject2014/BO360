@@ -167,7 +167,7 @@ void BOCutScene::LoadCutscene(int p_mapIndex)
 
     if (p_mapIndex < 4)
     {
-        m_mapDescription.SetSpritePointer(m_descriptions[p_mapIndex]);
+        m_description = m_descriptions[p_mapIndex];
     }
 
     m_text.SetText(m_texts[m_textIndex].m_text, int3(255, 255, 255), m_textBackground.GetSize().x - 10);
@@ -181,6 +181,11 @@ void BOCutScene::Next()
     if (m_textIndex < m_totalNumberOfTexts - 1)
     {
         m_textIndex++;
+
+        if (m_textIndex == m_totalNumberOfTexts - 1)
+        {
+            m_mapDescription.SetSpritePointer(m_description);
+        }
 
         m_text.SetText(m_texts[m_textIndex].m_text, int3(255, 255, 255), m_textBackground.GetSize().x - 10);
         m_speakerPortrait.SetSpritePointer(m_portraits[m_texts[m_textIndex].m_portraitIndex]); 
