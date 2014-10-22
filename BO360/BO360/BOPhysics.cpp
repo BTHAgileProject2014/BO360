@@ -482,7 +482,12 @@ bool BOPhysics::BallBouncedOnPad(const BOBall &p_ball, const BOPaddle &p_paddle,
 	// Check if the ball hit the paddle portion
     double padStartRad = p_paddle.GetStartRotation() * DEGREES_TO_RADIANS;
     NormalizeAngle(padStartRad);
-    double angleRad = p_paddle.GetDegrees() * DEGREES_TO_RADIANS;
+    double degrees = p_paddle.GetDegrees();
+    double angleRad =  degrees * DEGREES_TO_RADIANS;
+    if (angleRad > PI * 2)
+    {
+        int breakHere = 5;
+    }
     double padEndRad = padStartRad + angleRad;
     NormalizeAngle(padEndRad);
 
@@ -506,7 +511,7 @@ bool BOPhysics::BallBouncedOnPad(const BOBall &p_ball, const BOPaddle &p_paddle,
 
 	// Apply bias (?)
     float2 bias = ApplyBias(padStartRad, padEndRad, ballAngleRad);
-    p_newDirection = bias;
+    p_newDirection = p_newDirection + bias;
     p_newDirection.normalize();
 
 	return true;
