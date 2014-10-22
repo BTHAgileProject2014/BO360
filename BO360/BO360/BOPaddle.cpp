@@ -298,6 +298,8 @@ void BOPaddle::ActivateMegaPad()
 
             m_megaPadActive = true;
             m_megaPadCoolDown = 20 * BOTechTreeEffects::PUEffects.decreaseCD;
+
+            BOSoundManager::PlaySound(SOUND_BUMP);
         }
     }
 }

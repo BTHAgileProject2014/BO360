@@ -34,6 +34,7 @@ private:
     Mix_Chunk *m_slowDown;
     Mix_Chunk *m_slowUp;
     Mix_Chunk *m_thruster;
+    Mix_Chunk *m_bump;
 };
 
 #endif 

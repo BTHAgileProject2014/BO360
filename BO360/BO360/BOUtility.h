@@ -457,7 +457,9 @@ enum Sound
     SOUND_SHOCKWAVE,
     SOUND_SLOWDOWN,
     SOUND_SLOWUP,
-    SOUND_THRUSTER
+    SOUND_THRUSTER,
+    SOUND_FUEL,
+    SOUND_BUMP
 };
 
 // Sphere for collision check

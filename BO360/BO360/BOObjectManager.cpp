@@ -421,12 +421,13 @@ void BOObjectManager::Handle(InputMessages p_inputMessage)
         {
 
 
-		if (m_giantBallCoolDown <= 0)
-		{
-			m_giantBallActive = true; // Activate giantball;
-			GiantBall();
-			m_giantBallCoolDown = 20 * BOTechTreeEffects::PUEffects.decreaseCD;
+		    if (m_giantBallCoolDown <= 0)
+		    {
+			    m_giantBallActive = true; // Activate giantball;
+			    GiantBall();
+			    m_giantBallCoolDown = 20 * BOTechTreeEffects::PUEffects.decreaseCD;
                 BOHUDManager::ActionBarButtonCanUse(ABB_GIANTBALL, false);
+                BOSoundManager::PlaySound(SOUND_BUMP);
             }
 		}
 	}
@@ -436,11 +437,12 @@ void BOObjectManager::Handle(InputMessages p_inputMessage)
 	{
         if (BOTechTreeEffects::UtilityEffects.quantumFuelEnabled)
         {
-		if (m_quantumFuelCoolDown <= 0)
-		{
-			QuantumFuelActivate();
-			m_quantumFuelCoolDown = 20 * BOTechTreeEffects::PUEffects.decreaseCD;
+		    if (m_quantumFuelCoolDown <= 0)
+		    {
+			    QuantumFuelActivate();
+			    m_quantumFuelCoolDown = 20 * BOTechTreeEffects::PUEffects.decreaseCD;
                 BOHUDManager::ActionBarButtonCanUse(ABB_QUANTUMFUEL, false);
+                BOSoundManager::PlaySound(SOUND_FUEL);
             }
 		}		
 	}
@@ -892,10 +894,11 @@ void BOObjectManager::CheckBallToBall(int i)
 				{
 					BOPhysics::BallToBallCollision(*m_ballList[i], *m_ballList[j]);
 					m_ballList[j]->SetBallCollidedWithBall(true);
+                    BOSoundManager::PlaySound(SOUND_BOUNCEONPAD);
 					if (BOTechTreeEffects::UtilityEffects.ballsCollideFuel)
 					{
 						m_ballList[j]->BouncedOnPad();
-						m_ballList[i]->BouncedOnPad();
+						m_ballList[i]->BouncedOnPad();                        
 					}
 				}
 			}

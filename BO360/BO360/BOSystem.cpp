@@ -19,6 +19,7 @@ bool BOSystem::Initialize()
 	m_deltaTime = 0;
 	m_totalTime = 0;
 	m_FPS = 0;
+    m_soundPlayed = false;
 
 	result = m_timer.Initialize();
 	if (!result)
@@ -277,6 +278,11 @@ bool BOSystem::Run()
 			{
 				// Go to defeat screen
 				BOGlobals::GAME_STATE = DEFEAT;
+                if (!m_soundPlayed)
+                {
+                    BOSoundManager::PlaySound(SOUND_DIE);
+                    m_soundPlayed = true;
+                }                
 			}
 		}
 
@@ -384,6 +390,7 @@ void BOSystem::HandleAction(ButtonAction p_action)
 			// PLAY STORY MODE.
 			case(STORY) :
 			{
+                m_soundPlayed = false;
                 // Reset tech tree
                 m_techTreeManager.Reset();
                 m_techTreeManager.SetTechPoint(0, false);
@@ -488,6 +495,7 @@ void BOSystem::HandleAction(ButtonAction p_action)
                     m_quit = true;
                 }
                 BOGlobals::GAME_STATE = RUNNING;
+                m_soundPlayed = false;
                 break;
             }
 		}
