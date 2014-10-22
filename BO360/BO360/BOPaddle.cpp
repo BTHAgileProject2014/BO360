@@ -160,7 +160,7 @@ void BOPaddle::Update(double p_deltaTime)
     
 	if (m_megaPadActive)
 	{
-		m_megaPadTimeElapsed += p_deltaTime * BOPhysics::GetTimeScale();
+		//m_megaPadTimeElapsed += p_deltaTime * BOPhysics::GetTimeScale();
 		if (m_megaPadTimeElapsed >= m_megaPadTimeDuration)
 		{
 			DeactivateMegaPad();
@@ -235,7 +235,7 @@ void BOPaddle::RemoveSegments(int p_segments)
 
 double BOPaddle::GetDegrees()const
 {
-	return m_totalDegrees + 8;
+	return m_totalDegrees;
 }
 
 float2 BOPaddle::GetBallSpawnPosition()
@@ -290,9 +290,13 @@ void BOPaddle::ActivateMegaPad()
     {
         if (m_megaPadCoolDown <= 0)
         {
-            int megapad = 20;
+            int megapad = 17;
             m_preMegaSegments = m_segments;
             m_totalDegrees = (m_segementDegree * megapad);
+            if (m_totalDegrees > 359)
+            {
+                m_totalDegrees = 359;
+            }
             m_segments = megapad;
 
 
