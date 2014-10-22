@@ -24,6 +24,7 @@ private:
 
 	Mix_Music *m_runningMusic;
     Mix_Music *m_menuMusic;
+    Mix_Music *m_bossMusic;
 	Mix_Chunk *m_popHex;
 	Mix_Chunk *m_dying;
 	Mix_Chunk *m_powerup;

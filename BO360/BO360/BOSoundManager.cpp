@@ -9,6 +9,7 @@ bool BOSoundManager::Initialize()
 {
     GetInstance().m_runningMusic = NULL;
     GetInstance().m_menuMusic = NULL;
+    GetInstance().m_bossMusic = NULL;
 	GetInstance().m_popHex = NULL;
 	GetInstance().m_dying = NULL;
 	GetInstance().m_powerup = NULL;
@@ -29,14 +30,20 @@ bool BOSoundManager::Initialize()
 	}
 
 	// Load music
-    GetInstance().m_runningMusic = Mix_LoadMUS("Sounds/themeModified.wav");
+    GetInstance().m_runningMusic = Mix_LoadMUS("Sounds/newGameplaySong.wav");
     if (GetInstance().m_runningMusic == NULL)
 	{
 		return false;
 	}
 
-    GetInstance().m_menuMusic = Mix_LoadMUS("Sounds/menuTheme.wav");
+    GetInstance().m_menuMusic = Mix_LoadMUS("Sounds/newMenuSong.wav");
     if (GetInstance().m_menuMusic == NULL)
+    {
+        return false;
+    }
+
+    GetInstance().m_bossMusic = Mix_LoadMUS("Sounds/newBossSong.wav");
+    if (GetInstance().m_bossMusic == NULL)
     {
         return false;
     }
@@ -145,6 +152,9 @@ void BOSoundManager::Shutdown()
     Mix_FreeMusic(GetInstance().m_menuMusic);
     GetInstance().m_menuMusic = NULL;
 
+    Mix_FreeMusic(GetInstance().m_bossMusic);
+    GetInstance().m_bossMusic = NULL;
+
 	Mix_Quit();
 }
 
@@ -160,8 +170,11 @@ void BOSoundManager::PlaySound(Sound p_sound)
     case SOUND_MUSIC:
         Mix_PlayMusic(GetInstance().m_runningMusic, -1);
         break;
-    case SOUND_MUSIC2:
+    case SOUND_MENUMUSIC:
         Mix_PlayMusic(GetInstance().m_menuMusic, -1);
+        break;
+    case SOUND_BOSSMUSIC:
+        Mix_PlayMusic(GetInstance().m_bossMusic, -1);
         break;
 	case SOUND_POP:
 		// Play in channel 0 so pop sound resets every time it plays

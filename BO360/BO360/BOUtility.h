@@ -456,7 +456,8 @@ enum KeyMessages
 enum Sound
 {
     SOUND_MUSIC,
-    SOUND_MUSIC2,
+    SOUND_MENUMUSIC,
+    SOUND_BOSSMUSIC,
 	SOUND_POP,
 	SOUND_DIE,
 	SOUND_POWERUP,

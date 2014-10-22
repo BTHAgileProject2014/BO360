@@ -111,7 +111,7 @@ bool BOSystem::Initialize()
 
         return false;
     }
-    BOSoundManager::PlaySound(SOUND_MUSIC2);
+    BOSoundManager::PlaySound(SOUND_MENUMUSIC);
 
 	return true;
 }
@@ -219,8 +219,15 @@ bool BOSystem::InitializeMap(int p_levelIndex)
 	// Set the time scale to 1.0
 	BOPhysics::SetTimeScale(1.0f);
 
-    // play first song
-    BOSoundManager::PlaySound(SOUND_MUSIC);
+    // play the gameplay song
+    if (p_levelIndex == 15)
+    {
+        BOSoundManager::PlaySound(SOUND_BOSSMUSIC);
+    }
+    else
+    {
+        BOSoundManager::PlaySound(SOUND_MUSIC);
+    }    
 
 	return true;
 }
@@ -556,5 +563,5 @@ void BOSystem::ShutdownMap()
 	BOHUDManager::Shutdown();
 	BOScore::Shutdown();
     // Go back to menu music
-    BOSoundManager::PlaySound(SOUND_MUSIC2);
+    BOSoundManager::PlaySound(SOUND_MENUMUSIC);
 }
