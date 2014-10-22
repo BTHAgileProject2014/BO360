@@ -406,6 +406,8 @@ enum ButtonAction
     TECHTREEACTION,
     TECHTREERESET,
 
+    CUTSCENENEXT,
+    CUTSCENEPREVIOUS,
     CUTSCENEPLAY
 };
 
@@ -685,6 +687,7 @@ enum Textures
 
     // Cutscenes.
     TEXCUTSCENETEXTBACKGROUND,
+    TEXCUTSCENETEXTFRAME,
 
 	// Only maps from here on.
 	nrOfLevels,

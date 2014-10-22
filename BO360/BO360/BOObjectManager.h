@@ -27,7 +27,6 @@
 #include "BOShockwave.h"
 #include "BOBoss.h"
 #include "BOBossInvader.h"
-#include "BOCutScene.h"
 
 class BOObjectManager : public BOComponent, public BOPUSubscriber ,public BOSubscriber
 {
@@ -79,7 +78,6 @@ private:
     BOSlowTime m_slowTime;
     BOShockwave m_shockwave;
     BOBoss* m_boss;
-    BOCutScene m_cutScene;
 
 	double m_giantBallCoolDown;
 	double m_quantumFuelCoolDown;

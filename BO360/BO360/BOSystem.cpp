@@ -91,6 +91,10 @@ bool BOSystem::Initialize()
 	}
 	m_stateManager.SetButtonActionLevel(0, LEVEL);
 
+    // Initialize the cutscene manager.
+    m_cutsceneManager.Initialize(int2(1300, 900));
+    m_cutsceneManager.LoadCutscene(0);
+
 	// Add system as an subscriber
 	BOPublisher::AddSubscriber(this);
 
@@ -204,6 +208,9 @@ bool BOSystem::InitializeMap(int p_levelIndex)
 	// Set the correct level on the HUD
 	BOHUDManager::SetLevel(p_levelIndex + 1);
 
+    // Load the cutscenes.
+    m_cutsceneManager.LoadCutscene(p_levelIndex);
+
 	// Set the time scale to 1.0
 	BOPhysics::SetTimeScale(1.0f);
 
@@ -281,9 +288,15 @@ bool BOSystem::Run()
                 m_techTreeManager.Update();
             }
 
+            // Update TechTree
+            if (BOGlobals::GAME_STATE == CUTSCENE)
+            {
+                HandleAction(m_cutsceneManager.Update());
+            }
+
 			// Update approperiate menu and handle the actions.
 			HandleAction(m_stateManager.Update(BOGlobals::GAME_STATE));
-
+            
 			if (m_quit)
 			{
 				result = false;
@@ -308,7 +321,6 @@ bool BOSystem::Run()
 
 			//RenderHUD
              BOHUDManager::Draw();
-
 		}
 
 		if (renderRest)
@@ -320,7 +332,12 @@ bool BOSystem::Run()
             if (BOGlobals::GAME_STATE == TECHTREE)
             {
                 m_techTreeManager.Draw();
+            }
 
+            // Draw cutscenes
+            if (BOGlobals::GAME_STATE == CUTSCENE)
+            {
+                m_cutsceneManager.Draw();
             }
 		}
 		BOGraphicInterface::Present();
@@ -348,6 +365,7 @@ void BOSystem::Shutdown()
 	BOTextManager::Shutdown();
 	BOHUDManager::Shutdown();
 	BOTextureManager::Shutdown();
+    m_cutsceneManager.Shutdown();
 }
 
 void BOSystem::HandleAction(ButtonAction p_action)

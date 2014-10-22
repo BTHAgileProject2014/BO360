@@ -19,17 +19,31 @@ void BOCutScene::Initialize(int2 p_size)
     m_portraits.clear();
     m_discriptions.clear();
 
-    m_nextButton.Initialize(float2(p_size.x - 260.0f, 270.0f), int2(250, 75), BOTextureManager::GetTexture(TEXMENUBUTTON), "Next", NOACTION, "");
-    m_nextButton.UseToolTip(false);
+    BOButton button;
+    button.Initialize(float2(p_size.x - 260.0f, 270.0f), int2(250, 75), BOTextureManager::GetTexture(TEXMENUBUTTON), "Next", CUTSCENENEXT, "");
+    button.UseToolTip(false);
+    m_buttonList.push_back(button);
 
-    m_playButton.Initialize(float2(p_size.x - 260.0f, 815.0f), int2(250, 75), BOTextureManager::GetTexture(TEXMENUBUTTON), "Start Map", CUTSCENEPLAY, "");
-    m_playButton.UseToolTip(false);
+    button.Initialize(float2(p_size.x - 260.0f, 355.0f), int2(250, 75), BOTextureManager::GetTexture(TEXMENUBUTTON), "Previous", CUTSCENEPREVIOUS, "");
+    button.UseToolTip(false);
+    m_buttonList.push_back(button);
 
-    m_speakerPortrait.Initialize(float2(10.0f, 10.0f), int2(250, 250), BOTextureManager::GetTexture(TEXCUTSCENETEXTBACKGROUND));
-    m_textBackground.Initialize(float2(260.0f, 10.0f), int2(p_size.x - 270, 250), BOTextureManager::GetTexture(TEXCUTSCENETEXTBACKGROUND));
-    m_mapDescription.Initialize(float2(10.0f, 270.0f), int2(p_size.x - 280, p_size.y - 280), BOTextureManager::GetTexture(TEXCUTSCENETEXTBACKGROUND));
+    button.Initialize(float2(p_size.x - 260.0f, 815.0f), int2(250, 75), BOTextureManager::GetTexture(TEXMENUBUTTON), "Start Map", CUTSCENEPLAY, "");
+    button.UseToolTip(false);
+    m_buttonList.push_back(button);
 
-    m_text.Initialize(float2(m_textBackground.GetPosition().x + 10, m_textBackground.GetPosition().y + 10), "Initialized text.", int3(255, 255, 255), 30, m_textBackground.GetSize().x - 10);
+    m_background.Initialize(float2(0.0f, 0.0f), p_size, BOTextureManager::GetTexture(TEXCUTSCENETEXTBACKGROUND));
+    m_speakerPortrait.Initialize(float2(10.0f, 10.0f), int2(250, 250), BOTextureManager::GetTexture(TEXCUTSCENETEXTFRAME));
+    m_textBackground.Initialize(float2(260.0f, 10.0f), int2(p_size.x - 270, 250), BOTextureManager::GetTexture(TEXCUTSCENETEXTFRAME));
+    m_mapDescription.Initialize(float2(10.0f, 270.0f), int2(p_size.x - 280, p_size.y - 280), BOTextureManager::GetTexture(TEXCUTSCENETEXTFRAME));
+   
+    m_textPosition = float2(m_textBackground.GetPosition().x + 10, m_textBackground.GetPosition().y + 10);
+    m_text.Initialize(m_textPosition, " ", int3(255, 255, 255), 50, m_textBackground.GetSize().x - 10);
+
+    m_background.SetPosition(float2(m_background.GetPosition().x + m_background.GetSize().x / 2, m_background.GetPosition().y + m_background.GetSize().y / 2));
+    m_speakerPortrait.SetPosition(float2(m_speakerPortrait.GetPosition().x + m_speakerPortrait.GetSize().x / 2, m_speakerPortrait.GetPosition().y + m_speakerPortrait.GetSize().y / 2));
+    m_textBackground.SetPosition(float2(m_textBackground.GetPosition().x + m_textBackground.GetSize().x / 2, m_textBackground.GetPosition().y + m_textBackground.GetSize().y / 2));
+    m_mapDescription.SetPosition(float2(m_mapDescription.GetPosition().x + m_mapDescription.GetSize().x / 2, m_mapDescription.GetPosition().y + m_mapDescription.GetSize().y / 2));
 
     BOPublisher::AddSubscriber(this);
 
@@ -55,39 +69,49 @@ void BOCutScene::Shutdown()
 
 ButtonAction BOCutScene::Update()
 {
-    ButtonAction action = NOACTION;
-
-        if (m_mouseDown && !m_mousePrev)
+    for (unsigned int i = 0; i < m_buttonList.size(); i++)
+    {
+        if (m_buttonList[i].Intersects(m_mousePosition))
         {
-            m_mousePositionPrev = m_mousePosition;
-        }
-
-        if (!m_mouseDown && m_mousePrev)
-        {
-            if (m_textsLeft && m_nextButton.Intersects(m_mousePositionPrev))
+            if (m_mouseDown && !m_mousePrev)
             {
-                m_mousePrev = m_mouseDown;
-
-                Next();
-
-                action = NOACTION;
+                m_mousePositionPrev = m_mousePosition;
             }
 
-            else if (m_playButton.Intersects(m_mousePositionPrev))
+            if (!m_mouseDown && m_mousePrev)
             {
-                m_mousePrev = m_mouseDown;
+                if (m_buttonList[i].Intersects(m_mousePositionPrev))
+                {
+                    m_mousePrev = m_mouseDown;
 
-                action = CUTSCENEPLAY;
+                    if (m_buttonList[i].GetAction() == CUTSCENENEXT)
+                    {
+                        Next();
+                    }
+
+                    else if (m_buttonList[i].GetAction() == CUTSCENEPREVIOUS)
+                    {
+                        Previous();
+                    }
+
+                    else 
+                    {
+                        return m_buttonList[i].GetAction();
+                    }
+                }
             }
         }
+    }
 
-        m_mousePrev = m_mouseDown;
+    m_mousePrev = m_mouseDown;
 
-        return action;
+    return NOACTION;
 }
 
 void BOCutScene::Draw()
 {
+    m_background.Draw();
+
     m_speakerPortrait.Draw();
 
     m_textBackground.Draw();
@@ -95,8 +119,10 @@ void BOCutScene::Draw()
 
     m_mapDescription.Draw();
 
-    m_nextButton.Draw();
-    m_playButton.Draw();
+    for (unsigned int i = 0; i < m_buttonList.size(); i++)
+    {
+        m_buttonList[i].Draw();
+    }
 }
 
 void BOCutScene::LoadCutscene(int p_mapIndex)
@@ -132,25 +158,41 @@ void BOCutScene::LoadCutscene(int p_mapIndex)
             text.m_text = line;
 
             m_texts.push_back(text);
-
-            m_totalNumberOfTexts++;
         }
     }
 
+    m_totalNumberOfTexts = m_texts.size();
     file.close();
 
-    m_text.SetText(m_texts[m_textIndex].m_text, int3(255, 255, 255), 30);
+    m_text.SetText(m_texts[m_textIndex].m_text, int3(255, 255, 255), m_textBackground.GetSize().x - 10);
     m_speakerPortrait.SetSpritePointer(m_portraits[m_texts[m_textIndex].m_portraitIndex]);
+
+    m_text.SetPosition(float2(m_textPosition.x + m_text.GetSize().x / 2, m_textPosition.y + m_text.GetSize().y / 2));
 }
 
 void BOCutScene::Next()
 {
-    if (m_textsLeft)
+    if (m_textIndex < m_totalNumberOfTexts - 1)
     {
         m_textIndex++;
 
-        m_text.SetText(m_texts[m_textIndex].m_text, int3(255, 255, 255), 30);
+        m_text.SetText(m_texts[m_textIndex].m_text, int3(255, 255, 255), m_textBackground.GetSize().x - 10);
+        m_speakerPortrait.SetSpritePointer(m_portraits[m_texts[m_textIndex].m_portraitIndex]); 
+
+        m_text.SetPosition(float2(m_textPosition.x + m_text.GetSize().x / 2, m_textPosition.y + m_text.GetSize().y / 2));
+    }
+}
+
+void BOCutScene::Previous()
+{
+    if (m_textIndex > 0)
+    {
+        m_textIndex--;
+
+        m_text.SetText(m_texts[m_textIndex].m_text, int3(255, 255, 255), m_textBackground.GetSize().x - 10);
         m_speakerPortrait.SetSpritePointer(m_portraits[m_texts[m_textIndex].m_portraitIndex]);
+
+        m_text.SetPosition(float2(m_textPosition.x + m_text.GetSize().x / 2, m_textPosition.y + m_text.GetSize().y / 2));
     }
 }
 
@@ -162,6 +204,7 @@ void BOCutScene::Handle(InputMessages p_inputMessages)
 
 void BOCutScene::LoadPortraits()
 {
-    m_portraits.push_back(BOGraphicInterface::LoadTexture("Sprites/Portraits/Captain.png"));
-    m_portraits.push_back(BOGraphicInterface::LoadTexture("Sprites/Portraits/Crewman.png"));
+    m_portraits.push_back(BOGraphicInterface::LoadTexture("Sprites/Cutscenes/Portraits/Captain.png"));
+    m_portraits.push_back(BOGraphicInterface::LoadTexture("Sprites/Cutscenes/Portraits/Crewman.png"));
+    m_portraits.push_back(BOGraphicInterface::LoadTexture("Sprites/Cutscenes/Portraits/Perry.png"));
 }

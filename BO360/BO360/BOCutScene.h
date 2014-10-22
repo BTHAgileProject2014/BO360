@@ -34,22 +34,24 @@ private:
     };
 
     void Next();
+    void Previous();
     void LoadPortraits();
 
     int m_textIndex;
     int m_totalNumberOfTexts;
-    bool m_textsLeft;
 
     std::vector<CutSceneText> m_texts;
     std::vector<SDL_Texture*> m_portraits;
     std::vector<SDL_Texture*> m_discriptions;
 
-    BOButton m_nextButton;
-    BOButton m_playButton;
+    std::vector<BOButton> m_buttonList;
 
+    BOObject m_background;
     BOObject m_speakerPortrait;
     BOObject m_textBackground;
     BOObject m_mapDescription;
+
+    float2 m_textPosition;
 
     BODrawableText m_text;
 

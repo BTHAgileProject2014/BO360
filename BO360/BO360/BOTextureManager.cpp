@@ -593,8 +593,10 @@ void BOTextureManager::LoadTexture(std::string p_theme)
     GetInstance().textureList.push_back(texture);
 
     // Cutscenes.
-    //texture = BOGraphicInterface::LoadTexture(NULL);
-    GetInstance().textureList.push_back(NULL);
+    texture = BOGraphicInterface::LoadTexture("Sprites/Cutscenes/Background.png");
+    GetInstance().textureList.push_back(texture);
+    texture = BOGraphicInterface::LoadTexture("Sprites/Cutscenes/Frame.png");
+    GetInstance().textureList.push_back(texture);
 
 	GetInstance().textureList.push_back(NULL);// Lägg in en tom för att fixa nrOfLevels
 	texture = BOGraphicInterface::LoadTexture("Maps/button1Map.png");

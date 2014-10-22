@@ -12,9 +12,6 @@ BOObjectManager::~BOObjectManager()
 
 bool BOObjectManager::Initialize(int p_windowWidth, int p_windowHeight, int p_LevelIndex)
 {
-    m_cutScene.Initialize(int2(1300, 900));
-    m_cutScene.LoadCutscene(1);
-
 	m_life = 4 + BOTechTreeEffects::UtilityEffects.extraLifePerLevel;
 	BOHUDManager::SetLives(m_life);
     m_continue = false;
