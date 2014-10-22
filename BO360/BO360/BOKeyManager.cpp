@@ -58,6 +58,7 @@ void BOKeyManager::AddKey(float2 p_position, int2 p_size, float p_scale, SDL_Tex
 
 void BOKeyManager::KeyCatched()
 {
+    BOSoundManager::PlaySound(SOUND_POP);
 	if (m_keysNeeded - m_keysCatched > 0)
 	{
 		m_keysCatched++;

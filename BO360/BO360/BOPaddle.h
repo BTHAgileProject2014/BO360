@@ -7,6 +7,7 @@
 #include "BOPublisher.h"
 #include "BOPUSubscriber.h"
 #include "BOPowerUpManager.h"
+#include "BOHUDManager.h"
 
 class BOPaddle : public BOAnimatedObject, public BOSubscriber, public BOPUSubscriber
 {
@@ -34,6 +35,7 @@ public:
     double GetStickyTimer() const;
     double GetStickyTimeLeft() const;
     bool StickyGotRemoved() const;    
+    void UnsetStickyGotRemovedFlag();
 
 	float2 GetBallSpawnPosition();
     float2 GetBallStuckPosition(float angle);

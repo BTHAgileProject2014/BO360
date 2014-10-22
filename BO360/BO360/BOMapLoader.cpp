@@ -80,37 +80,83 @@ bool BOMapLoader::LoadMap(int p_index)
 	{
 	case(0) :
 	{
-		fileName.append("map1.bom");
+		fileName.append("map3.bom");
 		break;
 	}
 	case(1) :
 	{
-		fileName.append("map2.bom");
+		fileName.append("map4.bom");
 		break;
 	}
     case(2) :
     {
-        fileName.append("map3.bom");
+        fileName.append("map5.bom");
         break;
     }
     case(3) :
     {
-        fileName.append("map4.bom");
+        fileName.append("map1.bom");
         break;
     }
     case(4) :
     {
-        fileName.append("map5.bom");
+        fileName.append("map2.bom");
         break;
     }
     case(5) :
     {
-        fileName.append("Empty.bom");
+        fileName.append("map6.bom");
         break;
     }
     case(6) :
     {
         fileName.append("map7.bom");
+        break;
+    }
+    case(7) :
+    {
+        fileName.append("map8.bom");
+        break;
+    }
+    case(8) :
+    {
+        fileName.append("map13.bom");
+        break;
+    }
+    case(9) :
+    {
+        fileName.append("map10.bom");
+        break;
+    }
+    case(10) :
+    {
+        fileName.append("map15.bom");
+        break;
+    }
+    case(11) :
+    {
+        fileName.append("map12.bom");
+        break;
+    }
+    case(12) :
+    {
+        fileName.append("map14.bom");
+        break;
+    }
+    case(13) :
+    {
+        fileName.append("map9.bom");
+        break;
+    }
+    case(14) :
+    {
+        //fileName.append("map16.bom");
+        fileName.append("cage.bom");
+        break;
+    }
+    case(15) :
+    {
+        fileName.append("Empty.bom");
         break;
     }
 	default:

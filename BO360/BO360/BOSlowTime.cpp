@@ -45,6 +45,7 @@ void BOSlowTime::Update(double p_deltaTime)
                 if (m_timeLeft < m_fadeTime)
                 {
                     FadeState = FadeOut;
+                    BOSoundManager::PlaySound(SOUND_SLOWUP);
                 }
                 break;
             case FadeIn:
@@ -89,6 +90,7 @@ void BOSlowTime::Activate()
             m_timeLeft = m_duration;
             m_active = true;
             FadeState = FadeIn;
+            BOSoundManager::PlaySound(SOUND_SLOWDOWN);
         }
         // If you want unlimited nr of charges, use m_charges = -1; in initialize
         else if (m_charges < 0)
@@ -99,11 +101,11 @@ void BOSlowTime::Activate()
         }
         if (m_charges == 0)
         {
-            BOHUDManager::SetSlowtime(false);
+            BOHUDManager::ActionBarButtonCanUse(ABB_SLOWTIME, false);
         }
         else
         {
-            BOHUDManager::SetSlowtime(true);
+            BOHUDManager::ActionBarButtonCanUse(ABB_SLOWTIME, true);
         }
     }
 }
@@ -113,7 +115,7 @@ void BOSlowTime::AddCharges(int p_charges)
     m_charges += p_charges;
     if (m_charges != 0)
     {
-        BOHUDManager::SetSlowtime(true);
+        BOHUDManager::ActionBarButtonCanUse(ABB_SLOWTIME, true);
         
     }
 }

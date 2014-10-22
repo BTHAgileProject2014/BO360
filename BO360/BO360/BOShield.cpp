@@ -27,7 +27,7 @@ bool BOShield::Initialize(int2 p_ShieldSize, SDL_Texture* p_sprite, int2 p_Windo
     m_opacity = 255;
 
 	m_ShieldSprite = p_sprite;
-	m_lifes = 1 + BOTechTreeEffects::PUEffects.shieldCharge;
+	m_lifes = 0;
 
 	return true;
 }
@@ -42,9 +42,10 @@ void BOShield::Update(double p_deltaTime, BOBall& p_ball)
     if (m_IsActive)
     {
         if (BOPhysics::BallToSphereCollision(p_ball, m_ShieldSphere))
-        {
+        {   
             // Set fuel when the ball have bounced on the pad
             p_ball.BouncedOnPad();
+            BOSoundManager::PlaySound(SOUND_BOUNCEONPAD);
 
             m_lifes--;
             if (m_lifes <= 0)
@@ -66,7 +67,14 @@ void BOShield::Draw()
 void BOShield::SetActive(bool p_IsActive)
 {
 	m_IsActive = p_IsActive;
-	m_lifes += 1 + BOTechTreeEffects::PUEffects.shieldCharge;
+	if (BOTechTreeEffects::PUEffects.stackableShield)
+	{
+		m_lifes += 1 + BOTechTreeEffects::PUEffects.shieldCharge;
+	}
+	else
+	{
+		m_lifes = 1 + BOTechTreeEffects::PUEffects.shieldCharge;
+	}
 }
 
 void BOShield::SwitchActive()

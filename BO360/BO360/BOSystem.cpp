@@ -19,6 +19,7 @@ bool BOSystem::Initialize()
 	m_deltaTime = 0;
 	m_totalTime = 0;
 	m_FPS = 0;
+    m_soundPlayed = false;
 
 	result = m_timer.Initialize();
 	if (!result)
@@ -56,10 +57,10 @@ bool BOSystem::Initialize()
 		return false;
 	}
 
-	// Initialize the texturemanager
+	// Initialize the texture manager
 	if (!BOTextureManager::Initialize("Neon"))
 	{
-		std::cout << "Initialize texturemanager failed!" << std::endl;
+		std::cout << "Initialize texture manager failed!" << std::endl;
 
 		return false;
 	}
@@ -82,7 +83,7 @@ bool BOSystem::Initialize()
 	}
 
 	// Initialize the state handler.
-	BOGlobals::GAME_STATE = CUTSCENE;
+	BOGlobals::GAME_STATE = MENU;
 	if (!m_stateManager.Initialize(int2(m_windowWidth, m_windowHeight)))
 	{
 		std::cout << "Initialize state manager failed!" << std::endl;
@@ -102,6 +103,15 @@ bool BOSystem::Initialize()
     {
         return false;
     }
+
+    // Initialize the sound engine.
+    if (!BOSoundManager::Initialize())
+    {
+        std::cout << "Initialize sound manager failed!" << std::endl;
+
+        return false;
+    }
+    BOSoundManager::PlaySound(SOUND_MUSIC2);
 
 	return true;
 }
@@ -127,19 +137,11 @@ bool BOSystem::InitializeMap()
 		return false;
 	}
 
-	// Initilialize the object manager.
+	// Initialize the object manager.
 	result = m_objectManager.Initialize(m_windowWidth, m_windowHeight, -1);
 	if (!result)
 	{
 		std::cout << "Initialize object manager failed!" << std::endl;
-
-		return false;
-	}
-
-	// Initialize the sound engine.
-	if(!BOSoundManager::Initialize())
-	{
-		std::cout << "Initialize sound manager failed!" << std::endl;
 
 		return false;
 	}
@@ -156,6 +158,9 @@ bool BOSystem::InitializeMap()
 
     // Set the time scale to 1.0
     BOPhysics::SetTimeScale(1.0f);
+
+    // play first song
+    BOSoundManager::PlaySound(SOUND_MUSIC);
 
 	return true;
 }
@@ -181,7 +186,7 @@ bool BOSystem::InitializeMap(int p_levelIndex)
 		return false;
 	}
 
-	// Initilialize the object manager.
+	// Initialize the object manager.
 	result = m_objectManager.Initialize(m_windowWidth, m_windowHeight, p_levelIndex);
 	if (!result)
 	{
@@ -213,6 +218,9 @@ bool BOSystem::InitializeMap(int p_levelIndex)
 
 	// Set the time scale to 1.0
 	BOPhysics::SetTimeScale(1.0f);
+
+    // play first song
+    BOSoundManager::PlaySound(SOUND_MUSIC);
 
 	return true;
 }
@@ -277,6 +285,11 @@ bool BOSystem::Run()
 			{
 				// Go to defeat screen
 				BOGlobals::GAME_STATE = DEFEAT;
+                if (!m_soundPlayed)
+                {
+                    BOSoundManager::PlaySound(SOUND_DIE);
+                    m_soundPlayed = true;
+                }                
 			}
 		}
 
@@ -296,7 +309,7 @@ bool BOSystem::Run()
 
 			// Update approperiate menu and handle the actions.
 			HandleAction(m_stateManager.Update(BOGlobals::GAME_STATE));
-            
+
 			if (m_quit)
 			{
 				result = false;
@@ -325,7 +338,7 @@ bool BOSystem::Run()
 
 		if (renderRest)
 		{
-			// Draw approperiate menu.
+			// Draw appropriate menu.
 			m_stateManager.Draw(BOGlobals::GAME_STATE);
 
             // Draw TechTree
@@ -395,6 +408,7 @@ void BOSystem::HandleAction(ButtonAction p_action)
 			// PLAY STORY MODE.
 			case(STORY) :
 			{
+                m_soundPlayed = false;
                 // Reset tech tree
                 m_techTreeManager.Reset();
                 m_techTreeManager.SetTechPoint(0, false);
@@ -501,6 +515,7 @@ void BOSystem::HandleAction(ButtonAction p_action)
                     m_quit = true;
                 }
                 BOGlobals::GAME_STATE = RUNNING;
+                m_soundPlayed = false;
                 break;
             }
 		}
@@ -540,4 +555,6 @@ void BOSystem::ShutdownMap()
 	m_powerUpManager.Shutdown();
 	BOHUDManager::Shutdown();
 	BOScore::Shutdown();
+    // Go back to menu music
+    BOSoundManager::PlaySound(SOUND_MUSIC2);
 }

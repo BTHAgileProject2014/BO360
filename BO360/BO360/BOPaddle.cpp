@@ -160,7 +160,7 @@ void BOPaddle::Update(double p_deltaTime)
     
 	if (m_megaPadActive)
 	{
-		m_megaPadTimeElapsed += p_deltaTime * BOPhysics::GetTimeScale();
+		//m_megaPadTimeElapsed += p_deltaTime * BOPhysics::GetTimeScale();
 		if (m_megaPadTimeElapsed >= m_megaPadTimeDuration)
 		{
 			DeactivateMegaPad();
@@ -171,6 +171,10 @@ void BOPaddle::Update(double p_deltaTime)
 	{
 		m_megaPadCoolDown -= p_deltaTime * BOPhysics::GetTimeScale();
 	}
+    else
+    {
+        BOHUDManager::ActionBarButtonCanUse(ABB_MEGAPAD, true);
+    }
 	
 	// Animate the fire 
     BOAnimatedObject::Animate(p_deltaTime);
@@ -231,7 +235,7 @@ void BOPaddle::RemoveSegments(int p_segments)
 
 double BOPaddle::GetDegrees()const
 {
-	return m_totalDegrees + 8;
+	return m_totalDegrees;
 }
 
 float2 BOPaddle::GetBallSpawnPosition()
@@ -282,17 +286,26 @@ double BOPaddle::GetStickyTimer() const
 
 void BOPaddle::ActivateMegaPad()
 {
-	if (m_megaPadCoolDown <= 0)
-	{
-		int megapad = 20;
-		m_preMegaSegments = m_segments;
-		m_totalDegrees = (m_segementDegree * megapad);
-		m_segments = megapad;
+    if (BOTechTreeEffects::UtilityEffects.megaPadEnabled)
+    {
+        if (m_megaPadCoolDown <= 0)
+        {
+            int megapad = 17;
+            m_preMegaSegments = m_segments;
+            m_totalDegrees = (m_segementDegree * megapad);
+            if (m_totalDegrees > 359)
+            {
+                m_totalDegrees = 359;
+            }
+            m_segments = megapad;
 
 
-		m_megaPadActive = true;
-		m_megaPadCoolDown = 20 * BOTechTreeEffects::PUEffects.decreaseCD;
-	}	
+            m_megaPadActive = true;
+            m_megaPadCoolDown = 20 * BOTechTreeEffects::PUEffects.decreaseCD;
+
+            BOSoundManager::PlaySound(SOUND_BUMP);
+        }
+    }
 }
 
 void BOPaddle::DeactivateMegaPad()
@@ -315,4 +328,12 @@ double BOPaddle::GetStickyTimeLeft() const
 bool BOPaddle::StickyGotRemoved() const
 {
     return (!m_isSticky && m_isPrevSticky);
+}
+
+void BOPaddle::UnsetStickyGotRemovedFlag()
+{
+    // This is bad bad bad
+    // Do I care? No!
+    // But seriously... This is a biproduct of the whole StickyGotRemoved() idea, so don't blame me!
+    m_isPrevSticky = m_isSticky;
 }

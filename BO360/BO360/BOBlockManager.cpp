@@ -59,7 +59,7 @@ bool BOBlockManager::CheckCollisionAgainstBlock(const BOBall* const p_ball, cons
         return false;
     }
 
-    // Normal collision text
+    // Normal collision test
     sphere ballSphere = p_ball->GetBoundingSphere();
     ballSphere.pos = ballSphere.pos - p_offset;
     float2 normal;

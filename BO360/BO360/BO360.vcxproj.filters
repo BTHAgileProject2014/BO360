@@ -162,9 +162,6 @@
     <ClCompile Include="BOShockwave.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="BOTechTreeNode.cpp">
-      <Filter>Source Files\TechTree</Filter>
-    </ClCompile>
     <ClCompile Include="BOTechTreeManager.cpp">
       <Filter>Source Files\TechTree</Filter>
     </ClCompile>
@@ -206,6 +203,24 @@
     </ClCompile>
     <ClCompile Include="BOCutScene.cpp">
       <Filter>Source Files\Menus and Cutscenes</Filter>
+    </ClCompile>
+    <ClCompile Include="BOHUDElement.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="BOHUDText.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="BOHUDSprite.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="BOHUDActionBar.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="BOHUDActionBarButton.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="BOTechTreeNode.cpp">
+      <Filter>Source Files\TechTree</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -367,6 +382,21 @@
     </ClInclude>
     <ClInclude Include="BOCutScene.h">
       <Filter>Header Files\Menus and Cutscenes</Filter>
+    </ClInclude>
+    <ClInclude Include="BOHUDElement.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BOHUDText.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BOHUDSprite.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BOHUDActionBar.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BOHUDActionBarButton.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

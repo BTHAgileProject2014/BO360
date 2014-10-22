@@ -63,6 +63,10 @@ float2 BOObject::GetPosition() const
 
 void BOObject::SetPosition(float2 p_position)
 {
+    if (p_position.x < -1000)
+    {
+        int breakHerePlease = 5;
+    }
 	m_position = p_position;
 }
 

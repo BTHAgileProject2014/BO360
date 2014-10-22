@@ -55,6 +55,7 @@ private:
 	double m_deltaTime;
 	double m_totalTime;
 	int m_FPS;
+    bool m_soundPlayed;
 
 	Uint32 m_timePassedMS;
 
