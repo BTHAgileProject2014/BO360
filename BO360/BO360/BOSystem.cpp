@@ -82,7 +82,7 @@ bool BOSystem::Initialize()
 	}
 
 	// Initialize the state handler.
-	BOGlobals::GAME_STATE = MENU;
+	BOGlobals::GAME_STATE = CUTSCENE;
 	if (!m_stateManager.Initialize(int2(m_windowWidth, m_windowHeight)))
 	{
 		std::cout << "Initialize state manager failed!" << std::endl;

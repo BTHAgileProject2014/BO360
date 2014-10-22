@@ -204,6 +204,7 @@ void BOCutScene::Handle(InputMessages p_inputMessages)
 
 void BOCutScene::LoadPortraits()
 {
+    m_portraits.push_back(BOGraphicInterface::LoadTexture("Sprites/Cutscenes/Portraits/None.png"));
     m_portraits.push_back(BOGraphicInterface::LoadTexture("Sprites/Cutscenes/Portraits/Captain.png"));
     m_portraits.push_back(BOGraphicInterface::LoadTexture("Sprites/Cutscenes/Portraits/Crewman.png"));
     m_portraits.push_back(BOGraphicInterface::LoadTexture("Sprites/Cutscenes/Portraits/Perry.png"));
