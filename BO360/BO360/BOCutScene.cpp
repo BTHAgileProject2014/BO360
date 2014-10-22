@@ -17,7 +17,7 @@ void BOCutScene::Initialize(int2 p_size)
 
     m_texts.clear();
     m_portraits.clear();
-    m_discriptions.clear();
+    m_descriptions.clear();
 
     BOButton button;
     button.Initialize(float2(p_size.x - 260.0f, 270.0f), int2(250, 75), BOTextureManager::GetTexture(TEXMENUBUTTON), "Next", CUTSCENENEXT, "");
@@ -48,6 +48,7 @@ void BOCutScene::Initialize(int2 p_size)
     BOPublisher::AddSubscriber(this);
 
     LoadPortraits();
+    LoadDescriptions();
 }
 
 void BOCutScene::Shutdown()
@@ -60,11 +61,11 @@ void BOCutScene::Shutdown()
     }
     m_portraits.clear();
 
-    for (unsigned int i = 0; i < m_discriptions.size(); i++)
+    for (unsigned int i = 0; i < m_descriptions.size(); i++)
     {
-        BOGraphicInterface::DestroyTexture(m_discriptions[i]);
+        BOGraphicInterface::DestroyTexture(m_descriptions[i]);
     }
-    m_discriptions.clear();
+    m_descriptions.clear();
 }
 
 ButtonAction BOCutScene::Update()
@@ -164,6 +165,11 @@ void BOCutScene::LoadCutscene(int p_mapIndex)
     m_totalNumberOfTexts = m_texts.size();
     file.close();
 
+    if (p_mapIndex < 4)
+    {
+        m_mapDescription.SetSpritePointer(m_descriptions[p_mapIndex]);
+    }
+
     m_text.SetText(m_texts[m_textIndex].m_text, int3(255, 255, 255), m_textBackground.GetSize().x - 10);
     m_speakerPortrait.SetSpritePointer(m_portraits[m_texts[m_textIndex].m_portraitIndex]);
 
@@ -208,4 +214,12 @@ void BOCutScene::LoadPortraits()
     m_portraits.push_back(BOGraphicInterface::LoadTexture("Sprites/Cutscenes/Portraits/Captain.png"));
     m_portraits.push_back(BOGraphicInterface::LoadTexture("Sprites/Cutscenes/Portraits/Crewman.png"));
     m_portraits.push_back(BOGraphicInterface::LoadTexture("Sprites/Cutscenes/Portraits/Perry.png"));
+}
+
+void BOCutScene::LoadDescriptions()
+{
+    m_descriptions.push_back(BOGraphicInterface::LoadTexture("Sprites/Descriptions/Description0.png"));
+    m_descriptions.push_back(BOGraphicInterface::LoadTexture("Sprites/Descriptions/Description1.png"));
+    m_descriptions.push_back(BOGraphicInterface::LoadTexture("Sprites/Descriptions/Description2.png"));
+    m_descriptions.push_back(BOGraphicInterface::LoadTexture("Sprites/Descriptions/Description3.png"));
 }
