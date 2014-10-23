@@ -24,6 +24,7 @@ enum BOInputKey
 	BOInput_g,
 	BOInput_h,
 	BOInput_j,
+	BOInput_m,
 	LAST_OF_BOINPUT
 };
 

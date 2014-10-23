@@ -483,11 +483,11 @@ bool BOPhysics::BallBouncedOnPad(const BOBall &p_ball, const BOPaddle &p_paddle,
     double padStartRad = p_paddle.GetStartRotation() * DEGREES_TO_RADIANS;
     NormalizeAngle(padStartRad);
     double degrees = p_paddle.GetDegrees();
-    double angleRad =  degrees * DEGREES_TO_RADIANS;
-    if (angleRad > PI * 2)
+    if (degrees > 359.99)
     {
-        int breakHere = 5;
+        degrees = 359.99;
     }
+    double angleRad =  degrees * DEGREES_TO_RADIANS;
     double padEndRad = padStartRad + angleRad;
     NormalizeAngle(padEndRad);
 

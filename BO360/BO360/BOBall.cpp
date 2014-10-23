@@ -301,17 +301,12 @@ void BOBall::SetStuckAngle(float p_stuckAngle)
 	}
     m_stuckAngle = p_stuckAngle;
 }
+
 // input false for fire off: true for fire on
 void BOBall::SetBallOnFire(bool p_setOnFire)
 {
-	if (p_setOnFire)
-	{
-		m_onFire = true;
-	}
-	else if (!p_setOnFire)
-	{
-		m_onFire = false;
-	}
+    m_onFire = p_setOnFire;
+    m_fireTimeElapsed = 0;
 }
 
 bool BOBall::IsOnFire() const
