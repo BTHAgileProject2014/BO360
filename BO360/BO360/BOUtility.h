@@ -370,6 +370,7 @@ struct InputMessages
 	bool gKey;
 	bool hKey;
 	bool jKey;
+	bool mKey;
 	bool escKey;
     bool enterKey;
 };
@@ -450,6 +451,7 @@ enum KeyMessages
 	gKey,
 	hKey,
 	jKey,
+	mKey,
 	escKey
 };
 
