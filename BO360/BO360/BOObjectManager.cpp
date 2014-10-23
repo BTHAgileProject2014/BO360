@@ -970,7 +970,8 @@ void BOObjectManager::BallNewlyLaunched(BOBall* p_ball)
 
 		if (m_ballList.size() == 1)
 		{
-			for (int i = 0; i < BOTechTreeEffects::UtilityEffects.extraBallsFirstLaunch; i++)
+			int random = rand() % 100 + 1;
+			if (random <= (100 * BOTechTreeEffects::UtilityEffects.extraBallsFirstLaunch))
 			{
 				AddNewBall();
 			}

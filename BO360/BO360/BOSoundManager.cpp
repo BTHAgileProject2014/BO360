@@ -159,9 +159,6 @@ void BOSoundManager::Shutdown()
     Mix_FreeMusic(GetInstance().m_bossMusic);
     GetInstance().m_bossMusic = NULL;
 
-	Mix_FreeMusic(GetInstance().m_playingMusic);
-	GetInstance().m_playingMusic = NULL;
-
 	Mix_Quit();
 }
 
