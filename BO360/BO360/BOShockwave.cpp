@@ -14,7 +14,7 @@ bool BOShockwave::Initialize()
 {
     m_hasShockwave = false;
     m_isPowerUp = true;
-	m_totalCooldownTime = 3 * BOTechTreeEffects::PUEffects.decreaseCD;
+	m_totalCooldownTime = 20 * BOTechTreeEffects::PUEffects.decreaseCD;
     m_currentCooldownTime = 0;
     BOPowerUpManager::AddSubscriber(this);
 
