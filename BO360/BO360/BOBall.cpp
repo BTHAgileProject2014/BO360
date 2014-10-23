@@ -176,7 +176,7 @@ void BOBall::BouncedOnHexagon()
 	m_canColide = true;
     if (BOTechTreeEffects::UtilityEffects.superBouncy)
     {
-        m_Fuel  += (m_maxFuel / 10.0f);
+        m_Fuel  += (m_maxFuel / 5.0f);
     }
 }
 
