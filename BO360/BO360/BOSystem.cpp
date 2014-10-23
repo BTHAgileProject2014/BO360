@@ -418,7 +418,7 @@ void BOSystem::HandleAction(ButtonAction p_action)
                 m_soundPlayed = false;
                 // Reset tech tree
                 m_techTreeManager.Reset();
-                m_techTreeManager.SetTechPoint(0, false);
+                m_techTreeManager.SetTechPoint(0, true);
 				BOGlobals::GAME_STATE = RUNNING;
 				if (!InitializeMap(0))
 				{
