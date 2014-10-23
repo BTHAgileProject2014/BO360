@@ -391,7 +391,10 @@ void BOSystem::HandleAction(ButtonAction p_action)
 			// QUIT, return to main menu.
 			case(QUIT) :
 			{
-				ShutdownMap();
+				if (BOGlobals::GAME_STATE != LEVELSELECTOR)
+				{
+					ShutdownMap();
+				}
 				BOGlobals::GAME_STATE = MENU;
 				m_levelManager.SetLevel(0);
 
@@ -410,10 +413,14 @@ void BOSystem::HandleAction(ButtonAction p_action)
 			case(STORY) :
 			{
                 m_soundPlayed = false;
+
                 // Reset tech tree
                 m_techTreeManager.Reset();
                 m_techTreeManager.SetTechPoint(0, true);
-				BOGlobals::GAME_STATE = RUNNING;
+
+				BOGlobals::GAME_STATE = CUTSCENE;
+                m_cutsceneManager.LoadCutscene(0);
+
 				if (!InitializeMap(0))
 				{
 					std::cout << "Press ENTER to quit." << std::endl;
@@ -443,16 +450,21 @@ void BOSystem::HandleAction(ButtonAction p_action)
 			case(NEXT) :
 			{
                 ShutdownMap();
-                BOGlobals::GAME_STATE = TECHTREE;
+                BOGlobals::GAME_STATE = CUTSCENE;
+
 				int currentLevel = m_levelManager.GetCurrentLevel();
 				int nextLevel = m_levelManager.GetNextLevel();
-				if (currentLevel == nextLevel)	// Same if last map
+
+                // Same if last map
+				if (currentLevel == nextLevel)
 				{
 					BOGlobals::GAME_STATE = MENU;
 					m_levelManager.SetLevel(0);
 				}
-                //m_techTreeManager.Reset();
-                m_techTreeManager.SetTechPoint(m_levelManager.GetCurrentLevel(), false);
+
+                m_cutsceneManager.LoadCutscene(currentLevel + 1);
+                m_techTreeManager.SetTechPoint(currentLevel, false);
+
                 break;
             }
 
@@ -468,9 +480,10 @@ void BOSystem::HandleAction(ButtonAction p_action)
 
 					m_quit = true;
 				}
-				break;
 
+				break;
 			}
+
 			case (LEVELSELECT) :
 			{
 				// Kolla index och ladda bana.
@@ -485,8 +498,7 @@ void BOSystem::HandleAction(ButtonAction p_action)
                 // Special case for the first level, skipping the tech tree
                 if (index == 0)
                 {
-                    
-                    BOGlobals::GAME_STATE = RUNNING;
+                    BOGlobals::GAME_STATE = CUTSCENE;
 
                     if (!InitializeMap(0))
                     {
@@ -495,11 +507,14 @@ void BOSystem::HandleAction(ButtonAction p_action)
                         m_quit = true;
                     }
                 }
+
                 else if (index != -1)
 				{
-					BOGlobals::GAME_STATE = TECHTREE;
+					BOGlobals::GAME_STATE = CUTSCENE;
+                    m_cutsceneManager.LoadCutscene(index);
 					m_levelManager.SetLevel(index);
 				}
+
                 m_techTreeManager.Reset();
                 m_techTreeManager.SetTechPoint(index, true);
 				break;
@@ -515,8 +530,24 @@ void BOSystem::HandleAction(ButtonAction p_action)
 
                     m_quit = true;
                 }
+
                 BOGlobals::GAME_STATE = RUNNING;
                 m_soundPlayed = false;
+                break;
+            }
+
+            case(CUTSCENEPLAY) :
+            {
+                if (m_levelManager.GetCurrentLevel() != 0)
+                {
+                    BOGlobals::GAME_STATE = TECHTREE;
+                }
+                
+                else
+                {
+                    BOGlobals::GAME_STATE = RUNNING;
+                }
+
                 break;
             }
 		}

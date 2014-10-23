@@ -118,6 +118,8 @@ bool BOSoundManager::Initialize()
         return false;
     }
 
+	GetInstance().m_playingMusic = GetInstance().m_menuMusic;
+
 	return true;
 }
 
