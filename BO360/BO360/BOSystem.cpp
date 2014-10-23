@@ -391,7 +391,10 @@ void BOSystem::HandleAction(ButtonAction p_action)
 			// QUIT, return to main menu.
 			case(QUIT) :
 			{
-				ShutdownMap();
+				if (BOGlobals::GAME_STATE != LEVELSELECTOR)
+				{
+					ShutdownMap();
+				}
 				BOGlobals::GAME_STATE = MENU;
 				m_levelManager.SetLevel(0);
 
