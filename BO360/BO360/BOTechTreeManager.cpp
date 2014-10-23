@@ -736,7 +736,7 @@ void BOTechTreeManager::HandleToolTips(BOTechTreeNode* p_node)
         p_node->SetTexture(BOTextureManager::GetTexture(TEXTTPOWERUPBOOST2));
         break;
     case MegaPad:
-        p_node->SetToolTip("Enabled the use of Mega Pad ability. It will double the size of the pad for 8 seconds. There is a cooldown of [seconds]", "Mega Pad");///////////////////Key press mega pad, number of segments, time?
+        p_node->SetToolTip("Enabled the use of Mega Pad ability. It will double the size of the pad for 8 seconds. There is a cooldown of 20 seconds", "Mega Pad");///////////////////Key press mega pad, number of segments, time?
         p_node->SetTexture(BOTextureManager::GetTexture(TEXTTMEGAPAD));
         break;
     case StackableShield:
@@ -760,7 +760,7 @@ void BOTechTreeManager::HandleToolTips(BOTechTreeNode* p_node)
         p_node->SetTexture(BOTextureManager::GetTexture(TEXTTCHANCETODOUBLEPADSIZEINCREASE));
         break;
     case GiantBall:
-        p_node->SetToolTip("This is an activational ability that increases the ball size by 2. It will last 8 seconds and has a cooldown of (cd time) seconds.", "Giant Ball");/////button, time and cd time
+        p_node->SetToolTip("This is an activational ability that increases the ball size by 2. It will last 8 seconds and has a cooldown of 20 seconds.", "Giant Ball");/////button, time and cd time
         p_node->SetTexture(BOTextureManager::GetTexture(TEXTTGIANTBALL));
         break;
     case MuliSpawn:
@@ -784,7 +784,7 @@ void BOTechTreeManager::HandleToolTips(BOTechTreeNode* p_node)
         p_node->SetTexture(BOTextureManager::GetTexture(TEXTTMULTISPAWN));
         break;
     case QuantumFuel:
-        p_node->SetToolTip("This is an activational ability that teleports fuel to all balls. The ability has a cooldown of (cd time) seconds.", "Quantum Teleporter"); //////Cd time
+        p_node->SetToolTip("This is an activational ability that teleports fuel to all balls. The ability has a cooldown of 20 seconds.", "Quantum Teleporter"); //////Cd time
         p_node->SetTexture(BOTextureManager::GetTexture(TEXTTQUANTUMFUEL));
         break;
     case DecreaseCD:
@@ -796,7 +796,7 @@ void BOTechTreeManager::HandleToolTips(BOTechTreeNode* p_node)
         p_node->SetTexture(BOTextureManager::GetTexture(TEXTTMULTISPAWN));
         break;
     case ShockWave:
-        p_node->SetToolTip("This is an activational ability that pushes all the balls away from the black hole. The ability has a cooldown of (cd time) seconds.", "Shockwave"); //////Cd time
+        p_node->SetToolTip("This is an activational ability that pushes all the balls away from the black hole. The ability has a cooldown of 20 seconds.", "Shockwave"); //////Cd time
         p_node->SetTexture(BOTextureManager::GetTexture(TEXTTSHOCKWAVE));
         break;
     }
