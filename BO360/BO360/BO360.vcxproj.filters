@@ -9,10 +9,6 @@
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
     </Filter>
-    <Filter Include="Resource Files">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
     <Filter Include="Header Files\ParticleSystem">
       <UniqueIdentifier>{7be6141a-9428-4955-9c80-54d2d45bc407}</UniqueIdentifier>
     </Filter>
@@ -24,9 +20,6 @@
     </Filter>
     <Filter Include="Source Files\Blocks">
       <UniqueIdentifier>{74ba8f60-311b-4f63-97d7-3af07db16226}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Resource Files\Icon">
-      <UniqueIdentifier>{6b7733ae-2041-4383-8fc2-72f1ffd9a19a}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\ObjectTypes">
       <UniqueIdentifier>{4c2eec49-cbe5-4a51-a46c-d64b04bdc8e0}</UniqueIdentifier>
@@ -317,9 +310,6 @@
     <ClInclude Include="BOBlockMultiTexture.h">
       <Filter>Header Files\Blocks</Filter>
     </ClInclude>
-    <ClInclude Include="resource.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="BOTextureManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -398,26 +388,11 @@
     <ClInclude Include="BOHUDActionBarButton.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Maps\Empty.bom">
-      <Filter>Resource Files\Icon</Filter>
-    </None>
-    <None Include="Maps\Filled.bom">
-      <Filter>Resource Files\Icon</Filter>
-    </None>
-    <None Include="Maps\Demo.bom">
-      <Filter>Resource Files\Icon</Filter>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="BO360.rc">
-      <Filter>Resource Files</Filter>
-    </ResourceCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="icon1.ico">
-      <Filter>Resource Files</Filter>
-    </Image>
+    <ResourceCompile Include="BO360.rc" />
   </ItemGroup>
 </Project>

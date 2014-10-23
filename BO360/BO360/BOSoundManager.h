@@ -15,6 +15,7 @@ public:
 	static void Update();
 	static void PlayPopSound();
 	static void PlaySound(Sound p_sound);
+	static void MuteSound(bool p_soundOn);
 
 private:
 	BOSoundManager() {};
@@ -36,6 +37,10 @@ private:
     Mix_Chunk *m_slowUp;
     Mix_Chunk *m_thruster;
     Mix_Chunk *m_bump;
+
+	bool m_soundOn;
+
+	Mix_Music* m_playingMusic;
 };
 
 #endif 

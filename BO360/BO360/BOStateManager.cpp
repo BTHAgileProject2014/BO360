@@ -19,7 +19,6 @@ bool BOStateManager::Initialize(int2 p_screenSize)
     result = m_menu.Initialize(float2(p_screenSize.x / 2.0f, p_screenSize.y / 2.0f), p_screenSize, menuPosition, "MAIN MENU", BOTextureManager::GetTexture(TEXMENUBG));
     m_menu.AddButton(float2(menuPosition.x, menuPosition.y + 70), int2(250, 75), menuPosition, BOTextureManager::GetTexture(TEXMENUBUTTON), "STORY MODE", STORY, "         Play arcade.");
 	m_menu.AddButton(float2(menuPosition.x, menuPosition.y + 70), int2(250, 75), menuPosition, BOTextureManager::GetTexture(TEXMENUBUTTON), "SELECT LEVEL", LEVELSELECT, "         Select level to play.");
-	m_menu.AddButton(float2(menuPosition.x, menuPosition.y + 70), int2(250, 75), menuPosition, BOTextureManager::GetTexture(TEXMENUBUTTON), "HIGHSCORE", HIGHSCORE, "         View highscore.");
     m_menu.AddButton(float2(menuPosition.x, menuPosition.y + 70), int2(250, 75), menuPosition, BOTextureManager::GetTexture(TEXMENUBUTTON), "EXIT GAME", EXIT, "         Exit the game and return to desktop.\n\nWill you really abandon your ship and its crew in their hour of need?");
 	if (!result) return false;
 
