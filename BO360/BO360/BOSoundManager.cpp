@@ -21,6 +21,8 @@ bool BOSoundManager::Initialize()
     GetInstance().m_slowUp = NULL;
     GetInstance().m_thruster = NULL;
     GetInstance().m_bump = NULL;
+	GetInstance().m_playingMusic = NULL;
+	GetInstance().m_soundOn = true;
 
 	// Initialize SDL MIxer
 	if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0)
@@ -116,6 +118,8 @@ bool BOSoundManager::Initialize()
         return false;
     }
 
+	GetInstance().m_playingMusic = GetInstance().m_menuMusic;
+
 	return true;
 }
 
@@ -165,54 +169,75 @@ void BOSoundManager::Update()
 
 void BOSoundManager::PlaySound(Sound p_sound)
 {
-	switch (p_sound)
+	if (GetInstance().m_soundOn)
 	{
-    case SOUND_MUSIC:
-        Mix_PlayMusic(GetInstance().m_runningMusic, -1);
-        break;
-    case SOUND_MENUMUSIC:
-        Mix_PlayMusic(GetInstance().m_menuMusic, -1);
-        break;
-    case SOUND_BOSSMUSIC:
-        Mix_PlayMusic(GetInstance().m_bossMusic, -1);
-        break;
-	case SOUND_POP:
-		// Play in channel 0 so pop sound resets every time it plays
-		Mix_PlayChannel(0, GetInstance().m_popHex, 0);
-		break;
-	case SOUND_DIE:
-		Mix_PlayChannel(1, GetInstance().m_dying, 0);	// Channel -1 is nearest avaiable channel
-		break;
-	case SOUND_POWERUP:
-		Mix_PlayChannel(-1, GetInstance().m_powerup, 0);
-		break;
-	case SOUND_TELEPORT:
-		Mix_PlayChannel(-1, GetInstance().m_teleport, 0);
-		break;
-	case SOUND_BOUNCEONPAD:
-		Mix_PlayChannel(-1, GetInstance().m_bounceOnPad, 0);
-		break;
-    case SOUND_CHARGE:
-        Mix_PlayChannel(2, GetInstance().m_charge, 0);
-        break;
-    case SOUND_SHOCKWAVE:
-        Mix_PlayChannel(-1, GetInstance().m_shockwave, 0);
-        break;
-    case SOUND_SLOWDOWN:
-        Mix_PlayChannel(3, GetInstance().m_slowDown, 0);
-        break;
-    case SOUND_SLOWUP:
-        Mix_PlayChannel(3, GetInstance().m_slowUp, 0);
-        break;
-    case SOUND_THRUSTER:
-        Mix_PlayChannel(4, GetInstance().m_thruster, 0);
-        break;
-    case SOUND_FUEL:
-        Mix_PlayChannel(4, GetInstance().m_thruster, 3);
-        break;
-    case SOUND_BUMP:
-        Mix_PlayChannel(-1, GetInstance().m_bump, 0);
-        break;
+		switch (p_sound)
+		{
+		case SOUND_MUSIC:
+			GetInstance().m_playingMusic = GetInstance().m_runningMusic;
+			Mix_PlayMusic(GetInstance().m_playingMusic, -1);
+			break;
+		case SOUND_MENUMUSIC:
+			GetInstance().m_playingMusic = GetInstance().m_menuMusic;
+			Mix_PlayMusic(GetInstance().m_playingMusic, -1);
+			break;
+		case SOUND_BOSSMUSIC:
+			GetInstance().m_playingMusic = GetInstance().m_bossMusic;
+			Mix_PlayMusic(GetInstance().m_playingMusic, -1);
+			break;
+		case SOUND_POP:
+			// Play in channel 0 so pop sound resets every time it plays
+			Mix_PlayChannel(0, GetInstance().m_popHex, 0);
+			break;
+		case SOUND_DIE:
+			Mix_PlayChannel(1, GetInstance().m_dying, 0);	// Channel -1 is nearest avaiable channel
+			break;
+		case SOUND_POWERUP:
+			Mix_PlayChannel(-1, GetInstance().m_powerup, 0);
+			break;
+		case SOUND_TELEPORT:
+			Mix_PlayChannel(-1, GetInstance().m_teleport, 0);
+			break;
+		case SOUND_BOUNCEONPAD:
+			Mix_PlayChannel(-1, GetInstance().m_bounceOnPad, 0);
+			break;
+		case SOUND_CHARGE:
+			Mix_PlayChannel(2, GetInstance().m_charge, 0);
+			break;
+		case SOUND_SHOCKWAVE:
+			Mix_PlayChannel(-1, GetInstance().m_shockwave, 0);
+			break;
+		case SOUND_SLOWDOWN:
+			Mix_PlayChannel(3, GetInstance().m_slowDown, 0);
+			break;
+		case SOUND_SLOWUP:
+			Mix_PlayChannel(3, GetInstance().m_slowUp, 0);
+			break;
+		case SOUND_THRUSTER:
+			Mix_PlayChannel(4, GetInstance().m_thruster, 0);
+			break;
+		case SOUND_FUEL:
+			Mix_PlayChannel(4, GetInstance().m_thruster, 3);
+			break;
+		case SOUND_BUMP:
+			Mix_PlayChannel(-1, GetInstance().m_bump, 0);
+			break;
+		}
+	}
+	if (!GetInstance().m_soundOn)
+	{
+		switch (p_sound)
+		{
+		case SOUND_MUSIC:
+			GetInstance().m_playingMusic = GetInstance().m_runningMusic;
+			break;
+		case SOUND_MENUMUSIC:
+			GetInstance().m_playingMusic = GetInstance().m_menuMusic;
+			break;
+		case SOUND_BOSSMUSIC:
+			GetInstance().m_playingMusic = GetInstance().m_bossMusic;
+			break;
+		}
 	}
 }
 
@@ -220,4 +245,18 @@ BOSoundManager& BOSoundManager::GetInstance()
 {
 	static BOSoundManager instance;
 	return instance;
+}
+
+void BOSoundManager::MuteSound(bool p_soundOn)
+{
+	GetInstance().m_soundOn = p_soundOn;
+	if (!GetInstance().m_soundOn)
+	{
+		Mix_HaltMusic();
+		Mix_HaltChannel(-1);
+	}
+	else if (Mix_PlayingMusic() == 0)
+	{
+		Mix_PlayMusic(GetInstance().m_playingMusic, -1);
+	}
 }

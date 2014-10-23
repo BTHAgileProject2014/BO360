@@ -214,6 +214,18 @@ bool BOInput::Update()
 						}
 						break;
 					}
+					case SDLK_m:
+					{
+						if (!m_buttonsPressed[BOInput_m])
+						{
+							m_buttonsPressed[BOInput_m] = true;
+							m_publisher.Notify(mKey, true);
+#ifdef DEBUG
+							std::cout << "m is pressed\n";
+#endif
+						}
+						break;
+					}
 				}
 				break;
 			}
@@ -350,6 +362,15 @@ bool BOInput::Update()
 						m_publisher.Notify(jKey, false);
 #ifdef DEBUG
 						std::cout << "g is released\n";
+#endif
+						break;
+					}
+					case SDLK_m:
+					{
+						m_buttonsPressed[BOInput_m] = false;
+						m_publisher.Notify(mKey, false);
+#ifdef DEBUG
+						std::cout << "m is released\n";
 #endif
 						break;
 					}

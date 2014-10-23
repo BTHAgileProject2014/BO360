@@ -70,7 +70,7 @@ struct TechTreeUtilityEffects
     bool megaPadEnabled; // 21
     int extraLifePerLevel; // 24
     bool giantBallEnabled; // 27
-    int extraBallsFirstLaunch; // 28, 32
+    float extraBallsFirstLaunch; // 28, 32
     bool superBouncy; // 30
     bool quantumFuelEnabled; // 33
     bool shockwaveEnabled;

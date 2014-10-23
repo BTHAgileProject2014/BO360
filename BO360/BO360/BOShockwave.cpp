@@ -23,6 +23,13 @@ bool BOShockwave::Initialize()
     m_draw = false;
     m_wave = BOTextureManager::GetTexture(TEXSHOCKWAVE);
 
+    if (BOTechTreeEffects::UtilityEffects.shockwaveEnabled)
+    {
+        AddShockwave(false);
+        m_currentCooldownTime = m_totalCooldownTime;
+        BOHUDManager::ActionBarButtonCanUse(ABB_SHOCKWAVE, true);
+    }
+
     return true;
 }
 
@@ -37,8 +44,12 @@ void BOShockwave::Update(double p_deltaTime)
     if (m_hasShockwave && !m_isPowerUp && m_currentCooldownTime < m_totalCooldownTime)
     {
         m_currentCooldownTime += p_deltaTime;
+        if (m_currentCooldownTime >= m_totalCooldownTime)
+        {
+            BOHUDManager::ActionBarButtonCanUse(ABB_SHOCKWAVE, true);
+        }
     }
-
+    
     // BOHudManager::SetShockwaveCD(GetTimeLeft());
 }
 
@@ -54,6 +65,8 @@ bool BOShockwave::Activate()
         }
         else if(m_currentCooldownTime >= m_totalCooldownTime)
         {
+            m_currentCooldownTime = 0.0f;
+            BOHUDManager::ActionBarButtonCanUse(ABB_SHOCKWAVE, false);
             return true;
         }        
     }
