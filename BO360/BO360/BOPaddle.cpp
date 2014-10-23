@@ -160,7 +160,7 @@ void BOPaddle::Update(double p_deltaTime)
     
 	if (m_megaPadActive)
 	{
-		//m_megaPadTimeElapsed += p_deltaTime * BOPhysics::GetTimeScale();
+		m_megaPadTimeElapsed += p_deltaTime * BOPhysics::GetTimeScale();
 		if (m_megaPadTimeElapsed >= m_megaPadTimeDuration)
 		{
 			DeactivateMegaPad();

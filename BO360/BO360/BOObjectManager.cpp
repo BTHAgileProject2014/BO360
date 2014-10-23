@@ -675,6 +675,13 @@ bool BOObjectManager::LoadBlocksFromMap(int p_index)
 		}
 	}
 
+    if (m_boss)
+    {
+        m_boss->Shutdown();
+        delete m_boss;  
+        m_boss = 0;
+    }
+
     if (p_index == 15)
     {
         m_boss = new BOBossInvader();
