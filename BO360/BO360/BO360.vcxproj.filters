@@ -46,6 +46,12 @@
     <Filter Include="Header Files\Boss">
       <UniqueIdentifier>{2b9fedc1-ecf1-4046-895b-7e76ba816bf1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Menus and Cutscenes">
+      <UniqueIdentifier>{a0c8732f-52e7-4d27-86fb-39280f86be78}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Menus and Cutscenes">
+      <UniqueIdentifier>{07580d18-4233-41ee-9e6f-c1a6744ffcf9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BOSystem.cpp">
@@ -105,15 +111,6 @@
     <ClCompile Include="BOShield.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="BOState.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="BOButton.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="BOStateManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="BOSoundManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -121,9 +118,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="BOTextManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="BOHUDManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="BOPUSubscriber.cpp">
@@ -194,6 +188,21 @@
     </ClCompile>
     <ClCompile Include="BOGlobals.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="BOStateManager.cpp">
+      <Filter>Source Files\Menus and Cutscenes</Filter>
+    </ClCompile>
+    <ClCompile Include="BOState.cpp">
+      <Filter>Source Files\Menus and Cutscenes</Filter>
+    </ClCompile>
+    <ClCompile Include="BOButton.cpp">
+      <Filter>Source Files\Menus and Cutscenes</Filter>
+    </ClCompile>
+    <ClCompile Include="BOHUDManager.cpp">
+      <Filter>Source Files\Menus and Cutscenes</Filter>
+    </ClCompile>
+    <ClCompile Include="BOCutScene.cpp">
+      <Filter>Source Files\Menus and Cutscenes</Filter>
     </ClCompile>
     <ClCompile Include="BOHUDElement.cpp">
       <Filter>Source Files</Filter>
@@ -275,15 +284,6 @@
     <ClInclude Include="BOShield.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="BOButton.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="BOState.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="BOStateManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="BOSoundManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -291,9 +291,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="BOTextManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="BOHUDManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="BOPUSubscriber.h">
@@ -370,6 +367,21 @@
     </ClInclude>
     <ClInclude Include="BOGlobals.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BOState.h">
+      <Filter>Header Files\Menus and Cutscenes</Filter>
+    </ClInclude>
+    <ClInclude Include="BOStateManager.h">
+      <Filter>Header Files\Menus and Cutscenes</Filter>
+    </ClInclude>
+    <ClInclude Include="BOButton.h">
+      <Filter>Header Files\Menus and Cutscenes</Filter>
+    </ClInclude>
+    <ClInclude Include="BOHUDManager.h">
+      <Filter>Header Files\Menus and Cutscenes</Filter>
+    </ClInclude>
+    <ClInclude Include="BOCutScene.h">
+      <Filter>Header Files\Menus and Cutscenes</Filter>
     </ClInclude>
     <ClInclude Include="BOHUDElement.h">
       <Filter>Header Files</Filter>

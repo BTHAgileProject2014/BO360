@@ -140,6 +140,7 @@
     <ClInclude Include="BOUtility.h" />
     <ClInclude Include="BOWindow.h" />
     <ClInclude Include="BOButton.h" />
+    <ClInclude Include="BOCutScene.h" />
     <ClInclude Include="BOHUDElement.h" />
     <ClInclude Include="resource.h" />
   </ItemGroup>
@@ -154,6 +155,7 @@
     <ClCompile Include="BOBlockMultiTexture.cpp" />
     <ClCompile Include="BOBoss.cpp" />
     <ClCompile Include="BOComponent.cpp" />
+    <ClCompile Include="BOCutScene.cpp" />
     <ClCompile Include="BODrawableText.cpp" />
     <ClCompile Include="BOGlobals.cpp" />
     <ClCompile Include="BOGraphicInterface.cpp" />

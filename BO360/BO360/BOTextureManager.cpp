@@ -592,6 +592,12 @@ void BOTextureManager::LoadTexture(std::string p_theme)
     texture = BOGraphicInterface::LoadTexture("Sprites/Tech Tree/Icons/Tier 3/GiantBall.png");//TEXTTGIANTBALL
     GetInstance().textureList.push_back(texture);
 
+    // Cutscenes.
+    texture = BOGraphicInterface::LoadTexture("Sprites/Cutscenes/Background.png");
+    GetInstance().textureList.push_back(texture);
+    texture = BOGraphicInterface::LoadTexture("Sprites/Cutscenes/Frame.png");
+    GetInstance().textureList.push_back(texture);
+
 	GetInstance().textureList.push_back(NULL);// Lägg in en tom för att fixa nrOfLevels
 
 

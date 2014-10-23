@@ -15,6 +15,7 @@ bool BOButton::Initialize(float2 p_position, int2 p_size, SDL_Texture* p_sprite,
     BOObject::Initialize(p_position, p_size, NULL);
 	m_action = p_action;
 	m_name = p_name;
+    m_useToolTip = true;
 
 	// Load non highlighted texture.
 	m_nonHighlighted = p_sprite;
@@ -106,7 +107,10 @@ void BOButton::Draw()
 	// Draw tool tip if selected.
 	else if (m_lit)
 	{
-		m_toolTip.Draw();
+        if (m_useToolTip)
+        {
+            m_toolTip.Draw();
+        }
 		m_buttonTextLit.Draw();
 		m_buttonTooltipText.Draw();
 	}
@@ -131,4 +135,9 @@ void BOButton::Shutdown()
 	m_buttonText.Shutdown();
 	m_buttonTextLit.Shutdown();
 	m_buttonTooltipText.Shutdown();
+}
+
+void BOButton::UseToolTip(bool p_use)
+{
+    m_useToolTip = p_use;
 }

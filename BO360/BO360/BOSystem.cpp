@@ -19,6 +19,7 @@ bool BOSystem::Initialize()
 	m_deltaTime = 0;
 	m_totalTime = 0;
 	m_FPS = 0;
+    m_soundPlayed = false;
 
 	result = m_timer.Initialize();
 	if (!result)
@@ -91,6 +92,10 @@ bool BOSystem::Initialize()
 	}
 	m_stateManager.SetButtonActionLevel(0, LEVEL);
 
+    // Initialize the cutscene manager.
+    m_cutsceneManager.Initialize(int2(1300, 900));
+    m_cutsceneManager.LoadCutscene(0);
+
 	// Add system as an subscriber
 	BOPublisher::AddSubscriber(this);
 
@@ -106,7 +111,7 @@ bool BOSystem::Initialize()
 
         return false;
     }
-    BOSoundManager::PlaySound(SOUND_MUSIC2);
+    BOSoundManager::PlaySound(SOUND_MENUMUSIC);
 
 	return true;
 }
@@ -208,11 +213,21 @@ bool BOSystem::InitializeMap(int p_levelIndex)
 	// Set the correct level on the HUD
 	BOHUDManager::SetLevel(p_levelIndex + 1);
 
+    // Load the cutscenes.
+    m_cutsceneManager.LoadCutscene(p_levelIndex);
+
 	// Set the time scale to 1.0
 	BOPhysics::SetTimeScale(1.0f);
 
-    // play first song
-    BOSoundManager::PlaySound(SOUND_MUSIC);
+    // play the gameplay song
+    if (p_levelIndex == 15)
+    {
+        BOSoundManager::PlaySound(SOUND_BOSSMUSIC);
+    }
+    else
+    {
+        BOSoundManager::PlaySound(SOUND_MUSIC);
+    }    
 
 	return true;
 }
@@ -277,6 +292,11 @@ bool BOSystem::Run()
 			{
 				// Go to defeat screen
 				BOGlobals::GAME_STATE = DEFEAT;
+                if (!m_soundPlayed)
+                {
+                    BOSoundManager::PlaySound(SOUND_DIE);
+                    m_soundPlayed = true;
+                }                
 			}
 		}
 
@@ -288,7 +308,13 @@ bool BOSystem::Run()
                 m_techTreeManager.Update();
             }
 
-			// Update appropriate menu and handle the actions.
+            // Update TechTree
+            if (BOGlobals::GAME_STATE == CUTSCENE)
+            {
+                HandleAction(m_cutsceneManager.Update());
+            }
+
+			// Update approperiate menu and handle the actions.
 			HandleAction(m_stateManager.Update(BOGlobals::GAME_STATE));
 
 			if (m_quit)
@@ -315,7 +341,6 @@ bool BOSystem::Run()
 
 			//RenderHUD
              BOHUDManager::Draw();
-
 		}
 
 		if (renderRest)
@@ -327,7 +352,12 @@ bool BOSystem::Run()
             if (BOGlobals::GAME_STATE == TECHTREE)
             {
                 m_techTreeManager.Draw();
+            }
 
+            // Draw cutscenes
+            if (BOGlobals::GAME_STATE == CUTSCENE)
+            {
+                m_cutsceneManager.Draw();
             }
 		}
 		BOGraphicInterface::Present();
@@ -355,6 +385,7 @@ void BOSystem::Shutdown()
 	BOTextManager::Shutdown();
 	BOHUDManager::Shutdown();
 	BOTextureManager::Shutdown();
+    m_cutsceneManager.Shutdown();
 }
 
 void BOSystem::HandleAction(ButtonAction p_action)
@@ -384,6 +415,7 @@ void BOSystem::HandleAction(ButtonAction p_action)
 			// PLAY STORY MODE.
 			case(STORY) :
 			{
+                m_soundPlayed = false;
                 // Reset tech tree
                 m_techTreeManager.Reset();
                 m_techTreeManager.SetTechPoint(0, false);
@@ -451,6 +483,7 @@ void BOSystem::HandleAction(ButtonAction p_action)
 				BOGlobals::GAME_STATE = LEVELSELECTOR;
 				break;
 			}
+
 			case (LEVEL) :
 			{
 				int index =	m_stateManager.GetLevelIndex();
@@ -477,6 +510,7 @@ void BOSystem::HandleAction(ButtonAction p_action)
                 m_techTreeManager.SetTechPoint(index, true);
 				break;
 			}
+
             case(TECHTREEACTION) :
             {
                 // Initialize the new map
@@ -488,6 +522,7 @@ void BOSystem::HandleAction(ButtonAction p_action)
                     m_quit = true;
                 }
                 BOGlobals::GAME_STATE = RUNNING;
+                m_soundPlayed = false;
                 break;
             }
 		}
@@ -528,5 +563,5 @@ void BOSystem::ShutdownMap()
 	BOHUDManager::Shutdown();
 	BOScore::Shutdown();
     // Go back to menu music
-    BOSoundManager::PlaySound(SOUND_MUSIC2);
+    BOSoundManager::PlaySound(SOUND_MENUMUSIC);
 }

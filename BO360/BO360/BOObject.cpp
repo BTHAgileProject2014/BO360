@@ -94,6 +94,12 @@ void BOObject::SetSprite(Textures p_spriteIndex)
 	m_sprite = BOTextureManager::GetTexture(p_spriteIndex);
 }
 
+void BOObject::SetSpritePointer(SDL_Texture* p_pointer)
+{
+    // Set new texture.
+    m_sprite = p_pointer;
+}
+
 sphere BOObject::GetBoundingSphere() const
 {
 	return sphere(m_position, m_radius);

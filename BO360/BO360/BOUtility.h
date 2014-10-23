@@ -383,23 +383,32 @@ enum GameState
 	DEFEAT,
     HIGHSCORESTATE,
 	LEVELSELECTOR,
-    TECHTREE
+    TECHTREE,
+    CUTSCENE
 };
 
 enum ButtonAction
 {
 	NOACTION,
+
 	QUIT,
 	EXIT,
 	STORY,
     HIGHSCORE,
+
 	RESUME,
 	NEXT,
 	RETRY,
+
 	LEVELSELECT,
 	LEVEL,
+
     TECHTREEACTION,
-    TECHTREERESET
+    TECHTREERESET,
+
+    CUTSCENENEXT,
+    CUTSCENEPREVIOUS,
+    CUTSCENEPLAY
 };
 
 enum ParticleType
@@ -447,7 +456,8 @@ enum KeyMessages
 enum Sound
 {
     SOUND_MUSIC,
-    SOUND_MUSIC2,
+    SOUND_MENUMUSIC,
+    SOUND_BOSSMUSIC,
 	SOUND_POP,
 	SOUND_DIE,
 	SOUND_POWERUP,
@@ -457,7 +467,9 @@ enum Sound
     SOUND_SHOCKWAVE,
     SOUND_SLOWDOWN,
     SOUND_SLOWUP,
-    SOUND_THRUSTER
+    SOUND_THRUSTER,
+    SOUND_FUEL,
+    SOUND_BUMP
 };
 
 // Sphere for collision check
@@ -682,6 +694,10 @@ enum Textures
     TEXTTINCREASESTARTPAD,
 
     TEXTTGIANTBALL,
+
+    // Cutscenes.
+    TEXCUTSCENETEXTBACKGROUND,
+    TEXCUTSCENETEXTFRAME,
 
 	// Only maps from here on.
 	nrOfLevels,

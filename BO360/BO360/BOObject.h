@@ -30,6 +30,7 @@ public:
 
 	SDL_Texture* GetSprite();
 	void SetSprite(Textures p_spriteIndex);
+    void SetSpritePointer(SDL_Texture* p_pointer);
 
 	virtual sphere GetBoundingSphere() const;
 

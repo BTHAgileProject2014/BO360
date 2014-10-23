@@ -20,6 +20,7 @@
 #include "BOTechTreeManager.h"
 #include "BOLevelManager.h"
 #include <iostream>
+#include "BOCutScene.h"
 //#include <vld.h>
 
 class BOSystem : BOComponent, public BOSubscriber
@@ -45,6 +46,8 @@ private:
 	BOPowerUpManager m_powerUpManager;
 	BOStateManager m_stateManager;
 	BOLevelManager m_levelManager;
+    BOCutScene m_cutsceneManager;
+
 	bool m_quit;
 	int m_windowWidth, m_windowHeight;
 
@@ -52,6 +55,7 @@ private:
 	double m_deltaTime;
 	double m_totalTime;
 	int m_FPS;
+    bool m_soundPlayed;
 
 	Uint32 m_timePassedMS;
 
