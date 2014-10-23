@@ -724,7 +724,7 @@ void BOTechTreeManager::HandleToolTips(BOTechTreeNode* p_node)
         p_node->SetTexture(BOTextureManager::GetTexture(TEXTTINCREASEBALLDAMAGE));
         break;
     case SlowTime:
-        p_node->SetToolTip("Increases the duration of Slow Time Power Up.", "Slow Time Upgrade");
+        p_node->SetToolTip("Increases the duration of Slow Time power up.", "Slow Time Upgrade");
         p_node->SetTexture(BOTextureManager::GetTexture(TEXTTSLOWTIME));
         break;
     case PowerUpBoost1:
@@ -736,7 +736,7 @@ void BOTechTreeManager::HandleToolTips(BOTechTreeNode* p_node)
         p_node->SetTexture(BOTextureManager::GetTexture(TEXTTPOWERUPBOOST2));
         break;
     case MegaPad:
-        p_node->SetToolTip("Enabled the use of Mega Pad ability. It will double the size of the pad for 8 seconds. There is a cooldown of 20 seconds", "Mega Pad");///////////////////Key press mega pad, number of segments, time?
+        p_node->SetToolTip("Enabled the use of Mega Pad ability. It will give you the ultimate pad for 8 seconds. There is a cooldown of 20 seconds", "Mega Pad");///////////////////Key press mega pad, number of segments, time?
         p_node->SetTexture(BOTextureManager::GetTexture(TEXTTMEGAPAD));
         break;
     case StackableShield:
