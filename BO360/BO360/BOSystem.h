@@ -56,6 +56,7 @@ private:
 	double m_totalTime;
 	int m_FPS;
     bool m_soundPlayed;
+	bool m_soundOn;
 
 	Uint32 m_timePassedMS;
 

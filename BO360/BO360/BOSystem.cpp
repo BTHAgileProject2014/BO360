@@ -20,6 +20,7 @@ bool BOSystem::Initialize()
 	m_totalTime = 0;
 	m_FPS = 0;
     m_soundPlayed = false;
+	m_soundOn = true;
 
 	result = m_timer.Initialize();
 	if (!result)
@@ -111,6 +112,7 @@ bool BOSystem::Initialize()
 
         return false;
     }
+
     BOSoundManager::PlaySound(SOUND_MENUMUSIC);
 
 	return true;
@@ -191,14 +193,6 @@ bool BOSystem::InitializeMap(int p_levelIndex)
 	if (!result)
 	{
 		std::cout << "Initialize object manager failed!" << std::endl;
-
-		return false;
-	}
-
-	// Initialize the sound engine.
-	if (!BOSoundManager::Initialize())
-	{
-		std::cout << "Initialize sound manager failed!" << std::endl;
 
 		return false;
 	}
@@ -554,6 +548,12 @@ void BOSystem::Handle(InputMessages p_inputMessages)
         }
         
     }
+
+	if (p_inputMessages.mKey)
+	{
+		m_soundOn = !m_soundOn;
+		BOSoundManager::MuteSound(m_soundOn);
+	}
 }
 
 void BOSystem::ShutdownMap()

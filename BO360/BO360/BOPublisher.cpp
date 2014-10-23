@@ -30,6 +30,7 @@ bool BOPublisher::Initialize()
 	m_inputMessage.rightArrow = false;
 	m_inputMessage.zKey = false;
 	m_inputMessage.xKey = false;
+	m_inputMessage.mKey = false;
     m_inputMessage.fKey = false;
     m_inputMessage.tKey = false;
 	m_inputMessage.escKey = false;
@@ -101,6 +102,9 @@ void BOPublisher::Notify(KeyMessages p_keyMessage, bool p_value)
 		break;
 	case jKey:
 		m_inputMessage.jKey = p_value;
+		break;
+	case mKey:
+		m_inputMessage.mKey = p_value;
 		break;
 	case escKey:
 		m_inputMessage.escKey = p_value;
