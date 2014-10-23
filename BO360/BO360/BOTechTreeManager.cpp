@@ -652,7 +652,7 @@ void BOTechTreeManager::HandleToolTips(BOTechTreeNode* p_node)
     switch (upgradeIdentifier)
     {
     case DropBasicPowerUp:
-        p_node->SetToolTip("Enables different power ups to be dropped.", "Start");
+        p_node->SetToolTip("Enable different power ups to be dropped from blocks.", "Start");
         p_node->SetTexture(BOTextureManager::GetTexture(TEXTTDROPBASICPOWERUP));
         break;
     case DecreasePowerUpFallSpeed:

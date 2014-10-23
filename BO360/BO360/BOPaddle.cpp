@@ -20,7 +20,7 @@ bool BOPaddle::Initialize(float2 p_position, int2 p_size, int2 p_sourceSize, int
 	m_segments = 1;
 	m_minSegments = 1;
 	m_maxSegments = 5 + BOTechTreeEffects::PaddleEffects.maxSize;
-	AddSegments(2 + BOTechTreeEffects::PaddleEffects.size); // 2 here -> Start with total 3 segments
+	AddSegments(3 + BOTechTreeEffects::PaddleEffects.size); // 2 here -> Start with total 3 segments
 	m_deltaRotation = 200 * BOTechTreeEffects::PaddleEffects.speed;
     m_stickyMaxTimer = 0;
 	SetStickyTimer(20);
@@ -233,9 +233,9 @@ void BOPaddle::RemoveSegments(int p_segments)
 	}
 }
 
-double BOPaddle::GetDegrees()const
+double BOPaddle::GetDegrees() const
 {
-	return m_totalDegrees;
+	return m_totalDegrees + 8;
 }
 
 float2 BOPaddle::GetBallSpawnPosition()
