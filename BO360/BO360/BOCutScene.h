@@ -37,6 +37,7 @@ private:
     void Previous();
     void LoadPortraits();
     void LoadDescriptions();
+    void InitializeCutScene(int2 p_size);
 
     int m_textIndex;
     int m_totalNumberOfTexts;
@@ -62,5 +63,7 @@ private:
     int2 m_mousePositionPrev;
     bool m_mouseDown;
     bool m_mousePrev;
+
+    int2 m_size;
 };
 #endif;
